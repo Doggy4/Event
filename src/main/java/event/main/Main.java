@@ -1,6 +1,7 @@
 package event.main;
 
 
+import Game.BowShoot;
 import Game.DropItem;
 import Game.PlaceBlock;
 import PluginUtilities.InventoryConstructor;
@@ -25,6 +26,7 @@ public final class Main extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new InventoryConstructor(), this);
         this.getServer().getPluginManager().registerEvents(new PlaceBlock(), this);
         this.getServer().getPluginManager().registerEvents(new DropItem(), this);
+        this.getServer().getPluginManager().registerEvents(new BowShoot(), this);
 
         PrestartScoreBoard.PrestartScoreboard();
         this.saveDefaultConfig();

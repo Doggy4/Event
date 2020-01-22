@@ -13,7 +13,7 @@ public class GameCycle {
 
     public static HashMap<String, Integer> gameStats = new HashMap<String, Integer>();
     public static boolean isAnyBattleEnabled = false;
-    public static int battle = 8;
+    public static int battle = 1;
 
     public static void mainCycle() {
         if (StartEvent.secPreStart < 0 && !Commands.StartEvent.isGameStarted) {
@@ -67,15 +67,15 @@ public class GameCycle {
             player.sendMessage(ChatColor.YELLOW + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n" + ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Раунд: " + ChatColor.AQUA + battle + ChatColor.YELLOW + "\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n");
         isAnyBattleEnabled = true;
 
-        int randomBattle = Utilities.getRandom(3, 3);
+        int randomBattle = Utilities.getRandom(0, 1);
         switch (randomBattle) {
-            case 1:
+            case 0:
                 PlaceBlock.placeBlock();
                 break;
-            case 2:
+            case 1:
                 DropItem.DropItem();
                 break;
-            case 3:
+            case 2:
                 BowShoot.BowShoot();
                 break;
         }
@@ -90,5 +90,4 @@ public class GameCycle {
 
         gameStats.put(winner.getName(), 4 - place + gameStats.get(winner.getName()));
     }
-
 }

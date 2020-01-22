@@ -2,6 +2,7 @@ package ScoreBoardWork;
 
 import Commands.StartEvent;
 import Game.GameCycle;
+import PluginUtilities.Utilities;
 import QueueSystem.Queue;
 import event.main.Main;
 import org.bukkit.*;
@@ -25,7 +26,6 @@ public class PrestartScoreBoard {
         new BukkitRunnable() {
             @Override
             public void run() {
-
                 red.setPrefix(ChatColor.RED + "[RED] ");
                 yellow.setPrefix(ChatColor.YELLOW + "[YELLOW] ");
                 green.setPrefix(ChatColor.GREEN + "[GREEN] ");
@@ -46,7 +46,7 @@ public class PrestartScoreBoard {
                     gameState.setScore(-2);
                     Score divider2 = objective.getScore(ChatColor.AQUA + "▪▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▪");
                     divider2.setScore(31);
-                    for (String name : Queue.redQueueList){
+                    for (String name : Queue.redQueueList) {
                         Score player = objective.getScore(ChatColor.GOLD + name);
                         player.setScore(GameCycle.gameStats.get(name));
                     }
