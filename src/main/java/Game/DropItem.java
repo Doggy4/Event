@@ -26,23 +26,22 @@ public class DropItem implements Listener {
     public static void DropItem() {
         isDropItemActivated = GameCycle.isAnyBattleEnabled;
 
-        int randomMaterial = Utilities.getRandom(0, 150);
+        ArrayList<Material> materials = new ArrayList<Material>();
+        for (Material block : Material.values())
+                materials.add(block);
 
-        Material[] materials = new Material[5000];
-
-        int i = 0;
-
-        materials = Arrays.copyOfRange(Material.values(), randomMaterial, randomMaterial + 36);
+        int randomMaterial = Utilities.getRandom(0, materials.size() - 1);
+        materials.subList(randomMaterial, randomMaterial+36);
 
         int randomBlock = Utilities.getRandom(0, 36);
-        randomMaterialBlock = materials[randomBlock];
+        randomMaterialBlock = materials.get(randomBlock);
 
         for (String playerName : Queue.redQueueList) {
             Player player = Bukkit.getPlayer(playerName);
             player.getInventory().clear();
 
-            player.sendTitle(ChatColor.GREEN + "Выкиньте предмет", randomMaterialBlock.toString(), 40, 40, 40);
-            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Выкиньте предмет " + ChatColor.LIGHT_PURPLE.name() +  "[" + randomMaterialBlock.toString() + "]");
+            player.sendTitle(ChatColor.GREEN + "Выкиньте предмет", randomMaterialBlock.name(), 40, 40, 40);
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Выкиньте предмет " + ChatColor.LIGHT_PURPLE + randomMaterialBlock.name());
 
             for (Material block : materials)
                 player.getInventory().addItem(new ItemStack(block, 64));
@@ -57,13 +56,16 @@ public class DropItem implements Listener {
             return;
 
         event.setCancelled(true);
-        Player winner = event.getPlayer();
+        Player player = event.getPlayer();
 
         if (event.getItemDrop().getItemStack().getType().name().equals(randomMaterialBlock.name())){
-            GameCycle.addScore(winner, place);
+            GameCycle.addScore(player, place);
             place++;
-            winner.getInventory().clear();
-        }
+
+        } else
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Вы проиграли!");
+        player.getInventory().clear();
+
         if (place > 3){
             isDropItemActivated = false;
             GameCycle.isAnyBattleEnabled = isDropItemActivated;

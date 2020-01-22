@@ -9,7 +9,6 @@ import org.bukkit.entity.Player;
 
 public class TheEnd {
     public static void EndGame() {
-        Bukkit.broadcastMessage("f");
         int max = 0;
         String winner = "null";
 
