@@ -39,10 +39,17 @@ public class CommandEvent implements CommandExecutor {
             } else if (args[0].equals("clear")) {
                 player.sendMessage(ChatColor.YELLOW + divider + ChatColor.GREEN + "Очереди очищены!\n" + ChatColor.YELLOW + divider);
                 clearQueues();
+            } else if (args[0].equals("forceGameStart")) {
+                player.sendMessage(ChatColor.YELLOW + divider + ChatColor.GREEN + "Жопы очищены!\n" + ChatColor.YELLOW + divider);
+                forceGameStart();
             }
         }
 
         return true;
+    }
+
+    public void forceGameStart() {
+        StartEvent.secPreStart = 2;
     }
 
     public void saveLobbyLoc(Location location) {
