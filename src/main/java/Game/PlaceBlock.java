@@ -13,12 +13,16 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 
-public class PlaceBlock extends BaseClass implements Listener {
+public class PlaceBlock implements Listener {
 
     private static Material randomMaterialBlock;
     private static boolean isActivated = false;
 
     public static void placeBlock() {
+        BaseClass.PlayerDamageOn();
+        BaseClass.PlayerDropItemRuleOn();
+        BaseClass.PlayerBlockBreakRuleOn();
+
         isActivated = GameCycle.isAnyBattleEnabled;
 
         ArrayList<Material> materials = new ArrayList<Material>();
@@ -70,6 +74,9 @@ public class PlaceBlock extends BaseClass implements Listener {
             isActivated = false;
             GameCycle.isAnyBattleEnabled = isActivated;
             place = 1;
+            BaseClass.PlayerDamageOff();
+            BaseClass.PlayerDropItemRuleOff();
+            BaseClass.PlayerBlockBreakRuleOff();
         }
         event.setCancelled(true);
     }

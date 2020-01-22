@@ -14,13 +14,19 @@ import org.bukkit.util.BlockIterator;
 import static PluginUtilities.Items.BowEventArrows;
 import static PluginUtilities.Items.BowEventBow;
 
-public class BowShoot extends BaseClass implements Listener {
+public class BowShoot implements Listener {
     private static boolean isActivated = false;
+
+
 
     private static Material[] targets = {Material.LAPIS_BLOCK, Material.GOLD_BLOCK, Material.DIAMOND_BLOCK, Material.IRON_BLOCK, Material.REDSTONE_BLOCK};
     private static int n = (int) Math.floor(Math.random() * targets.length);
 
     public static void BowShoot() {
+        BaseClass.PlayerDamageOn();
+        BaseClass.PlayerDropItemRuleOn();
+        BaseClass.PlayerBlockBreakRuleOn();
+
         isActivated = GameCycle.isAnyBattleEnabled;
         for (String playerName : Queue.redQueueList) {
             Player player = Bukkit.getPlayer(playerName);
@@ -60,6 +66,9 @@ public class BowShoot extends BaseClass implements Listener {
             isActivated = false;
             GameCycle.isAnyBattleEnabled = isActivated;
             place = 1;
+            BaseClass.PlayerDamageOff();
+            BaseClass.PlayerDropItemRuleOff();
+            BaseClass.PlayerBlockBreakRuleOff();
         }
     }
 }
