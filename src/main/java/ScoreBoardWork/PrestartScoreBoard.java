@@ -43,7 +43,7 @@ public class PrestartScoreBoard {
                     Score gameState = objective.getScore(ChatColor.GOLD + "Статус игры: " + ChatColor.BLUE + "Начало " + ChatColor.WHITE + "[" + StartEvent.secPreStart + "сек]");
                     gameState.setScore(-2);
                 } else if (Commands.StartEvent.isGameStarted) {
-                    Score gameState = objective.getScore(ChatColor.GOLD + "Статус игры: " + ChatColor.GREEN + "Запущена");
+                    Score gameState = objective.getScore(ChatColor.GOLD + "Статус игры: " + ChatColor.GREEN + "Активна");
                     gameState.setScore(-2);
                     Score divider2 = objective.getScore(ChatColor.AQUA + "▪▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▪");
                     divider2.setScore(31);
