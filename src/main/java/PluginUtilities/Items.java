@@ -6,6 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.HashMap;
 import java.util.Random;
 
 import static QueueSystem.Queue.redQueueList;
@@ -78,6 +79,18 @@ public class Items {
             .amount(1)
             .displayName(ChatColor.RED + "Выйти из очереди")
             .lore("Нажмите, чтобы выйти из очереди")
+            .build();
+
+    public static ItemStack BowEventBow = new ItemStackConstructor(Material.BOW)
+            .amount(1)
+            .displayName(ChatColor.RED + "Турнирный лук")
+            .lore("Стреляйте в блоки")
+            .enchantment(Enchantment.ARROW_INFINITE, 1)
+            .build();
+
+    public static ItemStack BowEventArrows = new ItemStackConstructor(Material.ARROW)
+            .amount(64)
+            .displayName(ChatColor.RED + "Стрелы")
             .build();
 
 }
