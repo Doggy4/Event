@@ -20,7 +20,6 @@ public class TheEnd {
             }
 
         Player player = Bukkit.getPlayer(winner);
-
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
             onlinePlayer.sendTitle(ChatColor.AQUA + winner, ChatColor.GREEN + "победитель", 20, 20, 20);
             onlinePlayer.playSound(onlinePlayer.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 10, 1);
