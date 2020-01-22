@@ -38,6 +38,8 @@ public class CommandEvent implements CommandExecutor {
             } else if (args[0].equals("clear")) {
                 player.sendMessage(ChatColor.YELLOW + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n" + ChatColor.GREEN + "Очереди очищены!" + ChatColor.YELLOW + "\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
                 clearQueues();
+            } else {
+                player.sendMessage(ChatColor.YELLOW + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n" + ChatColor.RED + "Помощь:\n" + ChatColor.GREEN + "/event start" + ChatColor.YELLOW + " - начать эвент\n" + ChatColor.GREEN + "/event setspawn" + ChatColor.YELLOW + " - установить спавн\n" + ChatColor.GREEN + "/event setlobby" + ChatColor.YELLOW + " - установить лобби\n" + ChatColor.YELLOW + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
             }
         }
 
@@ -46,7 +48,6 @@ public class CommandEvent implements CommandExecutor {
 
     public void saveLobbyLoc(Location location) {
         FileConfiguration config = Main.main.getConfig();
-
         config.set("lobby.world", location.getWorld().getName());
         config.set("lobby.x", location.getX());
         config.set("lobby.y", location.getY());
