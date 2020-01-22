@@ -115,4 +115,20 @@ public class CommandEvent implements CommandExecutor {
 
         player.teleport(location);
     }
+
+    public static Location randLocationSpawn() {
+        FileConfiguration config = Main.main.getConfig();
+
+        World world = Bukkit.getWorld(config.getString("spawn.world"));
+
+        Double x = config.getDouble("spawn.x") + (Utilities.getRandom(0, 20) - 10);
+        Double z = config.getDouble("spawn.z") + (Utilities.getRandom(0, 20) - 10);
+
+        Location location = new Location(world, x, config.getDouble("spawn.y"), z);
+
+        location.setPitch((float) config.getDouble("spawn.pitch"));
+        location.setYaw((float) config.getDouble("spawn.yaw"));
+
+        return location;
+    }
 }

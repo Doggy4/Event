@@ -56,6 +56,7 @@ public class BowShoot implements Listener {
 
                 world.playEffect(block.getLocation(), Effect.SMOKE, 20, 20);
                 world.playSound(block.getLocation(), Sound.BLOCK_BELL_USE, 10, 1);
+                world.playEffect(block.getLocation(), Effect.SMOKE, 20, 20);
 
             }
         }.runTaskTimer(Main.main, 20, 20);

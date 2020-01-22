@@ -79,7 +79,7 @@ public class GameCycle {
             @Override
             public void run() {
 
-                int randomBattle = Utilities.getRandom(0, 2);
+                int randomBattle = Utilities.getRandom(0, 3);
                 switch (randomBattle) {
                     case 0:
                         PlaceBlock.placeBlock();
@@ -89,6 +89,9 @@ public class GameCycle {
                         break;
                     case 2:
                         BowShoot.BowShoot();
+                        break;
+                    case 3:
+                        ShearSheep.ShearSheep();
                         break;
                 }
                 battle++;
