@@ -44,7 +44,7 @@ public class CommandEvent implements CommandExecutor {
             }
         }
 
-        
+
         return true;
     }
 
