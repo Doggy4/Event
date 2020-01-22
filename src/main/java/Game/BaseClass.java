@@ -4,7 +4,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
 
 public class BaseClass implements Listener {
 
@@ -26,6 +28,13 @@ public class BaseClass implements Listener {
 
     @EventHandler
     public void onPlayerDropItem(PlayerDropItemEvent e) {
+        if (!isActivated)
+            return;
+        e.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onPickItem(EntityPickupItemEvent e) {
         if (!isActivated)
             return;
         e.setCancelled(true);

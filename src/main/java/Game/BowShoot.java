@@ -7,6 +7,8 @@ import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.util.BlockIterator;
 
@@ -14,14 +16,14 @@ import org.bukkit.util.BlockIterator;
 import static PluginUtilities.Items.BowEventArrows;
 import static PluginUtilities.Items.BowEventBow;
 
-public class BowShoot extends BaseClass implements Listener {
-    private static boolean isActivated = false;
+public class BowShoot implements Listener {
+    private static boolean isShootTargetActivated = false;
 
     private static Material[] targets = {Material.LAPIS_BLOCK, Material.GOLD_BLOCK, Material.DIAMOND_BLOCK, Material.IRON_BLOCK, Material.REDSTONE_BLOCK};
     private static int n = (int) Math.floor(Math.random() * targets.length);
 
     public static void BowShoot() {
-        isActivated = GameCycle.isAnyBattleEnabled;
+        isShootTargetActivated = GameCycle.isAnyBattleEnabled;
         for (String playerName : Queue.redQueueList) {
             Player player = Bukkit.getPlayer(playerName);
             player.getInventory().clear();
@@ -37,16 +39,16 @@ public class BowShoot extends BaseClass implements Listener {
 
     @EventHandler
     public void OnShoot(EntityShootBowEvent e) {
-        if (!isActivated) return;
+        if (!isShootTargetActivated) return;
         Player player = (Player) e.getEntity();
         Arrow arrow = (Arrow) e.getProjectile();
         World world = arrow.getWorld();
         BlockIterator iterator = new BlockIterator(world, arrow.getLocation().toVector(), arrow.getVelocity().normalize(), 0, 200);
         Block hitBlock = null;
 
-        while (iterator.hasNext()) {
+        while(iterator.hasNext()) {
             hitBlock = iterator.next();
-            if (!(hitBlock.getType().equals(Material.AIR)))
+            if(!hitBlock.getType().equals(Material.AIR))
                 break;
         }
 
@@ -57,11 +59,11 @@ public class BowShoot extends BaseClass implements Listener {
             player.getInventory().clear();
         }
         if (place > 3) {
-            isActivated = false;
-            GameCycle.isAnyBattleEnabled = isActivated;
+            isShootTargetActivated = false;
+            GameCycle.isAnyBattleEnabled = isShootTargetActivated;
             place = 1;
+            }
         }
-    }
 }
 
 

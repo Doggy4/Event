@@ -8,18 +8,22 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
-public class PlaceBlock extends BaseClass implements Listener {
+public class PlaceBlock implements Listener {
 
     private static Material randomMaterialBlock;
-    private static boolean isActivated = false;
+    private static boolean isPlaceBlockEventActivated = false;
 
     public static void placeBlock() {
-        isActivated = GameCycle.isAnyBattleEnabled;
+        isPlaceBlockEventActivated = GameCycle.isAnyBattleEnabled;
 
         ArrayList<Material> materials = new ArrayList<Material>();
 
@@ -29,7 +33,7 @@ public class PlaceBlock extends BaseClass implements Listener {
             }
 
         int randomMaterial = Utilities.getRandom(0, materials.size() - 1);
-        materials.subList(randomMaterial, randomMaterial + 36);
+        materials.subList(randomMaterial, randomMaterial+36);
 
         int randomBlock = Utilities.getRandom(0, 36);
         randomMaterialBlock = materials.get(randomBlock);
@@ -58,7 +62,7 @@ public class PlaceBlock extends BaseClass implements Listener {
     @EventHandler
     public void onPlayerPlaceBlock(BlockPlaceEvent event) {
         Player winner = event.getPlayer();
-        if (!isActivated)
+        if (!isPlaceBlockEventActivated)
             return;
         if (event.getBlockPlaced().getType().toString().equals(randomMaterialBlock.toString())) {
             GameCycle.addScore(winner, place);
@@ -67,8 +71,8 @@ public class PlaceBlock extends BaseClass implements Listener {
             winner.getInventory().clear();
         }
         if (place > 3) {
-            isActivated = false;
-            GameCycle.isAnyBattleEnabled = isActivated;
+            isPlaceBlockEventActivated = false;
+            GameCycle.isAnyBattleEnabled = isPlaceBlockEventActivated;
             place = 1;
         }
         event.setCancelled(true);

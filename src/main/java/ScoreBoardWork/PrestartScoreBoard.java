@@ -26,6 +26,7 @@ public class PrestartScoreBoard {
         new BukkitRunnable() {
             @Override
             public void run() {
+
                 red.setPrefix(ChatColor.RED + "[RED] ");
                 yellow.setPrefix(ChatColor.YELLOW + "[YELLOW] ");
                 green.setPrefix(ChatColor.GREEN + "[GREEN] ");
@@ -57,6 +58,7 @@ public class PrestartScoreBoard {
 
                 Score divider2 = objective.getScore(ChatColor.AQUA + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▪");
                 divider2.setScore(-1);
+
 
                 Game.GameCycle.mainCycle();
 
