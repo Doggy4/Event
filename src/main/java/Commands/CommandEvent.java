@@ -23,21 +23,21 @@ public class CommandEvent implements CommandExecutor {
             sender.sendMessage("[EVENT] Only players can use this command!");
         } else {
             Player player = (Player) sender;
-            String devider = "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n";
+            String divider = "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n";
 
             if (args.length < 1)
-                player.sendMessage(ChatColor.YELLOW + devider + ChatColor.RED + "Помощь:\n" + ChatColor.GREEN + "/event start" + ChatColor.YELLOW + " - начать эвент\n" + ChatColor.GREEN + "/event setspawn" + ChatColor.YELLOW + " - установить спавн\n" + ChatColor.GREEN + "/event setlobby" + ChatColor.YELLOW + " - установить лобби\n" + ChatColor.YELLOW + devider);
+                player.sendMessage(ChatColor.YELLOW + divider + ChatColor.RED + "Помощь:\n" + ChatColor.GREEN + "/event start" + ChatColor.YELLOW + " - начать эвент\n" + ChatColor.GREEN + "/event setspawn" + ChatColor.YELLOW + " - установить спавн\n" + ChatColor.GREEN + "/event setlobby" + ChatColor.YELLOW + " - установить лобби\n" + ChatColor.YELLOW + divider);
             else if (args[0].equals("start")) {
-                player.sendMessage(ChatColor.YELLOW + devider + ChatColor.GREEN + "Эвент запущен!" + ChatColor.YELLOW + devider);
+                player.sendMessage(ChatColor.YELLOW + divider + ChatColor.GREEN + "Эвент запущен!\n" + ChatColor.YELLOW + divider);
                 Commands.StartEvent.startEvent();
             } else if (args[0].equals("setspawn")) {
-                player.sendMessage(ChatColor.YELLOW + devider + ChatColor.GREEN + "Спавн установлен!\n" + LocationUtulities.getPlayerLocation(player.getLocation()) + ChatColor.YELLOW + devider);
+                player.sendMessage(ChatColor.YELLOW + divider + ChatColor.GREEN + "Спавн установлен!\n" + LocationUtulities.getPlayerLocation(player.getLocation()) + ChatColor.YELLOW + divider);
                 saveSpawnLoc(player.getLocation());
             } else if (args[0].equals("setlobby")) {
-                player.sendMessage(ChatColor.YELLOW + devider + ChatColor.GREEN + "Лобби установлено!\n" + LocationUtulities.getPlayerLocation(player.getLocation()) + ChatColor.YELLOW + devider);
+                player.sendMessage(ChatColor.YELLOW + divider + ChatColor.GREEN + "Лобби установлено!\n" + LocationUtulities.getPlayerLocation(player.getLocation()) + ChatColor.YELLOW + divider);
                 saveLobbyLoc(player.getLocation());
             } else if (args[0].equals("clear")) {
-                player.sendMessage(ChatColor.YELLOW + devider + ChatColor.GREEN + "Очереди очищены!" + ChatColor.YELLOW + devider);
+                player.sendMessage(ChatColor.YELLOW + divider + ChatColor.GREEN + "Очереди очищены!\n" + ChatColor.YELLOW + divider);
                 clearQueues();
             }
         }

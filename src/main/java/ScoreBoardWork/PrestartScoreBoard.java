@@ -1,12 +1,10 @@
 package ScoreBoardWork;
 
-import Commands.CommandEvent;
 import Commands.StartEvent;
 import Game.GameCycle;
 import QueueSystem.Queue;
 import event.main.Main;
 import org.bukkit.*;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.*;
@@ -50,7 +48,7 @@ public class PrestartScoreBoard {
                     divider2.setScore(31);
                     for (String name : Queue.redQueueList){
                         Score player = objective.getScore(ChatColor.GOLD + name);
-                        player.setScore(GameCycle.hashmap.get(name));
+                        player.setScore(GameCycle.gameStats.get(name));
                     }
                 } else {
                     Score gameState = objective.getScore(ChatColor.GOLD + "Статус игры: " + ChatColor.GREEN + "Ожидание...");
