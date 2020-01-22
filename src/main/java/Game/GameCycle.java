@@ -4,27 +4,24 @@ import Commands.CommandEvent;
 import Commands.StartEvent;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
-import ScoreBoardWork.PrestartScoreBoard;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
-import org.bukkit.scoreboard.Score;
 
 import java.util.HashMap;
 
 public class GameCycle {
 
-    public static HashMap<String, Integer> hashmap = new HashMap<String, Integer>();
+    public static HashMap<String, Integer> gameStats = new HashMap<String, Integer>();
     public static boolean isAnyBattleEnabled = false;
-    public static int battle = 1;
+    public static int battle = 8;
 
     public static void mainCycle() {
         if (StartEvent.secPreStart < 0 && !Commands.StartEvent.isGameStarted) {
             for (String playerName : Queue.redQueueList){
                 CommandEvent.teleportToSpawn(Bukkit.getPlayer(playerName));
-                hashmap.put(playerName, 0);
+                gameStats.put(playerName, 0);
             }
             Commands.StartEvent.isGameStarted = true;
-
         }
 
         if (!isAnyBattleEnabled && Commands.StartEvent.isGameStarted && battle < 10)
@@ -62,9 +59,13 @@ public class GameCycle {
     }
 
     private static void randomBattle() {
+        if (battle > 10){
+            TheEnd.EndGame();
+        }
+
         for (Player player : Bukkit.getOnlinePlayers())
             player.sendMessage(ChatColor.YELLOW + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n" + ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Раунд: " + ChatColor.AQUA + battle + ChatColor.YELLOW + "\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n");
-        battle++;
+        isAnyBattleEnabled = true;
 
         int randomBattle = Utilities.getRandom(0, 1);
         switch (randomBattle) {
@@ -75,6 +76,8 @@ public class GameCycle {
                 DropItem.DropItem();
                 break;
         }
+
+        battle++;
     }
 
     public static void addScore(Player winner, int place) {
@@ -83,7 +86,7 @@ public class GameCycle {
 
         winner.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "+" + (4 - place) + " очков(-а)!");
 
-        hashmap.put(winner.getName(), 4 - place + hashmap.get(winner.getName()));
+        gameStats.put(winner.getName(), 4 - place + gameStats.get(winner.getName()));
     }
 
 }

@@ -23,31 +23,28 @@ public class PlaceBlock implements Listener {
     private static boolean isPlaceBlockEventActivated = false;
 
     public static void placeBlock() {
-        isPlaceBlockEventActivated = true;
-        GameCycle.isAnyBattleEnabled = true;
+        isPlaceBlockEventActivated = GameCycle.isAnyBattleEnabled;
 
-        int randomMaterial = Utilities.getRandom(0, 150);
+        ArrayList<Material> materials = new ArrayList<Material>();
 
-        Material[] materials = new Material[5000];
-
-        int i = 0;
         for (Material block : Material.values())
             if (block.isBlock()) {
-                materials[i] = block;
-                i++;
+                materials.add(block);
             }
 
-        materials = Arrays.copyOfRange(materials, randomMaterial, randomMaterial + 36);
+        int randomMaterial = Utilities.getRandom(0, materials.size() - 1);
+        materials.subList(randomMaterial, randomMaterial+36);
 
         int randomBlock = Utilities.getRandom(0, 36);
-        randomMaterialBlock = materials[randomBlock];
+        randomMaterialBlock = materials.get(randomBlock);
 
         for (String playerName : Queue.redQueueList) {
             Player player = Bukkit.getPlayer(playerName);
             player.getInventory().clear();
 
+            player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
             player.sendTitle(ChatColor.GREEN + "Поставьте блок", randomMaterialBlock.toString(), 40, 40, 40);
-            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Поставьте блок " + ChatColor.LIGHT_PURPLE +  "[" + randomMaterialBlock.toString() + "]");
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Поставьте блок " + ChatColor.LIGHT_PURPLE + "[" + randomMaterialBlock.name() + "]");
             player.setGameMode(GameMode.SURVIVAL);
 
             for (Material block : materials)
@@ -67,15 +64,15 @@ public class PlaceBlock implements Listener {
         Player winner = event.getPlayer();
         if (!isPlaceBlockEventActivated)
             return;
-        if (event.getBlockPlaced().getType().toString().equals(randomMaterialBlock.toString())){
+        if (event.getBlockPlaced().getType().toString().equals(randomMaterialBlock.toString())) {
             GameCycle.addScore(winner, place);
             place++;
             winner.setGameMode(GameMode.ADVENTURE);
             winner.getInventory().clear();
         }
-        if (place > 3){
+        if (place > 3) {
             isPlaceBlockEventActivated = false;
-            GameCycle.isAnyBattleEnabled = false;
+            GameCycle.isAnyBattleEnabled = isPlaceBlockEventActivated;
             place = 1;
         }
         event.setCancelled(true);

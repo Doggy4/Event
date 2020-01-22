@@ -23,7 +23,7 @@ public class MainPlayerHandler implements Listener {
         player.sendTitle(ChatColor.GREEN + "Привет, " + ChatColor.YELLOW + player.getName(), ChatColor.AQUA + "Добро пожаловать!", 50, 50, 50);
         player.playSound(location, Sound.ENTITY_CAT_PURREOW, 10, 1);
 
-        event.setJoinMessage(ChatColor.GOLD + "[EVENT]" + ChatColor.WHITE + " Игрок " + ChatColor.GREEN + player.getName() + ChatColor.WHITE + " зашел на " + ChatColor.GOLD + "EVENT" + ChatColor.WHITE + "!");
+        event.setJoinMessage(ChatColor.GOLD + "[EVENT]" + ChatColor.WHITE + " Игрок " + ChatColor.AQUA + player.getName() + ChatColor.WHITE + " зашел на " + ChatColor.GOLD + "EVENT" + ChatColor.WHITE + "!");
 
         player.getInventory().setItem(0, Items.joinQueue);
         player.getInventory().setItem(8, Items.spectatorMode);
@@ -33,7 +33,7 @@ public class MainPlayerHandler implements Listener {
     public void onPlayerLeaveEvent(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
-        event.setQuitMessage(ChatColor.GOLD + "[EVENT]" + ChatColor.WHITE + " Игрок " + ChatColor.GREEN + player.getName() + ChatColor.WHITE + " вышел с " + ChatColor.GOLD + "EVENT" + ChatColor.WHITE + "!");
+        event.setQuitMessage(ChatColor.GOLD + "[EVENT]" + ChatColor.WHITE + " Игрок " + ChatColor.AQUA + player.getName() + ChatColor.WHITE + " вышел с " + ChatColor.GOLD + "EVENT" + ChatColor.WHITE + "!");
         Queue.LeaveQueue(player);
     }
 
