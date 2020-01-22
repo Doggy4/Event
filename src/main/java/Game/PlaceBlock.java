@@ -23,8 +23,7 @@ public class PlaceBlock implements Listener {
     private static boolean isPlaceBlockEventActivated = false;
 
     public static void placeBlock() {
-        isPlaceBlockEventActivated = true;
-        GameCycle.isAnyBattleEnabled = true;
+        isPlaceBlockEventActivated = GameCycle.isAnyBattleEnabled;
 
         int randomMaterial = Utilities.getRandom(0, 150);
 
@@ -75,7 +74,7 @@ public class PlaceBlock implements Listener {
         }
         if (place > 3){
             isPlaceBlockEventActivated = false;
-            GameCycle.isAnyBattleEnabled = false;
+            GameCycle.isAnyBattleEnabled = isPlaceBlockEventActivated;
             place = 1;
         }
         event.setCancelled(true);

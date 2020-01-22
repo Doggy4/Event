@@ -24,8 +24,7 @@ public class DropItem implements Listener {
     private static boolean isDropItemActivated = false;
 
     public static void DropItem() {
-        isDropItemActivated = true;
-        GameCycle.isAnyBattleEnabled = true;
+        isDropItemActivated = GameCycle.isAnyBattleEnabled;
 
         int randomMaterial = Utilities.getRandom(0, 150);
 
@@ -54,11 +53,11 @@ public class DropItem implements Listener {
 
     @EventHandler
     public void onPlayerDropItem(PlayerDropItemEvent event) {
-        event.setCancelled(true);
-        Player winner = event.getPlayer();
-
         if (!isDropItemActivated)
             return;
+
+        event.setCancelled(true);
+        Player winner = event.getPlayer();
 
         if (event.getItemDrop().getItemStack().getType().equals(randomMaterialBlock)){
             GameCycle.addScore(winner, place);
@@ -67,7 +66,7 @@ public class DropItem implements Listener {
         }
         if (place > 3){
             isDropItemActivated = false;
-            GameCycle.isAnyBattleEnabled = false;
+            GameCycle.isAnyBattleEnabled = isDropItemActivated;
             place = 1;
         }
     }
