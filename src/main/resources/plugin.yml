@@ -1,0 +1,14 @@
+name: RavagerRush
+version: ${project.version}
+main: event.main.Main
+api-version: 1.13
+prefix: RavagerRush
+authors: [Doggy4, bob302]
+description: Minecraft Mini-Game
+commands:
+  event:
+    usage: /event
+    description: Main Event Commands
+  spec:
+    usage: /spec
+    description: Change Spectator Mode
