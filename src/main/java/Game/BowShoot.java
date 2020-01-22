@@ -1,18 +1,17 @@
 package Game;
 
 import QueueSystem.Queue;
-import Utils.ArrowHitBlockEvent;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.util.BlockIterator;
 
-
-import java.util.Vector;
 
 import static PluginUtilities.Items.BowEventArrows;
 import static PluginUtilities.Items.BowEventBow;
@@ -44,26 +43,42 @@ public class BowShoot implements Listener {
         Player player = (Player) e.getEntity();
         Arrow arrow = (Arrow) e.getProjectile();
         World world = arrow.getWorld();
-        BlockIterator iterator;
-        iterator = new BlockIterator(world, arrow.getLocation().toVector(), arrow.getVelocity().normalize(), 0, 4);
+        BlockIterator iterator = new BlockIterator(world, arrow.getLocation().toVector(), arrow.getVelocity().normalize(), 0, 4);
         Block hitBlock = null;
-        while (iterator.hasNext()) {
-            hitBlock = iterator.next();
-            if(hitBlock.getBlockData().getMaterial().isAir()) break;
 
-            if (hitBlock.getBlockData().getMaterial().equals(targets[n])) {
-                GameCycle.addScore(player, place);
-                place++;
-                player.getInventory().clear();
-                if (arrow != null) arrow.remove();
-            }
-            if (place > 3) {
-                isShootTargetActivated = false;
-                GameCycle.isAnyBattleEnabled = isShootTargetActivated;
-                place = 1;
+        while(iterator.hasNext()) {
+            hitBlock = iterator.next();
+            if(hitBlock.getType().equals(Material.AIR))
+                break;
+        }
+
+
+        if (hitBlock.getType().equals(targets[n])) {
+            GameCycle.addScore(player, place);
+            place++;
+            player.getInventory().clear();
+        }
+        if (place > 3) {
+            isShootTargetActivated = false;
+            GameCycle.isAnyBattleEnabled = isShootTargetActivated;
+            place = 1;
             }
         }
+
+    @EventHandler
+    public void onPlayerDamage(EntityDamageEvent event) {
+        if (!isShootTargetActivated)
+            return;
+        event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onPlayerPick(EntityPickupItemEvent event) {
+        if (!isShootTargetActivated)
+            return;
+        event.setCancelled(true);
     }
 }
+
 
 
