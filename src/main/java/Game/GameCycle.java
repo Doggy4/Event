@@ -17,14 +17,14 @@ public class GameCycle {
 
     public static void mainCycle() {
         if (StartEvent.secPreStart < 0 && !Commands.StartEvent.isGameStarted) {
-            for (String playerName : Queue.redQueueList){
+            for (String playerName : Queue.redQueueList) {
                 CommandEvent.teleportToSpawn(Bukkit.getPlayer(playerName));
                 gameStats.put(playerName, 0);
             }
             Commands.StartEvent.isGameStarted = true;
         }
 
-        if (!isAnyBattleEnabled && Commands.StartEvent.isGameStarted && battle < 10)
+        if (!isAnyBattleEnabled && Commands.StartEvent.isGameStarted)
             randomBattle();
 
 
@@ -59,7 +59,7 @@ public class GameCycle {
     }
 
     private static void randomBattle() {
-        if (battle > 10){
+        if (battle == 11) {
             TheEnd.EndGame();
         }
 
@@ -79,7 +79,6 @@ public class GameCycle {
                 BowShoot.BowShoot();
                 break;
         }
-
         battle++;
     }
 
