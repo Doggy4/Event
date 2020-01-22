@@ -44,7 +44,7 @@ public class PlaceBlock implements Listener {
 
             player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
             player.sendTitle(ChatColor.GREEN + "Поставьте блок", randomMaterialBlock.toString(), 40, 40, 40);
-            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Поставьте блок " + ChatColor.LIGHT_PURPLE + "[" + randomMaterialBlock.toString() + "]");
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Поставьте блок " + ChatColor.LIGHT_PURPLE + "[" + randomMaterialBlock.name() + "]");
             player.setGameMode(GameMode.SURVIVAL);
 
             for (Material block : materials)

@@ -41,8 +41,8 @@ public class DropItem implements Listener {
             Player player = Bukkit.getPlayer(playerName);
             player.getInventory().clear();
 
-            player.sendTitle(ChatColor.GREEN + "Выкиньте блок", randomMaterialBlock.toString(), 40, 40, 40);
-            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Выкиньте предмет " + ChatColor.LIGHT_PURPLE +  "[" + randomMaterialBlock.toString() + "]");
+            player.sendTitle(ChatColor.GREEN + "Выкиньте предмет", randomMaterialBlock.toString(), 40, 40, 40);
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Выкиньте предмет " + ChatColor.LIGHT_PURPLE.name() +  "[" + randomMaterialBlock.toString() + "]");
 
             for (Material block : materials)
                 player.getInventory().addItem(new ItemStack(block, 64));
@@ -59,7 +59,7 @@ public class DropItem implements Listener {
         event.setCancelled(true);
         Player winner = event.getPlayer();
 
-        if (event.getItemDrop().getItemStack().getType().equals(randomMaterialBlock)){
+        if (event.getItemDrop().getItemStack().getType().name().equals(randomMaterialBlock.name())){
             GameCycle.addScore(winner, place);
             place++;
             winner.getInventory().clear();
