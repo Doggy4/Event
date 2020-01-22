@@ -67,13 +67,16 @@ public class GameCycle {
             player.sendMessage(ChatColor.YELLOW + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n" + ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Раунд: " + ChatColor.AQUA + battle + ChatColor.YELLOW + "\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n");
         isAnyBattleEnabled = true;
 
-        int randomBattle = Utilities.getRandom(0, 1);
+        int randomBattle = Utilities.getRandom(3, 3);
         switch (randomBattle) {
-            case 0:
+            case 1:
                 PlaceBlock.placeBlock();
                 break;
-            case 1:
+            case 2:
                 DropItem.DropItem();
+                break;
+            case 3:
+                BowShoot.BowShoot();
                 break;
         }
 

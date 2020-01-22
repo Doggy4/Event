@@ -29,3 +29,4 @@ public class ArrowHitBlockEvent extends BlockEvent {
     }
 
 }
+
