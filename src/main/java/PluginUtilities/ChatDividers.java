@@ -1,4 +1,4 @@
-package Utils;
+package PluginUtilities;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -18,5 +18,7 @@ public class ChatDividers {
     public static String divThicker8 = "########\n";
     public static String divThicker16 = "################\n";
     public static String divThicker32 = "################################\n";
+
+    public static String div = "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n";
 
 }

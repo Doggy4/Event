@@ -19,20 +19,16 @@ import java.util.ArrayList;
 
 public class ShearSheep implements Listener {
     private static boolean isShearSheepActivated = false;
-    private static ArrayList<DyeColor> colors = new ArrayList<DyeColor>();
+
     private static DyeColor randomColor;
     private static ArrayList<Sheep> sheeps = new ArrayList<Sheep>();
 
-    static {
-        for (DyeColor color : DyeColor.values())
-            colors.add(color);
-    }
 
     public static void ShearSheep() {
 
         isShearSheepActivated = GameCycle.isAnyBattleEnabled;
-        int randomColorIndex = Utilities.getRandom(0, colors.size() - 1);
-        randomColor = colors.get(randomColorIndex);
+
+        randomColor = Utilities.getRandomColor();
 
         for (String playerName : Queue.redQueueList) {
             Player player = Bukkit.getPlayer(playerName);
@@ -46,9 +42,9 @@ public class ShearSheep implements Listener {
             player.getInventory().addItem(Items.ShearEventShears);
         }
 
-        for (int i = 0; i < 70; i++) {
+        for (int i = 0; i < 80; i++) {
             Sheep sheep = (Sheep) Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).spawnEntity(Commands.CommandEvent.randLocationSpawn(), EntityType.SHEEP);
-            sheep.setColor(colors.get(Utilities.getRandom(0, colors.size() - 1)));
+            sheep.setColor(Utilities.getRandomColor());
             sheeps.add(sheep);
         }
     }

@@ -3,15 +3,12 @@ package Game;
 import Commands.CommandEvent;
 import Commands.StartEvent;
 import QueueSystem.Queue;
-import ScoreBoardWork.PrestartScoreBoard;
-import event.main.Main;
+import QueueSystem.PrestartScoreBoard;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
-import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public class Ending {
     public static void EndGame() {
@@ -32,9 +29,10 @@ public class Ending {
         Player player = Bukkit.getPlayer(winner);
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
             onlinePlayer.sendTitle(ChatColor.AQUA + winner, ChatColor.GREEN + "победитель", 20, 40, 20);
-            onlinePlayer.sendMessage(ChatColor.GREEN + "Игрок " + ChatColor.AQUA + winner + ChatColor.GREEN + " победитель!");
+
             onlinePlayer.playSound(onlinePlayer.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 10, 1);
             onlinePlayer.spawnParticle(Particle.DRAGON_BREATH, onlinePlayer.getLocation(), 80);
+            onlinePlayer.sendMessage(ChatColor.GREEN + "Игрок " + ChatColor.AQUA + winner + ChatColor.GREEN + " победитель!");
         }
 
         for (String playerName : Queue.redQueueList) {
