@@ -21,10 +21,12 @@ import java.util.Arrays;
 public class DropItem implements Listener {
 
     private static Material randomMaterialBlock;
-    private static boolean isDropItemActivated = false;
+    private static boolean isActivated = false;
 
     public static void DropItem() {
-        isDropItemActivated = GameCycle.isAnyBattleEnabled;
+        isActivated = GameCycle.isAnyBattleEnabled;
+
+        BaseClass.DropItemOff();
 
         ArrayList<Material> materials = new ArrayList<Material>();
         for (Material block : Material.values())
@@ -57,7 +59,7 @@ public class DropItem implements Listener {
 
     @EventHandler
     public void onPlayerDropItem(PlayerDropItemEvent event) {
-        if (!isDropItemActivated)
+        if (!isActivated)
             return;
 
         event.setCancelled(true);
@@ -72,8 +74,8 @@ public class DropItem implements Listener {
         player.getInventory().clear();
 
         if (place > 3){
-            isDropItemActivated = false;
-            GameCycle.isAnyBattleEnabled = isDropItemActivated;
+            isActivated = false;
+            GameCycle.isAnyBattleEnabled = isActivated;
             place = 1;
         }
     }

@@ -9,8 +9,6 @@ import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.BlockIterator;
@@ -20,7 +18,7 @@ import static PluginUtilities.Items.BowEventArrows;
 import static PluginUtilities.Items.BowEventBow;
 
 public class BowShoot implements Listener {
-    private static boolean isShootTargetActivated = false;
+    private static boolean isActivated = false;
 
     private static Material[] targets = {Material.LAPIS_BLOCK, Material.GOLD_BLOCK, Material.DIAMOND_BLOCK, Material.IRON_BLOCK, Material.REDSTONE_BLOCK};
     private static int n = (int) Math.floor(Math.random() * targets.length);
@@ -28,7 +26,8 @@ public class BowShoot implements Listener {
     private static Block block = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).getBlockAt(0, 0, 0);
 
     public static void BowShoot() {
-        isShootTargetActivated = GameCycle.isAnyBattleEnabled;
+        isActivated = GameCycle.isAnyBattleEnabled;
+
         for (String playerName : Queue.redQueueList) {
             Player player = Bukkit.getPlayer(playerName);
             player.getInventory().clear();
@@ -42,7 +41,7 @@ public class BowShoot implements Listener {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (!isShootTargetActivated) {
+                if (!isActivated) {
                     block.setType(Material.AIR);
                     this.cancel();
                 }
@@ -69,7 +68,7 @@ public class BowShoot implements Listener {
 
     @EventHandler
     public void OnShoot(EntityShootBowEvent e) {
-        if (!isShootTargetActivated) return;
+        if (!isActivated) return;
         Player player = (Player) e.getEntity();
         Arrow arrow = (Arrow) e.getProjectile();
         World world = arrow.getWorld();
@@ -88,8 +87,8 @@ public class BowShoot implements Listener {
             player.getInventory().clear();
         }
         if (place > 3) {
-            isShootTargetActivated = false;
-            GameCycle.isAnyBattleEnabled = isShootTargetActivated;
+            isActivated = false;
+            GameCycle.isAnyBattleEnabled = isActivated;
             place = 1;
         }
     }

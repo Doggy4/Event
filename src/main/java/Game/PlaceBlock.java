@@ -20,10 +20,12 @@ import java.util.Arrays;
 public class PlaceBlock implements Listener {
 
     private static Material randomMaterialBlock;
-    private static boolean isPlaceBlockEventActivated = false;
+    private static boolean isActivated = false;
 
     public static void placeBlock() {
-        isPlaceBlockEventActivated = GameCycle.isAnyBattleEnabled;
+        isActivated = GameCycle.isAnyBattleEnabled;
+
+        BaseClass.PlaceBlockOff();
 
         ArrayList<Material> materials = new ArrayList<Material>();
 
@@ -67,7 +69,7 @@ public class PlaceBlock implements Listener {
     @EventHandler
     public void onPlayerPlaceBlock(BlockPlaceEvent event) {
         Player winner = event.getPlayer();
-        if (!isPlaceBlockEventActivated)
+        if (!isActivated)
             return;
         if (event.getBlockPlaced().getType().toString().equals(randomMaterialBlock.toString())) {
             GameCycle.addScore(winner, place);
@@ -76,8 +78,8 @@ public class PlaceBlock implements Listener {
             winner.getInventory().clear();
         }
         if (place > 3) {
-            isPlaceBlockEventActivated = false;
-            GameCycle.isAnyBattleEnabled = isPlaceBlockEventActivated;
+            isActivated = false;
+            GameCycle.isAnyBattleEnabled = isActivated;
             place = 1;
         }
         event.setCancelled(true);
