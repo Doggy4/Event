@@ -4,56 +4,43 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
 
 public class BaseClass implements Listener {
-    private static boolean PlayerDamageRule = false;
-    private static boolean PlayerBlockBreakRule = false;
-    private static boolean PlayerDropItemRule = false;
-
-    public static void  PlayerDamageOn() {
-        PlayerDamageRule = true;
-    }
-
-    public static void  PlayerBlockBreakRuleOn() {
-        PlayerBlockBreakRule = true;
-    }
-
-    public static void  PlayerDropItemRuleOn() {
-        PlayerDropItemRule = true;
-    }
-
-    /////////////////////////////////////////////////
-    public static void  PlayerDamageOff() {
-        PlayerDamageRule = false;
-    }
-
-    public static void  PlayerBlockBreakRuleOff() {
-        PlayerBlockBreakRule = false;
-    }
-
-    public static void  PlayerDropItemRuleOff() {
-        PlayerDropItemRule = false;
-    }
-
 
     @EventHandler
     public void onPlayerDamage(EntityDamageEvent e) {
-        if (PlayerDamageRule == true)
+        if (!GameCycle.isAnyBattleEnabled)
             return;
         e.setCancelled(true);
     }
 
     @EventHandler
     public void onPlayerBreakBlock(BlockBreakEvent e) {
-        if (PlayerBlockBreakRule == true)
+        if (!GameCycle.isAnyBattleEnabled)
             return;
         e.setCancelled(true);
     }
 
     @EventHandler
     public void onPlayerDropItem(PlayerDropItemEvent e) {
-        if (PlayerDropItemRule == true)
+        if (!GameCycle.isAnyBattleEnabled)
+            return;
+        e.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onPickItem(EntityPickupItemEvent e) {
+        if (!GameCycle.isAnyBattleEnabled)
+            return;
+        e.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onEntityDamage(EntityDamageEvent e) {
+        if (!GameCycle.isAnyBattleEnabled)
             return;
         e.setCancelled(true);
     }

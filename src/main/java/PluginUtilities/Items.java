@@ -93,4 +93,10 @@ public class Items {
             .displayName(ChatColor.RED + "Стрелы")
             .build();
 
+    public static ItemStack ShearEventShears = new ItemStackConstructor(Material.SHEARS)
+            .amount(64)
+            .displayName(ChatColor.RED + "Турнирные ножницы")
+            .enchantment(Enchantment.DURABILITY, 10)
+            .build();
+
 }

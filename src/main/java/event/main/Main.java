@@ -4,6 +4,7 @@ package event.main;
 import Game.BowShoot;
 import Game.DropItem;
 import Game.PlaceBlock;
+import Game.ShearSheep;
 import PluginUtilities.InventoryConstructor;
 import ScoreBoardWork.PrestartScoreBoard;
 import org.bukkit.Bukkit;
@@ -27,6 +28,7 @@ public final class Main extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new PlaceBlock(), this);
         this.getServer().getPluginManager().registerEvents(new DropItem(), this);
         this.getServer().getPluginManager().registerEvents(new BowShoot(), this);
+        this.getServer().getPluginManager().registerEvents(new ShearSheep(), this);
 
         PrestartScoreBoard.PrestartScoreboard();
         this.saveDefaultConfig();

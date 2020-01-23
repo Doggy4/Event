@@ -19,42 +19,9 @@ public class Queue {
     private static Team yellowQueue = PrestartScoreBoard.scoreboard.getTeam("YELLOW");
     private static Team greenQueue = PrestartScoreBoard.scoreboard.getTeam("GREEN");
 
-    static {
-        yellowQueueList.add("yellow1");
-        yellowQueueList.add("yellow2");
-        yellowQueueList.add("yellow3");
-        yellowQueueList.add("yellow4");
-        yellowQueueList.add("yellow5");
-        yellowQueueList.add("yellow6");
-        yellowQueueList.add("yellow7");
-        yellowQueueList.add("yellow8");
-        yellowQueueList.add("yellow9");
-    }
-
-    static {
-        greenQueueList.add("green1");
-        greenQueueList.add("green2");
-        greenQueueList.add("green3");
-        greenQueueList.add("green4");
-        greenQueueList.add("green5");
-        greenQueueList.add("green6");
-        greenQueueList.add("green7");
-        greenQueueList.add("green8");
-        greenQueueList.add("green9");
-        greenQueueList.add("green10");
-        greenQueueList.add("green11");
-        greenQueueList.add("green12");
-        greenQueueList.add("green13");
-        greenQueueList.add("green14");
-        greenQueueList.add("green15");
-        greenQueueList.add("green16");
-        greenQueueList.add("green17");
-    }
-
-
     public static void AddToRedQueue(Player player) {
         if (redQueueList.contains(player.getName())) {
-            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы уже находитесь в очереди " + ChatColor.RED + "[RED]" + ChatColor.WHITE + "!");
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Вы уже находитесь в очереди " + ChatColor.RED + "[RED]" + ChatColor.WHITE + "!");
             player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 10, 1);
             player.sendMessage(ChatColor.RED + "Ожидают: " + ChatColor.WHITE + "[" + redQueueList.size() + "/10]!");
             return;
@@ -80,7 +47,7 @@ public class Queue {
     public static void AddToYellowQueue(Player player) {
 
         if (yellowQueueList.contains(player.getName())) {
-            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы уже находитесь в очереди " + ChatColor.YELLOW + "[YELLOW]" + ChatColor.WHITE + "!");
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Вы уже находитесь в очереди " + ChatColor.YELLOW + "[YELLOW]" + ChatColor.WHITE + "!");
             player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 10, 1);
             player.sendMessage(ChatColor.YELLOW + "Ожидают: " + ChatColor.WHITE + "[" + yellowQueueList.size() + "/10]!");
             return;
@@ -106,7 +73,7 @@ public class Queue {
     public static void AddToGreenQueue(Player player) {
 
         if (greenQueueList.contains(player.getName())) {
-            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы уже находитесь в очереди " + ChatColor.GREEN + "[GREEN]" + ChatColor.WHITE + "!");
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Вы уже находитесь в очереди " + ChatColor.GREEN + "[GREEN]" + ChatColor.WHITE + "!");
             player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 10, 1);
             player.sendMessage(ChatColor.GREEN + "Ожидают: " + ChatColor.WHITE + "[" + greenQueueList.size() + "/18]!");
             return;

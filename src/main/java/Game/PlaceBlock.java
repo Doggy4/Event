@@ -8,22 +8,22 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class PlaceBlock implements Listener {
 
     private static Material randomMaterialBlock;
-    private static boolean isActivated = false;
+    private static boolean isPlaceBlockEventActivated = false;
 
     public static void placeBlock() {
-        BaseClass.PlayerDamageOn();
-        BaseClass.PlayerDropItemRuleOn();
-        BaseClass.PlayerBlockBreakRuleOn();
-
-        isActivated = GameCycle.isAnyBattleEnabled;
+        isPlaceBlockEventActivated = GameCycle.isAnyBattleEnabled;
 
         ArrayList<Material> materials = new ArrayList<Material>();
 
@@ -32,11 +32,16 @@ public class PlaceBlock implements Listener {
                 materials.add(block);
             }
 
-        int randomMaterial = Utilities.getRandom(0, materials.size() - 1);
-        materials.subList(randomMaterial, randomMaterial + 36);
+        int randomMaterial = Utilities.getRandom(0, materials.size() - 37);
+        materials.subList(randomMaterial, randomMaterial+36);
 
         int randomBlock = Utilities.getRandom(0, 36);
         randomMaterialBlock = materials.get(randomBlock);
+
+        while (randomMaterialBlock.name().contains("STEM") || randomMaterialBlock.name().contains("AIR") || randomMaterialBlock.name().contains("STAND") || randomMaterialBlock.name().contains("COMMAND") || randomMaterialBlock.name().contains("BARRIER") || randomMaterialBlock.name().contains("LECTERN") || randomMaterialBlock.name().contains("BEETROOTS") || randomMaterialBlock.name().contains("CARROTS") || randomMaterialBlock.name().contains("SEEDS") || randomMaterialBlock.name().contains("POTATO") || randomMaterialBlock.name().contains("BLUET")){
+            randomBlock = Utilities.getRandom(0, 36);
+            randomMaterialBlock = materials.get(randomBlock);
+        }
 
         for (String playerName : Queue.redQueueList) {
             Player player = Bukkit.getPlayer(playerName);
@@ -62,7 +67,7 @@ public class PlaceBlock implements Listener {
     @EventHandler
     public void onPlayerPlaceBlock(BlockPlaceEvent event) {
         Player winner = event.getPlayer();
-        if (!isActivated)
+        if (!isPlaceBlockEventActivated)
             return;
         if (event.getBlockPlaced().getType().toString().equals(randomMaterialBlock.toString())) {
             GameCycle.addScore(winner, place);
@@ -71,12 +76,9 @@ public class PlaceBlock implements Listener {
             winner.getInventory().clear();
         }
         if (place > 3) {
-            isActivated = false;
-            GameCycle.isAnyBattleEnabled = isActivated;
+            isPlaceBlockEventActivated = false;
+            GameCycle.isAnyBattleEnabled = isPlaceBlockEventActivated;
             place = 1;
-            BaseClass.PlayerDamageOff();
-            BaseClass.PlayerDropItemRuleOff();
-            BaseClass.PlayerBlockBreakRuleOff();
         }
         event.setCancelled(true);
     }
