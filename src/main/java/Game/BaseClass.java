@@ -54,37 +54,37 @@ public class BaseClass implements Listener {
 
     @EventHandler
     public void onPlayerDamage(EntityDamageEvent e) {
-        if (playerDamageRULE == false) return;
+        if (!playerDamageRULE) return;
         e.setCancelled(true);
     }
 
     @EventHandler
     public void onPlayerBreakBlock(BlockBreakEvent e) {
-        if (breakBlockRULE == false) return;
+        if (!breakBlockRULE) return;
         e.setCancelled(true);
     }
 
     @EventHandler
     public void onPlayerDropItem(PlayerDropItemEvent e) {
-        if (dropItemRULE == false) return;
+        if (!dropItemRULE) return;
         e.setCancelled(true);
     }
 
     @EventHandler
     public void onPickItem(EntityPickupItemEvent e) {
-        if (pickUpItemRULE == false) return;
+        if (!pickUpItemRULE) return;
         e.setCancelled(true);
     }
 
     @EventHandler
     public void onEntityDamage(EntityDamageEvent e) {
-        if (entityDamageRULE == false) return;
+        if (!entityDamageRULE) return;
         e.setCancelled(true);
     }
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent e) {
-        if (placeBlockRULE == false) return;
+        if (!placeBlockRULE) return;
         e.setCancelled(true);
     }
 }
