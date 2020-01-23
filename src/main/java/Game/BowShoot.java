@@ -42,8 +42,11 @@ public class BowShoot implements Listener {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (!isShootTargetActivated)
+                if (!isShootTargetActivated) {
+                    block.setType(Material.AIR);
                     this.cancel();
+                }
+
 
                 double rand_x = Main.main.getConfig().getDouble("spawn.x") + Utilities.getRandom(1, 20) - 10;
                 double rand_z = Main.main.getConfig().getDouble("spawn.z") + Utilities.getRandom(1, 20) - 10;
@@ -60,8 +63,6 @@ public class BowShoot implements Listener {
 
             }
         }.runTaskTimer(Main.main, 20, 20);
-
-        block.setType(Material.AIR);
     }
 
     private static int place = 1;

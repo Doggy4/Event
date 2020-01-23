@@ -32,11 +32,16 @@ public class PlaceBlock implements Listener {
                 materials.add(block);
             }
 
-        int randomMaterial = Utilities.getRandom(0, materials.size() - 1);
+        int randomMaterial = Utilities.getRandom(0, materials.size() - 37);
         materials.subList(randomMaterial, randomMaterial+36);
 
         int randomBlock = Utilities.getRandom(0, 36);
         randomMaterialBlock = materials.get(randomBlock);
+
+        while (randomMaterialBlock.name().contains("STEM") || randomMaterialBlock.name().contains("AIR") || randomMaterialBlock.name().contains("STAND") || randomMaterialBlock.name().contains("COMMAND") || randomMaterialBlock.name().contains("BARRIER") || randomMaterialBlock.name().contains("LECTERN") || randomMaterialBlock.name().contains("BEETROOTS") || randomMaterialBlock.name().contains("CARROTS") || randomMaterialBlock.name().contains("SEEDS") || randomMaterialBlock.name().contains("POTATO") || randomMaterialBlock.name().contains("BLUET")){
+            randomBlock = Utilities.getRandom(0, 36);
+            randomMaterialBlock = materials.get(randomBlock);
+        }
 
         for (String playerName : Queue.redQueueList) {
             Player player = Bukkit.getPlayer(playerName);

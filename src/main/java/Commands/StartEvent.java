@@ -1,5 +1,7 @@
 package Commands;
 
+import Game.GameCycle;
+
 public class StartEvent {
 
     public static int secPreStart = 60;

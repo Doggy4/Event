@@ -10,32 +10,37 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 
 public class BaseClass implements Listener {
 
-    private static boolean isActivated = false;
-
     @EventHandler
     public void onPlayerDamage(EntityDamageEvent e) {
-        if (!isActivated)
+        if (!GameCycle.isAnyBattleEnabled)
             return;
         e.setCancelled(true);
     }
 
     @EventHandler
     public void onPlayerBreakBlock(BlockBreakEvent e) {
-        if (!isActivated)
+        if (!GameCycle.isAnyBattleEnabled)
             return;
         e.setCancelled(true);
     }
 
     @EventHandler
     public void onPlayerDropItem(PlayerDropItemEvent e) {
-        if (!isActivated)
+        if (!GameCycle.isAnyBattleEnabled)
             return;
         e.setCancelled(true);
     }
 
     @EventHandler
     public void onPickItem(EntityPickupItemEvent e) {
-        if (!isActivated)
+        if (!GameCycle.isAnyBattleEnabled)
+            return;
+        e.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onEntityDamage(EntityDamageEvent e) {
+        if (!GameCycle.isAnyBattleEnabled)
             return;
         e.setCancelled(true);
     }

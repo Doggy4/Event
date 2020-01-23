@@ -1,13 +1,11 @@
 package Game;
 
-import Commands.CommandEvent;
 import Commands.StartEvent;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
 import event.main.Main;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
 
@@ -15,26 +13,9 @@ public class GameCycle {
 
     public static HashMap<String, Integer> gameStats = new HashMap<String, Integer>();
     public static boolean isAnyBattleEnabled = false;
-    public static int battle = 1;
+    public static int battle = 9;
 
-    public static void mainCycle() {
-        if (StartEvent.secPreStart < 0 && !Commands.StartEvent.isGameStarted) {
-            for (String playerName : Queue.redQueueList) {
-                CommandEvent.teleportToSpawn(Bukkit.getPlayer(playerName));
-                gameStats.put(playerName, 0);
-            }
-            Commands.StartEvent.isGameStarted = true;
-        }
-
-        if (!isAnyBattleEnabled && Commands.StartEvent.isGameStarted)
-            randomBattle();
-
-
-        for (String playerName : Queue.redQueueList) {
-            Player redPlayer = Bukkit.getPlayer(playerName);
-            redPlayer.getLocation().getWorld().spawnParticle(Particle.VILLAGER_HAPPY, redPlayer.getLocation().getX(), redPlayer.getLocation().getY() + 2.5, redPlayer.getLocation().getZ(), 2);
-        }
-
+    public static void seconds() {
         if (StartEvent.secPreStart == 30 || StartEvent.secPreStart == 15 || StartEvent.secPreStart == 10 || StartEvent.secPreStart == 5)
             for (Player player : Bukkit.getOnlinePlayers()) {
                 player.sendTitle(ChatColor.GREEN + "Начало игры через", ChatColor.BLUE + "" + StartEvent.secPreStart + " секунд", 20, 20, 20);
@@ -59,26 +40,44 @@ public class GameCycle {
             }
     }
 
-    private static void randomBattle() {
-        if (battle == 11) {
-            TheEnd.EndGame();
-            Commands.StartEvent.isGameStarted = false;
-            return;
+    public static void mainCycle() {
+
+        // Старт игры
+        if (StartEvent.secPreStart < 0 && !Commands.StartEvent.isGameStarted) {
+            Start.StartGame();
         }
 
+        // Конец игры
+        if (battle > 10 && Commands.StartEvent.isGameStarted && !isAnyBattleEnabled) {
+            Ending.EndGame();
+        } else if (!isAnyBattleEnabled && Commands.StartEvent.isGameStarted){
+            randomBattle();
+        }
+
+        // Партиклы над головой игроков очереди RED
+        for (String playerName : Queue.redQueueList) {
+            Player redPlayer = Bukkit.getPlayer(playerName);
+            redPlayer.getLocation().getWorld().spawnParticle(Particle.VILLAGER_HAPPY, redPlayer.getLocation().getX(), redPlayer.getLocation().getY() + 2.5, redPlayer.getLocation().getZ(), 2);
+        }
+
+        // Кастомизация игроков...
+        for (Player player : Bukkit.getOnlinePlayers()){
+
+        }
+
+        // Отсчет секунд
+        seconds();
+    }
+
+    private static void randomBattle() {
+        isAnyBattleEnabled = true;
         for (Player player : Bukkit.getOnlinePlayers()) {
             player.sendMessage(ChatColor.YELLOW + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n" + ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Раунд: " + ChatColor.AQUA + battle + ChatColor.YELLOW + "\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n");
             player.sendTitle(ChatColor.YELLOW + "РАУНД " + ChatColor.AQUA + battle, ChatColor.GREEN + "Приготовьтесь к игре!", 20, 20, 20);
             player.playSound(player.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_CURSE, 10, 1);
         }
-
-        isAnyBattleEnabled = true;
-
-
-        new BukkitRunnable() {
-            @Override
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.main, new Runnable() {
             public void run() {
-
                 int randomBattle = Utilities.getRandom(0, 3);
                 switch (randomBattle) {
                     case 0:
@@ -94,12 +93,12 @@ public class GameCycle {
                         ShearSheep.ShearSheep();
                         break;
                 }
-                battle++;
-                this.cancel();
             }
-        }.runTaskTimer(Main.main, 10, 60);
-    }
+        }, (5 * 20));
 
+        battle++;
+
+    }
 
     public static void addScore(Player winner, int place) {
         for (Player player : Bukkit.getOnlinePlayers())
@@ -108,4 +107,6 @@ public class GameCycle {
         winner.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "+" + (4 - place) + " очков(-а)!");
         gameStats.put(winner.getName(), 4 - place + gameStats.get(winner.getName()));
     }
+
+
 }

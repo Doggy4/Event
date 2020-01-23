@@ -46,7 +46,7 @@ public class ShearSheep implements Listener {
             player.getInventory().addItem(Items.ShearEventShears);
         }
 
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 70; i++) {
             Sheep sheep = (Sheep) Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).spawnEntity(Commands.CommandEvent.randLocationSpawn(), EntityType.SHEEP);
             sheep.setColor(colors.get(Utilities.getRandom(0, colors.size() - 1)));
             sheeps.add(sheep);
