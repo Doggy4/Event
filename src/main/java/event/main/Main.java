@@ -1,12 +1,9 @@
 package event.main;
 
 
-import Game.BowShoot;
-import Game.DropItem;
-import Game.PlaceBlock;
-import Game.ShearSheep;
+import Game.*;
 import PluginUtilities.InventoryConstructor;
-import ScoreBoardWork.PrestartScoreBoard;
+import QueueSystem.PrestartScoreBoard;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -29,6 +26,7 @@ public final class Main extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new DropItem(), this);
         this.getServer().getPluginManager().registerEvents(new BowShoot(), this);
         this.getServer().getPluginManager().registerEvents(new ShearSheep(), this);
+        this.getServer().getPluginManager().registerEvents(new BaseClass(), this);
 
         PrestartScoreBoard.PrestartScoreboard();
         this.saveDefaultConfig();

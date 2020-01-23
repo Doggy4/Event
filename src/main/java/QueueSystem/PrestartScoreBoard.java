@@ -1,4 +1,4 @@
-package ScoreBoardWork;
+package QueueSystem;
 
 import Commands.StartEvent;
 import Game.GameCycle;

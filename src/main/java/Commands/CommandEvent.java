@@ -1,9 +1,10 @@
 package Commands;
 
+import PluginUtilities.ArmorStandConstructor;
 import PluginUtilities.LocationUtulities;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
-import ScoreBoardWork.PrestartScoreBoard;
+import QueueSystem.PrestartScoreBoard;
 import event.main.Main;
 import org.bukkit.*;
 import org.bukkit.command.Command;
@@ -11,6 +12,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
 
 public class CommandEvent implements CommandExecutor {
 
@@ -47,6 +50,17 @@ public class CommandEvent implements CommandExecutor {
         } else if (args[0].equals("broadcast")) {
             player.sendMessage(ChatColor.YELLOW + divider + ChatColor.GREEN + "Сообщение опубликовано!\n" + ChatColor.YELLOW + divider);
             broadcast(args[1]);
+        } else if (args[0].equals("test")) {
+
+            ItemStack skull = new ItemStack(Material.PLAYER_HEAD, 1);
+            SkullMeta meta = (SkullMeta) skull.getItemMeta();
+
+            meta.setOwningPlayer(player);
+            meta.setDisplayName(ChatColor.LIGHT_PURPLE + player.getName());
+            skull.setItemMeta(meta);
+
+            ArmorStandConstructor.ArmorStandConstructor(player.getLocation(), skull, ChatColor.GREEN + player.getName());
+
         } else {
             return false;
         }
@@ -94,8 +108,8 @@ public class CommandEvent implements CommandExecutor {
         Main.main.saveConfig();
     }
 
-    public void broadcast(String message){
-        for (Player player : Bukkit.getOnlinePlayers()){
+    public void broadcast(String message) {
+        for (Player player : Bukkit.getOnlinePlayers()) {
             player.sendTitle(ChatColor.RED + "Внимание!", ChatColor.YELLOW + message, 20, 40, 20);
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_XYLOPHONE, 10, 1);
         }
