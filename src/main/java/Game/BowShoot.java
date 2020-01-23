@@ -12,6 +12,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.BlockIterator;
+import org.bukkit.util.Vector;
 
 
 import static PluginUtilities.Items.BowEventArrows;
@@ -46,6 +47,7 @@ public class BowShoot implements Listener {
                     this.cancel();
                 }
 
+                Location oldLocation = block.getLocation();
 
                 double rand_x = Main.main.getConfig().getDouble("spawn.x") + Utilities.getRandom(1, 20) - 10;
                 double rand_z = Main.main.getConfig().getDouble("spawn.z") + Utilities.getRandom(1, 20) - 10;
@@ -56,13 +58,30 @@ public class BowShoot implements Listener {
                 block = world.getBlockAt(Math.round((float) rand_x), Math.round((float) Main.main.getConfig().getDouble("spawn.y")) + 5, Math.round((float) rand_z));
                 block.setType(targets[n]);
 
+                Location newLocation = block.getLocation();
+
+                oldLocation.subtract(newLocation);
+                double distance = oldLocation.distance(newLocation);
+                Vector direction = oldLocation.subtract(newLocation).toVector();
+
+                for (double i = 0; i < distance; i += 0.1) {
+                    Location particle = oldLocation.add(direction.normalize().multiply(i));
+                    world.spawnParticle(Particle.END_ROD, particle, 1);
+                }
+
+
                 world.playEffect(block.getLocation(), Effect.SMOKE, 20, 20);
                 world.playSound(block.getLocation(), Sound.BLOCK_BELL_USE, 10, 1);
                 world.playEffect(block.getLocation(), Effect.SMOKE, 20, 20);
 
+
+
+
             }
         }.runTaskTimer(Main.main, 20, 20);
     }
+
+
 
     private static int place = 1;
 
