@@ -20,7 +20,7 @@ public class Start {
             player.setExp(0);
 
             CommandEvent.teleportToSpawn(player);
-            GameCycle.gameStats.put(playerName, 0);
+            aGameCycle.gameStats.put(playerName, 0);
         }
         Commands.StartEvent.isGameStarted = true;
     }

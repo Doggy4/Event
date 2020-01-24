@@ -9,11 +9,11 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 
-public class GameCycle {
+public class aGameCycle {
 
     public static HashMap<String, Integer> gameStats = new HashMap<String, Integer>();
     public static boolean isAnyBattleEnabled = false;
-    public static int battle = 9;
+    public static int battle = 1;
 
     public static void seconds() {
         if (StartEvent.secPreStart == 30 || StartEvent.secPreStart == 15 || StartEvent.secPreStart == 10 || StartEvent.secPreStart == 5)
@@ -78,7 +78,7 @@ public class GameCycle {
         }
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.main, new Runnable() {
             public void run() {
-                int randomBattle = Utilities.getRandom(0, 3);
+                int randomBattle = Utilities.getRandom(0, 4);
                 switch (randomBattle) {
                     case 0:
                         PlaceBlock.placeBlock();
@@ -91,6 +91,9 @@ public class GameCycle {
                         break;
                     case 3:
                         ShearSheep.ShearSheep();
+                        break;
+                    case 4:
+                        EggThrow.EggThrow();
                         break;
                 }
             }

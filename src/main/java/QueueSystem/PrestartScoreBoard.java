@@ -1,9 +1,7 @@
 package QueueSystem;
 
 import Commands.StartEvent;
-import Game.GameCycle;
-import PluginUtilities.Utilities;
-import QueueSystem.Queue;
+import Game.aGameCycle;
 import event.main.Main;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -45,9 +43,9 @@ public class PrestartScoreBoard {
             divider2.setScore(31);
             for (String name : Queue.redQueueList) {
                 Score player = objective.getScore(ChatColor.GOLD + name);
-                player.setScore(GameCycle.gameStats.get(name));
+                player.setScore(aGameCycle.gameStats.get(name));
                 Player p = Bukkit.getPlayer(name);
-                p.setLevel(GameCycle.gameStats.get(name));
+                p.setLevel(aGameCycle.gameStats.get(name));
             }
         } else {
             Score gameState = objective.getScore(ChatColor.GOLD + "Статус игры: " + ChatColor.GREEN + "Ожидание...");
@@ -73,7 +71,7 @@ public class PrestartScoreBoard {
                     player.setScoreboard(scoreboard);
 
                 // ГЛАВНЫЙ ИГРОВОЙ ЦИКЛ
-                Game.GameCycle.mainCycle();
+                aGameCycle.mainCycle();
             }
         }.
                 runTaskTimer(Main.main, 10, 10);

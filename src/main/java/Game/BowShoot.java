@@ -27,7 +27,7 @@ public class BowShoot implements Listener {
     private static Block block = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).getBlockAt(0, 0, 0);
 
     public static void BowShoot() {
-        isActivated = GameCycle.isAnyBattleEnabled;
+        isActivated = aGameCycle.isAnyBattleEnabled;
 
         for (String playerName : Queue.redQueueList) {
             Player player = Bukkit.getPlayer(playerName);
@@ -69,13 +69,9 @@ public class BowShoot implements Listener {
                     world.spawnParticle(Particle.END_ROD, particle, 1);
                 }
 
-
                 world.playEffect(block.getLocation(), Effect.SMOKE, 20, 20);
                 world.playSound(block.getLocation(), Sound.BLOCK_BELL_USE, 10, 1);
                 world.playEffect(block.getLocation(), Effect.SMOKE, 20, 20);
-
-
-
 
             }
         }.runTaskTimer(Main.main, 20, 20);
@@ -101,13 +97,13 @@ public class BowShoot implements Listener {
         }
 
         if (hitBlock.getType().equals(targets[n])) {
-            GameCycle.addScore(player, place);
+            aGameCycle.addScore(player, place);
             place++;
             player.getInventory().clear();
         }
         if (place > 3) {
             isActivated = false;
-            GameCycle.isAnyBattleEnabled = isActivated;
+            aGameCycle.isAnyBattleEnabled = isActivated;
             place = 1;
         }
     }

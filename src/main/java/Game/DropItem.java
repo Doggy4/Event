@@ -2,21 +2,14 @@ package Game;
 
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
-import event.main.Main;
 import org.bukkit.*;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class DropItem implements Listener {
 
@@ -24,7 +17,7 @@ public class DropItem implements Listener {
     private static boolean isActivated = false;
 
     public static void DropItem() {
-        isActivated = GameCycle.isAnyBattleEnabled;
+        isActivated = aGameCycle.isAnyBattleEnabled;
 
         BaseClass.DropItemOff();
 
@@ -66,7 +59,7 @@ public class DropItem implements Listener {
         Player player = event.getPlayer();
 
         if (event.getItemDrop().getItemStack().getType().name().equals(randomMaterialBlock.name())){
-            GameCycle.addScore(player, place);
+            aGameCycle.addScore(player, place);
             place++;
         } else
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Вы проиграли!");
@@ -75,7 +68,7 @@ public class DropItem implements Listener {
 
         if (place > 3){
             isActivated = false;
-            GameCycle.isAnyBattleEnabled = isActivated;
+            aGameCycle.isAnyBattleEnabled = isActivated;
             place = 1;
         }
     }

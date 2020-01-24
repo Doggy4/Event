@@ -8,14 +8,10 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class PlaceBlock implements Listener {
 
@@ -23,7 +19,7 @@ public class PlaceBlock implements Listener {
     private static boolean isActivated = false;
 
     public static void placeBlock() {
-        isActivated = GameCycle.isAnyBattleEnabled;
+        isActivated = aGameCycle.isAnyBattleEnabled;
 
         BaseClass.PlaceBlockOff();
 
@@ -72,14 +68,14 @@ public class PlaceBlock implements Listener {
         if (!isActivated)
             return;
         if (event.getBlockPlaced().getType().toString().equals(randomMaterialBlock.toString())) {
-            GameCycle.addScore(winner, place);
+            aGameCycle.addScore(winner, place);
             place++;
             winner.setGameMode(GameMode.ADVENTURE);
             winner.getInventory().clear();
         }
         if (place > 3) {
             isActivated = false;
-            GameCycle.isAnyBattleEnabled = isActivated;
+            aGameCycle.isAnyBattleEnabled = isActivated;
             place = 1;
         }
         event.setCancelled(true);

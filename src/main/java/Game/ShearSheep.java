@@ -5,16 +5,13 @@ import PluginUtilities.Utilities;
 import QueueSystem.Queue;
 import event.main.Main;
 import org.bukkit.*;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Sheep;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerShearEntityEvent;
-import org.bukkit.inventory.ItemStack;
+
 import java.util.ArrayList;
 
 public class ShearSheep implements Listener {
@@ -26,7 +23,7 @@ public class ShearSheep implements Listener {
 
     public static void ShearSheep() {
 
-        isShearSheepActivated = GameCycle.isAnyBattleEnabled;
+        isShearSheepActivated = aGameCycle.isAnyBattleEnabled;
 
         randomColor = Utilities.getRandomColor();
 
@@ -58,14 +55,14 @@ public class ShearSheep implements Listener {
         if (!isShearSheepActivated)
             return;
         if (sheep.getColor() == randomColor) {
-            GameCycle.addScore(winner, place);
+            aGameCycle.addScore(winner, place);
             place++;
             winner.setGameMode(GameMode.ADVENTURE);
             winner.getInventory().clear();
         }
         if (place > 3) {
             isShearSheepActivated = false;
-            GameCycle.isAnyBattleEnabled = false;
+            aGameCycle.isAnyBattleEnabled = false;
             place = 1;
 
             for (Sheep sheepFromList : sheeps) {

@@ -26,6 +26,7 @@ public final class Main extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new DropItem(), this);
         this.getServer().getPluginManager().registerEvents(new BowShoot(), this);
         this.getServer().getPluginManager().registerEvents(new ShearSheep(), this);
+        this.getServer().getPluginManager().registerEvents(new EggThrow(), this);
         this.getServer().getPluginManager().registerEvents(new BaseClass(), this);
 
         PrestartScoreBoard.PrestartScoreboard();

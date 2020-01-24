@@ -15,14 +15,14 @@ public class Ending {
         StartEvent.isGameTimerStarted = false;
         Commands.StartEvent.isGameStarted = false;
         StartEvent.secPreStart = 60;
-        GameCycle.battle = 1;
+        aGameCycle.battle = 1;
 
         int max = 0;
         String winner = "null";
 
         for (String name : Queue.redQueueList)
-            if (GameCycle.gameStats.get(name) > max) {
-                max = GameCycle.gameStats.get(name);
+            if (aGameCycle.gameStats.get(name) > max) {
+                max = aGameCycle.gameStats.get(name);
                 winner = name;
             }
 
