@@ -1,6 +1,7 @@
 package Commands;
 
 import PluginUtilities.ArmorStandConstructor;
+import PluginUtilities.ChatDividers;
 import PluginUtilities.LocationUtulities;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
@@ -10,12 +11,26 @@ import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
-public class CommandEvent implements CommandExecutor {
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+public class CommandEvent implements TabExecutor {
+
+    public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
+        switch (args.length) {
+            case 1:
+                return Arrays.asList("help", "start", "setlobby", "setspawn", "broadcast", "test");
+            default:
+                return Collections.emptyList();
+        }
+    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -27,29 +42,29 @@ public class CommandEvent implements CommandExecutor {
         Player player = (Player) sender;
 
         if (!player.isOp()) {
-            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Only operators can use this command!");
+            player.sendMessage(ChatColor.RED + "[EVENT] Only operators can use this command!");
             return true;
         }
 
-        String divider = "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n";
+        String divider = ChatDividers.div;
 
-        if (args.length < 1)
-            player.sendMessage(ChatColor.YELLOW + divider + ChatColor.RED + "Помощь:\n" + ChatColor.GREEN + "/event start" + ChatColor.YELLOW + " - начать эвент\n" + ChatColor.GREEN + "/event setspawn" + ChatColor.YELLOW + " - установить спавн\n" + ChatColor.GREEN + "/event setlobby" + ChatColor.YELLOW + " - установить лобби\n" + ChatColor.YELLOW + divider);
+        if (args.length < 1 || args[0].equals("help"))
+            player.sendMessage(ChatColor.YELLOW + divider + ChatColor.RED + "Помощь:\n" + ChatColor.GREEN + "/event start" + ChatColor.YELLOW + " - начать эвент\n" + ChatColor.GREEN + "/event setspawn" + ChatColor.YELLOW + " - установить спавн\n" + ChatColor.GREEN + "/event setlobby" + ChatColor.YELLOW + " - установить лобби\n" + ChatColor.GREEN + "/event broadcast [сообщение]" + ChatColor.YELLOW + " - отправить Title\n" + ChatColor.YELLOW + divider);
         else if (args[0].equals("start")) {
             player.sendMessage(ChatColor.YELLOW + divider + ChatColor.GREEN + "Эвент запущен!\n" + ChatColor.YELLOW + divider);
             Commands.StartEvent.startEvent();
         } else if (args[0].equals("setspawn")) {
-            player.sendMessage(ChatColor.YELLOW + divider + ChatColor.GREEN + "Спавн установлен!\n" + LocationUtulities.getPlayerLocation(player.getLocation()) + ChatColor.YELLOW + divider);
+            player.sendMessage(ChatColor.YELLOW + divider + ChatColor.GREEN + "Спавн установлен!\n" + LocationUtulities.getPlayerLocation(player.getLocation()) + ChatColor.YELLOW + "\n" + divider);
             saveSpawnLoc(player.getLocation());
         } else if (args[0].equals("setlobby")) {
-            player.sendMessage(ChatColor.YELLOW + divider + ChatColor.GREEN + "Лобби установлено!\n" + LocationUtulities.getPlayerLocation(player.getLocation()) + ChatColor.YELLOW + divider);
+            player.sendMessage(ChatColor.YELLOW + divider + ChatColor.GREEN + "Лобби установлено!\n" + LocationUtulities.getPlayerLocation(player.getLocation()) + ChatColor.YELLOW + "\n" + divider);
             saveLobbyLoc(player.getLocation());
         } else if (args[0].equals("clear")) {
             player.sendMessage(ChatColor.YELLOW + divider + ChatColor.GREEN + "Очереди очищены!\n" + ChatColor.YELLOW + divider);
             clearQueues();
         } else if (args[0].equals("broadcast")) {
             player.sendMessage(ChatColor.YELLOW + divider + ChatColor.GREEN + "Сообщение опубликовано!\n" + ChatColor.YELLOW + divider);
-            broadcast(args[1]);
+            broadcast(Arrays.copyOfRange(args, 1, args.length));
         } else if (args[0].equals("test")) {
 
             ItemStack skull = new ItemStack(Material.PLAYER_HEAD, 1);
@@ -108,10 +123,10 @@ public class CommandEvent implements CommandExecutor {
         Main.main.saveConfig();
     }
 
-    public void broadcast(String message) {
+    public void broadcast(String[] message) {
         for (Player player : Bukkit.getOnlinePlayers()) {
-            player.sendTitle(ChatColor.RED + "Внимание!", ChatColor.YELLOW + message, 20, 40, 20);
-            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_XYLOPHONE, 10, 1);
+            player.sendTitle(ChatColor.RED + "Внимание!", ChatColor.YELLOW + String.join(" ", message), 40, 60, 40);
+            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 10, 1);
         }
     }
 

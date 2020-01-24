@@ -1,5 +1,6 @@
 package event.main;
 
+import Commands.CommandEvent;
 import PluginUtilities.InventoryConstructor;
 import PluginUtilities.Items;
 import QueueSystem.Queue;
@@ -40,17 +41,24 @@ public class MainPlayerHandler implements Listener {
     @EventHandler
     public void onPlayerInteractEvent(PlayerInteractEvent event) {
         Player player = event.getPlayer();
+
         if (player.getInventory().getItemInMainHand().getItemMeta() == null)
             return;
 
         if (player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equals(Items.joinQueue.getItemMeta().getDisplayName())) {
             player.openInventory(InventoryConstructor.queueInventory());
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_GUITAR, 10, 1);
-        } else if (player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equals(Items.spectatorMode.getItemMeta().getDisplayName()) && player.getGameMode() != GameMode.SPECTATOR) {
-            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_XYLOPHONE, 10, 1);
-            player.setGameMode(GameMode.SPECTATOR);
-            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы вошли в режим наблюдателя! Выйти из режима: " + ChatColor.BLUE + "/spec");
+        } else if (player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equals(Items.spectatorMode.getItemMeta().getDisplayName())) {
+            if (player.getGameMode() == GameMode.SPECTATOR){
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_XYLOPHONE, 10, 1);
+                player.setGameMode(GameMode.ADVENTURE);
+                player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы вышли из режима наблюдателя!");
+                CommandEvent.teleportToLobby(player);
+            } else {
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_XYLOPHONE, 10, 1);
+                player.setGameMode(GameMode.SPECTATOR);
+                player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы вошли в режим наблюдателя! Выйти из режима: " + ChatColor.BLUE + "ЛКМ");
+            }
         }
     }
-
 }

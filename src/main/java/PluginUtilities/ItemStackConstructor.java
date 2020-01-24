@@ -67,7 +67,7 @@ public class ItemStackConstructor {
         if (this.material == null)
             throw new IllegalArgumentException("Отсутствует материал");
 
-        ItemStack itemStack = new ItemStack(this.material, this.amount, this.durability);
+        ItemStack itemStack = new ItemStack(this.material, this.amount);
 
         ItemMeta itemMeta = itemStack.getItemMeta();
         if (this.displayName != null)

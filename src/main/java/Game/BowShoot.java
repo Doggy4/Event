@@ -46,33 +46,17 @@ public class BowShoot implements Listener {
                     block.setType(Material.AIR);
                     this.cancel();
                 }
-
-                Location oldLocation = block.getLocation();
-
                 double rand_x = Main.main.getConfig().getDouble("spawn.x") + Utilities.getRandom(1, 20) - 10;
                 double rand_z = Main.main.getConfig().getDouble("spawn.z") + Utilities.getRandom(1, 20) - 10;
 
                 World world = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world"));
-
                 block.setType(Material.AIR);
                 block = world.getBlockAt(Math.round((float) rand_x), Math.round((float) Main.main.getConfig().getDouble("spawn.y")) + 5, Math.round((float) rand_z));
                 block.setType(targets[n]);
 
-                Location newLocation = block.getLocation();
-
-                oldLocation.subtract(newLocation);
-                double distance = oldLocation.distance(newLocation);
-                Vector direction = oldLocation.subtract(newLocation).toVector();
-
-                for (double i = 0; i < distance; i += 0.1) {
-                    Location particle = oldLocation.add(direction.normalize().multiply(i));
-                    world.spawnParticle(Particle.END_ROD, particle, 1);
-                }
-
                 world.playEffect(block.getLocation(), Effect.SMOKE, 20, 20);
                 world.playSound(block.getLocation(), Sound.BLOCK_BELL_USE, 10, 1);
                 world.playEffect(block.getLocation(), Effect.SMOKE, 20, 20);
-
             }
         }.runTaskTimer(Main.main, 20, 20);
     }
@@ -87,7 +71,7 @@ public class BowShoot implements Listener {
         Player player = (Player) e.getEntity();
         Arrow arrow = (Arrow) e.getProjectile();
         World world = arrow.getWorld();
-        BlockIterator iterator = new BlockIterator(world, arrow.getLocation().toVector(), arrow.getVelocity().normalize(), 0, 200);
+        BlockIterator iterator = new BlockIterator(world, arrow.getLocation().toVector(), arrow.getVelocity().normalize(), 0, 30);
         Block hitBlock = null;
 
         while (iterator.hasNext()) {

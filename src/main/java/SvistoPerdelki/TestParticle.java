@@ -13,7 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TestParticle implements Listener {
-    // Боп вспоминает как юзать геометрию
+    // - Боп вспоминает как юзать геометрию
+    // - Боп получит в глаз за бесполезные классы и пакеты с тупыми названиями.
     @EventHandler
     public static void ParticleHandler(PlayerMoveEvent e) {
         Player player = e.getPlayer();
