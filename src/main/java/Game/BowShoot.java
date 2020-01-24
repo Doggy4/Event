@@ -38,7 +38,6 @@ public class BowShoot implements Listener {
             player.getInventory().addItem(BowEventBow);
             player.getInventory().addItem(BowEventArrows);
         }
-
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -75,6 +74,8 @@ public class BowShoot implements Listener {
         Block hitBlock = null;
 
         while (iterator.hasNext()) {
+            Location arrowLoc = arrow.getLocation();
+            arrowLoc.getWorld().spawnParticle(Particle.END_ROD,arrowLoc,1);
             hitBlock = iterator.next();
             if (!hitBlock.getType().equals(Material.AIR))
                 break;
