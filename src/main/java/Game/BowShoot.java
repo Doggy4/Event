@@ -51,7 +51,7 @@ public class BowShoot implements Listener {
                 int rand_x = Main.main.getConfig().getInt("spawn.x") + Utilities.getRandom(1, 20) - 10;
                 int rand_z = Main.main.getConfig().getInt("spawn.z") + Utilities.getRandom(1, 20) - 10;
 
-                Location newLoc = block.getLocation().add(rand_x,0 ,rand_z);
+                Location newLoc = block.getLocation().add(rand_x, 0, rand_z);
                 World world = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world"));
 
                 block.setType(Material.AIR);
@@ -65,7 +65,7 @@ public class BowShoot implements Listener {
                     line.multiply(d);
                     oldLoc.add(line);
 
-                    world.spawnParticle(Particle.END_ROD, oldLoc,1);
+                    world.spawnParticle(Particle.END_ROD, oldLoc, 1);
 
                     oldLoc.subtract(line);
                     line.normalize();
@@ -95,8 +95,8 @@ public class BowShoot implements Listener {
         }
         if (place > 3) {
             block.setType(Material.AIR);
-            block.getWorld().spawnParticle(Particle.EXPLOSION_HUGE,  block.getLocation(), 1);
-            block.getWorld().playSound(block.getLocation(), Sound.ENTITY_GENERIC_EXPLODE,10,1);
+            block.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, block.getLocation(), 1);
+            block.getWorld().playSound(block.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 10, 1);
             isActivated = false;
             aGameCycle.isAnyBattleEnabled = isActivated;
             place = 1;
