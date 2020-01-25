@@ -61,8 +61,10 @@ public class DropItem implements Listener {
         if (event.getItemDrop().getItemStack().getType().name().equals(randomMaterialBlock.name())){
             aGameCycle.addScore(player, place);
             place++;
-        } else
+        } else {
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Вы проиграли!");
+        }
+
 
         player.getInventory().clear();
 

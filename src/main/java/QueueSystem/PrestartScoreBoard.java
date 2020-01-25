@@ -73,8 +73,7 @@ public class PrestartScoreBoard {
                 // ГЛАВНЫЙ ИГРОВОЙ ЦИКЛ
                 aGameCycle.mainCycle();
             }
-        }.
-                runTaskTimer(Main.main, 10, 10);
+        }.runTaskTimer(Main.main, 10, 10);
     }
 
 }

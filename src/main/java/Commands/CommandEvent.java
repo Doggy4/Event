@@ -1,9 +1,7 @@
 package Commands;
 
-import PluginUtilities.ArmorStandConstructor;
-import PluginUtilities.ChatDividers;
-import PluginUtilities.LocationUtulities;
-import PluginUtilities.Utilities;
+import Game.aGameCycle;
+import PluginUtilities.*;
 import QueueSystem.Queue;
 import QueueSystem.PrestartScoreBoard;
 import event.main.Main;
@@ -40,7 +38,6 @@ public class CommandEvent implements TabExecutor {
         }
 
         Player player = (Player) sender;
-
         if (!player.isOp()) {
             player.sendMessage(ChatColor.RED + "[EVENT] Only operators can use this command!");
             return true;
@@ -67,14 +64,16 @@ public class CommandEvent implements TabExecutor {
             broadcast(Arrays.copyOfRange(args, 1, args.length));
         } else if (args[0].equals("test")) {
 
-            ItemStack skull = new ItemStack(Material.PLAYER_HEAD, 1);
-            SkullMeta meta = (SkullMeta) skull.getItemMeta();
+            ParticleConstructor.blockAnimation(player.getLocation(), 1);
 
-            meta.setOwningPlayer(player);
-            meta.setDisplayName(ChatColor.LIGHT_PURPLE + player.getName());
-            skull.setItemMeta(meta);
-
-            ArmorStandConstructor.ArmorStandConstructor(player.getLocation(), skull, ChatColor.GREEN + player.getName());
+//            ItemStack skull = new ItemStack(Material.PLAYER_HEAD, 1);
+//            SkullMeta meta = (SkullMeta) skull.getItemMeta();
+//
+//            meta.setOwningPlayer(player);
+//            meta.setDisplayName(ChatColor.LIGHT_PURPLE + player.getName());
+//            skull.setItemMeta(meta);
+//
+//            ArmorStandConstructor.ArmorStandConstructor(player.getLocation(), skull, ChatColor.GREEN + player.getName());
 
         } else {
             return false;
@@ -96,6 +95,7 @@ public class CommandEvent implements TabExecutor {
     }
 
     public void clearQueues() {
+        aGameCycle.broadcastToEveryone("Встаньте в очередь! Приоритет очереди: " + ChatColor.RED + "[RED]");
 
         for (String name : Queue.redQueueList)
             PrestartScoreBoard.red.removeEntry(name);
@@ -124,6 +124,7 @@ public class CommandEvent implements TabExecutor {
     }
 
     public void broadcast(String[] message) {
+        aGameCycle.broadcastToEveryone(String.join(" ", message));
         for (Player player : Bukkit.getOnlinePlayers()) {
             player.sendTitle(ChatColor.RED + "Внимание!", ChatColor.YELLOW + String.join(" ", message), 40, 60, 40);
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 10, 1);
