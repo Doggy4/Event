@@ -5,6 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 public class ParticleConstructor {
@@ -26,6 +27,13 @@ public class ParticleConstructor {
 
             Location newLoc = new Location(loc.getWorld(), (float) loc.getX() + x, (float) loc.getY(), (float) loc.getZ() + z);
             loc.getWorld().spawnParticle(Particle.FIREWORKS_SPARK, newLoc, 1);
+        }
+    }
+
+    public static void entityTrail(Entity entity, Particle particle) {
+        for(double t = 0; t < 50; t += 0.5) {
+            Location loc = entity.getLocation();
+            loc.getWorld().spawnParticle(particle, loc ,1);
         }
     }
 }

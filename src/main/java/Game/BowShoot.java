@@ -27,6 +27,7 @@ public class BowShoot implements Listener {
     private static int n = (int) Math.floor(Math.random() * targets.length);
 
     private static Block block = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).getBlockAt(0, 0, 0);
+    private static Location oldLoc = block.getLocation();
 
     public static void BowShoot() {
         isActivated = aGameCycle.isAnyBattleEnabled;
@@ -50,11 +51,11 @@ public class BowShoot implements Listener {
                 int rand_x = Main.main.getConfig().getInt("spawn.x") + Utilities.getRandom(1, 20) - 10;
                 int rand_z = Main.main.getConfig().getInt("spawn.z") + Utilities.getRandom(1, 20) - 10;
 
+                Location newLoc = block.getLocation().add(rand_x,0 ,rand_z);
                 World world = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world"));
+
                 block.setType(Material.AIR);
-                Location oldLoc = block.getLocation();
                 block = world.getBlockAt(rand_x, Main.main.getConfig().getInt("spawn.y") + 5, rand_z);
-                Location newLoc = block.getLocation();
                 block.setType(targets[n]);
 
                 Vector line = newLoc.toVector().subtract(oldLoc.toVector());
@@ -76,8 +77,6 @@ public class BowShoot implements Listener {
         }.runTaskTimer(Main.main, 20, 20);
     }
 
-
-
     private static int place = 1;
 
     @EventHandler
@@ -89,7 +88,7 @@ public class BowShoot implements Listener {
 
         Block hitBlock = e.getHitBlock();
 
-        if (hitBlock.getType().equals(targets[n])) {
+        if (hitBlock.getType().equals(targets[n]) && !(hitBlock.getType().isAir())) {
             aGameCycle.addScore(player, place);
             place++;
             player.getInventory().clear();
