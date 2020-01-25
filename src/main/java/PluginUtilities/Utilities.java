@@ -9,9 +9,8 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Utilities {
 
     public static int getRandom(int min, int max) {
-        Random random = new Random();
-        int randomNum = ThreadLocalRandom.current().nextInt(min, max + 1);
-        return randomNum;
+        Random rand = new Random();
+        return rand.nextInt((max - min) + 1) + min;
     }
 
     public static DyeColor getRandomColor() {

@@ -7,13 +7,10 @@ import QueueSystem.PrestartScoreBoard;
 import event.main.Main;
 import org.bukkit.*;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -43,7 +40,7 @@ public class CommandEvent implements TabExecutor {
             return true;
         }
 
-        String divider = ChatDividers.div;
+        String divider = Chat.div;
 
         if (args.length < 1 || args[0].equals("help"))
             player.sendMessage(ChatColor.YELLOW + divider + ChatColor.RED + "Помощь:\n" + ChatColor.GREEN + "/event start" + ChatColor.YELLOW + " - начать эвент\n" + ChatColor.GREEN + "/event setspawn" + ChatColor.YELLOW + " - установить спавн\n" + ChatColor.GREEN + "/event setlobby" + ChatColor.YELLOW + " - установить лобби\n" + ChatColor.GREEN + "/event broadcast [сообщение]" + ChatColor.YELLOW + " - отправить Title\n" + ChatColor.YELLOW + divider);

@@ -48,6 +48,7 @@ public class BowShoot implements Listener {
                     block.setType(Material.AIR);
                     this.cancel();
                 }
+
                 int rand_x = Main.main.getConfig().getInt("spawn.x") + Utilities.getRandom(1, 20) - 10;
                 int rand_z = Main.main.getConfig().getInt("spawn.z") + Utilities.getRandom(1, 20) - 10;
 
@@ -89,16 +90,18 @@ public class BowShoot implements Listener {
         Block hitBlock = e.getHitBlock();
 
         if (hitBlock.getType().equals(targets[n]) && !(hitBlock.getType().isAir())) {
-            aGameCycle.addScore(player, place);
+            aGameCycle.playerWin(player, place);
             place++;
             player.getInventory().clear();
         }
         if (place > 3) {
-            block.setType(Material.AIR);
-            block.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, block.getLocation(), 1);
-            block.getWorld().playSound(block.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 10, 1);
             isActivated = false;
-            aGameCycle.isAnyBattleEnabled = isActivated;
+            aGameCycle.isAnyBattleEnabled = false;
+
+            block.setType(Material.AIR);
+            block.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, block.getLocation(), 1);
+            block.getWorld().playSound(block.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 10, 1);
+
             place = 1;
         }
     }

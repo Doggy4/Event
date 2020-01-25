@@ -12,6 +12,8 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class PlaceBlock implements Listener {
 
@@ -31,14 +33,14 @@ public class PlaceBlock implements Listener {
             }
 
         int randomMaterial = Utilities.getRandom(0, materials.size() - 37);
-        materials.subList(randomMaterial, randomMaterial+36);
+        List<Material> materialsNew =  materials.subList(randomMaterial, randomMaterial+36);
 
         int randomBlock = Utilities.getRandom(0, 36);
-        randomMaterialBlock = materials.get(randomBlock);
+        randomMaterialBlock = materialsNew.get(randomBlock);
 
-        while (randomMaterialBlock.name().contains("STEM") || randomMaterialBlock.name().contains("AIR") || randomMaterialBlock.name().contains("STAND") || randomMaterialBlock.name().contains("COMMAND") || randomMaterialBlock.name().contains("BARRIER") || randomMaterialBlock.name().contains("LECTERN") || randomMaterialBlock.name().contains("BEETROOTS") || randomMaterialBlock.name().contains("CARROTS") || randomMaterialBlock.name().contains("SEEDS") || randomMaterialBlock.name().contains("POTATO") || randomMaterialBlock.name().contains("BLUET")){
+        while (randomMaterialBlock.name().contains("STEM") || randomMaterialBlock.name().contains("BAMBOO")  || randomMaterialBlock.name().contains("AIR") || randomMaterialBlock.name().contains("STAND") || randomMaterialBlock.name().contains("COMMAND") || randomMaterialBlock.name().contains("BARRIER") || randomMaterialBlock.name().contains("LECTERN") || randomMaterialBlock.name().contains("BEETROOTS") || randomMaterialBlock.name().contains("CARROTS") || randomMaterialBlock.name().contains("SEEDS") || randomMaterialBlock.name().contains("POTATO") || randomMaterialBlock.name().contains("BLUET")){
             randomBlock = Utilities.getRandom(0, 36);
-            randomMaterialBlock = materials.get(randomBlock);
+            randomMaterialBlock = materialsNew.get(randomBlock);
         }
 
         for (String playerName : Queue.redQueueList) {
@@ -50,7 +52,7 @@ public class PlaceBlock implements Listener {
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Поставьте блок " + ChatColor.LIGHT_PURPLE + "[" + randomMaterialBlock.name() + "]");
             player.setGameMode(GameMode.SURVIVAL);
 
-            for (Material block : materials)
+            for (Material block : materialsNew)
                 player.getInventory().addItem(new ItemStack(block, 64));
         }
 
@@ -64,15 +66,18 @@ public class PlaceBlock implements Listener {
 
     @EventHandler
     public void onPlayerPlaceBlock(BlockPlaceEvent event) {
-        Player winner = event.getPlayer();
+        Player player = event.getPlayer();
         if (!isActivated)
             return;
         if (event.getBlockPlaced().getType().toString().equals(randomMaterialBlock.toString())) {
-            aGameCycle.addScore(winner, place);
+            aGameCycle.playerWin(player, place);
             place++;
-            winner.setGameMode(GameMode.ADVENTURE);
-            winner.getInventory().clear();
+            player.setGameMode(GameMode.ADVENTURE);
+            player.getInventory().clear();
+        } else {
+            aGameCycle.playerLose(player);
         }
+
         if (place > 3) {
             isActivated = false;
             aGameCycle.isAnyBattleEnabled = isActivated;

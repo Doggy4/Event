@@ -10,12 +10,12 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 
 public class BaseClass implements Listener {
 
-    private static boolean playerDamageRULE = false;
-    private static boolean breakBlockRULE = false;
-    private static boolean dropItemRULE = false;
-    private static boolean pickUpItemRULE = false;
-    private static boolean entityDamageRULE = false;
-    private static boolean placeBlockRULE = false;
+    private static boolean playerDamageRULE = true;
+    private static boolean breakBlockRULE = true;
+    private static boolean dropItemRULE = true;
+    private static boolean pickUpItemRULE = true;
+    private static boolean entityDamageRULE = true;
+    private static boolean placeBlockRULE = true;
 
     public static void TurnOffAllRules() {
         playerDamageRULE = true;
@@ -27,27 +27,27 @@ public class BaseClass implements Listener {
     }
 
     public static void PlaceBlockOff() {
-        placeBlockRULE = true;
+        placeBlockRULE = false;
     }
 
     public static void PlayerDamageOff() {
-        playerDamageRULE = true;
+        playerDamageRULE = false;
     }
 
     public static void BreakBlockOff() {
-        breakBlockRULE = true;
+        breakBlockRULE = false;
     }
 
     public static void DropItemOff() {
-        dropItemRULE = true;
+        dropItemRULE = false;
     }
 
     public static void PickUpItemOff() {
-        pickUpItemRULE = true;
+        pickUpItemRULE = false;
     }
 
     public static void EntityDamageOff() {
-        entityDamageRULE = true;
+        entityDamageRULE = false;
     }
 
     @EventHandler
@@ -86,4 +86,3 @@ public class BaseClass implements Listener {
         e.setCancelled(true);
     }
 }
-
