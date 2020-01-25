@@ -46,13 +46,28 @@ public class BowShoot implements Listener {
                     block.setType(Material.AIR);
                     this.cancel();
                 }
-                double rand_x = Main.main.getConfig().getDouble("spawn.x") + Utilities.getRandom(1, 20) - 10;
-                double rand_z = Main.main.getConfig().getDouble("spawn.z") + Utilities.getRandom(1, 20) - 10;
+                int rand_x = Main.main.getConfig().getInt("spawn.x") + Utilities.getRandom(1, 20) - 10;
+                int rand_z = Main.main.getConfig().getInt("spawn.z") + Utilities.getRandom(1, 20) - 10;
 
                 World world = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world"));
                 block.setType(Material.AIR);
-                block = world.getBlockAt(Math.round((float) rand_x), Math.round((float) Main.main.getConfig().getDouble("spawn.y")) + 5, Math.round((float) rand_z));
+                Location oldLoc = block.getLocation();
+                block = world.getBlockAt(rand_x, Main.main.getConfig().getInt("spawn.y") + 5, rand_z);
+                Location newLoc = block.getLocation();
                 block.setType(targets[n]);
+
+                Vector line = newLoc.toVector().subtract(oldLoc.toVector());
+                double step = 0.5D;
+
+                for (double d = 0; d < line.length(); d += step) {
+                    line.multiply(d);
+                    oldLoc.add(line);
+
+                    world.spawnParticle(Particle.END_ROD, oldLoc,1);
+
+                    oldLoc.subtract(line);
+                    line.normalize();
+                }
 
                 world.playSound(block.getLocation(), Sound.BLOCK_BELL_USE, 10, 1);
                 ParticleConstructor.blockAnimation(block.getLocation(), 1);
