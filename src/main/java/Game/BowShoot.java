@@ -94,6 +94,9 @@ public class BowShoot implements Listener {
             player.getInventory().clear();
         }
         if (place > 3) {
+            block.setType(Material.AIR);
+            block.getWorld().spawnParticle(Particle.EXPLOSION_HUGE,  block.getLocation(), 1);
+            block.getWorld().playSound(block.getLocation(), Sound.ENTITY_GENERIC_EXPLODE,10,1);
             isActivated = false;
             aGameCycle.isAnyBattleEnabled = isActivated;
             place = 1;
