@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.BlockIterator;
 import org.bukkit.util.Vector;
@@ -80,21 +81,13 @@ public class BowShoot implements Listener {
     private static int place = 1;
 
     @EventHandler
-    public void OnShoot(EntityShootBowEvent e) {
+    public void OnProjHit(ProjectileHitEvent e) {
         if (!isActivated) return;
-        Player player = (Player) e.getEntity();
-        Arrow arrow = (Arrow) e.getProjectile();
-        World world = arrow.getWorld();
-        BlockIterator iterator = new BlockIterator(world, arrow.getLocation().toVector(), arrow.getVelocity().normalize(), 0, 30);
-        Block hitBlock = null;
 
-        while (iterator.hasNext()) {
-            Location arrowLoc = arrow.getLocation();
-            arrowLoc.getWorld().spawnParticle(Particle.END_ROD,arrowLoc,1);
-            hitBlock = iterator.next();
-            if (!hitBlock.getType().equals(Material.AIR))
-                break;
-        }
+        Arrow arrow = (Arrow) e.getEntity();
+        Player player = (Player) arrow.getShooter();
+
+        Block hitBlock = e.getHitBlock();
 
         if (hitBlock.getType().equals(targets[n])) {
             aGameCycle.addScore(player, place);
