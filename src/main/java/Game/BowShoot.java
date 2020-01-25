@@ -1,5 +1,6 @@
 package Game;
 
+import PluginUtilities.ParticleConstructor;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
 import event.main.Main;
@@ -53,9 +54,8 @@ public class BowShoot implements Listener {
                 block = world.getBlockAt(Math.round((float) rand_x), Math.round((float) Main.main.getConfig().getDouble("spawn.y")) + 5, Math.round((float) rand_z));
                 block.setType(targets[n]);
 
-                world.playEffect(block.getLocation(), Effect.SMOKE, 20, 20);
                 world.playSound(block.getLocation(), Sound.BLOCK_BELL_USE, 10, 1);
-                world.playEffect(block.getLocation(), Effect.SMOKE, 20, 20);
+                ParticleConstructor.blockAnimation(block.getLocation(), 1);
             }
         }.runTaskTimer(Main.main, 20, 20);
     }

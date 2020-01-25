@@ -16,7 +16,7 @@ public final class Main extends JavaPlugin {
     public void onEnable() {
         main = this;
 
-        Bukkit.getLogger().info(ChatColor.GOLD + "[RavagerRush] Plugin enabled!");
+        Bukkit.getLogger().info(ChatColor.GOLD + "[EVENT] Plugin enabled!");
         Bukkit.getPluginCommand("event").setExecutor(new Commands.CommandEvent());
 
         this.getServer().getPluginManager().registerEvents(new MainPlayerHandler(), this);
