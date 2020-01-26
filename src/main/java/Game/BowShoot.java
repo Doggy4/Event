@@ -15,8 +15,11 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.BlockIterator;
 import org.bukkit.util.Vector;
+import sun.nio.ch.Util;
 
 
+import static Game.ScoreSystemTest.isEventStarted;
+import static Game.ScoreSystemTest.isEventTimerStarted;
 import static PluginUtilities.Items.BowEventArrows;
 import static PluginUtilities.Items.BowEventBow;
 
@@ -24,13 +27,18 @@ public class BowShoot implements Listener {
     private static boolean isActivated = false;
 
     private static Material[] targets = {Material.LAPIS_BLOCK, Material.GOLD_BLOCK, Material.DIAMOND_BLOCK, Material.IRON_BLOCK, Material.REDSTONE_BLOCK};
+    private static Material bonusTarget = Material.GLOWSTONE;
+
+    private static int blockChance = Utilities.getRandom(0,100);
     private static int n = (int) Math.floor(Math.random() * targets.length);
 
     private static Block block = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).getBlockAt(0, 0, 0);
-    private static Location oldLoc = block.getLocation();
+    private static Block bonusBlock = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).getBlockAt(0, 0, 0);
 
     public static void BowShoot() {
-        isActivated = aGameCycle.isAnyBattleEnabled;
+        ScoreSystemTest.StartEvent();
+        isActivated = isEventStarted;
+
 
         for (String playerName : Queue.redQueueList) {
             Player player = Bukkit.getPlayer(playerName);
@@ -52,33 +60,52 @@ public class BowShoot implements Listener {
                 int rand_x = Main.main.getConfig().getInt("spawn.x") + Utilities.getRandom(1, 20) - 10;
                 int rand_z = Main.main.getConfig().getInt("spawn.z") + Utilities.getRandom(1, 20) - 10;
 
-                Location newLoc = block.getLocation().add(rand_x, 0, rand_z);
                 World world = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world"));
 
-                block.setType(Material.AIR);
                 block = world.getBlockAt(rand_x, Main.main.getConfig().getInt("spawn.y") + 5, rand_z);
+                bonusBlock = world.getBlockAt(rand_z, Main.main.getConfig().getInt("spawn.y") + 10, rand_x);
+
+                Location targetLoc = block.getLocation();
+                Location bonusLoc = bonusBlock.getLocation();
+
+                block.setType(Material.AIR);
+                bonusBlock.setType(Material.AIR);
+
+                if (blockChance >=35) bonusBlock.setType(bonusTarget);
                 block.setType(targets[n]);
 
-                Vector line = newLoc.toVector().subtract(oldLoc.toVector());
                 double step = 0.5D;
 
+                Vector line = targetLoc.add(rand_x,0,rand_z).toVector().subtract(targetLoc.toVector());
                 for (double d = 0; d < line.length(); d += step) {
                     line.multiply(d);
-                    oldLoc.add(line);
+                    targetLoc.add(line);
 
-                    world.spawnParticle(Particle.END_ROD, oldLoc, 1);
+                    world.spawnParticle(Particle.END_ROD, targetLoc, 1);
 
-                    oldLoc.subtract(line);
+                    targetLoc.subtract(line);
                     line.normalize();
+                }
+
+                Vector bonusLine = targetLoc.add(rand_x,0,rand_z).toVector().subtract(targetLoc.toVector());
+                for (double d = 0; d < bonusLine.length(); d += step) {
+                    bonusLine.multiply(d);
+                    targetLoc.add(bonusLine);
+
+                    world.spawnParticle(Particle.FLAME, targetLoc, 1);
+
+                    targetLoc.subtract(bonusLine);
+                    bonusLine.normalize();
                 }
 
                 world.playSound(block.getLocation(), Sound.BLOCK_BELL_USE, 10, 1);
                 ParticleConstructor.blockAnimation(block.getLocation(), 1);
+
+                world.playSound(bonusBlock.getLocation(), Sound.BLOCK_BELL_RESONATE, 10,1);
+                ParticleConstructor.spiral(block.getLocation());
             }
         }.runTaskTimer(Main.main, 20, 20);
     }
-
-    private static int place = 1;
 
     @EventHandler
     public void OnProjHit(ProjectileHitEvent e) {
@@ -89,20 +116,23 @@ public class BowShoot implements Listener {
 
         Block hitBlock = e.getHitBlock();
 
-        if (hitBlock.getType().equals(targets[n]) && !(hitBlock.getType().isAir())) {
-            aGameCycle.playerWin(player, place);
-            place++;
-            player.getInventory().clear();
+        if (hitBlock.getType().equals(targets[n])) {
+            ScoreSystemTest.addScore(player, 1);
+        } else if (hitBlock.getType().equals(bonusTarget)) {
+            ScoreSystemTest.addScore(player, 5);
         }
-        if (place > 3) {
-            isActivated = false;
-            aGameCycle.isAnyBattleEnabled = false;
+        if (ScoreSystemTest.EventSeconds <= 0) {
+            ScoreSystemTest.Winner();
+            isEventStarted = false;
+            isEventTimerStarted = false;
+
+            bonusBlock.setType(Material.AIR);
+            bonusBlock.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, block.getLocation(), 1);
+            bonusBlock.getWorld().playSound(block.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 10, 1);
 
             block.setType(Material.AIR);
             block.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, block.getLocation(), 1);
             block.getWorld().playSound(block.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 10, 1);
-
-            place = 1;
         }
     }
 }
