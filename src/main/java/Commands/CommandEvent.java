@@ -1,8 +1,6 @@
 package Commands;
 
-import Game.DodgeAnvils;
-import Game.ScoreSystemTest;
-import Game.aGameCycle;
+import Game.RoundSystem;
 import PluginUtilities.*;
 import QueueSystem.Queue;
 import QueueSystem.PrestartScoreBoard;
@@ -62,10 +60,10 @@ public class CommandEvent implements TabExecutor {
             player.sendMessage(ChatColor.YELLOW + divider + ChatColor.GREEN + "Сообщение опубликовано!\n" + ChatColor.YELLOW + divider);
             broadcast(Arrays.copyOfRange(args, 1, args.length));
         } else if (args[0].equals("test")) {
-            ScoreSystemTest.addScore(player, 1);
-            ScoreSystemTest.addScore(player, 2);
-            ScoreSystemTest.addScore(player, 5);
-            ScoreSystemTest.addScore(player, 10);
+            RoundSystem.addScore(player, 1);
+            RoundSystem.addScore(player, 2);
+            RoundSystem.addScore(player, 5);
+            RoundSystem.addScore(player, 10);
 //            ItemStack skull = new ItemStack(Material.PLAYER_HEAD, 1);
 //            SkullMeta meta = (SkullMeta) skull.getItemMeta();
 //

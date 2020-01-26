@@ -10,16 +10,13 @@ import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.BlockIterator;
 import org.bukkit.util.Vector;
-import sun.nio.ch.Util;
 
 
-import static Game.ScoreSystemTest.isEventStarted;
-import static Game.ScoreSystemTest.isEventTimerStarted;
+import static Game.RoundSystem.isRoundStarted;
+import static Game.RoundSystem.isRoundTimerStarted;
 import static PluginUtilities.Items.BowEventArrows;
 import static PluginUtilities.Items.BowEventBow;
 
@@ -36,8 +33,8 @@ public class BowShoot implements Listener {
     private static Block bonusBlock = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).getBlockAt(0, 0, 0);
 
     public static void BowShoot() {
-        ScoreSystemTest.StartEvent();
-        isActivated = isEventStarted;
+        RoundSystem.StartEvent();
+        isActivated = isRoundStarted;
 
 
         for (String playerName : Queue.redQueueList) {
@@ -117,14 +114,15 @@ public class BowShoot implements Listener {
         Block hitBlock = e.getHitBlock();
 
         if (hitBlock.getType().equals(targets[n])) {
-            ScoreSystemTest.addScore(player, 1);
+            RoundSystem.addScore(player, 1);
         } else if (hitBlock.getType().equals(bonusTarget)) {
-            ScoreSystemTest.addScore(player, 5);
+            RoundSystem.addScore(player, 5);
         }
-        if (ScoreSystemTest.EventSeconds <= 0) {
-            ScoreSystemTest.Winner();
-            isEventStarted = false;
-            isEventTimerStarted = false;
+
+        if (RoundSystem.eventSeconds <= 0) {
+            RoundSystem.EndRound();
+            isRoundStarted = false;
+            isRoundTimerStarted = false;
 
             bonusBlock.setType(Material.AIR);
             bonusBlock.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, block.getLocation(), 1);

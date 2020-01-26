@@ -1,18 +1,10 @@
 package QueueSystem;
 
-import Commands.StartEvent;
-import Game.aGameCycle;
-import PluginUtilities.Chat;
-import PluginUtilities.Utilities;
 import event.main.Main;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.*;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class PrestartScoreBoard {
 
