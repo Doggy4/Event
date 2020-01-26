@@ -1,11 +1,16 @@
 package Game;
 
+import Commands.CommandEvent;
 import Commands.StartEvent;
+import PluginUtilities.Chat;
 import PluginUtilities.ParticleConstructor;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
 import event.main.Main;
 import org.bukkit.*;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -43,17 +48,15 @@ public class aGameCycle {
                 player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
             }
         } else if (StartEvent.secPreStart == 0) {
-            broadcastToEveryone(ChatColor.GREEN + "Игра началась! " + ChatColor.YELLOW + "Играют: " + ChatColor.RED + "[RED]");
             for (Player player : Bukkit.getOnlinePlayers()) {
                 player.sendTitle(ChatColor.GREEN + "Игра началась!", ChatColor.YELLOW + "Играют: " + ChatColor.RED + "[RED]", 30, 30, 30);
                 player.playSound(player.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_CURSE, 10, 1);
-                player.sendMessage(ChatColor.YELLOW + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n" + ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Игра началась!\n" + ChatColor.YELLOW + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n");
+                player.sendMessage(ChatColor.YELLOW + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n" + ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Игра началась!\n" + ChatColor.YELLOW + "Играют: " + ChatColor.RED + "[RED]\n" + ChatColor.YELLOW + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n");
             }
         }
     }
 
     public static void mainCycle() {
-
         // Старт игры
         if (StartEvent.secPreStart < 0 && !Commands.StartEvent.isGameStarted) {
             Start.StartGame();
@@ -68,15 +71,18 @@ public class aGameCycle {
 
         // Партиклы над головой игроков очереди RED
         for (String playerName : Queue.redQueueList) {
-            ParticleConstructor.circle(Bukkit.getPlayer(playerName).getLocation(), 1);
+            Player player = Bukkit.getPlayer(playerName);
+            if (player.getGameMode() != GameMode.SPECTATOR)
+                ParticleConstructor.circle(player.getLocation(), 1);
         }
 
         // Кастомизация игроков...
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            if (!Queue.redQueueList.contains(player.getName()))
+        for (Player player : Bukkit.getOnlinePlayers())
+            if (!Queue.redQueueList.contains(player.getName())) {
                 player.getLocation().getWorld().spawnParticle(Particle.NOTE, player.getLocation().getX(), player.getLocation().getY() + 2.5, player.getLocation().getZ(), 2);
-
-        }
+                player.setHealth(20);
+                player.setFoodLevel(20);
+            }
 
         // Отсчет секунд
         seconds();
@@ -84,19 +90,51 @@ public class aGameCycle {
 
     private static void randomBattle() {
         isAnyBattleEnabled = true;
-        BaseClass.TurnOffAllRules();
+        BaseClass.TurnOnAllRules();
+
+        for (String playerName : Queue.redQueueList){
+            Player player = Bukkit.getPlayer(playerName);
+            player.setGameMode(GameMode.ADVENTURE);
+            CommandEvent.teleportToSpawn(player);
+        }
 
 
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            player.sendMessage(ChatColor.YELLOW + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n" + ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Раунд: " + ChatColor.AQUA + battle + ChatColor.YELLOW + "\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n");
-            player.sendTitle(ChatColor.YELLOW + "РАУНД " + ChatColor.AQUA + battle, ChatColor.GREEN + "Начинаем!", 20, 20, 20);
-            player.playSound(player.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_CURSE, 10, 1);
+        for (Entity entity : Bukkit.getWorld("world").getEntities()) {
+            if (entity.getType() == EntityType.ARROW || entity.getType() == EntityType.DROPPED_ITEM || entity instanceof Mob) {
+                entity.remove();
+            }
         }
 
         new BukkitRunnable() {
             @Override
             public void run() {
-                int randomBattle = Utilities.getRandom(0, 4);
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Обработка... Выбор мини-режима...");
+                    player.sendTitle(ChatColor.YELLOW + "Приготовьтесь!", ChatColor.WHITE + "Выбор мини-режима...", 20, 20, 20);
+                    player.playSound(player.getLocation(), Sound.BLOCK_LEVER_CLICK, 10, 1);
+                }
+            }
+        }.runTaskLater(Main.main, 2 * 20);
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    player.sendMessage(ChatColor.YELLOW + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n" + ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Раунд: " + ChatColor.AQUA + battle + ChatColor.YELLOW + "\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n");
+                    player.sendTitle(ChatColor.YELLOW + "РАУНД " + ChatColor.AQUA + battle, ChatColor.GREEN + "Начинаем!", 20, 20, 20);
+                    player.playSound(player.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_CURSE, 10, 1);
+                }
+                battle++;
+            }
+        }.runTaskLater(Main.main, 5 * 20);
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                for (Player player : Bukkit.getOnlinePlayers())
+                    player.playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 10, 1);
+
+                int randomBattle = Utilities.getRandom(5, 8);
                 switch (randomBattle) {
                     case 0:
                         PlaceBlock.placeBlock();
@@ -113,23 +151,53 @@ public class aGameCycle {
                     case 4:
                         EggThrow.EggThrow();
                         break;
+                    case 5:
+                        CowMilk.CowMilk();
+                        break;
+                    case 6:
+                        BuildTower.BuildTower();
+                        break;
+                    case 7:
+                        ReachSky.ReachSky();
+                        break;
+                    case 8:
+                        DodgeAnvils.DodgeAnvils();
+                        break;
                 }
             }
-        }.runTaskLater(Main.main, 5 * 20);
-        battle++;
-    }
-
-    public static void addScore(Player winner, int place) {
-        for (Player player : Bukkit.getOnlinePlayers())
-            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Игрок " + winner.getName() + " занял " + ChatColor.GREEN + place + ChatColor.WHITE + " место!");
-
-        winner.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "+" + (4 - place) + " очков(-а)!");
-        gameStats.put(winner.getName(), 4 - place + gameStats.get(winner.getName()));
+        }.runTaskLater(Main.main, 8 * 20);
     }
 
     public static void broadcastToEveryone(String message) {
         for (Player player : Bukkit.getOnlinePlayers()) {
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + message);
         }
+    }
+
+    public static void playerWin(Player winner, int place) {
+        for (Player player : Bukkit.getOnlinePlayers())
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Игрок " + winner.getName() + " занял " + ChatColor.GREEN + place + ChatColor.WHITE + " место!");
+
+        winner.sendTitle(ChatColor.GREEN + "Поздравляем!", "Вы заняли " + place + " место!", 20, 20, 20);
+        winner.playSound(winner.getLocation(), Sound.BLOCK_NOTE_BLOCK_COW_BELL, 10, 1);
+
+        winner.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Вы получили +" + (4 - place) + " очков(-а)!");
+        gameStats.put(winner.getName(), 4 - place + gameStats.get(winner.getName()));
+
+        reset(winner);
+    }
+
+    public static void playerLose(Player loser) {
+        broadcastToEveryone(ChatColor.RED + "Игрок " + loser.getName() + " проиграл!");
+        loser.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Вы проиграли!");
+        loser.playSound(loser.getLocation(), Sound.ENTITY_BAT_DEATH, 10, 1);
+
+        reset(loser);
+    }
+
+    public static void reset(Player player) {
+        player.getInventory().clear();
+        player.setFoodLevel(20);
+        player.setHealth(20);
     }
 }

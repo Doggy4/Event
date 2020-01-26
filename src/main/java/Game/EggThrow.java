@@ -52,7 +52,7 @@ public class EggThrow implements Listener {
 
         Player player = event.getPlayer();
 
-        aGameCycle.addScore(player, place);
+        aGameCycle.playerWin(player, place);
         place++;
 
         player.getInventory().clear();

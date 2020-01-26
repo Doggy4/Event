@@ -17,7 +17,7 @@ public class BaseClass implements Listener {
     private static boolean entityDamageRULE = false;
     private static boolean placeBlockRULE = false;
 
-    public static void TurnOffAllRules() {
+    public static void TurnOnAllRules() {
         playerDamageRULE = true;
         breakBlockRULE = true;
         dropItemRULE = true;
@@ -27,27 +27,27 @@ public class BaseClass implements Listener {
     }
 
     public static void PlaceBlockOff() {
-        placeBlockRULE = true;
+        placeBlockRULE = false;
     }
 
     public static void PlayerDamageOff() {
-        playerDamageRULE = true;
+        playerDamageRULE = false;
     }
 
     public static void BreakBlockOff() {
-        breakBlockRULE = true;
+        breakBlockRULE = false;
     }
 
     public static void DropItemOff() {
-        dropItemRULE = true;
+        dropItemRULE = false;
     }
 
     public static void PickUpItemOff() {
-        pickUpItemRULE = true;
+        pickUpItemRULE = false;
     }
 
     public static void EntityDamageOff() {
-        entityDamageRULE = true;
+        entityDamageRULE = false;
     }
 
     @EventHandler
@@ -86,4 +86,3 @@ public class BaseClass implements Listener {
         e.setCancelled(true);
     }
 }
-

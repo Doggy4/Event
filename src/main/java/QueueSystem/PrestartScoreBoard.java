@@ -2,11 +2,17 @@ package QueueSystem;
 
 import Commands.StartEvent;
 import Game.aGameCycle;
+import PluginUtilities.Chat;
+import PluginUtilities.Utilities;
 import event.main.Main;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.*;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class PrestartScoreBoard {
 
@@ -30,7 +36,7 @@ public class PrestartScoreBoard {
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
         Score divider1 = objective.getScore(ChatColor.AQUA + "▪▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
-        divider1.setScore(-3);
+        divider1.setScore(-4);
 
         if (StartEvent.isGameTimerStarted && !Commands.StartEvent.isGameStarted) {
             StartEvent.secPreStart--;
@@ -39,6 +45,9 @@ public class PrestartScoreBoard {
         } else if (Commands.StartEvent.isGameStarted) {
             Score gameState = objective.getScore(ChatColor.GOLD + "Статус игры: " + ChatColor.GREEN + "Активна");
             gameState.setScore(-2);
+            Score battle = objective.getScore(ChatColor.GOLD + "Раунд: " + ChatColor.GREEN + (aGameCycle.battle-1));
+            battle.setScore(-3);
+
             Score divider2 = objective.getScore(ChatColor.AQUA + "▪▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▪");
             divider2.setScore(31);
             for (String name : Queue.redQueueList) {
@@ -54,7 +63,6 @@ public class PrestartScoreBoard {
 
         Score divider2 = objective.getScore(ChatColor.AQUA + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▪");
         divider2.setScore(-1);
-
     }
 
     public static void PrestartScoreboard() {
