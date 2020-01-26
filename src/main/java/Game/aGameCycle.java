@@ -134,7 +134,7 @@ public class aGameCycle {
                 for (Player player : Bukkit.getOnlinePlayers())
                     player.playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 10, 1);
 
-                int randomBattle = Utilities.getRandom(0, 8);
+                int randomBattle = Utilities.getRandom(5, 8);
                 switch (randomBattle) {
                     case 0:
                         PlaceBlock.placeBlock();

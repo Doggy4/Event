@@ -1,6 +1,7 @@
 package Commands;
 
 import Game.DodgeAnvils;
+import Game.ScoreSystemTest;
 import Game.aGameCycle;
 import PluginUtilities.*;
 import QueueSystem.Queue;
@@ -61,9 +62,10 @@ public class CommandEvent implements TabExecutor {
             player.sendMessage(ChatColor.YELLOW + divider + ChatColor.GREEN + "Сообщение опубликовано!\n" + ChatColor.YELLOW + divider);
             broadcast(Arrays.copyOfRange(args, 1, args.length));
         } else if (args[0].equals("test")) {
-
-            MapRebuild.loadSchematic("arena");
-            DodgeAnvils.DodgeAnvils();
+            ScoreSystemTest.addScore(player, 1);
+            ScoreSystemTest.addScore(player, 2);
+            ScoreSystemTest.addScore(player, 5);
+            ScoreSystemTest.addScore(player, 10);
 //            ItemStack skull = new ItemStack(Material.PLAYER_HEAD, 1);
 //            SkullMeta meta = (SkullMeta) skull.getItemMeta();
 //
