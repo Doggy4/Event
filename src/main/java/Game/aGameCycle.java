@@ -1,5 +1,6 @@
 package Game;
 
+import Commands.CommandEvent;
 import Commands.StartEvent;
 import PluginUtilities.Chat;
 import PluginUtilities.ParticleConstructor;
@@ -47,11 +48,10 @@ public class aGameCycle {
                 player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
             }
         } else if (StartEvent.secPreStart == 0) {
-            broadcastToEveryone(ChatColor.GREEN + "Игра началась! " + ChatColor.YELLOW + "Играют: " + ChatColor.RED + "[RED]");
             for (Player player : Bukkit.getOnlinePlayers()) {
                 player.sendTitle(ChatColor.GREEN + "Игра началась!", ChatColor.YELLOW + "Играют: " + ChatColor.RED + "[RED]", 30, 30, 30);
                 player.playSound(player.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_CURSE, 10, 1);
-                player.sendMessage(ChatColor.YELLOW + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n" + ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Игра началась!\n" + ChatColor.YELLOW + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n");
+                player.sendMessage(ChatColor.YELLOW + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n" + ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Игра началась!\n" + ChatColor.YELLOW + "Играют: " + ChatColor.RED + "[RED]\n" + ChatColor.YELLOW + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n");
             }
         }
     }
@@ -71,12 +71,14 @@ public class aGameCycle {
 
         // Партиклы над головой игроков очереди RED
         for (String playerName : Queue.redQueueList) {
-            ParticleConstructor.circle(Bukkit.getPlayer(playerName).getLocation(), 1);
+            Player player = Bukkit.getPlayer(playerName);
+            if (player.getGameMode() != GameMode.SPECTATOR)
+                ParticleConstructor.circle(player.getLocation(), 1);
         }
 
         // Кастомизация игроков...
         for (Player player : Bukkit.getOnlinePlayers())
-            if (!Queue.redQueueList.contains(player.getName())){
+            if (!Queue.redQueueList.contains(player.getName())) {
                 player.getLocation().getWorld().spawnParticle(Particle.NOTE, player.getLocation().getX(), player.getLocation().getY() + 2.5, player.getLocation().getZ(), 2);
                 player.setHealth(20);
                 player.setFoodLevel(20);
@@ -88,7 +90,14 @@ public class aGameCycle {
 
     private static void randomBattle() {
         isAnyBattleEnabled = true;
-        BaseClass.TurnOffAllRules();
+        BaseClass.TurnOnAllRules();
+
+        for (String playerName : Queue.redQueueList){
+            Player player = Bukkit.getPlayer(playerName);
+            player.setGameMode(GameMode.ADVENTURE);
+            CommandEvent.teleportToSpawn(player);
+        }
+
 
         for (Entity entity : Bukkit.getWorld("world").getEntities()) {
             if (entity.getType() == EntityType.ARROW || entity.getType() == EntityType.DROPPED_ITEM || entity instanceof Mob) {
@@ -123,9 +132,9 @@ public class aGameCycle {
             @Override
             public void run() {
                 for (Player player : Bukkit.getOnlinePlayers())
-                    player.playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 10 , 1);
+                    player.playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 10, 1);
 
-                int randomBattle = Utilities.getRandom(2, 2);
+                int randomBattle = Utilities.getRandom(0, 8);
                 switch (randomBattle) {
                     case 0:
                         PlaceBlock.placeBlock();
@@ -141,6 +150,18 @@ public class aGameCycle {
                         break;
                     case 4:
                         EggThrow.EggThrow();
+                        break;
+                    case 5:
+                        CowMilk.CowMilk();
+                        break;
+                    case 6:
+                        BuildTower.BuildTower();
+                        break;
+                    case 7:
+                        ReachSky.ReachSky();
+                        break;
+                    case 8:
+                        DodgeAnvils.DodgeAnvils();
                         break;
                 }
             }
@@ -178,7 +199,5 @@ public class aGameCycle {
         player.getInventory().clear();
         player.setFoodLevel(20);
         player.setHealth(20);
-
-
     }
 }

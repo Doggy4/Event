@@ -23,8 +23,6 @@ public class DropItem implements Listener {
 
         isActivated = aGameCycle.isAnyBattleEnabled;
 
-        BaseClass.DropItemOff();
-
         ArrayList<Material> materials = new ArrayList<Material>(Arrays.asList(Material.values()));
 
         int randomMaterial = Utilities.getRandom(0, materials.size() - 37);
@@ -68,7 +66,7 @@ public class DropItem implements Listener {
 
         if (place > 3){
             isActivated = false;
-            aGameCycle.isAnyBattleEnabled = isActivated;
+            aGameCycle.isAnyBattleEnabled = false;
             place = 1;
         }
     }

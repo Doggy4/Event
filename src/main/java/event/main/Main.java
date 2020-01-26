@@ -3,6 +3,7 @@ package event.main;
 
 import Game.*;
 import PluginUtilities.InventoryConstructor;
+import PluginUtilities.MapRebuild;
 import QueueSystem.PrestartScoreBoard;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -27,6 +28,9 @@ public final class Main extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new ShearSheep(), this);
         this.getServer().getPluginManager().registerEvents(new EggThrow(), this);
         this.getServer().getPluginManager().registerEvents(new BaseClass(), this);
+        this.getServer().getPluginManager().registerEvents(new CowMilk(), this);
+        this.getServer().getPluginManager().registerEvents(new BuildTower(), this);
+        this.getServer().getPluginManager().registerEvents(new DodgeAnvils(), this);
 
         PrestartScoreBoard.PrestartScoreboard();
         this.saveDefaultConfig();

@@ -1,5 +1,6 @@
 package Commands;
 
+import Game.DodgeAnvils;
 import Game.aGameCycle;
 import PluginUtilities.*;
 import QueueSystem.Queue;
@@ -61,8 +62,8 @@ public class CommandEvent implements TabExecutor {
             broadcast(Arrays.copyOfRange(args, 1, args.length));
         } else if (args[0].equals("test")) {
 
-            ParticleConstructor.blockAnimation(player.getLocation(), 1);
-
+            MapRebuild.loadSchematic("arena");
+            DodgeAnvils.DodgeAnvils();
 //            ItemStack skull = new ItemStack(Material.PLAYER_HEAD, 1);
 //            SkullMeta meta = (SkullMeta) skull.getItemMeta();
 //

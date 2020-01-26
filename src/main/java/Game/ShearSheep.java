@@ -19,7 +19,6 @@ public class ShearSheep implements Listener {
     private static boolean isShearSheepActivated = false;
 
     private static DyeColor randomColor;
-    private static ArrayList<Sheep> sheeps = new ArrayList<Sheep>();
 
 
     public static void ShearSheep() {
@@ -45,14 +44,12 @@ public class ShearSheep implements Listener {
             DyeColor color = Utilities.getRandomColor();
             sheep.setColor(color);
             sheep.setCustomName(Chat.colors.get(color.toString()) + color.toString());
-            sheeps.add(sheep);
         }
 
         for (int i = 0; i < 3; i++) {
             Sheep sheep = (Sheep) Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).spawnEntity(Commands.CommandEvent.randLocationSpawn(), EntityType.SHEEP);
             sheep.setColor(randomColor);
             sheep.setCustomName(Chat.colors.get(randomColor.toString()) + randomColor.toString());
-            sheeps.add(sheep);
         }
     }
 
@@ -77,10 +74,6 @@ public class ShearSheep implements Listener {
             aGameCycle.isAnyBattleEnabled = false;
             place = 1;
 
-            for (Sheep sheepFromList : sheeps) {
-                sheepFromList.remove();
-            }
-            sheeps.clear();
         }
     }
 }
