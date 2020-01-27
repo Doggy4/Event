@@ -19,9 +19,8 @@ public class DropItem implements Listener {
     private static boolean isActivated = false;
 
     public static void DropItem() {
+        isActivated = true;
         BaseClass.DropItemOff();
-
-        isActivated = aGameCycle.isAnyBattleEnabled;
 
         ArrayList<Material> materials = new ArrayList<Material>(Arrays.asList(Material.values()));
 
@@ -48,26 +47,22 @@ public class DropItem implements Listener {
         }
     }
 
-    private static int place = 1;
-
     @EventHandler
     public void onPlayerDropItem(PlayerDropItemEvent event) {
-        if (!isActivated)
-            return;
+        if (!isActivated) return;
 
         Player player = event.getPlayer();
 
         if (event.getItemDrop().getItemStack().getType().name().equals(randomMaterialBlock.name())){
-            aGameCycle.playerWin(player, place);
-            place++;
+           RoundSystem.addScore(player, 1);
+            DropItem();
         } else {
-            aGameCycle.playerLose(player);
+            RoundSystem.playerLose(player);
         }
 
-        if (place > 3){
+        if (RoundSystem.roundSeconds <= 0) {
             isActivated = false;
-            aGameCycle.isAnyBattleEnabled = false;
-            place = 1;
+            RoundSystem.EndRound();
         }
     }
 }

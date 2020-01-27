@@ -19,12 +19,12 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
+// Потом проапаю
 public class DodgeAnvils implements Listener {
     private static boolean isActivated = false;
 
     public static void DodgeAnvils() {
-        isActivated = aGameCycle.isAnyBattleEnabled;
+        isActivated = true;
         BaseClass.EntityDamageOff();
 
         for (String playerName : Queue.redQueueList) {

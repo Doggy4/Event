@@ -2,7 +2,6 @@ package Game;
 
 import Commands.CommandEvent;
 import PluginUtilities.Utilities;
-import QueueSystem.PrestartScoreBoard;
 import QueueSystem.Queue;
 import event.main.Main;
 import org.bukkit.*;
@@ -37,6 +36,7 @@ public class RoundSystem {
     }
 
     public static void StartRound() {
+
         isRoundStarted = true;
         BaseClass.TurnOnAllRules();
         RoundTimer();
@@ -101,7 +101,7 @@ public class RoundSystem {
                         EggThrow.EggThrow();
                         break;
                     case 5:
-                        CowMilk.CowMilk();
+                        CowMilk.MilkCow();
                         break;
                     case 6:
                         BuildTower.BuildTower();
