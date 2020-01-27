@@ -2,8 +2,8 @@ package Game;
 
 import Commands.CommandEvent;
 import Commands.StartEvent;
-import QueueSystem.Queue;
 import QueueSystem.PrestartScoreBoard;
+import QueueSystem.Queue;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Particle;
@@ -25,6 +25,7 @@ public class Ending {
                 max = aGameCycle.gameStats.get(name);
                 winner = name;
             }
+
 
         Player player = Bukkit.getPlayer(winner);
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
