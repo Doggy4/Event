@@ -156,6 +156,5 @@ public class Queue {
             greenQueueList.remove(player.getName());
             greenQueue.removeEntry(player.getName());
         }
-
     }
 }

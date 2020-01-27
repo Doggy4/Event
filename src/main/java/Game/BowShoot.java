@@ -15,8 +15,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 
-import static Game.RoundSystem.isRoundStarted;
-import static Game.RoundSystem.isRoundTimerStarted;
+import static Game.RoundSystem.*;
 import static PluginUtilities.Items.BowEventArrows;
 import static PluginUtilities.Items.BowEventBow;
 
@@ -33,9 +32,7 @@ public class BowShoot implements Listener {
     private static Block bonusBlock = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).getBlockAt(0, 0, 0);
 
     public static void BowShoot() {
-        RoundSystem.StartEvent();
-        isActivated = isRoundStarted;
-
+        isActivated = true;
 
         for (String playerName : Queue.redQueueList) {
             Player player = Bukkit.getPlayer(playerName);
@@ -84,14 +81,14 @@ public class BowShoot implements Listener {
                     line.normalize();
                 }
 
-                Vector bonusLine = targetLoc.add(rand_x,0,rand_z).toVector().subtract(targetLoc.toVector());
+                Vector bonusLine = bonusLoc.add(rand_x,0,rand_z).toVector().subtract(bonusLoc.toVector());
                 for (double d = 0; d < bonusLine.length(); d += step) {
                     bonusLine.multiply(d);
-                    targetLoc.add(bonusLine);
+                    bonusLoc.add(bonusLine);
 
                     world.spawnParticle(Particle.FLAME, targetLoc, 1);
 
-                    targetLoc.subtract(bonusLine);
+                    bonusLoc.subtract(bonusLine);
                     bonusLine.normalize();
                 }
 
@@ -119,10 +116,9 @@ public class BowShoot implements Listener {
             RoundSystem.addScore(player, 5);
         }
 
-        if (RoundSystem.eventSeconds <= 0) {
+        if (RoundSystem.roundSeconds <= 0) {
             RoundSystem.EndRound();
-            isRoundStarted = false;
-            isRoundTimerStarted = false;
+            isActivated = false;
 
             bonusBlock.setType(Material.AIR);
             bonusBlock.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, block.getLocation(), 1);

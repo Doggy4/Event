@@ -1,5 +1,6 @@
 package QueueSystem;
 
+import Game.GameCycle;
 import event.main.Main;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -71,7 +72,7 @@ public class PrestartScoreBoard {
                     player.setScoreboard(scoreboard);
 
                 // ГЛАВНЫЙ ИГРОВОЙ ЦИКЛ
-                aGameCycle.mainCycle();
+                GameCycle.mainCycle();
             }
         }.runTaskTimer(Main.main, 10, 10);
     }

@@ -15,205 +15,36 @@ import java.util.*;
 import static PluginUtilities.Chat.*;
 
 public class RoundSystem {
-    // MainCycle
-    public static HashMap<String, Integer> gameStats = new HashMap<String, Integer>();
-    public static int round;
-    private static int roundCount = 10;
 
-    private static int mainSecPreStart = 60;
-    public static boolean isGameStarted = false;
-    public static boolean isGameTimerStarted = false;
+    public static HashMap<String, Integer> roundStats = new HashMap<String, Integer>();
 
-    // RoundCycle
-    private static HashMap<String, Integer> roundStats = new HashMap<String, Integer>();
-    public static int eventSeconds = 30;
+    public static int round = 1;
+    public static int roundCount = 10;
+    public static int roundSeconds = 30;
     public static boolean isRoundStarted = false;
     public static boolean isRoundTimerStarted = false;
 
-    // Main // // Main // // Main // // Main // // Main // // Main // // Main // // Main // // Main // // Main // // Main // // Main // // Main //
-    public static void mainCycle() {
-        // START
-        if (mainSecPreStart <= 0 && !isGameStarted) {
-            PlayerReset();
-        }
-        // END
-        if (round > roundCount && isGameStarted && !isRoundStarted) {
-            EndGame();
-        } else if (!isRoundTimerStarted && isGameStarted) {
-            nextRound();
-        }
-        seconds();
-    }
-
-    public static void StartGame() {
-        mainSecPreStart = 60;
-        isGameStarted = false;
-        isGameTimerStarted = true;
-    }
-
-    private static void PlayerReset() {
-        for (String playerName : Queue.redQueueList) {
-            Player player = Bukkit.getPlayer(playerName);
-
-            player.getInventory().clear();
-            player.setHealth(20);
-            player.setFoodLevel(20);
-            player.setExp(0);
-            player.getActivePotionEffects().clear();
-            player.setGameMode(GameMode.ADVENTURE);
-
-            CommandEvent.teleportToSpawn(player);
-            roundStats.put(playerName, 0);
-        }
-        isGameStarted = true;
-    }
-
-    public static void EndGame() {
-        isRoundTimerStarted = false;
-        isGameStarted = false;
-        mainSecPreStart = 60;
-        round = 1;
-
-        int max = 0;
-        String winner = "null";
-
-        for (String name : Queue.redQueueList)
-            if (aGameCycle.gameStats.get(name) > max) {
-                max = roundStats.get(name);
-                winner = name;
-            }
-
-        Player player = Bukkit.getPlayer(winner);
-        for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-            onlinePlayer.sendTitle(ChatColor.GOLD + winner, ChatColor.BLUE + "победитель", 20, 40, 20);
-
-            onlinePlayer.playSound(onlinePlayer.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 10, 1);
-            onlinePlayer.spawnParticle(Particle.DRAGON_BREATH, onlinePlayer.getLocation(), 80);
-            onlinePlayer.sendMessage(ChatColor.BLUE + "Игрок " + ChatColor.GOLD + winner + ChatColor.BLUE + " победитель!");
-        }
-
-        for (String playerName : Queue.redQueueList) {
-            Player redPlayer = Bukkit.getPlayer(playerName);
-            CommandEvent.teleportToLobby(redPlayer);
-
-            PrestartScoreBoard.red.removeEntry(playerName);
-        }
-
-        Queue.redQueueList.clear();
-
-        for (String playerName : Queue.yellowQueueList) {
-            Queue.redQueueList.add(playerName);
-
-            Player yellowPlayer = Bukkit.getPlayer(playerName);
-            PrestartScoreBoard.red.addEntry(playerName);
-            yellowPlayer.sendTitle(ChatColor.YELLOW + "Вы определены в " + ChatColor.RED + "[RED]", ChatColor.LIGHT_PURPLE + "Приготовьтесь к игре!", 20, 20, 20);
-            yellowPlayer.sendMessage(ChatColor.YELLOW + "Вы определены в " + ChatColor.RED + "[RED]");
-            yellowPlayer.playSound(yellowPlayer.getLocation(), Sound.BLOCK_ANVIL_PLACE, 20, 1);
-        }
-
-        Queue.yellowQueueList.clear();
-
-        for (int i = 0; i < 10; i++) {
-            String playerName = Queue.greenQueueList.get(i);
-
-            if (playerName == null) break;
-
-            Queue.greenQueueList.remove(i);
-            Queue.yellowQueueList.add(playerName);
-
-            Player greenPlayer = Bukkit.getPlayer(playerName);
-            PrestartScoreBoard.yellow.addEntry(playerName);
-            greenPlayer.sendTitle(ChatColor.YELLOW + "Вы определены в " + ChatColor.YELLOW + "[YELLOW]", ChatColor.LIGHT_PURPLE + "Ожидайте!", 20, 20, 20);
-            greenPlayer.sendMessage(ChatColor.YELLOW + "Вы определены в " + ChatColor.YELLOW + "[YELLOW]");
-            greenPlayer.playSound(greenPlayer.getLocation(), Sound.BLOCK_ANVIL_PLACE, 20, 1);
-        }
-    }
-
-    public static void seconds() {
-        if (mainSecPreStart == 59) {
-            broadcastToEveryone(ChatColor.GREEN + "Внимание! Начало игры!");
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                player.sendTitle(ChatColor.RED + "Внимание!", ChatColor.BLUE + "Начало игры!", 20, 20, 20);
-                player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
-            }
-        } else if (mainSecPreStart == 30 || mainSecPreStart == 15 || mainSecPreStart == 10 ||mainSecPreStart == 5) {
-            broadcastToEveryone(ChatColor.BLUE + "Начало игры через " + ChatColor.GOLD + mainSecPreStart + ChatColor.BLUE + " секунд");
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                player.sendTitle(ChatColor.BLUE + "Начало игры через", ChatColor.GOLD + "" + mainSecPreStart + ChatColor.BLUE + " секунд", 20, 20, 20);
-                player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
-            }
-        } else if (mainSecPreStart < 5 && mainSecPreStart > 1) {
-            broadcastToEveryone(ChatColor.BLUE + "Начало игры через " + ChatColor.GOLD + mainSecPreStart + ChatColor.BLUE + " секунд");
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                player.sendTitle(ChatColor.BLUE + "Начало игры через", ChatColor.GOLD + "" + mainSecPreStart + ChatColor.BLUE + " секунд", 20, 20, 20);
-                player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
-            }
-        } else if (mainSecPreStart == 1) {
-            broadcastToEveryone(ChatColor.BLUE + "Начало игры через " + ChatColor.GOLD + mainSecPreStart + ChatColor.BLUE + " секунду");
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                broadcastToEveryone(ChatColor.BLUE + "Начало игры через " + ChatColor.GOLD + mainSecPreStart + ChatColor.BLUE + " секунду");
-                player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
-            }
-        } else if (mainSecPreStart == 0) {
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                player.sendTitle(ChatColor.BLUE + "Игра началась!", ChatColor.GOLD + "Играют: " + ChatColor.RED + "[RED]", 30, 30, 30);
-                player.playSound(player.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_CURSE, 10, 1);
-                player.sendMessage(ChatColor.AQUA + divThick16 + ChatColor.GOLD + "[EVENT] " + ChatColor.BLUE + "Игра началась!\n" + ChatColor.GOLD + "Играют: " + ChatColor.RED + "[RED]\n" + ChatColor.YELLOW + divThick32);
-            }
-        }
-    }
-// ROUND // ROUND // ROUND // ROUND // ROUND // ROUND // ROUND // ROUND // ROUND // ROUND // ROUND // ROUND // ROUND // ROUND // ROUND // ROUND
-    public static void addScore(Player winner, int score) {
-        String scoreString;
-
-        if (score == 1)
-            scoreString = " Очко";
-        else if (score > 1 && score < 5)
-            scoreString = " Очка";
-        else
-            scoreString = " Очков";
-
-        roundStats.put(winner.getName(), score);
-        winner.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы получили +" + score + scoreString);
-    }
-
     private static List<Integer> list = new ArrayList<>(roundStats.values());
-
-
-    public static void StartRound() {
-        isRoundStarted = true;
-        RoundTimer();
-    }
-
-    public static void EndRound() {
-        // Сортировка мапы по очкам и выводим в зависимости от места playerWin или playerLose
-        isRoundTimerStarted = false;
-        isRoundStarted = false;
-
-        System.out.println(roundStats);
-        System.out.println(list);
-        nextRound();
-    }
-
-
 
     public static void RoundTimer() {
         isRoundTimerStarted = true;
         new BukkitRunnable() {
             @Override
             public void run() {
-                eventSeconds--;
+                roundSeconds--;
             }
         }.runTaskTimer(Main.main, 10, 10);
     }
 
-    public static void nextRound() {
-        RoundSystem.isRoundStarted = true;
+    public static void StartRound() {
+        isRoundStarted = true;
         BaseClass.TurnOnAllRules();
+        RoundTimer();
 
         for (String playerName : Queue.redQueueList){
             Player player = Bukkit.getPlayer(playerName);
             player.setGameMode(GameMode.ADVENTURE);
+            roundStats.put(playerName, 0);
             CommandEvent.teleportToSpawn(player);
         }
 
@@ -286,28 +117,75 @@ public class RoundSystem {
         }.runTaskLater(Main.main, 8 * 20);
     }
 
-    public static void playerWin(Player winner, Integer place, Integer scoreCount) {
-        for (Player player : Bukkit.getOnlinePlayers())
-            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Игрок " + winner.getName() + " занял " + ChatColor.BLUE + place + ChatColor.WHITE + " место!");
+    public static void EndRound() {
+        isRoundTimerStarted = false;
+        isRoundStarted = false;
 
-        winner.sendTitle(ChatColor.GREEN + "Поздравляем!", "Вы заняли " + place + " место!", 20, 20, 20);
-        winner.playSound(winner.getLocation(), Sound.BLOCK_NOTE_BLOCK_COW_BELL, 10, 1);
+        LinkedList<Map.Entry<String, Integer>> list = new LinkedList<>(roundStats.entrySet());
+        Comparator<Map.Entry<String, Integer>> comparator = Comparator.comparing(Map.Entry::getValue);
+        Collections.sort(list, comparator.reversed());
 
-        winner.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Вы получили +" + (4 - place) + " очков(-а)!");
-        gameStats.put(winner.getName(), 4 - place + gameStats.get(winner.getName()));
-
-        reset(winner);
+        System.out.println(list);
+        // Сортировка, потом применение функции playerPlace()
+        StartRound();
     }
 
-    public static void playerLose(Player loser, Integer place, Integer scoreCount) {
-        broadcastToEveryone(ChatColor.RED + "Игрок " + loser.getName() + " проиграл!");
+    public static void addScore(Player winner, int score) {
+        String scoreString;
+
+        if (score == 1) {
+            scoreString = " Очко ";
+        } else if (score > 1 && score < 5) {
+            scoreString = " Очка ";
+        } else {
+            scoreString = " Очков ";
+        }
+
+        roundStats.put(winner.getName(), score);
+        winner.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы получили +" + score + scoreString);
+    }
+
+    public static void playerPlace(Player roundPlayer, Integer place, Integer scoreCount) {
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            if (place <= 3) {
+                player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Игрок " + roundPlayer.getName() + " занял " + ChatColor.BLUE + place + ChatColor.WHITE + " место! С " + scoreCount + "очками");
+                roundPlayer.sendTitle(ChatColor.GREEN + "Поздравляем!", "Вы заняли " + place + " призовое место!", 20, 20, 20);
+                roundPlayer.playSound(roundPlayer.getLocation(), Sound.BLOCK_NOTE_BLOCK_COW_BELL, 10, 1);
+            } else {
+                roundPlayer.sendTitle(ChatColor.RED + "К сожалению...", "Вы не заняли  призовое место :C", 20, 20, 20);
+                roundPlayer.playSound(roundPlayer.getLocation(), Sound.ENTITY_BAT_DEATH, 10, 1);
+            }
+
+            int scoreForWin = 4 - place;
+            String scoreString;
+
+            if (scoreForWin == 1) {
+                scoreString = " Очко ";
+            } else if (scoreForWin > 1 && scoreForWin < 5) {
+                scoreString = " Очка ";
+            } else {
+                scoreString = " Очков ";
+            }
+
+            if (scoreForWin <= 0) {
+                roundPlayer.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Вы не получаете очков за этот раунд");
+                PlayerReset(roundPlayer);
+            } else {
+                GameCycle.gameStats.put(roundPlayer.getName(), scoreForWin + GameCycle.gameStats.get(roundPlayer.getName()));
+                roundPlayer.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы получили +" + scoreForWin + scoreString + "за этот раунд");
+                PlayerReset(roundPlayer);
+            }
+        }
+    }
+
+    public static void playerLose(Player loser) {
         loser.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Вы проиграли!");
         loser.playSound(loser.getLocation(), Sound.ENTITY_BAT_DEATH, 10, 1);
 
-        reset(loser);
+        PlayerReset(loser);
     }
 
-    public static void reset(Player player) {
+    public static void PlayerReset(Player player) {
         player.getInventory().clear();
         player.setFoodLevel(20);
         player.setHealth(20);
