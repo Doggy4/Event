@@ -5,6 +5,7 @@ import PluginUtilities.Utilities;
 import QueueSystem.Queue;
 import event.main.Main;
 import org.bukkit.*;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -15,7 +16,7 @@ import static PluginUtilities.Chat.*;
 
 public class RoundSystem {
 
-    public static HashMap<String, Integer> roundStats = new HashMap<String, Integer>();
+    public static HashMap<Player, Integer> roundStats = new HashMap<Player, Integer>();
 
     public static int round = 1;
     public static int roundCount = 10;
@@ -41,15 +42,14 @@ public class RoundSystem {
         BaseClass.TurnOnAllRules();
         RoundTimer();
 
-        for (String playerName : Queue.redQueueList){
-            Player player = Bukkit.getPlayer(playerName);
+        for (Player player : Queue.redQueueList){
             player.setGameMode(GameMode.ADVENTURE);
-            roundStats.put(playerName, 0);
+            roundStats.put(player, 0);
             CommandEvent.teleportToSpawn(player);
         }
 
         for (Entity entity : Bukkit.getWorld("world").getEntities()) {
-            if (!(entity instanceof Player)) {
+            if (!(entity instanceof Player && !(entity instanceof ArmorStand))) {
                 entity.remove();
             }
         }
@@ -86,7 +86,7 @@ public class RoundSystem {
                 int randomBattle = Utilities.getRandom(5, 8);
                 switch (randomBattle) {
                     case 0:
-                        PlaceBlock.placeBlock();
+                        PlaceBlock.PlaceBlock();
                         break;
                     case 1:
                         DropItem.DropItem();
@@ -121,8 +121,8 @@ public class RoundSystem {
         isRoundTimerStarted = false;
         isRoundStarted = false;
 
-        LinkedList<Map.Entry<String, Integer>> list = new LinkedList<>(roundStats.entrySet());
-        Comparator<Map.Entry<String, Integer>> comparator = Comparator.comparing(Map.Entry::getValue);
+        LinkedList<Map.Entry<Player, Integer>> list = new LinkedList<>(roundStats.entrySet());
+        Comparator<Map.Entry<Player, Integer>> comparator = Comparator.comparing(Map.Entry::getValue);
         Collections.sort(list, comparator.reversed());
 
         System.out.println(list);
@@ -141,7 +141,7 @@ public class RoundSystem {
             scoreString = " Очков ";
         }
 
-        roundStats.put(winner.getName(), score);
+        roundStats.put(winner, score);
         winner.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы получили +" + score + scoreString);
     }
 

@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.*;
 
+// Сложна вырубай
 public class PrestartScoreBoard {
 
     public static Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
@@ -31,7 +32,7 @@ public class PrestartScoreBoard {
         Score divider1 = objective.getScore(ChatColor.AQUA + "▪▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
         divider1.setScore(-4);
 
-        if (StartEvent.isGameTimerStarted && !Commands.StartEvent.isGameStarted) {
+        if (GameCycle.isGameStarted && !Commands.StartEvent.isGameStarted) {
             StartEvent.secPreStart--;
             Score gameState = objective.getScore(ChatColor.GOLD + "Статус игры: " + ChatColor.BLUE + "Начало " + ChatColor.WHITE + "[" + StartEvent.secPreStart + "сек]");
             gameState.setScore(-2);

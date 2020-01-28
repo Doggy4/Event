@@ -13,12 +13,14 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class PlaceBlock implements Listener {
 
     private static Material randomMaterialBlock;
     private static boolean isActivated = false;
+    private static HashMap<Player, Location> playerRoom = new HashMap<Player, Location>();
 
     private static ArrayList<Location> GetSpawnPoints() {
         FileConfiguration config = Main.main.getConfig();
@@ -38,20 +40,18 @@ public class PlaceBlock implements Listener {
         locations.add(location.add(-9,0,6));
         return locations;
     }
-///////// ПЕРЕДЕЛАТЬ НАХУЙ
-    public static void start() {
+
+    public static void PlaceBlock() {
         isActivated = true;
         BaseClass.PlaceBlockOff();
         ArrayList<Location> locations = GetSpawnPoints();
 
-        for (String playerName : Queue.redQueueList) {
-            Player player = Bukkit.getPlayer(playerName);
-
+        int l = 0;
+        for (Player player : Queue.redQueueList) {
             player.getInventory().clear();
-
-            for (Location roomLoc : locations) {
-                player.teleport(roomLoc);
-            }
+            Location location = locations.get(l);
+            player.teleport(location.add(0,1.5,0));
+            l++;
 
             ArrayList<Material> materials = new ArrayList<Material>();
 
@@ -67,23 +67,23 @@ public class PlaceBlock implements Listener {
 
             randomMaterialBlock = materialsNew.get(randomBlock);
 
+            player.getInventory().clear();
+
             for (Material block : materialsNew) player.getInventory().addItem(new ItemStack(block, 1));
-
-
 
             player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
             player.sendTitle(ChatColor.GREEN + "Поставьте блок", randomMaterialBlock.name(), 40, 40, 40);
-            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Поставьте блок " + ChatColor.LIGHT_PURPLE + "[" + randomMaterialBlock.name() + "]");
             player.setGameMode(GameMode.SURVIVAL);
 
             FileConfiguration config = Main.main.getConfig();
             World world = Bukkit.getWorld(config.getString("spawn.world"));
-            Location location = new Location(world, config.getDouble("spawn.x"), config.getDouble("spawn.y") + 2, config.getDouble("spawn.z"));
             world.getBlockAt(location).setType(randomMaterialBlock);
+            playerRoom.put(player,location);
         }
     }
 
     private static void PlaceNext(Player player) {
+        Location location = playerRoom.get(player);
         ArrayList<Material> materials = new ArrayList<Material>();
 
         for (Material block : Material.values())
@@ -101,17 +101,12 @@ public class PlaceBlock implements Listener {
         for (Material block : materialsNew) player.getInventory().addItem(new ItemStack(block, 1));
 
         player.getInventory().clear();
-
         player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
         player.sendTitle(ChatColor.GREEN + "Поставьте блок", randomMaterialBlock.name(), 40, 40, 40);
-        player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Поставьте блок " + ChatColor.LIGHT_PURPLE + "[" + randomMaterialBlock.name() + "]");
-        player.setGameMode(GameMode.SURVIVAL);
 
         FileConfiguration config = Main.main.getConfig();
         World world = Bukkit.getWorld(config.getString("spawn.world"));
-        Location location = new Location(world, config.getDouble("spawn.x"), config.getDouble("spawn.y") + 2, config.getDouble("spawn.z"));
         world.getBlockAt(location).setType(randomMaterialBlock);
-
     }
 
     @EventHandler
@@ -124,6 +119,7 @@ public class PlaceBlock implements Listener {
             PlaceNext(player);
         } else {
             RoundSystem.addScore(player, -1);
+            PlaceNext(player);
         }
 
         if (RoundSystem.roundSeconds >= 0) {
