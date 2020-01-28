@@ -14,8 +14,6 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-
-import static Game.RoundSystem.*;
 import static PluginUtilities.Items.BowEventArrows;
 import static PluginUtilities.Items.BowEventBow;
 
@@ -34,8 +32,7 @@ public class BowShoot implements Listener {
     public static void BowShoot() {
         isActivated = true;
 
-        for (String playerName : Queue.redQueueList) {
-            Player player = Bukkit.getPlayer(playerName);
+        for (Player player : Queue.redQueueList) {
             player.getInventory().clear();
 
             player.sendTitle(ChatColor.GREEN + "Выстрелите в блок ", targets[n].toString(), 40, 40, 40);

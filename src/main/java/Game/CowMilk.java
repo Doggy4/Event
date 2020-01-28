@@ -11,7 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
-
+// Сделать респавнилку коров, (Не один раз)
 public class CowMilk implements Listener {
     private static String commonCow = (ChatColor.GRAY + "[✶] Милка");
     private static String uncommonCow = (ChatColor.GREEN + "[✷] Милка");
@@ -30,8 +30,7 @@ public class CowMilk implements Listener {
     public static void MilkCow() {
         isActivated = true;
 
-        for (String playerName : Queue.redQueueList) {
-            Player player = Bukkit.getPlayer(playerName);
+        for (Player player : Queue.redQueueList) {
             player.getInventory().clear();
 
             player.sendTitle(ChatColor.GREEN + "Подоите корову!", "Скорее!", 40, 40, 40);

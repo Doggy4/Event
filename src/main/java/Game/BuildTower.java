@@ -21,8 +21,7 @@ public class BuildTower implements Listener {
     public static void BuildTower() {
         BaseClass.PlaceBlockOff();
 
-        for (String playerName : Queue.redQueueList) {
-            Player player = Bukkit.getPlayer(playerName);
+        for (Player player : Queue.redQueueList) {
             player.getInventory().clear();
 
             player.setGameMode(GameMode.SURVIVAL);

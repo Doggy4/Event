@@ -19,7 +19,7 @@ public class GameCycle {
 
     public static HashMap<String, Integer> gameStats = new HashMap<String, Integer>();
 
-    private static int mainSecPreStart = 60;
+    public static int mainSecPreStart = 60;
     public static boolean isGameStarted = false;
     public static boolean isGameTimerStarted = false;
 
@@ -52,19 +52,12 @@ public class GameCycle {
         }.runTaskTimer(Main.main, 10, 10);
     }
 
-    private static void StartGame() {
-        for (String playerName : Queue.redQueueList) {
-            Player player = Bukkit.getPlayer(playerName);
-
-            player.getInventory().clear();
-            player.setHealth(20);
-            player.setFoodLevel(20);
+    public static void StartGame() {
+        for (Player player : Queue.redQueueList) {
             player.setExp(0);
-            player.getActivePotionEffects().clear();
-            player.setGameMode(GameMode.ADVENTURE);
-
+            PlayerReset(player);
             CommandEvent.teleportToSpawn(player);
-            roundStats.put(playerName, 0);
+            roundStats.put(player, 0);
         }
         isGameStarted = true;
         RoundSystem.StartRound();
@@ -79,10 +72,10 @@ public class GameCycle {
         int max = 0;
         String winner = "null";
 
-        for (String name : Queue.redQueueList)
-            if (gameStats.get(name) > max) {
-                max = roundStats.get(name);
-                winner = name;
+        for (Player redPlayer : Queue.redQueueList)
+            if (gameStats.get(redPlayer) > max) {
+                max = roundStats.get(redPlayer);
+                winner = redPlayer.getName();
             }
 
         Player player = Bukkit.getPlayer(winner);
@@ -94,20 +87,17 @@ public class GameCycle {
             onlinePlayer.sendMessage(ChatColor.BLUE + "Игрок " + ChatColor.GOLD + winner + ChatColor.BLUE + " победитель!");
         }
 
-        for (String playerName : Queue.redQueueList) {
-            Player redPlayer = Bukkit.getPlayer(playerName);
+        for (Player redPlayer : Queue.redQueueList) {
             CommandEvent.teleportToLobby(redPlayer);
-
-            PrestartScoreBoard.red.removeEntry(playerName);
+            PrestartScoreBoard.red.removeEntry(player.getName());
         }
 
         Queue.redQueueList.clear();
 
-        for (String playerName : Queue.yellowQueueList) {
-            Queue.redQueueList.add(playerName);
+        for (Player yellowPlayer : Queue.yellowQueueList) {
+            Queue.redQueueList.add(yellowPlayer);
 
-            Player yellowPlayer = Bukkit.getPlayer(playerName);
-            PrestartScoreBoard.red.addEntry(playerName);
+            PrestartScoreBoard.red.addEntry(yellowPlayer.getName());
             yellowPlayer.sendTitle(ChatColor.YELLOW + "Вы определены в " + ChatColor.RED + "[RED]", ChatColor.LIGHT_PURPLE + "Приготовьтесь к игре!", 20, 20, 20);
             yellowPlayer.sendMessage(ChatColor.YELLOW + "Вы определены в " + ChatColor.RED + "[RED]");
             yellowPlayer.playSound(yellowPlayer.getLocation(), Sound.BLOCK_ANVIL_PLACE, 20, 1);
@@ -116,15 +106,14 @@ public class GameCycle {
         Queue.yellowQueueList.clear();
 
         for (int i = 0; i < 10; i++) {
-            String playerName = Queue.greenQueueList.get(i);
+           Player greenPlayer = Queue.greenQueueList.get(i);
 
-            if (playerName == null) break;
+            if (greenPlayer == null) break;
 
             Queue.greenQueueList.remove(i);
-            Queue.yellowQueueList.add(playerName);
+            Queue.yellowQueueList.add(greenPlayer);
 
-            Player greenPlayer = Bukkit.getPlayer(playerName);
-            PrestartScoreBoard.yellow.addEntry(playerName);
+            PrestartScoreBoard.yellow.addEntry(greenPlayer.getName());
             greenPlayer.sendTitle(ChatColor.YELLOW + "Вы определены в " + ChatColor.YELLOW + "[YELLOW]", ChatColor.LIGHT_PURPLE + "Ожидайте!", 20, 20, 20);
             greenPlayer.sendMessage(ChatColor.YELLOW + "Вы определены в " + ChatColor.YELLOW + "[YELLOW]");
             greenPlayer.playSound(greenPlayer.getLocation(), Sound.BLOCK_ANVIL_PLACE, 20, 1);
@@ -156,7 +145,7 @@ public class GameCycle {
                 broadcastToEveryone(ChatColor.BLUE + "Начало игры через " + ChatColor.GOLD + mainSecPreStart + ChatColor.BLUE + " секунду");
                 player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
             }
-        } else if (mainSecPreStart == 0) {
+        } else if (mainSecPreStart <= 0) {
             for (Player player : Bukkit.getOnlinePlayers()) {
                 player.sendTitle(ChatColor.BLUE + "Игра началась!", ChatColor.GOLD + "Играют: " + ChatColor.RED + "[RED]", 30, 30, 30);
                 player.playSound(player.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_CURSE, 10, 1);

@@ -1,6 +1,7 @@
 package QueueSystem;
 
 import Game.GameCycle;
+import PluginUtilities.Chat;
 import event.main.Main;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -29,20 +30,20 @@ public class PrestartScoreBoard {
         Objective objective = scoreboard.registerNewObjective("divider1", "dummy", ChatColor.AQUA + "[" + ChatColor.YELLOW + "EVENT" + ChatColor.AQUA + "]");
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
-        Score divider1 = objective.getScore(ChatColor.AQUA + "▪▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
+        Score divider1 = objective.getScore(ChatColor.AQUA + Chat.divThick32);
         divider1.setScore(-4);
 
-        if (GameCycle.isGameStarted && !Commands.StartEvent.isGameStarted) {
-            StartEvent.secPreStart--;
-            Score gameState = objective.getScore(ChatColor.GOLD + "Статус игры: " + ChatColor.BLUE + "Начало " + ChatColor.WHITE + "[" + StartEvent.secPreStart + "сек]");
+        if (StartEvent.isGameStarted && !Commands.StartEvent.isGameStarted) {
+            GameCycle.mainSecPreStart--;
+            Score gameState = objective.getScore(ChatColor.GOLD + "Статус игры: " + ChatColor.BLUE + "Начало " + ChatColor.WHITE + "[" +GameCycle.mainSecPreStart + "сек]");
             gameState.setScore(-2);
-        } else if (Commands.StartEvent.isGameStarted) {
+        } else if (GameCycle.isGameStarted) {
             Score gameState = objective.getScore(ChatColor.GOLD + "Статус игры: " + ChatColor.GREEN + "Активна");
             gameState.setScore(-2);
             Score battle = objective.getScore(ChatColor.GOLD + "Раунд: " + ChatColor.GREEN + (aGameCycle.battle-1));
             battle.setScore(-3);
 
-            Score divider2 = objective.getScore(ChatColor.AQUA + "▪▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▪");
+            Score divider2 = objective.getScore(ChatColor.AQUA + Chat.divThick32);
             divider2.setScore(31);
             for (String name : Queue.redQueueList) {
                 Score player = objective.getScore(ChatColor.GOLD + name);

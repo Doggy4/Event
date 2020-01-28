@@ -24,8 +24,6 @@ public class RoundSystem {
     public static boolean isRoundStarted = false;
     public static boolean isRoundTimerStarted = false;
 
-    private static List<Integer> list = new ArrayList<>(roundStats.values());
-
     public static void RoundTimer() {
         isRoundTimerStarted = true;
         new BukkitRunnable() {
@@ -37,7 +35,6 @@ public class RoundSystem {
     }
 
     public static void StartRound() {
-
         isRoundStarted = true;
         BaseClass.TurnOnAllRules();
         RoundTimer();
@@ -187,7 +184,9 @@ public class RoundSystem {
 
     public static void PlayerReset(Player player) {
         player.getInventory().clear();
-        player.setFoodLevel(20);
         player.setHealth(20);
+        player.setFoodLevel(20);
+        player.getActivePotionEffects().clear();
+        player.setGameMode(GameMode.ADVENTURE);
     }
 }

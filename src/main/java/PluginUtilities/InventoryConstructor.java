@@ -42,13 +42,13 @@ public class InventoryConstructor implements Listener {
         Inventory redWaiters = Bukkit.createInventory(null, 18, ChatColor.RED + "Список ожидающих RED");
 
         int i = 0;
-        for (String name : Queue.redQueueList) {
+        for (Player player : Queue.redQueueList) {
 
             ItemStack skull = new ItemStack(Material.PLAYER_HEAD, 1);
             SkullMeta meta = (SkullMeta) skull.getItemMeta();
 
-            meta.setOwningPlayer(Bukkit.getPlayer(name));
-            meta.setDisplayName(ChatColor.RED + "#" + (i + 1) + " " + ChatColor.LIGHT_PURPLE + name);
+            meta.setOwningPlayer(Bukkit.getPlayer(player.getName()));
+            meta.setDisplayName(ChatColor.RED + "#" + (i + 1) + " " + ChatColor.LIGHT_PURPLE + player);
             skull.setItemMeta(meta);
 
             if (i >= 5)
@@ -66,13 +66,13 @@ public class InventoryConstructor implements Listener {
         Inventory yellowWaiters = Bukkit.createInventory(null, 18, ChatColor.YELLOW + "Список ожидающих YELLOW");
 
         int i = 0;
-        for (String name : Queue.yellowQueueList) {
+        for (Player player : Queue.yellowQueueList) {
 
             ItemStack skull = new ItemStack(Material.PLAYER_HEAD, 1);
             SkullMeta meta = (SkullMeta) skull.getItemMeta();
 
-            meta.setOwningPlayer(Bukkit.getPlayer(name));
-            meta.setDisplayName(ChatColor.YELLOW + "#" + (i + 1) + " " + ChatColor.LIGHT_PURPLE + name);
+            meta.setOwningPlayer(Bukkit.getPlayer(player.getName()));
+            meta.setDisplayName(ChatColor.YELLOW + "#" + (i + 1) + " " + ChatColor.LIGHT_PURPLE + player);
             skull.setItemMeta(meta);
 
             if (i >= 5)
@@ -89,13 +89,13 @@ public class InventoryConstructor implements Listener {
         Inventory greenWaiters = Bukkit.createInventory(null, 18, ChatColor.GREEN + "Список ожидающих GREEN");
 
         int i = 0;
-        for (String name : greenQueueList) {
+        for (Player player : greenQueueList) {
 
             ItemStack skull = new ItemStack(Material.PLAYER_HEAD, 1);
             SkullMeta meta = (SkullMeta) skull.getItemMeta();
 
-            meta.setOwningPlayer(Bukkit.getPlayer(name));
-            meta.setDisplayName(ChatColor.GREEN + "#" + (i + 1) + " " + ChatColor.LIGHT_PURPLE + name);
+            meta.setOwningPlayer(Bukkit.getPlayer(player.getName()));
+            meta.setDisplayName(ChatColor.GREEN + "#" + (i + 1) + " " + ChatColor.LIGHT_PURPLE + player);
             skull.setItemMeta(meta);
 
             greenWaiters.setItem(i, skull);
