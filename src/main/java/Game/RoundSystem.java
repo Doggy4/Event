@@ -168,7 +168,7 @@ public class RoundSystem {
                 roundPlayer.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Вы не получаете очков за этот раунд");
                 PlayerReset(roundPlayer);
             } else {
-                GameCycle.gameStats.put(roundPlayer.getName(), scoreForWin + GameCycle.gameStats.get(roundPlayer.getName()));
+                GameCycle.gameStats.put(roundPlayer, scoreForWin + GameCycle.gameStats.get(roundPlayer));
                 roundPlayer.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы получили +" + scoreForWin + scoreString + "за этот раунд");
                 PlayerReset(roundPlayer);
             }
