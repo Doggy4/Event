@@ -4,14 +4,11 @@ import PluginUtilities.MapRebuild;
 import QueueSystem.Queue;
 import event.main.Main;
 import org.bukkit.*;
-import org.bukkit.entity.Cow;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public class BuildTower implements Listener {
     // Добавить условия компановки блоков, например поставьте красную шерсть рядом с синей
@@ -53,7 +50,7 @@ public class BuildTower implements Listener {
         if (RoundSystem.roundSeconds <= 0) {
             isActivated = false;
             MapRebuild.loadSchematic("arena");
-            RoundSystem.EndRound();
+            RoundSystem.endRound();
         }
     }
 }

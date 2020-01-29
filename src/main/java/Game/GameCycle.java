@@ -30,7 +30,7 @@ public class GameCycle {
         }
         // END
         if (round > roundCount && isGameStarted && !isRoundStarted) {
-            EndGame();
+            endGame();
         }
         seconds();
     }
@@ -39,10 +39,10 @@ public class GameCycle {
     public static void GameTimerStart() {
         mainSecPreStart = 60;
         isGameStarted = false;
-        GameTimer();
+        gameTimer();
     }
 
-    public static void GameTimer() {
+    public static void gameTimer() {
         isGameTimerStarted = true;
         new BukkitRunnable() {
             @Override
@@ -60,10 +60,10 @@ public class GameCycle {
             roundStats.put(player, 0);
         }
         isGameStarted = true;
-        RoundSystem.StartRound();
+        RoundSystem.startRound();
     }
 
-    public static void EndGame() {
+    public static void endGame() {
         isRoundTimerStarted = false;
         isGameStarted = false;
         mainSecPreStart = 60;

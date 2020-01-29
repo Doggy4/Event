@@ -24,7 +24,7 @@ public class RoundSystem {
     public static boolean isRoundStarted = false;
     public static boolean isRoundTimerStarted = false;
 
-    public static void RoundTimer() {
+    public static void roundTimer() {
         isRoundTimerStarted = true;
         new BukkitRunnable() {
             @Override
@@ -34,10 +34,10 @@ public class RoundSystem {
         }.runTaskTimer(Main.main, 10, 10);
     }
 
-    public static void StartRound() {
+    public static void startRound() {
         isRoundStarted = true;
         BaseClass.TurnOnAllRules();
-        RoundTimer();
+        roundTimer();
 
         for (Player player : Queue.redQueueList){
             player.setGameMode(GameMode.ADVENTURE);
@@ -114,7 +114,7 @@ public class RoundSystem {
         }.runTaskLater(Main.main, 8 * 20);
     }
 
-    public static void EndRound() {
+    public static void endRound() {
         isRoundTimerStarted = false;
         isRoundStarted = false;
 
@@ -124,7 +124,7 @@ public class RoundSystem {
 
         System.out.println(list);
         // Сортировка, потом применение функции playerPlace()
-        StartRound();
+        startRound();
     }
 
     public static void addScore(Player winner, int score) {

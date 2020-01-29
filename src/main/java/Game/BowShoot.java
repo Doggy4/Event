@@ -114,7 +114,7 @@ public class BowShoot implements Listener {
         }
 
         if (RoundSystem.roundSeconds <= 0) {
-            RoundSystem.EndRound();
+            RoundSystem.endRound();
             isActivated = false;
 
             bonusBlock.setType(Material.AIR);

@@ -12,7 +12,6 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -124,7 +123,7 @@ public class PlaceBlock implements Listener {
 
         if (RoundSystem.roundSeconds >= 0) {
             isActivated = false;
-            RoundSystem.EndRound();
+            RoundSystem.endRound();
         }
         event.setCancelled(true);
     }

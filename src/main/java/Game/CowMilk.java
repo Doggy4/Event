@@ -1,7 +1,5 @@
 package Game;
 
-import PluginUtilities.Chat;
-import PluginUtilities.ParticleConstructor;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
 import event.main.Main;
@@ -93,7 +91,7 @@ public class CowMilk implements Listener {
 
         if (RoundSystem.roundSeconds <= 0){
             isActivated = false;
-            RoundSystem.EndRound();
+            RoundSystem.endRound();
         }
     }
 }

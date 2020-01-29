@@ -82,7 +82,7 @@ public class DropItem implements Listener {
 
         if (RoundSystem.roundSeconds <= 0) {
             isActivated = false;
-            RoundSystem.EndRound();
+            RoundSystem.endRound();
         }
     }
 }
