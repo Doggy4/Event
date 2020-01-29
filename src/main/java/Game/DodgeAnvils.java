@@ -104,7 +104,7 @@ public class DodgeAnvils implements Listener {
 
         Player player = (Player) event.getEntity();
 
-        if (!Queue.redQueueList.contains(player.getName())) return;
+        if (!Queue.redQueueList.contains(player)) return;
 
         player.setGameMode(GameMode.SPECTATOR);
         RoundSystem.playerLose(player);

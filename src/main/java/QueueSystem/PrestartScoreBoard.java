@@ -47,7 +47,7 @@ public class PrestartScoreBoard {
             divider2.setScore(31);
             for (Player player : Queue.redQueueList) {
                 Score score = objective.getScore(ChatColor.GOLD + player.getName());
-                score.setScore(GameCycle.gameStats.get(player);
+                score.setScore(GameCycle.gameStats.get(player));
                 player.setLevel(GameCycle.gameStats.get(player));
             }
         } else {
