@@ -41,11 +41,10 @@ public class DodgeAnvils implements Listener {
 
             @Override
             public void run() {
-                if (RoundSystem.roundSeconds >= 30) {
+                if (RoundSystem.roundSeconds >= 0) {
                     this.cancel();
                     endDodgeAnvils();
                     RoundSystem.endRound();
-                    RoundSystem.isRoundStarted = false;
                     isActivated = false;
                 }
 
@@ -105,7 +104,7 @@ public class DodgeAnvils implements Listener {
 
         Player player = (Player) event.getEntity();
 
-        if (!Queue.redQueueList.contains(player.getName())) return;
+        if (!Queue.redQueueList.contains(player)) return;
 
         player.setGameMode(GameMode.SPECTATOR);
         RoundSystem.playerLose(player);
