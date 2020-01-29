@@ -12,10 +12,12 @@ import org.bukkit.inventory.ItemStack;
 
 public class BuildTower implements Listener {
     // Добавить условия компановки блоков, например поставьте красную шерсть рядом с синей
+    private static int score = 10;
 
     private static boolean isActivated = false;
 
     public static void BuildTower() {
+        isActivated = true;
         BaseClass.PlaceBlockOff();
 
         for (Player player : Queue.redQueueList) {
@@ -39,7 +41,6 @@ public class BuildTower implements Listener {
         Player player = event.getPlayer();
 
         if (blockPlace >= 20) {
-            int score = 10;
             player.getWorld().spawnParticle(Particle.FIREWORKS_SPARK, event.getBlockPlaced().getLocation(), 10);
             RoundSystem.addScore(player, score);
             score -= 2;

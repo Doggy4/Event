@@ -31,7 +31,7 @@ public class PrestartScoreBoard {
         Objective objective = scoreboard.registerNewObjective("divider1", "dummy", ChatColor.AQUA + "[" + ChatColor.YELLOW + "EVENT" + ChatColor.AQUA + "]");
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
-        Score divider1 = objective.getScore(ChatColor.AQUA + Chat.divThick32);
+        Score divider1 = objective.getScore(ChatColor.AQUA + Chat.divThick16);
         divider1.setScore(-4);
 
         if (!GameCycle.isGameStarted && GameCycle.isGameTimerStarted) {
@@ -43,7 +43,7 @@ public class PrestartScoreBoard {
             Score battle = objective.getScore(ChatColor.GOLD + "Раунд: " + ChatColor.GREEN + RoundSystem.round);
             battle.setScore(-3);
 
-            Score divider2 = objective.getScore(ChatColor.AQUA + Chat.divThick32);
+            Score divider2 = objective.getScore(ChatColor.AQUA + Chat.divThick16);
             divider2.setScore(31);
             for (Player player : Queue.redQueueList) {
                 Score name = objective.getScore(ChatColor.GOLD + player.getName());
@@ -55,7 +55,7 @@ public class PrestartScoreBoard {
             gameState.setScore(-2);
         }
 
-        Score divider2 = objective.getScore(ChatColor.AQUA + Chat.divThick32);
+        Score divider2 = objective.getScore(ChatColor.AQUA + Chat.divThick16);
         divider2.setScore(-1);
     }
 

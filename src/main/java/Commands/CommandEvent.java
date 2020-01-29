@@ -94,18 +94,18 @@ public class CommandEvent implements TabExecutor {
     }
 
     public void clearQueues() {
-        aGameCycle.broadcastToEveryone("Встаньте в очередь! Приоритет очереди: " + ChatColor.RED + "[RED]");
+        Chat.broadcastToEveryone("Встаньте в очередь! Приоритет очереди: " + ChatColor.RED + "[RED]");
 
         for (Player player : Queue.redQueueList)
-            PrestartScoreBoard.red.removeEntry(player);
+            PrestartScoreBoard.red.removeEntry(player.getName());
         Queue.redQueueList.clear();
 
         for (Player player : Queue.yellowQueueList)
-            PrestartScoreBoard.yellow.removeEntry(player);
+            PrestartScoreBoard.yellow.removeEntry(player.getName());
         Queue.yellowQueueList.clear();
 
         for (Player player : Queue.greenQueueList)
-            PrestartScoreBoard.green.removeEntry(player);
+            PrestartScoreBoard.green.removeEntry(player.getName());
         Queue.greenQueueList.clear();
     }
 
@@ -123,7 +123,7 @@ public class CommandEvent implements TabExecutor {
     }
 
     public void broadcast(String[] message) {
-        aGameCycle.broadcastToEveryone(String.join(" ", message));
+        Chat.broadcastToEveryone(String.join(" ", message));
         for (Player player : Bukkit.getOnlinePlayers()) {
             player.sendTitle(ChatColor.RED + "Внимание!", ChatColor.YELLOW + String.join(" ", message), 40, 60, 40);
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 10, 1);
