@@ -64,7 +64,7 @@ public class ShearSheep implements Listener {
         } else {
             RoundSystem.playerLose(player);
         }
-        if (RoundSystem.roundSeconds >= 0) {
+        if (RoundSystem.roundSeconds <= 0) {
             isShearSheepActivated = false;
            RoundSystem.endRound();
         }

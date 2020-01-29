@@ -50,7 +50,7 @@ public class EggThrow implements Listener {
 
         player.getInventory().clear();
 
-        if (RoundSystem.roundSeconds >= 0) {
+        if (RoundSystem.roundSeconds <= 0) {
             isActivated = false;
             RoundSystem.endRound();
         }
