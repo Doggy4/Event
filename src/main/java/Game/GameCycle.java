@@ -58,6 +58,7 @@ public class GameCycle {
             PlayerReset(player);
             CommandEvent.teleportToSpawn(player);
             roundStats.put(player, 0);
+            gameStats.put(player, 0);
         }
         isGameStarted = true;
         RoundSystem.startRound();
