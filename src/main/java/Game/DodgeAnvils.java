@@ -42,10 +42,10 @@ public class DodgeAnvils implements Listener {
             @Override
             public void run() {
                 if (RoundSystem.roundSeconds >= 0) {
-                    this.cancel();
                     endDodgeAnvils();
                     RoundSystem.endRound();
                     isActivated = false;
+                    this.cancel();
                 }
 
                 for (int i = 0; i < 50; i++) {

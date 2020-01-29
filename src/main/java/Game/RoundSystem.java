@@ -26,6 +26,7 @@ public class RoundSystem {
 
     public static void roundTimer() {
         isRoundTimerStarted = true;
+        roundSeconds = 30;
         new BukkitRunnable() {
             @Override
             public void run() {
