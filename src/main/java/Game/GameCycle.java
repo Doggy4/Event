@@ -17,7 +17,7 @@ import static PluginUtilities.Chat.*;
 
 public class GameCycle {
 
-    public static HashMap<String, Integer> gameStats = new HashMap<String, Integer>();
+    public static HashMap<Player, Integer> gameStats = new HashMap<Player, Integer>();
 
     public static int mainSecPreStart = 60;
     public static boolean isGameStarted = false;

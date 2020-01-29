@@ -42,10 +42,10 @@ public class DodgeAnvils implements Listener {
             @Override
             public void run() {
                 if (RoundSystem.roundSeconds >= 0) {
-                    this.cancel();
                     endDodgeAnvils();
                     RoundSystem.endRound();
                     isActivated = false;
+                    this.cancel();
                 }
 
                 for (int i = 0; i < 50; i++) {
@@ -74,7 +74,7 @@ public class DodgeAnvils implements Listener {
                 roundPlayer.playSound(roundPlayer.getLocation(), Sound.BLOCK_NOTE_BLOCK_COW_BELL, 10, 1);
 
                 roundPlayer.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Вы получили +" + 2 + " очков(-а)!");
-                GameCycle.gameStats.put(roundPlayer.getName(), 2 + GameCycle.gameStats.get(roundPlayer.getName()));
+                GameCycle.gameStats.put(roundPlayer, 2 + GameCycle.gameStats.get(roundPlayer));
 
                 RoundSystem.PlayerReset(roundPlayer);
             }
