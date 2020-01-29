@@ -1,19 +1,15 @@
 package QueueSystem;
 
-import Commands.StartEvent;
-import Game.aGameCycle;
+import Game.GameCycle;
+import Game.RoundSystem;
 import PluginUtilities.Chat;
-import PluginUtilities.Utilities;
 import event.main.Main;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+// Сложна вырубай
 public class PrestartScoreBoard {
 
     public static Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
@@ -35,51 +31,46 @@ public class PrestartScoreBoard {
         Objective objective = scoreboard.registerNewObjective("divider1", "dummy", ChatColor.AQUA + "[" + ChatColor.YELLOW + "EVENT" + ChatColor.AQUA + "]");
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
-        Score divider1 = objective.getScore(ChatColor.AQUA + "▪▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
+        Score divider1 = objective.getScore(ChatColor.AQUA + Chat.divThick32);
         divider1.setScore(-4);
 
-        if (StartEvent.isGameTimerStarted && !Commands.StartEvent.isGameStarted) {
-            StartEvent.secPreStart--;
-            Score gameState = objective.getScore(ChatColor.GOLD + "Статус игры: " + ChatColor.BLUE + "Начало " + ChatColor.WHITE + "[" + StartEvent.secPreStart + "сек]");
+        if (!GameCycle.isGameStarted && GameCycle.isGameTimerStarted) {
+            Score gameState = objective.getScore(ChatColor.GOLD + "Статус игры: " + ChatColor.BLUE + "Начало " + ChatColor.WHITE + "[" + GameCycle.mainSecPreStart + "сек]");
             gameState.setScore(-2);
-        } else if (Commands.StartEvent.isGameStarted) {
+        } else if (GameCycle.isGameStarted) {
             Score gameState = objective.getScore(ChatColor.GOLD + "Статус игры: " + ChatColor.GREEN + "Активна");
             gameState.setScore(-2);
-            Score battle = objective.getScore(ChatColor.GOLD + "Раунд: " + ChatColor.GREEN + (aGameCycle.battle-1));
+            Score battle = objective.getScore(ChatColor.GOLD + "Раунд: " + ChatColor.GREEN + RoundSystem.round);
             battle.setScore(-3);
 
-            Score divider2 = objective.getScore(ChatColor.AQUA + "▪▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▪");
+            Score divider2 = objective.getScore(ChatColor.AQUA + Chat.divThick32);
             divider2.setScore(31);
-            for (String name : Queue.redQueueList) {
-                Score player = objective.getScore(ChatColor.GOLD + name);
-                player.setScore(aGameCycle.gameStats.get(name));
-                Player p = Bukkit.getPlayer(name);
-                p.setLevel(aGameCycle.gameStats.get(name));
+            for (Player player : Queue.redQueueList) {
+                Score name = objective.getScore(ChatColor.GOLD + player.getName());
+                name.setScore(GameCycle.gameStats.get(player.getName()));
+                player.setLevel(GameCycle.gameStats.get(player));
             }
         } else {
             Score gameState = objective.getScore(ChatColor.GOLD + "Статус игры: " + ChatColor.GREEN + "Ожидание...");
             gameState.setScore(-2);
         }
 
-        Score divider2 = objective.getScore(ChatColor.AQUA + "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▪");
+        Score divider2 = objective.getScore(ChatColor.AQUA + Chat.divThick32);
         divider2.setScore(-1);
     }
 
     public static void PrestartScoreboard() {
         // Игровой раннабл
-
         new BukkitRunnable() {
             @Override
             public void run() {
                 // ГЛАВНЫЕ ЭЛЕМЕНТЫ БОРДА
                 setMainBoardSettings();
-
                 // УСТАНОВКА БОРДА
                 for (Player player : Bukkit.getOnlinePlayers())
                     player.setScoreboard(scoreboard);
-
                 // ГЛАВНЫЙ ИГРОВОЙ ЦИКЛ
-                aGameCycle.mainCycle();
+                GameCycle.mainCycle();
             }
         }.runTaskTimer(Main.main, 10, 10);
     }

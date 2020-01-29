@@ -11,9 +11,8 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Collections;
-
+// Сделать что-то
 public class EggThrow implements Listener {
-
     private static Material randomMaterialBlock;
     private static boolean isActivated = false;
 
@@ -29,39 +28,31 @@ public class EggThrow implements Listener {
 
         int randomBlock = Utilities.getRandom(0, 36);
 
-        for (String playerName : Queue.redQueueList) {
-            Player player = Bukkit.getPlayer(playerName);
+        for (Player player : Queue.redQueueList) {
             player.getInventory().clear();
 
             player.sendTitle(ChatColor.GREEN + "Бросьте яйцо!", "Поторпитесь!", 40, 40, 40);
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Бросьте яйцо!");
 
-            for (Material block : materials)
-                player.getInventory().addItem(new ItemStack(block, 64));
+            for (Material block : materials) player.getInventory().addItem(new ItemStack(block, 64));
 
             player.getInventory().setItem(randomBlock, new ItemStack(Material.EGG));
         }
     }
 
-    private static int place = 1;
-
     @EventHandler
-    public void onPlayerThrowEgg(PlayerEggThrowEvent event) {
-        if (!isActivated)
-            return;
+    public void onPlayerThrowEgg(PlayerEggThrowEvent e) {
+        if (!isActivated) return;
 
-        Player player = event.getPlayer();
+        Player player = e.getPlayer();
 
-        aGameCycle.playerWin(player, place);
-        place++;
+        RoundSystem.addScore(player, 1);
 
         player.getInventory().clear();
 
-        if (place > 3) {
+        if (RoundSystem.roundSeconds >= 0) {
             isActivated = false;
-            aGameCycle.isAnyBattleEnabled = isActivated;
-            place = 1;
+            RoundSystem.endRound();
         }
     }
-
 }

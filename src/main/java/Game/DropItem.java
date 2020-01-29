@@ -19,9 +19,8 @@ public class DropItem implements Listener {
     private static boolean isActivated = false;
 
     public static void DropItem() {
+        isActivated = true;
         BaseClass.DropItemOff();
-
-        isActivated = aGameCycle.isAnyBattleEnabled;
 
         ArrayList<Material> materials = new ArrayList<Material>(Arrays.asList(Material.values()));
 
@@ -36,8 +35,7 @@ public class DropItem implements Listener {
             randomMaterialBlock = materialsNew.get(randomBlock);
         }
 
-        for (String playerName : Queue.redQueueList) {
-            Player player = Bukkit.getPlayer(playerName);
+        for (Player player : Queue.redQueueList) {
             player.getInventory().clear();
 
             player.sendTitle(ChatColor.GREEN + "Выкиньте предмет", randomMaterialBlock.name(), 40, 40, 40);
@@ -48,26 +46,43 @@ public class DropItem implements Listener {
         }
     }
 
-    private static int place = 1;
+    private static void DropNext(Player player) {
+        ArrayList<Material> materials = new ArrayList<Material>(Arrays.asList(Material.values()));
+
+        int randomMaterial = Utilities.getRandom(0, materials.size() - 37);
+        List<Material> materialsNew =  materials.subList(randomMaterial, randomMaterial+36);
+
+        int randomBlock = Utilities.getRandom(0, 36);
+        randomMaterialBlock = materialsNew.get(randomBlock);
+
+        while (randomMaterialBlock.name().contains("STEM") || randomMaterialBlock.name().contains("AIR") || randomMaterialBlock.name().contains("BAMBOO")  || randomMaterialBlock.name().contains("STAND") || randomMaterialBlock.name().contains("COMMAND") || randomMaterialBlock.name().contains("BARRIER") || randomMaterialBlock.name().contains("LECTERN") || randomMaterialBlock.name().contains("BEETROOTS") || randomMaterialBlock.name().contains("CARROTS") || randomMaterialBlock.name().contains("SEEDS") || randomMaterialBlock.name().contains("POTATO") || randomMaterialBlock.name().contains("BLUET")){
+            randomBlock = Utilities.getRandom(0, 36);
+            randomMaterialBlock = materialsNew.get(randomBlock);
+        }
+            player.getInventory().clear();
+            player.sendTitle(ChatColor.GREEN + "Выкиньте предмет", randomMaterialBlock.name(), 40, 40, 40);
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Выкиньте предмет " + ChatColor.LIGHT_PURPLE + "[" + randomMaterialBlock.name() + "]");
+
+            for (Material block : materialsNew) player.getInventory().addItem(new ItemStack(block, 64));
+
+    }
 
     @EventHandler
     public void onPlayerDropItem(PlayerDropItemEvent event) {
-        if (!isActivated)
-            return;
+        if (!isActivated) return;
 
         Player player = event.getPlayer();
 
         if (event.getItemDrop().getItemStack().getType().name().equals(randomMaterialBlock.name())){
-            aGameCycle.playerWin(player, place);
-            place++;
+           RoundSystem.addScore(player, 1);
+            DropNext(player);
         } else {
-            aGameCycle.playerLose(player);
+            RoundSystem.playerLose(player);
         }
 
-        if (place > 3){
+        if (RoundSystem.roundSeconds <= 0) {
             isActivated = false;
-            aGameCycle.isAnyBattleEnabled = false;
-            place = 1;
+            RoundSystem.endRound();
         }
     }
 }

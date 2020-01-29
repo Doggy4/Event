@@ -9,16 +9,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Queue {
-    public static List<String> redQueueList = new ArrayList<String>();
-    public static List<String> yellowQueueList = new ArrayList<String>();
-    public static List<String> greenQueueList = new ArrayList<String>();
+    public static List<Player> redQueueList = new ArrayList<Player>();
+    public static List<Player> yellowQueueList = new ArrayList<Player>();
+    public static List<Player> greenQueueList = new ArrayList<Player>();
 
     private static Team redQueue = PrestartScoreBoard.scoreboard.getTeam("RED");
     private static Team yellowQueue = PrestartScoreBoard.scoreboard.getTeam("YELLOW");
     private static Team greenQueue = PrestartScoreBoard.scoreboard.getTeam("GREEN");
 
     public static void AddToRedQueue(Player player) {
-        if (redQueueList.contains(player.getName())) {
+        if (redQueueList.contains(player)) {
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Вы уже находитесь в очереди " + ChatColor.RED + "[RED]" + ChatColor.WHITE + "!");
             player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 10, 1);
             player.sendMessage(ChatColor.RED + "Ожидают: " + ChatColor.WHITE + "[" + redQueueList.size() + "/10]!");
@@ -34,7 +34,7 @@ public class Queue {
 
         LeaveQueue(player);
         redQueue.addEntry(player.getName());
-        redQueueList.add(player.getName());
+        redQueueList.add(player);
 
         player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы успешно встали в очередь " + ChatColor.RED + "[RED]" + ChatColor.WHITE + "!");
         player.sendMessage(ChatColor.RED + "Ожидают: " + ChatColor.WHITE + "[" + redQueueList.size() + "/10]!");
@@ -43,8 +43,7 @@ public class Queue {
     }
 
     public static void AddToYellowQueue(Player player) {
-
-        if (yellowQueueList.contains(player.getName())) {
+        if (yellowQueueList.contains(player)) {
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Вы уже находитесь в очереди " + ChatColor.YELLOW + "[YELLOW]" + ChatColor.WHITE + "!");
             player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 10, 1);
             player.sendMessage(ChatColor.YELLOW + "Ожидают: " + ChatColor.WHITE + "[" + yellowQueueList.size() + "/10]!");
@@ -60,7 +59,7 @@ public class Queue {
 
         LeaveQueue(player);
         yellowQueue.addEntry(player.getName());
-        yellowQueueList.add(player.getName());
+        yellowQueueList.add(player);
 
         player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы успешно встали в очередь " + ChatColor.YELLOW + "[YELLOW]" + ChatColor.WHITE + "!");
         player.sendMessage(ChatColor.YELLOW + "Ожидают: " + ChatColor.WHITE + "[" + yellowQueueList.size() + "/10]!");
@@ -70,7 +69,7 @@ public class Queue {
 
     public static void AddToGreenQueue(Player player) {
 
-        if (greenQueueList.contains(player.getName())) {
+        if (greenQueueList.contains(player)) {
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Вы уже находитесь в очереди " + ChatColor.GREEN + "[GREEN]" + ChatColor.WHITE + "!");
             player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 10, 1);
             player.sendMessage(ChatColor.GREEN + "Ожидают: " + ChatColor.WHITE + "[" + greenQueueList.size() + "/18]!");
@@ -86,7 +85,7 @@ public class Queue {
 
         LeaveQueue(player);
         greenQueue.addEntry(player.getName());
-        greenQueueList.add(player.getName());
+        greenQueueList.add(player);
 
         player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы успешно встали в очередь " + ChatColor.GREEN + "[GREEN]" + ChatColor.WHITE + "!");
         player.sendMessage(ChatColor.GREEN + "Ожидают: " + ChatColor.WHITE + "[" + greenQueueList.size() + "/18]!");
@@ -97,7 +96,7 @@ public class Queue {
         boolean isInQueue = false;
         String lastQueue = null;
 
-        if (redQueueList.contains(player.getName())) {
+        if (redQueueList.contains(player)) {
             lastQueue = ChatColor.RED + "[RED]";
             redQueueList.remove(player.getName());
             redQueue.removeEntry(player.getName());
@@ -121,8 +120,7 @@ public class Queue {
 
 
         if (lastQueue != null) {
-            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы успешно вышли из очереди " + lastQueue
-                    + ChatColor.WHITE + "!");
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы успешно вышли из очереди " + lastQueue + ChatColor.WHITE + "!");
             player.playSound(player.getLocation(), Sound.BLOCK_DISPENSER_DISPENSE, 10, 1);
         } else {
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Вы не находитесь в очереди!");
@@ -135,27 +133,24 @@ public class Queue {
         boolean isInQueue = false;
         String lastQueue = null;
 
-        if (redQueueList.contains(player.getName())) {
+        if (redQueueList.contains(player)) {
             lastQueue = ChatColor.RED + "[RED]";
-            redQueueList.remove(player.getName());
+            redQueueList.remove(player);
             redQueue.removeEntry(player.getName());
         }
 
-
-        if (yellowQueueList.contains(player.getName())) {
+        if (yellowQueueList.contains(player)) {
             lastQueue = ChatColor.YELLOW + "[YELLOW]";
 
-            yellowQueueList.remove(player.getName());
+            yellowQueueList.remove(player);
             yellowQueue.removeEntry(player.getName());
         }
 
-
-        if (greenQueueList.contains(player.getName())) {
+        if (greenQueueList.contains(player)) {
             lastQueue = ChatColor.GREEN + "[GREEN]";
 
-            greenQueueList.remove(player.getName());
+            greenQueueList.remove(player);
             greenQueue.removeEntry(player.getName());
         }
-
     }
 }

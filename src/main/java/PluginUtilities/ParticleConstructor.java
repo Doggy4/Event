@@ -1,5 +1,6 @@
 package PluginUtilities;
 
+import event.main.Main;
 import org.bukkit.*;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -7,8 +8,14 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
+
+import java.util.HashMap;
 
 public class ParticleConstructor {
+    private HashMap<String, Integer> locations = new HashMap<>();
+    private Plugin plugin = Bukkit.getPluginManager().getPlugin("");
+    private int range = 25;
 
     public static void circle(Location loc, float radius) {
         for (double t = 0; t < 25; t += 1) {
@@ -30,10 +37,15 @@ public class ParticleConstructor {
         }
     }
 
-    public static void entityTrail(Entity entity, Particle particle) {
-        for(double t = 0; t < 50; t += 0.5) {
-            Location loc = entity.getLocation();
-            loc.getWorld().spawnParticle(particle, loc ,1);
+    public static void spiral(Location loc) {
+        for (double t = 0; t < 60; t += 0.5) {
+            double x = t * Math.cos(6*t);
+            double y = t * Math.sin(6*t);
+
+            Location newLoc = new Location(loc.getWorld(), loc.getX() + x, loc.getY() + y, loc.getZ() + t);
+            loc.getWorld().spawnParticle(Particle.FLAME, newLoc, 1);
         }
     }
+
+
 }

@@ -1,5 +1,6 @@
 package PluginUtilities;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.entity.Player;
@@ -45,5 +46,11 @@ public class Chat {
         colors.put("CYAN", ChatColor.DARK_AQUA);
         colors.put("MAGENTA", ChatColor.LIGHT_PURPLE);
         colors.put("LIGHT_BLUE", ChatColor.AQUA);
+    }
+
+    public static void broadcastToEveryone(String message) {
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + message);
+        }
     }
 }

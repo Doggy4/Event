@@ -14,13 +14,11 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class ReachSky {
 
     private static boolean isActivated = false;
-    private static int place = 1;
 
     public static void ReachSky() {
-        isActivated = aGameCycle.isAnyBattleEnabled;
+        isActivated = true;
 
-        for (String playerName : Queue.redQueueList) {
-            Player player = Bukkit.getPlayer(playerName);
+        for (Player player : Queue.redQueueList) {
             player.getInventory().clear();
 
             player.setGameMode(GameMode.SURVIVAL);
@@ -34,25 +32,22 @@ public class ReachSky {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (place > 3) {
+                if (RoundSystem.roundSeconds >= 0) {
                     isActivated = false;
-                    aGameCycle.isAnyBattleEnabled = false;
-                    place = 1;
+                    RoundSystem.endRound();
 
-                    for (String playerName : Queue.redQueueList)
-                        Bukkit.getPlayer(playerName).setAllowFlight(false);
+                    for (Player player  : Queue.redQueueList) player.setAllowFlight(false);
 
                     this.cancel();
                 }
+                int score = 10;
 
-                for (String playerName : Queue.redQueueList) {
-                    Player player = Bukkit.getPlayer(playerName);
-
+                for (Player player  : Queue.redQueueList) {
                     if (player.getLocation().getY() >= 150){
                         player.getWorld().spawnParticle(Particle.FIREWORKS_SPARK, player.getLocation(), 10);
                         player.setAllowFlight(false);
-                        aGameCycle.playerWin(player, place);
-                        place++;
+                        RoundSystem.addScore(player, score);
+                        score--;
                     }
                 }
             }

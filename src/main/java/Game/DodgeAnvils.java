@@ -19,16 +19,15 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
+// Потом проапаю
 public class DodgeAnvils implements Listener {
     private static boolean isActivated = false;
 
     public static void DodgeAnvils() {
-        isActivated = aGameCycle.isAnyBattleEnabled;
+        isActivated = true;
         BaseClass.EntityDamageOff();
 
-        for (String playerName : Queue.redQueueList) {
-            Player player = Bukkit.getPlayer(playerName);
+        for (Player player : Queue.redQueueList) {
             player.getInventory().clear();
 
             player.setGameMode(GameMode.ADVENTURE);
@@ -45,13 +44,11 @@ public class DodgeAnvils implements Listener {
                 if (counter >= 20) {
                     this.cancel();
                     endDodgeAnvils();
-                    aGameCycle.isAnyBattleEnabled = false;
+                    RoundSystem.isRoundStarted = false;
                     isActivated = false;
-
                 }
 
                 for (int i = 0; i < 50; i++) {
-
                     int randX = Math.round((float) Main.main.getConfig().getDouble("spawn.x")) + Utilities.getRandom(0, 32) - 16;
                     int randZ = Math.round((float) Main.main.getConfig().getDouble("spawn.z")) + Utilities.getRandom(0, 32) - 16;
                     int y = Math.round((float) Main.main.getConfig().getDouble("spawn.y")) + 10;
@@ -66,24 +63,20 @@ public class DodgeAnvils implements Listener {
                 counter++;
             }
         }.runTaskTimer(Main.main, 20, 20);
-
-
     }
 
     private static void endDodgeAnvils() {
-        for (String playerName : Queue.redQueueList) {
-            Player winner = Bukkit.getPlayer(playerName);
-            if (winner.getGameMode() == GameMode.ADVENTURE) {
-                for (Player player : Bukkit.getOnlinePlayers())
-                    player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Игрок " + winner.getName() + " победил!");
+        for (Player roundPlayer : Queue.redQueueList) {
+            if (roundPlayer.getGameMode() == GameMode.ADVENTURE) {
+                for (Player player : Bukkit.getOnlinePlayers()) player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Игрок " + player.getName() + " победил!");
 
-                winner.sendTitle(ChatColor.GREEN + "Поздравляем!", "Вы победили!", 20, 20, 20);
-                winner.playSound(winner.getLocation(), Sound.BLOCK_NOTE_BLOCK_COW_BELL, 10, 1);
+                roundPlayer.sendTitle(ChatColor.GREEN + "Поздравляем!", "Вы победили!", 20, 20, 20);
+                roundPlayer.playSound(roundPlayer.getLocation(), Sound.BLOCK_NOTE_BLOCK_COW_BELL, 10, 1);
 
-                winner.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Вы получили +" + 2 + " очков(-а)!");
-                aGameCycle.gameStats.put(winner.getName(), 2 + aGameCycle.gameStats.get(winner.getName()));
+                roundPlayer.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Вы получили +" + 2 + " очков(-а)!");
+                GameCycle.gameStats.put(roundPlayer.getName(), 2 + GameCycle.gameStats.get(roundPlayer.getName()));
 
-                aGameCycle.reset(winner);
+                RoundSystem.PlayerReset(roundPlayer);
             }
         }
     }
@@ -105,22 +98,15 @@ public class DodgeAnvils implements Listener {
 
     @EventHandler
     public void PlayerDamage(EntityDamageEvent event) {
-        if (!isActivated)
-            return;
+        if (!isActivated) return;
 
-        if (!(event.getEntity() instanceof Player))
-            return;
+        if (!(event.getEntity() instanceof Player)) return;
 
         Player player = (Player) event.getEntity();
 
-        if (!Queue.redQueueList.contains(player.getName()))
-            return;
-
+        if (!Queue.redQueueList.contains(player.getName())) return;
 
         player.setGameMode(GameMode.SPECTATOR);
-        aGameCycle.playerLose(player);
-
+        RoundSystem.playerLose(player);
     }
-
-
 }

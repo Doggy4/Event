@@ -14,21 +14,17 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerShearEntityEvent;
 
 import java.util.ArrayList;
-
+// Доделать
 public class ShearSheep implements Listener {
     private static boolean isShearSheepActivated = false;
-
     private static DyeColor randomColor;
 
-
     public static void ShearSheep() {
-
-        isShearSheepActivated = aGameCycle.isAnyBattleEnabled;
+        isShearSheepActivated = true;
 
         randomColor = Utilities.getRandomColor();
 
-        for (String playerName : Queue.redQueueList) {
-            Player player = Bukkit.getPlayer(playerName);
+        for (Player player : Queue.redQueueList) {
             player.getInventory().clear();
 
             player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
@@ -59,21 +55,18 @@ public class ShearSheep implements Listener {
     public void onPlayerShearSheep(PlayerShearEntityEvent event) {
         Player player = event.getPlayer();
         Sheep sheep = (Sheep) event.getEntity();
-        if (!isShearSheepActivated)
-            return;
+        if (!isShearSheepActivated) return;
+
         if (sheep.getColor() == randomColor) {
-            aGameCycle.playerWin(player, place);
-            place++;
+            RoundSystem.addScore(player, place);
             player.setGameMode(GameMode.ADVENTURE);
             player.getInventory().clear();
         } else {
-            aGameCycle.playerLose(player);
+            RoundSystem.playerLose(player);
         }
-        if (place > 3) {
+        if (RoundSystem.roundSeconds >= 0) {
             isShearSheepActivated = false;
-            aGameCycle.isAnyBattleEnabled = false;
-            place = 1;
-
+           RoundSystem.endRound();
         }
     }
 }
