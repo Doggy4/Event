@@ -19,6 +19,9 @@ public class Chat {
     public static String divThick16 = "================\n";
     public static String divThick32 = "================================\n";
 
+    public static String ScoreBoardDivider1 = ".▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬";
+    public static String ScoreBoardDivider2 = "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬.";
+
     public static String divThicker8 = "########\n";
     public static String divThicker16 = "################\n";
     public static String divThicker32 = "################################\n";

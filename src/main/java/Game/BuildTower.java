@@ -16,6 +16,7 @@ public class BuildTower implements Listener {
     private static boolean isActivated = false;
 
     public static void BuildTower() {
+        isActivated = true;
         BaseClass.PlaceBlockOff();
 
         for (Player player : Queue.redQueueList) {

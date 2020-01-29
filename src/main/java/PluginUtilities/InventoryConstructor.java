@@ -48,7 +48,7 @@ public class InventoryConstructor implements Listener {
             SkullMeta meta = (SkullMeta) skull.getItemMeta();
 
             meta.setOwningPlayer(Bukkit.getPlayer(player.getName()));
-            meta.setDisplayName(ChatColor.RED + "#" + (i + 1) + " " + ChatColor.LIGHT_PURPLE + player);
+            meta.setDisplayName(ChatColor.RED + "#" + (i + 1) + " " + ChatColor.LIGHT_PURPLE + player.getName());
             skull.setItemMeta(meta);
 
             if (i >= 5)
@@ -72,7 +72,7 @@ public class InventoryConstructor implements Listener {
             SkullMeta meta = (SkullMeta) skull.getItemMeta();
 
             meta.setOwningPlayer(Bukkit.getPlayer(player.getName()));
-            meta.setDisplayName(ChatColor.YELLOW + "#" + (i + 1) + " " + ChatColor.LIGHT_PURPLE + player);
+            meta.setDisplayName(ChatColor.YELLOW + "#" + (i + 1) + " " + ChatColor.LIGHT_PURPLE + player.getName());
             skull.setItemMeta(meta);
 
             if (i >= 5)
@@ -95,7 +95,7 @@ public class InventoryConstructor implements Listener {
             SkullMeta meta = (SkullMeta) skull.getItemMeta();
 
             meta.setOwningPlayer(Bukkit.getPlayer(player.getName()));
-            meta.setDisplayName(ChatColor.GREEN + "#" + (i + 1) + " " + ChatColor.LIGHT_PURPLE + player);
+            meta.setDisplayName(ChatColor.GREEN + "#" + (i + 1) + " " + ChatColor.LIGHT_PURPLE + player.getName());
             skull.setItemMeta(meta);
 
             greenWaiters.setItem(i, skull);
