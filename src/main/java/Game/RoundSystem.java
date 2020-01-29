@@ -12,6 +12,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 
+import static Game.GameCycle.endGame;
+import static Game.GameCycle.isGameStarted;
 import static PluginUtilities.Chat.*;
 
 public class RoundSystem {
@@ -36,6 +38,10 @@ public class RoundSystem {
     }
 
     public static void startRound() {
+        if (round > roundCount && isGameStarted && !isRoundStarted) {
+            endGame();
+            return;
+        }
         isRoundStarted = true;
         BaseClass.TurnOnAllRules();
         roundTimer();

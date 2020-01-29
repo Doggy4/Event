@@ -32,7 +32,7 @@ public class ReachSky {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (RoundSystem.roundSeconds >= 0) {
+                if (RoundSystem.roundSeconds <= 0) {
                     isActivated = false;
                     RoundSystem.endRound();
 

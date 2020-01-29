@@ -49,8 +49,6 @@ public class ShearSheep implements Listener {
         }
     }
 
-    private static int place = 1;
-
     @EventHandler
     public void onPlayerShearSheep(PlayerShearEntityEvent event) {
         Player player = event.getPlayer();
@@ -58,7 +56,7 @@ public class ShearSheep implements Listener {
         if (!isShearSheepActivated) return;
 
         if (sheep.getColor() == randomColor) {
-            RoundSystem.addScore(player, place);
+            RoundSystem.addScore(player, 1);
             player.setGameMode(GameMode.ADVENTURE);
             player.getInventory().clear();
         } else {

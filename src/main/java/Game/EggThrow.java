@@ -11,13 +11,11 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Collections;
-// Сделать что-то
+
 public class EggThrow implements Listener {
-    private static Material randomMaterialBlock;
     private static boolean isActivated = false;
 
     public static void EggThrow() {
-
         isActivated = true;
 
         ArrayList<Material> materials = new ArrayList<Material>();
@@ -26,7 +24,7 @@ public class EggThrow implements Listener {
         int randomMaterial = Utilities.getRandom(0, materials.size() - 37);
         materials.subList(randomMaterial, randomMaterial + 36);
 
-        int randomBlock = Utilities.getRandom(0, 36);
+        int randomSlot = Utilities.getRandom(0, 35);
 
         for (Player player : Queue.redQueueList) {
             player.getInventory().clear();
@@ -36,7 +34,7 @@ public class EggThrow implements Listener {
 
             for (Material block : materials) player.getInventory().addItem(new ItemStack(block, 64));
 
-            player.getInventory().setItem(randomBlock, new ItemStack(Material.EGG));
+            player.getInventory().setItem(randomSlot, new ItemStack(Material.EGG));
         }
     }
 

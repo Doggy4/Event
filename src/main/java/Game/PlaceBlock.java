@@ -14,7 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
+// Зафиксить появление воды и другой жидкости
 public class PlaceBlock implements Listener {
 
     private static Material randomMaterialBlock;
@@ -67,11 +67,11 @@ public class PlaceBlock implements Listener {
             randomMaterialBlock = materialsNew.get(randomBlock);
 
             player.getInventory().clear();
-
             for (Material block : materialsNew) player.getInventory().addItem(new ItemStack(block, 1));
 
             player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
             player.sendTitle(ChatColor.GREEN + "Поставьте блок", randomMaterialBlock.name(), 40, 40, 40);
+            player.sendMessage(ChatColor.GREEN + "Поставьте блок " + randomMaterialBlock.name());
             player.setGameMode(GameMode.SURVIVAL);
 
             FileConfiguration config = Main.main.getConfig();
@@ -97,11 +97,12 @@ public class PlaceBlock implements Listener {
 
         randomMaterialBlock = materialsNew.get(randomBlock);
 
+        player.getInventory().clear();
         for (Material block : materialsNew) player.getInventory().addItem(new ItemStack(block, 1));
 
-        player.getInventory().clear();
         player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
         player.sendTitle(ChatColor.GREEN + "Поставьте блок", randomMaterialBlock.name(), 40, 40, 40);
+        player.sendMessage(ChatColor.GREEN + "Поставьте блок " + randomMaterialBlock.name());
 
         FileConfiguration config = Main.main.getConfig();
         World world = Bukkit.getWorld(config.getString("spawn.world"));
@@ -113,7 +114,7 @@ public class PlaceBlock implements Listener {
         Player player = event.getPlayer();
         if (!isActivated) return;
 
-        if (event.getBlockPlaced().getType().toString().equals(randomMaterialBlock.toString())) {
+        if (event.getBlockPlaced().getType().equals(randomMaterialBlock)) {
             RoundSystem.addScore(player, 1);
             PlaceNext(player);
         } else {
