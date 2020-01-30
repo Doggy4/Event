@@ -31,9 +31,10 @@ public class RoundSystem {
         new BukkitRunnable() {
             @Override
             public void run() {
+                if(!isRoundStarted) this.cancel();
                 roundSeconds--;
             }
-        }.runTaskTimer(Main.main, 10, 10);
+        }.runTaskTimer(Main.main, 20, 20);
     }
 
     public static void startRound() {

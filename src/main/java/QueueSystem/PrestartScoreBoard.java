@@ -43,7 +43,7 @@ public class PrestartScoreBoard {
             Score battle = objective.getScore(ChatColor.GOLD + "Раунд: " + ChatColor.GREEN + RoundSystem.round);
             battle.setScore(-3);
 
-            Score divider2 = objective.getScore(ChatColor.AQUA + Chat.divThick16);
+            Score divider2 = objective.getScore(ChatColor.AQUA + Chat.ScoreBoardDivider2);
             divider2.setScore(31);
             for (Player player : Queue.redQueueList) {
                 Score score = objective.getScore(ChatColor.GOLD + player.getName());

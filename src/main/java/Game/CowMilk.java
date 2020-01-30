@@ -9,6 +9,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
+
 // Сделать респавнилку коров, (Не один раз)
 public class CowMilk implements Listener {
     private static String commonCow = (ChatColor.GRAY + "[✶] Милка");
@@ -43,7 +44,7 @@ public class CowMilk implements Listener {
             int chance = Utilities.getRandom(0, 100);
             Cow cow = (Cow) Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).spawnEntity(Commands.CommandEvent.randLocationSpawn(), EntityType.COW);
 
-            if (chance < uncommonCowChance ) {
+            if (chance < uncommonCowChance) {
                 cow.setCustomName(commonCow);
             } else if (chance > uncommonCowChance && chance < rareCowChance) {
                 cow.setCustomName(uncommonCow);
@@ -69,28 +70,28 @@ public class CowMilk implements Listener {
             World world = cow.getWorld();
             if (cow.getCustomName().equals(commonCow)) {
                 RoundSystem.addScore(player, 1);
-                world.playSound(cowLoc,Sound.ENTITY_COW_HURT,1,1);
+                world.playSound(cowLoc, Sound.ENTITY_COW_HURT, 1, 1);
             } else if (cow.getCustomName().equals(uncommonCow)) {
                 RoundSystem.addScore(player, 2);
-                world.spawnParticle(Particle.DRIP_WATER,cowLoc.add(0,1.2,0),1);
-                world.playSound(cowLoc,Sound.ENTITY_COW_HURT,1,2);
+                world.spawnParticle(Particle.DRIP_WATER, cowLoc.add(0, 1.2, 0), 1);
+                world.playSound(cowLoc, Sound.ENTITY_COW_HURT, 1, 2);
             } else if (cow.getCustomName().equals(rareCow)) {
                 RoundSystem.addScore(player, 5);
-                world.spawnParticle(Particle.HEART,cowLoc.add(0,1.2,0),1);
-                world.playSound(cowLoc,Sound.ENTITY_COW_HURT,1,3);
+                world.spawnParticle(Particle.HEART, cowLoc.add(0, 1.2, 0), 1);
+                world.playSound(cowLoc, Sound.ENTITY_COW_HURT, 1, 3);
             } else if (cow.getCustomName().equals(specialCow)) {
-                RoundSystem.addScore(player,10);
-                world.spawnParticle(Particle.DRAGON_BREATH,cowLoc.add(0,1.2,0),1);
-                world.playSound(cowLoc,Sound.ITEM_BOTTLE_FILL_DRAGONBREATH,1,1);
+                RoundSystem.addScore(player, 10);
+                world.spawnParticle(Particle.DRAGON_BREATH, cowLoc.add(0, 1.2, 0), 1);
+                world.playSound(cowLoc, Sound.ITEM_BOTTLE_FILL_DRAGONBREATH, 1, 1);
             } else if (cow.getCustomName().equals(boomCow)) {
-                RoundSystem.addScore(player,-1);
-                world.spawnParticle(Particle.EXPLOSION_LARGE,cowLoc.add(0,0,0),1);
-                world.playSound(cowLoc,Sound.ENTITY_GENERIC_EXPLODE,1,1);
-                cow.remove();
+                RoundSystem.addScore(player, -1);
+                world.spawnParticle(Particle.EXPLOSION_LARGE, cowLoc.add(0, 0, 0), 1);
+                world.playSound(cowLoc, Sound.ENTITY_GENERIC_EXPLODE, 1, 1);
             }
+            cow.remove();
         }
 
-        if (RoundSystem.roundSeconds <= 0){
+        if (RoundSystem.roundSeconds <= 0) {
             isActivated = false;
             RoundSystem.endRound();
         }
