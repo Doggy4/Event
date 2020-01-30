@@ -61,10 +61,6 @@ public class CommandEvent implements TabExecutor {
             player.sendMessage(ChatColor.YELLOW + divider + ChatColor.GREEN + "Сообщение опубликовано!\n" + ChatColor.YELLOW + divider);
             broadcast(Arrays.copyOfRange(args, 1, args.length));
         } else if (args[0].equals("test")) {
-            RoundSystem.addScore(player, 1);
-            RoundSystem.addScore(player, 2);
-            RoundSystem.addScore(player, 5);
-            RoundSystem.addScore(player, 10);
 //            ItemStack skull = new ItemStack(Material.PLAYER_HEAD, 1);
 //            SkullMeta meta = (SkullMeta) skull.getItemMeta();
 //
