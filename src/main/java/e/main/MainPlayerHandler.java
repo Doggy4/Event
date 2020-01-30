@@ -1,18 +1,15 @@
-package event.main;
+package e.main;
 
 import Commands.CommandEvent;
 import PluginUtilities.InventoryConstructor;
 import PluginUtilities.Items;
 import QueueSystem.Queue;
 import org.bukkit.*;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.*;
-import org.bukkit.inventory.Inventory;
-
-import static QueueSystem.Queue.*;
 
 public class MainPlayerHandler implements Listener {
 
@@ -27,6 +24,7 @@ public class MainPlayerHandler implements Listener {
         event.setJoinMessage(ChatColor.GOLD + "[EVENT]" + ChatColor.WHITE + " Игрок " + ChatColor.AQUA + player.getName() + ChatColor.WHITE + " зашел на " + ChatColor.GOLD + "EVENT" + ChatColor.WHITE + "!");
 
         player.getInventory().setItem(0, Items.joinQueue);
+        player.getInventory().setItem(7, Items.particleSelect);
         player.getInventory().setItem(8, Items.spectatorMode);
     }
 

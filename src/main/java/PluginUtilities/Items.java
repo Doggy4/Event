@@ -12,6 +12,14 @@ import java.util.Random;
 import static QueueSystem.Queue.redQueueList;
 
 public class Items {
+
+    public static ItemStack particleSelect = new ItemStackConstructor(Material.FIREWORK_STAR)
+            .amount(1)
+            .displayName(ChatColor.RED + "Меню партиклов")
+            .lore("Нажмите, чтобы попасть в меню эффектов")
+            .enchantment(Enchantment.DURABILITY, 10)
+            .build();
+
     public static ItemStack joinQueue = new ItemStackConstructor(Material.SLIME_BALL)
             .amount(1)
             .displayName(ChatColor.GREEN + "Встать в очередь")
@@ -96,6 +104,12 @@ public class Items {
     public static ItemStack ShearEventShears = new ItemStackConstructor(Material.SHEARS)
             .amount(1)
             .displayName(ChatColor.RED + "Турнирные ножницы")
+            .enchantment(Enchantment.DURABILITY, 10)
+            .build();
+
+    public static ItemStack ParticleSample = new ItemStackConstructor(Material.GRAY_STAINED_GLASS_PANE)
+            .amount(1)
+            .displayName(ChatColor.GRAY + "Нихера не сделано")
             .enchantment(Enchantment.DURABILITY, 10)
             .build();
 
