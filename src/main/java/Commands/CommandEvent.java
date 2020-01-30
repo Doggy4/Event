@@ -1,10 +1,12 @@
 package Commands;
 
 import Game.GameCycle;
-import Game.RoundSystem;
-import PluginUtilities.*;
+import PluginUtilities.Chat;
+import PluginUtilities.LocationUtulities;
+import PluginUtilities.MapRebuild;
+import PluginUtilities.Utilities;
+import QueueSystem.MainScoreBoard;
 import QueueSystem.Queue;
-import QueueSystem.PrestartScoreBoard;
 import event.main.Main;
 import org.bukkit.*;
 import org.bukkit.command.Command;
@@ -47,7 +49,7 @@ public class CommandEvent implements TabExecutor {
             player.sendMessage(ChatColor.YELLOW + divider + ChatColor.RED + "Помощь:\n" + ChatColor.GREEN + "/event start" + ChatColor.YELLOW + " - начать эвент\n" + ChatColor.GREEN + "/event setspawn" + ChatColor.YELLOW + " - установить спавн\n" + ChatColor.GREEN + "/event setlobby" + ChatColor.YELLOW + " - установить лобби\n" + ChatColor.GREEN + "/event broadcast [сообщение]" + ChatColor.YELLOW + " - отправить Title\n" + ChatColor.YELLOW + divider);
         else if (args[0].equals("start")) {
             player.sendMessage(ChatColor.YELLOW + divider + ChatColor.GREEN + "Эвент запущен!\n" + ChatColor.YELLOW + divider);
-            GameCycle.StartGame();
+            GameCycle.isCommandStartEventTipped = true;
         } else if (args[0].equals("setspawn")) {
             player.sendMessage(ChatColor.YELLOW + divider + ChatColor.GREEN + "Спавн установлен!\n" + LocationUtulities.getPlayerLocation(player.getLocation()) + ChatColor.YELLOW + "\n" + divider);
             saveSpawnLoc(player.getLocation());
@@ -61,14 +63,7 @@ public class CommandEvent implements TabExecutor {
             player.sendMessage(ChatColor.YELLOW + divider + ChatColor.GREEN + "Сообщение опубликовано!\n" + ChatColor.YELLOW + divider);
             broadcast(Arrays.copyOfRange(args, 1, args.length));
         } else if (args[0].equals("test")) {
-//            ItemStack skull = new ItemStack(Material.PLAYER_HEAD, 1);
-//            SkullMeta meta = (SkullMeta) skull.getItemMeta();
-//
-//            meta.setOwningPlayer(player);
-//            meta.setDisplayName(ChatColor.LIGHT_PURPLE + player.getName());
-//            skull.setItemMeta(meta);
-//
-//            ArmorStandConstructor.ArmorStandConstructor(player.getLocation(), skull, ChatColor.GREEN + player.getName());
+            MapRebuild.loadSchematic("arena");
 
         } else {
             return false;
@@ -93,15 +88,15 @@ public class CommandEvent implements TabExecutor {
         Chat.broadcastToEveryone("Встаньте в очередь! Приоритет очереди: " + ChatColor.RED + "[RED]");
 
         for (Player player : Queue.redQueueList)
-            PrestartScoreBoard.red.removeEntry(player.getName());
+            MainScoreBoard.red.removeEntry(player.getName());
         Queue.redQueueList.clear();
 
         for (Player player : Queue.yellowQueueList)
-            PrestartScoreBoard.yellow.removeEntry(player.getName());
+            MainScoreBoard.yellow.removeEntry(player.getName());
         Queue.yellowQueueList.clear();
 
         for (Player player : Queue.greenQueueList)
-            PrestartScoreBoard.green.removeEntry(player.getName());
+            MainScoreBoard.green.removeEntry(player.getName());
         Queue.greenQueueList.clear();
     }
 

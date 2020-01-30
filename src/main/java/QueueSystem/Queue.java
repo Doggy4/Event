@@ -13,9 +13,9 @@ public class Queue {
     public static List<Player> yellowQueueList = new ArrayList<Player>();
     public static List<Player> greenQueueList = new ArrayList<Player>();
 
-    private static Team redQueue = PrestartScoreBoard.scoreboard.getTeam("RED");
-    private static Team yellowQueue = PrestartScoreBoard.scoreboard.getTeam("YELLOW");
-    private static Team greenQueue = PrestartScoreBoard.scoreboard.getTeam("GREEN");
+    private static Team redQueue = MainScoreBoard.scoreboard.getTeam("RED");
+    private static Team yellowQueue = MainScoreBoard.scoreboard.getTeam("YELLOW");
+    private static Team greenQueue = MainScoreBoard.scoreboard.getTeam("GREEN");
 
     public static void AddToRedQueue(Player player) {
         if (redQueueList.contains(player)) {

@@ -3,7 +3,7 @@ package event.main;
 
 import Game.*;
 import PluginUtilities.InventoryConstructor;
-import QueueSystem.PrestartScoreBoard;
+import QueueSystem.MainScoreBoard;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -31,7 +31,7 @@ public final class Main extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new BuildTower(), this);
         this.getServer().getPluginManager().registerEvents(new DodgeAnvils(), this);
 
-        PrestartScoreBoard.PrestartScoreboard();
+        MainScoreBoard.setMainScoreBoard();
         this.saveDefaultConfig();
 
     }
