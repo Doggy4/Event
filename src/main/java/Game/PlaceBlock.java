@@ -21,7 +21,11 @@ public class PlaceBlock implements Listener {
     private static boolean isActivated = false;
     private static HashMap<Player, Location> playerRoom = new HashMap<Player, Location>();
 
-    private static ArrayList<Location> GetSpawnPoints() {
+    public static void PlaceBlock() {
+        isActivated = true;
+        RoundSystem.roundSeconds = 30;
+        GameRules.PlaceBlockOff();
+
         FileConfiguration config = Main.main.getConfig();
         World world = Bukkit.getWorld(config.getString("spawn.world"));
         Location location = new Location(world, config.getDouble("spawn.x"), config.getDouble("spawn.y"), config.getDouble("spawn.z"));
@@ -37,19 +41,12 @@ public class PlaceBlock implements Listener {
         locations.add(location.add(-9,0,-6));
         locations.add(location.add(9,0,6));
         locations.add(location.add(-9,0,6));
-        return locations;
-    }
-
-    public static void PlaceBlock() {
-        isActivated = true;
-        BaseClass.PlaceBlockOff();
-        ArrayList<Location> locations = GetSpawnPoints();
 
         int l = 0;
+
         for (Player player : Queue.redQueueList) {
             player.getInventory().clear();
-            Location location = locations.get(l);
-            player.teleport(location.add(0,1.5,0));
+            player.teleport(locations.get(l).add(0,2,0));
             l++;
 
             ArrayList<Material> materials = new ArrayList<Material>();
@@ -74,10 +71,8 @@ public class PlaceBlock implements Listener {
             player.sendMessage(ChatColor.GREEN + "Поставьте блок " + randomMaterialBlock.name());
             player.setGameMode(GameMode.SURVIVAL);
 
-            FileConfiguration config = Main.main.getConfig();
-            World world = Bukkit.getWorld(config.getString("spawn.world"));
-            world.getBlockAt(location).setType(randomMaterialBlock);
-            playerRoom.put(player,location);
+            location.getWorld().getBlockAt(locations.get(l)).setType(randomMaterialBlock);
+            playerRoom.put(player, locations.get(l));
         }
     }
 

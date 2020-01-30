@@ -12,11 +12,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class ReachSky {
-
     private static boolean isActivated = false;
+    private static int score = 10;
 
     public static void ReachSky() {
         isActivated = true;
+        RoundSystem.roundSeconds = 15;
 
         for (Player player : Queue.redQueueList) {
             player.getInventory().clear();
@@ -40,7 +41,6 @@ public class ReachSky {
 
                     this.cancel();
                 }
-                int score = 10;
 
                 for (Player player  : Queue.redQueueList) {
                     if (player.getLocation().getY() >= 150){

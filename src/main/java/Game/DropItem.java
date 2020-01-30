@@ -20,7 +20,8 @@ public class DropItem implements Listener {
 
     public static void DropItem() {
         isActivated = true;
-        BaseClass.DropItemOff();
+        GameRules.DropItemOff();
+        RoundSystem.roundSeconds = 30;
 
         ArrayList<Material> materials = new ArrayList<Material>(Arrays.asList(Material.values()));
 

@@ -5,27 +5,22 @@ import QueueSystem.Queue;
 import event.main.Main;
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.EntityBlockFormEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 // Потом проапаю
 public class DodgeAnvils implements Listener {
     private static boolean isActivated = false;
 
     public static void DodgeAnvils() {
         isActivated = true;
-        BaseClass.EntityDamageOff();
+        RoundSystem.roundSeconds = 15;
+        GameRules.EntityDamageOff();
 
         for (Player player : Queue.redQueueList) {
             player.getInventory().clear();

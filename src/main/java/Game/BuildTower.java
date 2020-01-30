@@ -13,12 +13,11 @@ import org.bukkit.inventory.ItemStack;
 public class BuildTower implements Listener {
     // Добавить условия компановки блоков, например поставьте красную шерсть рядом с синей
     private static int score = 10;
-
     private static boolean isActivated = false;
 
     public static void BuildTower() {
         isActivated = true;
-        BaseClass.PlaceBlockOff();
+        GameRules.PlaceBlockOff();
 
         for (Player player : Queue.redQueueList) {
             player.getInventory().clear();
@@ -33,7 +32,7 @@ public class BuildTower implements Listener {
     }
 
     @EventHandler
-    public void onPlaceBlock(BlockPlaceEvent event){
+    public void onPlaceBlock(BlockPlaceEvent event) {
         if (!isActivated) return;
 
         int blockPlace = (int) Math.round(event.getBlockPlaced().getY() - Main.main.getConfig().getDouble("spawn.y")) + 1;
