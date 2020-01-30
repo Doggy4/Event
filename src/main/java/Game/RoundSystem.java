@@ -46,9 +46,9 @@ public class RoundSystem {
             endGame();
             return;
         }
+
         isRoundStarted = true;
         GameRules.TurnOnAllRules();
-        roundTimer();
 
         for (Player player : Queue.redQueueList){
             player.setGameMode(GameMode.ADVENTURE);
@@ -123,6 +123,8 @@ public class RoundSystem {
                 }
             }
         }.runTaskLater(Main.main, 8 * 20);
+
+        roundTimer();
     }
 
     public static void endRound() {
