@@ -4,6 +4,8 @@ package event.main;
 import Game.*;
 import PluginUtilities.InventoryConstructor;
 import QueueSystem.MainScoreBoard;
+import SvistoPerdelki.ParticleGUI;
+import e.main.MainPlayerHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -30,8 +32,9 @@ public final class Main extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new CowMilk(), this);
         this.getServer().getPluginManager().registerEvents(new BuildTower(), this);
         this.getServer().getPluginManager().registerEvents(new DodgeAnvils(), this);
+        this.getServer().getPluginManager().registerEvents(new ParticleGUI(), this);
 
-        MainScoreBoard.setMainScoreBoard();
+        MainScoreBoard.startPluginRunnable();
         this.saveDefaultConfig();
 
     }

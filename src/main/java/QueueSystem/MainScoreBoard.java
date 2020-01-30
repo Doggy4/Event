@@ -11,16 +11,14 @@ import org.bukkit.scoreboard.*;
 
 import static PluginUtilities.Chat.*;
 
-// Сложна вырубай
+// КЛАСС НЕ ПЕРЕДЕЛЫВАТЬ - ОПТИМИЗИРОВАН ПО МАКСИМУМУ
 public class MainScoreBoard {
-
     // Секунды до начала
     public static int mainSecPreStart = 60;
 
     // Создаем скорборд
     public static Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
-
-    // Создаем команды
+    // Регистрируем очереди
     public static Team red = scoreboard.registerNewTeam("RED");
     public static Team yellow = scoreboard.registerNewTeam("YELLOW");
     public static Team green = scoreboard.registerNewTeam("GREEN");
@@ -28,6 +26,7 @@ public class MainScoreBoard {
     // Создаем объект
     public static Objective objective = scoreboard.registerNewObjective("divider1", "dummy", ChatColor.AQUA + "[" + ChatColor.YELLOW + "EVENT" + ChatColor.AQUA + "]");
 
+    // Установка опций главного скорборда
     public static void setMainScoreBoardSettings() {
         // Устанавливаем сайдбар
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
@@ -43,7 +42,6 @@ public class MainScoreBoard {
 
         Score gameState = objective.getScore(ChatColor.GOLD + "Статус игры: " + ChatColor.GREEN + "Активна");
         Score alternative = null;
-
 
         // Если игра запущена:
         if (GameCycle.isGameStarted) {
@@ -63,18 +61,16 @@ public class MainScoreBoard {
                     player.setLevel(GameCycle.gameStats.get(player));
                 }
             }
-        } else if (GameCycle.isCommandStartEventTipped) {
+        } else if (GameCycle.isCommandStartEventTipped)
             alternative = objective.getScore(ChatColor.BLUE + "До начала игры: " + ChatColor.YELLOW + mainSecPreStart);
-        } else {
+        else
             gameState = objective.getScore(ChatColor.GOLD + "Статус игры: " + ChatColor.GREEN + "Ожидание...");
-        }
 
         // Состояние игры
         gameState.setScore(-2);
         if (alternative != null) alternative.setScore(-3);
 
         // Разделители
-
         Score divider1 = objective.getScore(ChatColor.AQUA + Chat.ScoreBoardDivider1);
         divider1.setScore(-4);
 
@@ -82,6 +78,7 @@ public class MainScoreBoard {
         divider3.setScore(-1);
     }
 
+    // Отсчет секунд до старта
     public static void countdown() {
         String secondsString = null;
 
@@ -99,8 +96,12 @@ public class MainScoreBoard {
             secondsString = " секунды!";
         else if (mainSecPreStart == 1) {
             secondsString = " секунду!";
+        } else if (mainSecPreStart == 0) {
             GameCycle.StartGame();
+            mainSecPreStart--;
+            return;
         }
+
 
         if (mainSecPreStart == 30 || mainSecPreStart == 15 || mainSecPreStart == 10 || mainSecPreStart <= 5) {
             broadcastToEveryone(ChatColor.BLUE + "Начало игры через " + ChatColor.GOLD + mainSecPreStart + ChatColor.BLUE + secondsString);
@@ -108,13 +109,13 @@ public class MainScoreBoard {
                 player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
                 player.sendTitle(ChatColor.BLUE + "Начало игры через", ChatColor.GOLD + "" + mainSecPreStart + ChatColor.BLUE + secondsString, 20, 20, 20);
             }
-
         }
+
         mainSecPreStart--;
     }
 
-
-    public static void setMainScoreBoard() {
+    // Запуск главного раннабла
+    public static void startPluginRunnable() {
         // Игровой раннабл
         new BukkitRunnable() {
             @Override
@@ -127,6 +128,6 @@ public class MainScoreBoard {
                 // ГЛАВНЫЙ ИГРОВОЙ ЦИКЛ
                 GameCycle.mainCycle();
             }
-        }.runTaskTimer(Main.main, 20, 20);
+        }.runTaskTimer(Main.main, 10, 10);
     }
 }

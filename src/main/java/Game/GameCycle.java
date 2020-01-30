@@ -1,6 +1,7 @@
 package Game;
 
 import Commands.CommandEvent;
+import PluginUtilities.Chat;
 import QueueSystem.MainScoreBoard;
 import QueueSystem.Queue;
 import event.main.Main;
@@ -9,10 +10,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
-
-import static Game.RoundSystem.*;
-import static PluginUtilities.Chat.divThick16;
-import static PluginUtilities.Chat.divThick32;
 
 
 public class GameCycle {
@@ -24,49 +21,50 @@ public class GameCycle {
     public static boolean isCommandStartEventTipped = false;
 
     public static void mainCycle() {
+
+        if (RoundSystem.round >= RoundSystem.roundCount && isGameStarted && !RoundSystem.isRoundStarted) {
+            endGame();
+            return;
+        }
         // START
         if (isCommandStartEventTipped && !isGameStarted)
             MainScoreBoard.countdown();
 
-        if (isGameStarted && !isRoundStarted)
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    RoundSystem.startRound();
-                }
-            }.runTaskLater(Main.main, 4 * 20);
+        else if (isGameStarted && !RoundSystem.isRoundStarted)
+            RoundSystem.startRound();
+
+        else if (isGameStarted)
+            RoundSystem.roundTimer();
     }
 
     public static void StartGame() {
         for (Player player : Queue.redQueueList) {
             player.setExp(0);
-            PlayerReset(player);
+            RoundSystem.PlayerReset(player);
             CommandEvent.teleportToSpawn(player);
-            roundStats.put(player, 0);
+            RoundSystem.roundStats.put(player, 0);
             gameStats.put(player, 0);
         }
 
         for (Player player : Bukkit.getOnlinePlayers()) {
             player.sendTitle(ChatColor.BLUE + "Игра началась!", ChatColor.GOLD + "Играют: " + ChatColor.RED + "[RED]", 30, 30, 30);
             player.playSound(player.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_CURSE, 10, 1);
-            player.sendMessage(ChatColor.AQUA + divThick16 + ChatColor.GOLD + "[EVENT] " + ChatColor.BLUE + "Игра началась!\n" + ChatColor.GOLD + "Играют: " + ChatColor.RED + "[RED]\n" + ChatColor.YELLOW + divThick32);
+            player.sendMessage(ChatColor.AQUA + Chat.divThick16 + ChatColor.GOLD + "[EVENT] " + ChatColor.BLUE + "Игра началась!\n" + ChatColor.GOLD + "Играют: " + ChatColor.RED + "[RED]\n" + ChatColor.YELLOW + Chat.divThick32);
         }
-
         isGameStarted = true;
     }
 
     public static void endGame() {
-        isRoundTimerStarted = false;
         isGameStarted = false;
         MainScoreBoard.mainSecPreStart = 60;
-        round = 1;
+        RoundSystem.round = 1;
 
         int max = 0;
         String winner = "null";
 
         for (Player redPlayer : Queue.redQueueList)
             if (gameStats.get(redPlayer) > max) {
-                max = roundStats.get(redPlayer);
+                max = RoundSystem.roundStats.get(redPlayer);
                 winner = redPlayer.getName();
             }
 

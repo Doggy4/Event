@@ -24,7 +24,7 @@ public class MainPlayerHandler implements Listener {
         event.setJoinMessage(ChatColor.GOLD + "[EVENT]" + ChatColor.WHITE + " Игрок " + ChatColor.AQUA + player.getName() + ChatColor.WHITE + " зашел на " + ChatColor.GOLD + "EVENT" + ChatColor.WHITE + "!");
 
         player.getInventory().setItem(0, Items.joinQueue);
-        player.getInventory().setItem(7, Items.particleSelect);
+        player.getInventory().addItem(Items.particleSelect);
         player.getInventory().setItem(8, Items.spectatorMode);
     }
 
