@@ -16,6 +16,8 @@ public class BuildTower implements Listener {
     private static boolean isActivated = false;
 
     public static void BuildTower() {
+        RoundSystem.roundSeconds = 30;
+
         isActivated = true;
         GameRules.PlaceBlockOff();
 
@@ -47,8 +49,8 @@ public class BuildTower implements Listener {
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Вы поставили блоков: [" + blockPlace + "/20]");
         }
 
-        if (!(RoundSystem.isRoundTimerStarted)) {
-            isActivated = RoundSystem.isRoundTimerStarted;
+        if (!(RoundSystem.isRoundTimerEnabled)) {
+            isActivated = RoundSystem.isRoundTimerEnabled;
             MapRebuild.loadSchematic("arena");
         }
     }

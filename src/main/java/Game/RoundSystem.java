@@ -1,6 +1,7 @@
 package Game;
 
 import Commands.CommandEvent;
+import PluginUtilities.Chat;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
 import e.main.Main;
@@ -12,8 +13,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 
-import static Game.GameCycle.endGame;
-import static Game.GameCycle.isGameStarted;
 import static PluginUtilities.Chat.*;
 
 public class RoundSystem {
@@ -22,37 +21,34 @@ public class RoundSystem {
 
     public static int round = 1;
     public static int roundCount = 10;
-    public static int roundSeconds;
+    public static int roundSeconds = 30;
     public static boolean isRoundStarted = false;
-    public static boolean isRoundTimerStarted = false;
+    public static boolean isRoundTimerEnabled = false;
+
+    private static int curTicker = 0;
 
     public static void roundTimer() {
-        isRoundTimerStarted = true;
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                if (roundSeconds <= 0) {
-                    RoundSystem.endRound();
-                    this.cancel();
-                }
-                if(!isRoundStarted) this.cancel();
-                roundSeconds--;
-            }
-        }.runTaskTimer(Main.main, 20, 20);
+        Chat.broadcastToEveryone(curTicker + "/" + roundSeconds);
+
+        if (!isRoundTimerEnabled) {
+            curTicker = 0;
+            isRoundTimerEnabled = true;
+        }
+
+        curTicker++;
+
+        if (roundSeconds <= curTicker) {
+            RoundSystem.endRound();
+            isRoundTimerEnabled = false;
+        }
     }
 
     public static void startRound() {
-        if (round > roundCount && isGameStarted && !isRoundStarted) {
-            endGame();
-            return;
-        }
         isRoundStarted = true;
         GameRules.TurnOnAllRules();
-        roundTimer();
 
-        for (Player player : Queue.redQueueList){
+        for (Player player : Queue.redQueueList) {
             player.setGameMode(GameMode.ADVENTURE);
-            roundStats.put(player, 0);
             CommandEvent.teleportToSpawn(player);
         }
 
@@ -62,71 +58,55 @@ public class RoundSystem {
             }
         }
 
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                for (Player player : Bukkit.getOnlinePlayers()) {
-                    player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Обработка... Выбор мини-режима...");
-                    player.sendTitle(ChatColor.YELLOW + "Приготовьтесь!", ChatColor.WHITE + "Выбор мини-режима...", 20, 20, 20);
-                    player.playSound(player.getLocation(), Sound.BLOCK_LEVER_CLICK, 10, 1);
-                }
-            }
-        }.runTaskLater(Main.main, 2 * 20);
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Обработка... Выбор мини-режима...");
+            player.sendTitle(ChatColor.YELLOW + "Приготовьтесь!", ChatColor.WHITE + "Выбор мини-режима...", 20, 20, 20);
+            player.playSound(player.getLocation(), Sound.BLOCK_LEVER_CLICK, 10, 1);
+        }
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            player.sendMessage(ChatColor.YELLOW + divThick16 + ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Раунд: " + ChatColor.AQUA + round + "\n" + ChatColor.YELLOW + divThick16);
+            player.sendTitle(ChatColor.YELLOW + "РАУНД " + ChatColor.AQUA + round, ChatColor.BLUE + "Начинаем!", 20, 20, 20);
+            player.playSound(player.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_CURSE, 10, 1);
+        }
+        round++;
 
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                for (Player player : Bukkit.getOnlinePlayers()) {
-                    player.sendMessage(ChatColor.YELLOW + divThick16 + ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Раунд: " + ChatColor.AQUA + round + "\n" + ChatColor.YELLOW + divThick16);
-                    player.sendTitle(ChatColor.YELLOW + "РАУНД " + ChatColor.AQUA + round, ChatColor.BLUE + "Начинаем!", 20, 20, 20);
-                    player.playSound(player.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_CURSE, 10, 1);
-                }
-                round++;
-            }
-        }.runTaskLater(Main.main, 5 * 20);
+        for (Player player : Bukkit.getOnlinePlayers())
+            player.playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 10, 1);
 
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                for (Player player : Bukkit.getOnlinePlayers())
-                    player.playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 10, 1);
-
-                int randomBattle = Utilities.getRandom(0, 8);
-                switch (randomBattle) {
-                    case 0:
-                        PlaceBlock.PlaceBlock();
-                        break;
-                    case 1:
-                        DropItem.DropItem();
-                        break;
-                    case 2:
-                        BowShoot.BowShoot();
-                        break;
-                    case 3:
-                        ShearSheep.ShearSheep();
-                        break;
-                    case 4:
-                        EggThrow.EggThrow();
-                        break;
-                    case 5:
-                        CowMilk.MilkCow();
-                        break;
-                    case 6:
-                        BuildTower.BuildTower();
-                        break;
-                    case 7:
-                        ReachSky.ReachSky();
-                        break;
-                    case 8:
-                        DodgeAnvils.DodgeAnvils();
-                        break;
-                }
-            }
-        }.runTaskLater(Main.main, 8 * 20);
+        int randomBattle = Utilities.getRandom(0, 8);
+        switch (randomBattle) {
+            case 0:
+                PlaceBlock.PlaceBlock();
+                break;
+            case 1:
+                DropItem.DropItem();
+                break;
+            case 2:
+                BowShoot.BowShoot();
+                break;
+            case 3:
+                ShearSheep.ShearSheep();
+                break;
+            case 4:
+                EggThrow.EggThrow();
+                break;
+            case 5:
+                CowMilk.MilkCow();
+                break;
+            case 6:
+                BuildTower.BuildTower();
+                break;
+            case 7:
+                ReachSky.ReachSky();
+                break;
+            case 8:
+                DodgeAnvils.DodgeAnvils();
+                break;
+        }
+        roundTimer();
     }
 
     public static void endRound() {
-        isRoundTimerStarted = false;
         isRoundStarted = false;
 
         LinkedList<Map.Entry<Player, Integer>> list = new LinkedList<>(roundStats.entrySet());

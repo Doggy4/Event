@@ -19,6 +19,8 @@ public class ShearSheep implements Listener {
     private static DyeColor randomColor;
 
     public static void ShearSheep() {
+        RoundSystem.roundSeconds = 30;
+
         isActivated = true;
 
         randomColor = Utilities.getRandomColor();

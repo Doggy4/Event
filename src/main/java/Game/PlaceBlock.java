@@ -59,7 +59,7 @@ public class PlaceBlock implements Listener {
             int randomMaterial = Utilities.getRandom(0, materials.size() - 37);
             List<Material> materialsNew =  materials.subList(randomMaterial, randomMaterial + 36);
 
-            int randomBlock = Utilities.getRandom(0, 36);
+            int randomBlock = Utilities.getRandom(0, 35);
 
             randomMaterialBlock = materialsNew.get(randomBlock);
 
@@ -88,7 +88,7 @@ public class PlaceBlock implements Listener {
         int randomMaterial = Utilities.getRandom(0, materials.size() - 37);
         List<Material> materialsNew =  materials.subList(randomMaterial, randomMaterial + 36);
 
-        int randomBlock = Utilities.getRandom(0, 36);
+        int randomBlock = Utilities.getRandom(0, 35);
 
         randomMaterialBlock = materialsNew.get(randomBlock);
 
@@ -117,8 +117,8 @@ public class PlaceBlock implements Listener {
             PlaceNext(player);
         }
 
-        if (!(RoundSystem.isRoundTimerStarted)) {
-            isActivated = RoundSystem.isRoundTimerStarted;
+        if (!(RoundSystem.isRoundTimerEnabled)) {
+            isActivated = RoundSystem.isRoundTimerEnabled;
         }
         event.setCancelled(true);
     }
