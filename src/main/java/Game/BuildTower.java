@@ -2,7 +2,7 @@ package Game;
 
 import PluginUtilities.MapRebuild;
 import QueueSystem.Queue;
-import event.main.Main;
+import e.main.Main;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

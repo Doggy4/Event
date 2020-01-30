@@ -4,7 +4,7 @@ import PluginUtilities.Chat;
 import PluginUtilities.Items;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
-import event.main.Main;
+import e.main.Main;
 import org.bukkit.*;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -13,7 +13,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerShearEntityEvent;
 
-import java.util.ArrayList;
 // Доделать
 public class ShearSheep implements Listener {
     private static boolean isActivated = false;

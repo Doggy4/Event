@@ -1,4 +1,4 @@
-package event.main;
+package e.main;
 
 
 import Game.*;
@@ -17,7 +17,7 @@ public final class Main extends JavaPlugin {
         main = this;
 
         Bukkit.getLogger().info(ChatColor.GOLD + "[EVENT] Plugin enabled!");
-        Bukkit.getPluginCommand("event").setExecutor(new Commands.CommandEvent());
+        Bukkit.getPluginCommand("e").setExecutor(new Commands.CommandEvent());
 
         this.getServer().getPluginManager().registerEvents(new MainPlayerHandler(), this);
         this.getServer().getPluginManager().registerEvents(new InventoryConstructor(), this);

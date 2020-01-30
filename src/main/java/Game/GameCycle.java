@@ -3,7 +3,7 @@ package Game;
 import Commands.CommandEvent;
 import QueueSystem.PrestartScoreBoard;
 import QueueSystem.Queue;
-import event.main.Main;
+import e.main.Main;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
