@@ -8,7 +8,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 
-public class BaseClass implements Listener {
+public class GameRules implements Listener {
 
     private static boolean playerDamageRULE = false;
     private static boolean breakBlockRULE = false;

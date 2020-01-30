@@ -28,10 +28,6 @@ public class GameCycle {
         if (mainSecPreStart <= 0 && !isGameStarted) {
             StartGame();
         }
-        // END
-        if (round > roundCount && isGameStarted && !isRoundStarted) {
-            endGame();
-        }
         seconds();
     }
 

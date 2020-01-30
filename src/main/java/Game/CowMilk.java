@@ -27,6 +27,7 @@ public class CowMilk implements Listener {
 
     public static void MilkCow() {
         isActivated = true;
+        RoundSystem.roundSeconds = 30;
 
         for (Player player : Queue.redQueueList) {
             player.getInventory().clear();

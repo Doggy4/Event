@@ -14,14 +14,18 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
+// Зафиксить появление воды и другой жидкости
 public class PlaceBlock implements Listener {
 
     private static Material randomMaterialBlock;
     private static boolean isActivated = false;
     private static HashMap<Player, Location> playerRoom = new HashMap<Player, Location>();
 
-    private static ArrayList<Location> GetSpawnPoints() {
+    public static void PlaceBlock() {
+        isActivated = true;
+        RoundSystem.roundSeconds = 30;
+        GameRules.PlaceBlockOff();
+
         FileConfiguration config = Main.main.getConfig();
         World world = Bukkit.getWorld(config.getString("spawn.world"));
         Location location = new Location(world, config.getDouble("spawn.x"), config.getDouble("spawn.y"), config.getDouble("spawn.z"));
@@ -37,19 +41,12 @@ public class PlaceBlock implements Listener {
         locations.add(location.add(-9,0,-6));
         locations.add(location.add(9,0,6));
         locations.add(location.add(-9,0,6));
-        return locations;
-    }
-
-    public static void PlaceBlock() {
-        isActivated = true;
-        BaseClass.PlaceBlockOff();
-        ArrayList<Location> locations = GetSpawnPoints();
 
         int l = 0;
+
         for (Player player : Queue.redQueueList) {
             player.getInventory().clear();
-            Location location = locations.get(l);
-            player.teleport(location.add(0,1.5,0));
+            player.teleport(locations.get(l).add(0,2,0));
             l++;
 
             ArrayList<Material> materials = new ArrayList<Material>();
@@ -67,17 +64,15 @@ public class PlaceBlock implements Listener {
             randomMaterialBlock = materialsNew.get(randomBlock);
 
             player.getInventory().clear();
-
             for (Material block : materialsNew) player.getInventory().addItem(new ItemStack(block, 1));
 
             player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
             player.sendTitle(ChatColor.GREEN + "Поставьте блок", randomMaterialBlock.name(), 40, 40, 40);
+            player.sendMessage(ChatColor.GREEN + "Поставьте блок " + randomMaterialBlock.name());
             player.setGameMode(GameMode.SURVIVAL);
 
-            FileConfiguration config = Main.main.getConfig();
-            World world = Bukkit.getWorld(config.getString("spawn.world"));
-            world.getBlockAt(location).setType(randomMaterialBlock);
-            playerRoom.put(player,location);
+            location.getWorld().getBlockAt(locations.get(l)).setType(randomMaterialBlock);
+            playerRoom.put(player, locations.get(l));
         }
     }
 
@@ -97,11 +92,12 @@ public class PlaceBlock implements Listener {
 
         randomMaterialBlock = materialsNew.get(randomBlock);
 
+        player.getInventory().clear();
         for (Material block : materialsNew) player.getInventory().addItem(new ItemStack(block, 1));
 
-        player.getInventory().clear();
         player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
         player.sendTitle(ChatColor.GREEN + "Поставьте блок", randomMaterialBlock.name(), 40, 40, 40);
+        player.sendMessage(ChatColor.GREEN + "Поставьте блок " + randomMaterialBlock.name());
 
         FileConfiguration config = Main.main.getConfig();
         World world = Bukkit.getWorld(config.getString("spawn.world"));
@@ -113,7 +109,7 @@ public class PlaceBlock implements Listener {
         Player player = event.getPlayer();
         if (!isActivated) return;
 
-        if (event.getBlockPlaced().getType().toString().equals(randomMaterialBlock.toString())) {
+        if (event.getBlockPlaced().getType().equals(randomMaterialBlock)) {
             RoundSystem.addScore(player, 1);
             PlaceNext(player);
         } else {

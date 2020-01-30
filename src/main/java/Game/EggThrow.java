@@ -11,14 +11,13 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Collections;
-// Сделать что-то
+
 public class EggThrow implements Listener {
-    private static Material randomMaterialBlock;
     private static boolean isActivated = false;
 
     public static void EggThrow() {
-
         isActivated = true;
+        RoundSystem.roundSeconds = 15;
 
         ArrayList<Material> materials = new ArrayList<Material>();
         Collections.addAll(materials, Material.values());
@@ -26,7 +25,7 @@ public class EggThrow implements Listener {
         int randomMaterial = Utilities.getRandom(0, materials.size() - 37);
         materials.subList(randomMaterial, randomMaterial + 36);
 
-        int randomBlock = Utilities.getRandom(0, 36);
+        int randomSlot = Utilities.getRandom(0, 35);
 
         for (Player player : Queue.redQueueList) {
             player.getInventory().clear();
@@ -34,10 +33,29 @@ public class EggThrow implements Listener {
             player.sendTitle(ChatColor.GREEN + "Бросьте яйцо!", "Поторпитесь!", 40, 40, 40);
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Бросьте яйцо!");
 
-            for (Material block : materials) player.getInventory().addItem(new ItemStack(block, 64));
+            for (Material block : materials) player.getInventory().addItem(new ItemStack(block, 1));
 
-            player.getInventory().setItem(randomBlock, new ItemStack(Material.EGG));
+            player.getInventory().setItem(randomSlot, new ItemStack(Material.EGG));
         }
+    }
+
+    public static void throwNext(Player player) {
+        ArrayList<Material> materials = new ArrayList<Material>();
+        Collections.addAll(materials, Material.values());
+
+        int randomMaterial = Utilities.getRandom(0, materials.size() - 37);
+        materials.subList(randomMaterial, randomMaterial + 36);
+
+        int randomSlot = Utilities.getRandom(0, 35);
+
+        player.getInventory().clear();
+
+        player.sendTitle(ChatColor.GREEN + "Еще одно!", "Поторпитесь!", 40, 40, 40);
+        player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Бросьте еще одно!");
+
+        for (Material block : materials) player.getInventory().addItem(new ItemStack(block, 1));
+
+        player.getInventory().setItem(randomSlot, new ItemStack(Material.EGG));
     }
 
     @EventHandler
@@ -47,8 +65,7 @@ public class EggThrow implements Listener {
         Player player = e.getPlayer();
 
         RoundSystem.addScore(player, 1);
-
-        player.getInventory().clear();
+        throwNext(player);
 
         if (RoundSystem.roundSeconds <= 0) {
             isActivated = false;

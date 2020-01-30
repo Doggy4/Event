@@ -37,6 +37,19 @@ public class PrestartScoreBoard {
         if (!GameCycle.isGameStarted && GameCycle.isGameTimerStarted) {
             Score gameState = objective.getScore(ChatColor.GOLD + "Статус игры: " + ChatColor.BLUE + "Начало " + ChatColor.WHITE + "[" + GameCycle.mainSecPreStart + "сек]");
             gameState.setScore(-2);
+        } else if (RoundSystem.isRoundStarted) {
+            Score gameState = objective.getScore(ChatColor.GOLD + "Статус игры: " + ChatColor.GREEN + "Активна");
+            gameState.setScore(-2);
+            Score battle = objective.getScore(ChatColor.GOLD + "Раунд: " + ChatColor.GREEN + RoundSystem.round);
+            battle.setScore(-3);
+
+            Score divider2 = objective.getScore(ChatColor.AQUA + Chat.divThick16);
+            divider2.setScore(31);
+            for (Player player : Queue.redQueueList) {
+                Score score = objective.getScore(ChatColor.GOLD + player.getName());
+                score.setScore(RoundSystem.roundStats.get(player));
+                player.setLevel(RoundSystem.roundStats.get(player));
+            }
         } else if (GameCycle.isGameStarted) {
             Score gameState = objective.getScore(ChatColor.GOLD + "Статус игры: " + ChatColor.GREEN + "Активна");
             gameState.setScore(-2);

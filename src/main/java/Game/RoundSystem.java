@@ -12,6 +12,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 
+import static Game.GameCycle.endGame;
+import static Game.GameCycle.isGameStarted;
 import static PluginUtilities.Chat.*;
 
 public class RoundSystem {
@@ -20,13 +22,12 @@ public class RoundSystem {
 
     public static int round = 1;
     public static int roundCount = 10;
-    public static int roundSeconds = 30;
+    public static int roundSeconds;
     public static boolean isRoundStarted = false;
     public static boolean isRoundTimerStarted = false;
 
     public static void roundTimer() {
         isRoundTimerStarted = true;
-        roundSeconds = 30;
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -36,8 +37,12 @@ public class RoundSystem {
     }
 
     public static void startRound() {
+        if (round > roundCount && isGameStarted && !isRoundStarted) {
+            endGame();
+            return;
+        }
         isRoundStarted = true;
-        BaseClass.TurnOnAllRules();
+        GameRules.TurnOnAllRules();
         roundTimer();
 
         for (Player player : Queue.redQueueList){
@@ -67,7 +72,7 @@ public class RoundSystem {
             @Override
             public void run() {
                 for (Player player : Bukkit.getOnlinePlayers()) {
-                    player.sendMessage(ChatColor.YELLOW + divThick32 + ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Раунд: " + ChatColor.AQUA + round + ChatColor.YELLOW + divThick32);
+                    player.sendMessage(ChatColor.YELLOW + divThick16 + ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Раунд: " + ChatColor.AQUA + round + "\n" + ChatColor.YELLOW + divThick16);
                     player.sendTitle(ChatColor.YELLOW + "РАУНД " + ChatColor.AQUA + round, ChatColor.BLUE + "Начинаем!", 20, 20, 20);
                     player.playSound(player.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_CURSE, 10, 1);
                 }
@@ -140,7 +145,7 @@ public class RoundSystem {
         }
 
         roundStats.put(winner, score);
-        winner.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы получили +" + score + scoreString);
+        winner.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы получили " + score + scoreString);
     }
 
     public static void playerPlace(Player roundPlayer, Integer place, Integer scoreCount) {

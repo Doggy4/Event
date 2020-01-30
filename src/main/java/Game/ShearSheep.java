@@ -18,6 +18,7 @@ import java.util.ArrayList;
 public class ShearSheep implements Listener {
     private static boolean isShearSheepActivated = false;
     private static DyeColor randomColor;
+    private static int score = 10;
 
     public static void ShearSheep() {
         isShearSheepActivated = true;
@@ -49,18 +50,18 @@ public class ShearSheep implements Listener {
         }
     }
 
-    private static int place = 1;
-
     @EventHandler
     public void onPlayerShearSheep(PlayerShearEntityEvent event) {
-        Player player = event.getPlayer();
-        Sheep sheep = (Sheep) event.getEntity();
         if (!isShearSheepActivated) return;
 
+        Player player = event.getPlayer();
+        Sheep sheep = (Sheep) event.getEntity();
+
         if (sheep.getColor() == randomColor) {
-            RoundSystem.addScore(player, place);
+            RoundSystem.addScore(player, score);
             player.setGameMode(GameMode.ADVENTURE);
             player.getInventory().clear();
+            score--;
         } else {
             RoundSystem.playerLose(player);
         }
