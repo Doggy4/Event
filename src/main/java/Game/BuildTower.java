@@ -47,10 +47,9 @@ public class BuildTower implements Listener {
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Вы поставили блоков: [" + blockPlace + "/20]");
         }
 
-        if (RoundSystem.roundSeconds <= 0) {
-            isActivated = false;
+        if (!(RoundSystem.isRoundTimerStarted)) {
+            isActivated = RoundSystem.isRoundTimerStarted;
             MapRebuild.loadSchematic("arena");
-            RoundSystem.endRound();
         }
     }
 }

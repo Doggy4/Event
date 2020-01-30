@@ -16,12 +16,11 @@ import org.bukkit.event.player.PlayerShearEntityEvent;
 import java.util.ArrayList;
 // Доделать
 public class ShearSheep implements Listener {
-    private static boolean isShearSheepActivated = false;
+    private static boolean isActivated = false;
     private static DyeColor randomColor;
-    private static int score = 10;
 
     public static void ShearSheep() {
-        isShearSheepActivated = true;
+        isActivated = true;
 
         randomColor = Utilities.getRandomColor();
 
@@ -52,22 +51,17 @@ public class ShearSheep implements Listener {
 
     @EventHandler
     public void onPlayerShearSheep(PlayerShearEntityEvent event) {
-        if (!isShearSheepActivated) return;
+        if (!isActivated) return;
 
         Player player = event.getPlayer();
         Sheep sheep = (Sheep) event.getEntity();
 
         if (sheep.getColor() == randomColor) {
-            RoundSystem.addScore(player, score);
+            RoundSystem.addScore(player, 1);
             player.setGameMode(GameMode.ADVENTURE);
             player.getInventory().clear();
-            score--;
         } else {
             RoundSystem.playerLose(player);
-        }
-        if (RoundSystem.roundSeconds <= 0) {
-            isShearSheepActivated = false;
-           RoundSystem.endRound();
         }
     }
 }

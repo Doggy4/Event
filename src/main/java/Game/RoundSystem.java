@@ -31,6 +31,10 @@ public class RoundSystem {
         new BukkitRunnable() {
             @Override
             public void run() {
+                if (roundSeconds <= 0) {
+                    RoundSystem.endRound();
+                    this.cancel();
+                }
                 if(!isRoundStarted) this.cancel();
                 roundSeconds--;
             }
@@ -146,7 +150,7 @@ public class RoundSystem {
         }
 
         roundStats.put(winner, score);
-        winner.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы получили " + score + scoreString);
+        winner.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы получили " + ChatColor.GREEN + score + ChatColor.WHITE + scoreString);
     }
 
     public static void playerPlace(Player roundPlayer, Integer place, Integer scoreCount) {

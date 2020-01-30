@@ -13,7 +13,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class ReachSky {
     private static boolean isActivated = false;
-    private static int score = 10;
 
     public static void ReachSky() {
         isActivated = true;
@@ -33,9 +32,8 @@ public class ReachSky {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (RoundSystem.roundSeconds <= 0) {
-                    isActivated = false;
-                    RoundSystem.endRound();
+                if (!(RoundSystem.isRoundTimerStarted)) {
+                    isActivated = RoundSystem.isRoundTimerStarted;
 
                     for (Player player  : Queue.redQueueList) player.setAllowFlight(false);
 
@@ -46,8 +44,7 @@ public class ReachSky {
                     if (player.getLocation().getY() >= 150){
                         player.getWorld().spawnParticle(Particle.FIREWORKS_SPARK, player.getLocation(), 10);
                         player.setAllowFlight(false);
-                        RoundSystem.addScore(player, score);
-                        score--;
+                        RoundSystem.addScore(player, 1);
                     }
                 }
             }

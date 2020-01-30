@@ -80,9 +80,8 @@ public class DropItem implements Listener {
         } else
             RoundSystem.playerLose(player);
 
-        if (RoundSystem.roundSeconds <= 0) {
-            isActivated = false;
-            RoundSystem.endRound();
+        if (!(RoundSystem.isRoundTimerStarted)) {
+            isActivated = RoundSystem.isRoundTimerStarted;
         }
     }
 }

@@ -67,9 +67,8 @@ public class EggThrow implements Listener {
         RoundSystem.addScore(player, 1);
         throwNext(player);
 
-        if (RoundSystem.roundSeconds <= 0) {
-            isActivated = false;
-            RoundSystem.endRound();
+        if (!(RoundSystem.isRoundTimerStarted)) {
+            isActivated = RoundSystem.isRoundTimerStarted;
         }
     }
 }

@@ -30,7 +30,7 @@ public class BowShoot implements Listener {
     private static Block bonusBlock = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).getBlockAt(0, 0, 0);
 
     public static void BowShoot() {
-        isActivated = true;
+        isActivated = RoundSystem.isRoundTimerStarted;
 
         for (Player player : Queue.redQueueList) {
             player.getInventory().clear();
@@ -112,10 +112,7 @@ public class BowShoot implements Listener {
         } else if (hitBlock.getType().equals(bonusTarget)) {
             RoundSystem.addScore(player, 5);
         }
-
-        if (RoundSystem.roundSeconds <= 0) {
-            RoundSystem.endRound();
-            isActivated = false;
+            if (!(RoundSystem.isRoundTimerStarted)) {
 
             bonusBlock.setType(Material.AIR);
             bonusBlock.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, block.getLocation(), 1);

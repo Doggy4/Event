@@ -117,9 +117,8 @@ public class PlaceBlock implements Listener {
             PlaceNext(player);
         }
 
-        if (RoundSystem.roundSeconds <= 0) {
-            isActivated = false;
-            RoundSystem.endRound();
+        if (!(RoundSystem.isRoundTimerStarted)) {
+            isActivated = RoundSystem.isRoundTimerStarted;
         }
         event.setCancelled(true);
     }
