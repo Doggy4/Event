@@ -98,23 +98,20 @@ public class Queue {
 
         if (redQueueList.contains(player)) {
             lastQueue = ChatColor.RED + "[RED]";
-            redQueueList.remove(player.getName());
+            redQueueList.remove(player);
             redQueue.removeEntry(player.getName());
         }
 
-
-        if (yellowQueueList.contains(player.getName())) {
+        if (yellowQueueList.contains(player)) {
             lastQueue = ChatColor.YELLOW + "[YELLOW]";
-
-            yellowQueueList.remove(player.getName());
+            yellowQueueList.remove(player);
             yellowQueue.removeEntry(player.getName());
         }
 
 
-        if (greenQueueList.contains(player.getName())) {
+        if (greenQueueList.contains(player)) {
             lastQueue = ChatColor.GREEN + "[GREEN]";
-
-            greenQueueList.remove(player.getName());
+            greenQueueList.remove(player);
             greenQueue.removeEntry(player.getName());
         }
 
@@ -126,7 +123,6 @@ public class Queue {
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Вы не находитесь в очереди!");
             player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 10, 1);
         }
-
     }
 
     public static void LeaveQueue(Player player) {
