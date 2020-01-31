@@ -1,8 +1,10 @@
 package Game;
 
+import PluginUtilities.BlackList;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
-import org.bukkit.*;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -29,11 +31,10 @@ public class DropItem implements Listener {
         List<Material> materialsNew = materials.subList(randomMaterial, randomMaterial + 36);
 
         int randomBlock = Utilities.getRandom(0, 35);
-        randomMaterialBlock = materialsNew.get(randomBlock);
 
-        while (randomMaterialBlock.name().contains("STEM") || randomMaterialBlock.name().contains("AIR") || randomMaterialBlock.name().contains("BAMBOO") || randomMaterialBlock.name().contains("STAND") || randomMaterialBlock.name().contains("COMMAND") || randomMaterialBlock.name().contains("BARRIER") || randomMaterialBlock.name().contains("LECTERN") || randomMaterialBlock.name().contains("BEETROOTS") || randomMaterialBlock.name().contains("CARROTS") || randomMaterialBlock.name().contains("SEEDS") || randomMaterialBlock.name().contains("POTATO") || randomMaterialBlock.name().contains("BLUET")) {
+        while (BlackList.isItemIsBlocked(materialsNew.get(randomBlock).name())) {
             randomBlock = Utilities.getRandom(0, 35);
-            randomMaterialBlock = materialsNew.get(randomBlock);
+            Material randomMaterialBlock = materialsNew.get(randomBlock);
         }
 
         for (Player player : Queue.redQueueList) {
