@@ -10,15 +10,15 @@ public class Particles {
 
     public static void fireBlock(Location location) {
         World world = location.getWorld();
-        double startX = 0.0D;
-        double startY = 0.0D;
-        double startZ = 0.0D;
+        double startX = location.getX();
+        double startY = location.getY();
+        double startZ = location.getZ();
 
-        double step = 0.1D;
+        double step = 1D;
 
-        for (int x = 0; x < 3; x += step) {
-            for (int z = 0; z < 3; z += step) {
-                for (int y = 0; y <= 3; y += step) {
+        for (double x = 0; x < 3; x += step) {
+            for (double z = 0; z < 3; z += step) {
+                for (double y = 0; y <= 3; y += step) {
                     Location loc = new Location(world, startX + x, startY + y, startZ + z);
                     if (y != 3 && y != 0) {
                         if ((x >= 0 && z == 0) || (x >= 0 && z == 2) || (x == 0 && z >= 0) || (x == 2 && z >= 0))
