@@ -37,7 +37,7 @@ public class DodgeAnvils implements Listener {
             @Override
             public void run() {
                 if (!(RoundSystem.isRoundTimerEnabled)) {
-                    isActivated = RoundSystem.isRoundTimerEnabled;
+                    isActivated = false;
                     endDodgeAnvils();
                     this.cancel();
                 }

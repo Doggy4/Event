@@ -121,16 +121,20 @@ public class RoundSystem {
     public static void addScore(Player winner, int score) {
         String scoreString;
 
-        if (score == 1) {
-            scoreString = " Очко ";
-        } else if (score > 1 && score < 5) {
-            scoreString = " Очка ";
+        if (score == 1 || score == -1) {
+            scoreString = " очко ";
+        } else if (score > 1 && score < 5 || score < -1 && score > -5) {
+            scoreString = " очка ";
         } else {
-            scoreString = " Очков ";
+            scoreString = " очков ";
         }
 
+        if (score > 0)
+            winner.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы получили " + ChatColor.GREEN + score + ChatColor.WHITE + scoreString);
+        else
+            winner.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы потеряли " + ChatColor.RED + score + ChatColor.WHITE + scoreString);
         roundStats.put(winner, score);
-        winner.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы получили " + ChatColor.GREEN + score + ChatColor.WHITE + scoreString);
+
     }
 
     public static void playerPlace(Player roundPlayer, Integer place, Integer scoreCount) {
