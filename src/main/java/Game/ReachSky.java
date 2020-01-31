@@ -1,8 +1,10 @@
 package Game;
 
 import QueueSystem.Queue;
-import e.main.Main;
-import org.bukkit.*;
+import event.main.Main;
+import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
+import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 

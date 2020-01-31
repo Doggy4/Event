@@ -1,15 +1,19 @@
-package e.main;
+package event.main;
 
 import Commands.CommandEvent;
 import PluginUtilities.InventoryConstructor;
 import PluginUtilities.Items;
 import QueueSystem.Queue;
-import org.bukkit.*;
-import org.bukkit.entity.Item;
+import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.*;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 public class MainPlayerHandler implements Listener {
 

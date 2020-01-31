@@ -2,8 +2,11 @@ package Game;
 
 import PluginUtilities.MapRebuild;
 import QueueSystem.Queue;
-import e.main.Main;
-import org.bukkit.*;
+import event.main.Main;
+import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
+import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

@@ -7,8 +7,5 @@ authors: [Doggy4, bob302]
 description: Minecraft Mini-Game
 commands:
   event:
-    usage: /event
+    usage: /event help
     description: Main Event Commands
-  spec:
-    usage: /spec
-    description: Change Spectator Mode

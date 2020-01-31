@@ -1,11 +1,10 @@
-package e.main;
+package event.main;
 
 
 import Game.*;
 import PluginUtilities.InventoryConstructor;
 import QueueSystem.MainScoreBoard;
 import SvistoPerdelki.ParticleGUI;
-import e.main.MainPlayerHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -19,7 +18,7 @@ public final class Main extends JavaPlugin {
         main = this;
 
         Bukkit.getLogger().info(ChatColor.GOLD + "[EVENT] Plugin enabled!");
-        Bukkit.getPluginCommand("e").setExecutor(new Commands.CommandEvent());
+        Bukkit.getPluginCommand("event").setExecutor(new Commands.CommandEvent());
 
         this.getServer().getPluginManager().registerEvents(new MainPlayerHandler(), this);
         this.getServer().getPluginManager().registerEvents(new InventoryConstructor(), this);

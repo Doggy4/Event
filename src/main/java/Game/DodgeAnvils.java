@@ -2,7 +2,7 @@ package Game;
 
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
-import e.main.Main;
+import event.main.Main;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.FallingBlock;
@@ -37,7 +37,7 @@ public class DodgeAnvils implements Listener {
             @Override
             public void run() {
                 if (!(RoundSystem.isRoundTimerEnabled)) {
-                    isActivated = RoundSystem.isRoundTimerEnabled;
+                    isActivated = false;
                     endDodgeAnvils();
                     this.cancel();
                 }
