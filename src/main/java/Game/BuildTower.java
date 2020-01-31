@@ -45,6 +45,7 @@ public class BuildTower implements Listener {
         Player player = event.getPlayer();
 
         if (blockPlace >= 20) {
+            player.getInventory().clear();
             player.getWorld().spawnParticle(Particle.FIREWORKS_SPARK, event.getBlockPlaced().getLocation(), 10);
             RoundSystem.addScore(player, score);
             score -= 2;
