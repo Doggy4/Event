@@ -7,6 +7,9 @@ import event.main.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarStyle;
+import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.*;
@@ -79,6 +82,8 @@ public class MainScoreBoard {
         divider3.setScore(-1);
     }
 
+    private static BossBar bossbar = Bukkit.getServer().createBossBar(ChatColor.GOLD + "Ожидание...", BarColor.BLUE, BarStyle.SEGMENTED_20);
+
     // Отсчет секунд до старта
     public static void countdown() {
         String secondsString = null;
@@ -112,7 +117,25 @@ public class MainScoreBoard {
             }
         }
 
+        for (Player player : Bukkit.getOnlinePlayers())
+            countdownBar(player);
+
         mainSecPreStart--;
+    }
+
+    private static void timerBar(Player player) {
+        bossbar.addPlayer(player);
+        if (!GameCycle.isGameStarted) return;
+        bossbar.setTitle(ChatColor.AQUA + "До следующего раунда " + (RoundSystem.roundSeconds - RoundSystem.curTicker));
+        bossbar.setProgress((RoundSystem.roundSeconds - RoundSystem.curTicker) * 1.0 / RoundSystem.roundSeconds);
+        bossbar.setVisible(true);
+    }
+
+    private static void countdownBar(Player player) {
+        bossbar.setTitle(ChatColor.GREEN + " До начала игры " + mainSecPreStart);
+        bossbar.setProgress(mainSecPreStart / 60.0);
+        bossbar.setVisible(true);
+        bossbar.addPlayer(player);
     }
 
     // Запуск главного раннабла
@@ -124,8 +147,12 @@ public class MainScoreBoard {
                 // ГЛАВНЫЕ ЭЛЕМЕНТЫ БОРДА
                 setMainScoreBoardSettings();
                 // УСТАНОВКА БОРДА
-                for (Player player : Bukkit.getOnlinePlayers())
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    timerBar(player);
                     player.setScoreboard(scoreboard);
+                }
+
+
                 // ГЛАВНЫЙ ИГРОВОЙ ЦИКЛ
                 GameCycle.mainCycle();
             }

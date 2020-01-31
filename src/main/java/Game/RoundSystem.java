@@ -27,11 +27,9 @@ public class RoundSystem {
     public static boolean isRoundStarted = false;
     public static boolean isRoundTimerEnabled = false;
 
-    private static int curTicker = 0;
+    public static int curTicker = 0;
 
     public static void roundTimer() {
-        Chat.broadcastToEveryone(curTicker + "/" + roundSeconds);
-
         if (!isRoundTimerEnabled) {
             curTicker = 0;
             isRoundTimerEnabled = true;
@@ -116,7 +114,7 @@ public class RoundSystem {
             player.playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 10, 1);
 
         // Зачем это надо? Ты дурак?
-        // Выведи здесь через Chat.broadcastToEveryone() статистику за раунд
+        // Выведи здесь через Chat.broadcastToEveryone() статистику
         LinkedList<Map.Entry<Player, Integer>> list = new LinkedList<>(roundStats.entrySet());
         Comparator<Map.Entry<Player, Integer>> comparator = Comparator.comparing(Map.Entry::getValue);
         Collections.sort(list, comparator.reversed());
