@@ -3,6 +3,7 @@ package Game;
 import PluginUtilities.ParticleConstructor;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
+import SvistoPerdelki.Particles;
 import e.main.Main;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -32,7 +33,7 @@ public class BowShoot implements Listener {
     public static void BowShoot() {
         RoundSystem.roundSeconds = 30;
 
-        isActivated = RoundSystem.isRoundTimerEnabled;
+        isActivated = true;
 
         for (Player player : Queue.redQueueList) {
             player.getInventory().clear();
@@ -94,11 +95,11 @@ public class BowShoot implements Listener {
                     bonusLine.normalize();
                 }
 
-                world.playSound(block.getLocation(), Sound.BLOCK_BELL_USE, 10, 1);
-                ParticleConstructor.blockAnimation(block.getLocation(), 1);
+                world.playSound(block.getLocation(), Sound.BLOCK_BELL_USE, 1, 2);
+                Particles.fireBlock(block.getLocation());
 
-                world.playSound(bonusBlock.getLocation(), Sound.BLOCK_BELL_RESONATE, 10,1);
-                ParticleConstructor.spiral(block.getLocation());
+                world.playSound(bonusBlock.getLocation(), Sound.BLOCK_BELL_RESONATE, 1,3);
+                Particles.fireBlock(block.getLocation());
             }
         }.runTaskTimer(Main.main, 20, 20);
     }
@@ -118,6 +119,7 @@ public class BowShoot implements Listener {
             RoundSystem.addScore(player, 5);
         }
         if (!(RoundSystem.isRoundTimerEnabled)) {
+            isActivated = false;
 
             bonusBlock.setType(Material.AIR);
             bonusBlock.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, block.getLocation(), 1);
