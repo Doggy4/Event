@@ -13,12 +13,12 @@ public class Particles {
         double startY = location.getY();
         double startZ = location.getZ();
 
-        double step = 1D;
+        double step = 0.3D;
 
         for (double x = 0; x < 3; x += step) {
             for (double z = 0; z < 3; z += step) {
                 for (double y = 0; y <= 3; y += step) {
-                    Location loc = new Location(world, startX + x, startY + y, startZ + z);
+                    Location loc =  location.add( startX + x, startY + y, startZ + z);
                     if (y != 3 && y != 0) {
                         if ((x >= 0 && z == 0) || (x >= 0 && z == 2) || (x == 0 && z >= 0) || (x == 2 && z >= 0))
                             world.spawnParticle(Particle.FLAME, loc, 1);
