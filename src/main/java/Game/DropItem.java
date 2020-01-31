@@ -20,22 +20,27 @@ public class DropItem implements Listener {
     private static Material randomMaterialBlock;
     private static boolean isActivated = false;
 
+    // Тошнит от этого кода, сделай его красивым
     public static void DropItem() {
+        // Активация раунда
         isActivated = true;
+
+        // Разрешение дропа предметов
         GameRules.DropItemOff();
+
+        // Установка времени на раунд
         RoundSystem.roundSeconds = 30;
 
+        // Список материалов с учетом черного списка в BlackList.java
         ArrayList<Material> materials = new ArrayList<Material>(Arrays.asList(Material.values()));
+        materials.removeIf(material -> (BlackList.isItemBlocked(material.name())));
 
-        int randomMaterial = Utilities.getRandom(0, materials.size() - 37);
-        List<Material> materialsNew = materials.subList(randomMaterial, randomMaterial + 36);
+        // Рандомный range
+        int randomMaterialListIndex = Utilities.getRandom(0, materials.size() - 37);
+        List<Material> materialList = materials.subList(randomMaterialListIndex, randomMaterialListIndex + 36);
 
-        int randomBlock = Utilities.getRandom(0, 35);
-
-        while (BlackList.isItemIsBlocked(materialsNew.get(randomBlock).name())) {
-            randomBlock = Utilities.getRandom(0, 35);
-            Material randomMaterialBlock = materialsNew.get(randomBlock);
-        }
+        int randomMaterialIndex = Utilities.getRandom(0, 35);
+        randomMaterialBlock = materialList.get(randomMaterialIndex);
 
         for (Player player : Queue.redQueueList) {
             player.getInventory().clear();
@@ -43,9 +48,10 @@ public class DropItem implements Listener {
             player.sendTitle(ChatColor.GREEN + "Выкиньте предмет", randomMaterialBlock.name(), 40, 40, 40);
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Выкиньте предмет " + ChatColor.LIGHT_PURPLE + "[" + randomMaterialBlock.name() + "]");
 
-            for (Material block : materialsNew)
+            for (Material block : materialList)
                 player.getInventory().addItem(new ItemStack(block, 64));
         }
+
     }
 
     private static void DropNext(Player player) {
