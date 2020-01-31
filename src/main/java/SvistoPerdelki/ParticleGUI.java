@@ -31,8 +31,6 @@ public class ParticleGUI implements Listener {
     private static ItemStack particleTypesBursts = new ItemStackConstructor(Material.FIREWORK_STAR).amount(1).displayName(ChatColor.RED + "Выбросы").lore("Резкий выброс партиклов").build();
     private static ItemStack particleTypesShoots = new ItemStackConstructor(Material.FIREWORK_STAR).amount(1).displayName(ChatColor.RED + "Выстрелы").lore("Партиклы по направлению взгяда").build();
 
-    private static ItemStack coloredCircle = new ItemStackConstructor(Material.RED_DYE).amount(1).displayName(ChatColor.BLUE + "Радужный круг").lore("Соси жопу").build();
-
     public static void openParticleTypes(Player player) {
         int size = 9;
         if (particleTypes == null) {
@@ -122,7 +120,6 @@ public class ParticleGUI implements Listener {
 
             if (e.getView().getTitle().equals(ChatColor.GREEN + "Ауры")) {
                 e.setCancelled(true);
-//                if (e.getCurrentItem().getItemMeta().getDisplayName().equals(coloredCircle.getItemMeta().getDisplayName()))
             }
         }
     }
