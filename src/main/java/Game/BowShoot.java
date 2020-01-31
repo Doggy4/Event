@@ -37,7 +37,7 @@ public class BowShoot implements Listener {
         for (Player player : Queue.redQueueList) {
             player.getInventory().clear();
 
-            player.sendTitle(ChatColor.GREEN + "Выстрелите в блок ", targets[n].toString(), 40, 40, 40);
+            player.sendTitle(ChatColor.GREEN + "Стреляйте в блоки ", targets[n].toString(), 40, 40, 40);
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Попадите в блок " + ChatColor.LIGHT_PURPLE + "[" + targets[n].toString() + "]");
             player.getInventory().addItem(BowEventBow);
             player.getInventory().addItem(BowEventArrows);
@@ -50,19 +50,22 @@ public class BowShoot implements Listener {
                     this.cancel();
                 }
 
+                block.setType(Material.AIR);
+                bonusBlock.setType(Material.AIR);
+
                 int rand_x = Main.main.getConfig().getInt("spawn.x") + Utilities.getRandom(1, 20) - 10;
                 int rand_z = Main.main.getConfig().getInt("spawn.z") + Utilities.getRandom(1, 20) - 10;
+
+                int rand_bonus_x = Main.main.getConfig().getInt("spawn.x") + Utilities.getRandom(1, 20) - 10;
+                int rand_bonus_z = Main.main.getConfig().getInt("spawn.z") + Utilities.getRandom(1, 20) - 10;
 
                 World world = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world"));
 
                 block = world.getBlockAt(rand_x, Main.main.getConfig().getInt("spawn.y") + 5, rand_z);
-                bonusBlock = world.getBlockAt(rand_z, Main.main.getConfig().getInt("spawn.y") + 10, rand_x);
+                bonusBlock = world.getBlockAt(rand_bonus_x, Main.main.getConfig().getInt("spawn.y") + 10, rand_bonus_z);
 
                 Location targetLoc = block.getLocation();
                 Location bonusLoc = bonusBlock.getLocation();
-
-                block.setType(Material.AIR);
-                bonusBlock.setType(Material.AIR);
 
                 if (blockChance >=35) bonusBlock.setType(bonusTarget);
                 block.setType(targets[n]);
