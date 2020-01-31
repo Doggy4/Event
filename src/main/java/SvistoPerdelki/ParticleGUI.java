@@ -9,7 +9,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -95,6 +94,9 @@ public class ParticleGUI implements Listener {
     public void onPlayerInteractEvent(PlayerInteractEvent event) {
         Player player = event.getPlayer();
 
+        if (player.getInventory().getItemInMainHand().getItemMeta() == null)
+            return;
+
         if (player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equals(Items.particleSelect.getItemMeta().getDisplayName())) {
             openParticleTypes(player);
         }
@@ -122,8 +124,8 @@ public class ParticleGUI implements Listener {
 
             if (e.getView().getTitle().equals(ChatColor.GREEN + "Ауры")) {
                 e.setCancelled(true);
-                if (e.getCurrentItem().getItemMeta().getDisplayName().equals(coloredCircle.getItemMeta().getDisplayName()))
-                Particles.coloredRing(player);
+                // if (e.getCurrentItem().getItemMeta().getDisplayName().equals(coloredCircle.getItemMeta().getDisplayName()))
+                // Particles.coloredRing(player);
             }
         }
     }

@@ -57,6 +57,8 @@ public class CowMilk implements Listener {
     @EventHandler
     public void onPlayerMilkCow(PlayerInteractEntityEvent e) {
         if (!isActivated) return;
+        if (!(e.getRightClicked() instanceof Cow))
+            return;
 
         Player player = e.getPlayer();
         LivingEntity cow = (Cow) e.getRightClicked();
