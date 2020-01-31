@@ -9,11 +9,11 @@ public class Particles {
 
     public static void fireBlock(Location location) {
         World world = location.getWorld();
-        double startX = 0.0D;
-        double startY = 0.0D;
-        double startZ = 0.0D;
+        double startX = location.getX();
+        double startY = location.getY();
+        double startZ = location.getZ();
 
-        double step = 0.1D;
+        double step = 1D;
 
         for (double x = 0; x < 3; x += step) {
             for (double z = 0; z < 3; z += step) {
