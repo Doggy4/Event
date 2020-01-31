@@ -31,14 +31,17 @@ public class DropItem implements Listener {
         // Установка времени на раунд
         RoundSystem.roundSeconds = 30;
 
+        // ------------------------------------------------------------------
+
         // Список материалов с учетом черного списка в BlackList.java
         ArrayList<Material> materials = new ArrayList<Material>(Arrays.asList(Material.values()));
         materials.removeIf(material -> (BlackList.isItemBlocked(material.name())));
 
-        // Рандомный range
+        // Рандомный range списка материалов в инвентаре
         int randomMaterialListIndex = Utilities.getRandom(0, materials.size() - 37);
         List<Material> materialList = materials.subList(randomMaterialListIndex, randomMaterialListIndex + 36);
 
+        // Рандомный предмет
         int randomMaterialIndex = Utilities.getRandom(0, 35);
         randomMaterialBlock = materialList.get(randomMaterialIndex);
 
@@ -51,27 +54,28 @@ public class DropItem implements Listener {
             for (Material block : materialList)
                 player.getInventory().addItem(new ItemStack(block, 64));
         }
-
     }
 
     private static void DropNext(Player player) {
+        // Список материалов с учетом черного списка в BlackList.java
         ArrayList<Material> materials = new ArrayList<Material>(Arrays.asList(Material.values()));
+        materials.removeIf(material -> (BlackList.isItemBlocked(material.name())));
 
-        int randomMaterial = Utilities.getRandom(0, materials.size() - 37);
-        List<Material> materialsNew = materials.subList(randomMaterial, randomMaterial + 36);
+        // Рандомный range списка материалов в инвентаре
+        int randomMaterialListIndex = Utilities.getRandom(0, materials.size() - 37);
+        List<Material> materialList = materials.subList(randomMaterialListIndex, randomMaterialListIndex + 36);
 
-        int randomBlock = Utilities.getRandom(0, 35);
-        randomMaterialBlock = materialsNew.get(randomBlock);
+        // Рандомный предмет
+        int randomMaterialIndex = Utilities.getRandom(0, 35);
+        randomMaterialBlock = materialList.get(randomMaterialIndex);
 
-        while (randomMaterialBlock.name().contains("STEM") || randomMaterialBlock.name().contains("AIR") || randomMaterialBlock.name().contains("BAMBOO") || randomMaterialBlock.name().contains("STAND") || randomMaterialBlock.name().contains("COMMAND") || randomMaterialBlock.name().contains("BARRIER") || randomMaterialBlock.name().contains("LECTERN") || randomMaterialBlock.name().contains("BEETROOTS") || randomMaterialBlock.name().contains("CARROTS") || randomMaterialBlock.name().contains("SEEDS") || randomMaterialBlock.name().contains("POTATO") || randomMaterialBlock.name().contains("BLUET")) {
-            randomBlock = Utilities.getRandom(0, 35);
-            randomMaterialBlock = materialsNew.get(randomBlock);
-        }
+        // ---------------------------------------------------------------
+
         player.getInventory().clear();
         player.sendTitle(ChatColor.GREEN + "Выкиньте предмет", randomMaterialBlock.name(), 40, 40, 40);
         player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Выкиньте предмет " + ChatColor.LIGHT_PURPLE + "[" + randomMaterialBlock.name() + "]");
 
-        for (Material block : materialsNew) player.getInventory().addItem(new ItemStack(block, 64));
+        for (Material block : materialList) player.getInventory().addItem(new ItemStack(block, 64));
 
     }
 
