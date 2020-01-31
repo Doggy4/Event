@@ -45,8 +45,9 @@ public class BowShoot implements Listener {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (!isActivated) {
+                if (!(RoundSystem.isRoundTimerEnabled)) {
                     block.setType(Material.AIR);
+                    bonusBlock.setType(Material.AIR);
                     this.cancel();
                 }
 
@@ -98,7 +99,7 @@ public class BowShoot implements Listener {
                 Particles.fireBlock(block.getLocation());
 
                 world.playSound(bonusBlock.getLocation(), Sound.BLOCK_BELL_RESONATE, 1,3);
-                Particles.fireBlock(block.getLocation());
+                Particles.fireBlock(bonusBlock.getLocation());
             }
         }.runTaskTimer(Main.main, 20, 20);
     }
