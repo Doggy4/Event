@@ -15,6 +15,7 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        // Ссылка на главный класс
         main = this;
 
         Bukkit.getLogger().info(ChatColor.GOLD + "[EVENT] Plugin enabled!");

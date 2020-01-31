@@ -112,6 +112,4 @@ public class GameCycle {
             greenPlayer.playSound(greenPlayer.getLocation(), Sound.BLOCK_ANVIL_PLACE, 20, 1);
         }
     }
-
-
 }

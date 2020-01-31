@@ -56,7 +56,7 @@ public class DodgeAnvils implements Listener {
                 }
                 counter++;
             }
-        }.runTaskTimer(Main.main, 20, 20);
+        }.runTaskTimer(Main.main, 10, 10);
     }
 
     private static void endDodgeAnvils() {

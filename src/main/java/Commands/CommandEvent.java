@@ -22,12 +22,10 @@ import java.util.List;
 public class CommandEvent implements TabExecutor {
 
     public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
-        switch (args.length) {
-            case 1:
-                return Arrays.asList("help", "start", "setlobby", "setspawn", "broadcast", "test");
-            default:
-                return Collections.emptyList();
+        if (args.length == 1) {
+            return Arrays.asList("help", "start", "setlobby", "setspawn", "broadcast", "test");
         }
+        return Collections.emptyList();
     }
 
     @Override
@@ -38,6 +36,7 @@ public class CommandEvent implements TabExecutor {
         }
 
         Player player = (Player) sender;
+
         if (!player.isOp()) {
             player.sendMessage(ChatColor.RED + "[EVENT] Only operators can use this command!");
             return true;
@@ -62,13 +61,10 @@ public class CommandEvent implements TabExecutor {
         } else if (args[0].equals("broadcast")) {
             player.sendMessage(ChatColor.YELLOW + divider + ChatColor.GREEN + "Сообщение опубликовано!\n" + ChatColor.YELLOW + divider);
             broadcast(Arrays.copyOfRange(args, 1, args.length));
-        } else if (args[0].equals("test")) {
+        } else if (args[0].equals("test"))
             MapRebuild.loadSchematic("arena");
 
-        } else {
-            return false;
-        }
-        return true;
+        return false;
     }
 
     public void saveLobbyLoc(Location location) {

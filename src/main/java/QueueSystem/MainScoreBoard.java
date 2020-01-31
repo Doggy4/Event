@@ -4,12 +4,14 @@ import Game.GameCycle;
 import Game.RoundSystem;
 import PluginUtilities.Chat;
 import event.main.Main;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.*;
 
-import static PluginUtilities.Chat.*;
+import static PluginUtilities.Chat.broadcastToEveryone;
 
 // КЛАСС НЕ ПЕРЕДЕЛЫВАТЬ - ОПТИМИЗИРОВАН ПО МАКСИМУМУ
 public class MainScoreBoard {
@@ -22,7 +24,6 @@ public class MainScoreBoard {
     public static Team red = scoreboard.registerNewTeam("RED");
     public static Team yellow = scoreboard.registerNewTeam("YELLOW");
     public static Team green = scoreboard.registerNewTeam("GREEN");
-
     // Создаем объект
     public static Objective objective = scoreboard.registerNewObjective("divider1", "dummy", ChatColor.AQUA + "[" + ChatColor.YELLOW + "EVENT" + ChatColor.AQUA + "]");
 
@@ -64,7 +65,7 @@ public class MainScoreBoard {
         } else if (GameCycle.isCommandStartEventTipped)
             alternative = objective.getScore(ChatColor.BLUE + "До начала игры: " + ChatColor.YELLOW + mainSecPreStart);
         else
-            gameState = objective.getScore(ChatColor.GOLD + "Статус игры: " + ChatColor.GREEN + "Ожидание...");
+            gameState = objective.getScore(ChatColor.GOLD + "Статус игры: " + ChatColor.YELLOW + "Ожидание...");
 
         // Состояние игры
         gameState.setScore(-2);

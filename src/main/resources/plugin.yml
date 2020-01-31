@@ -1,11 +1,11 @@
-name: RavagerRush
+name: Event
 version: ${project.version}
 main: event.main.Main
 api-version: 1.13
-prefix: RavagerRush
+prefix: Event
 authors: [Doggy4, bob302]
 description: Minecraft Mini-Game
 commands:
   event:
-    usage: /event help
+    usage: Неизвестная команда! Введите /event help
     description: Main Event Commands
