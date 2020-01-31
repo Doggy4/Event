@@ -22,9 +22,9 @@ public class Particles {
                     Location loc =  location.add( startX + x, startY + y, startZ + z);
                     if (y != 3 && y != 0) {
                         if ((x >= 0 && z == 0) || (x >= 0 && z == 2) || (x == 0 && z >= 0) || (x == 2 && z >= 0))
-                            world.spawnParticle(Particle.FLAME, loc, 1);
+                            world.spawnParticle(Particle.FLAME, loc, 0);
                     } else {
-                        world.spawnParticle(Particle.CLOUD, loc, 1);
+                        world.spawnParticle(Particle.CLOUD, loc, 0);
                     }
                 }
             }

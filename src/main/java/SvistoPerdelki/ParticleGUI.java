@@ -122,8 +122,7 @@ public class ParticleGUI implements Listener {
 
             if (e.getView().getTitle().equals(ChatColor.GREEN + "Ауры")) {
                 e.setCancelled(true);
-                if (e.getCurrentItem().getItemMeta().getDisplayName().equals(coloredCircle.getItemMeta().getDisplayName()))
-                Particles.coloredRing(player);
+//                if (e.getCurrentItem().getItemMeta().getDisplayName().equals(coloredCircle.getItemMeta().getDisplayName()))
             }
         }
     }
