@@ -4,10 +4,11 @@ import Commands.CommandEvent;
 import PluginUtilities.Chat;
 import QueueSystem.MainScoreBoard;
 import QueueSystem.Queue;
-import e.main.Main;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
 
@@ -30,7 +31,7 @@ public class GameCycle {
         if (isCommandStartEventTipped && !isGameStarted)
             MainScoreBoard.countdown();
 
-        else if (isGameStarted && !RoundSystem.isRoundStarted)
+        else if (isGameStarted && !RoundSystem.isRoundStarted && !RoundSystem.isRoundTimerEnabled)
             RoundSystem.startRound();
 
         else if (isGameStarted)

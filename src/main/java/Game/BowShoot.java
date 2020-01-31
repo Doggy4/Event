@@ -3,7 +3,7 @@ package Game;
 import PluginUtilities.ParticleConstructor;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
-import e.main.Main;
+import event.main.Main;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Arrow;

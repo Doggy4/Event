@@ -4,7 +4,7 @@ import PluginUtilities.Chat;
 import PluginUtilities.Items;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
-import e.main.Main;
+import event.main.Main;
 import org.bukkit.*;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;

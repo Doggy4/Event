@@ -2,7 +2,7 @@ package Game;
 
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
-import e.main.Main;
+import event.main.Main;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;

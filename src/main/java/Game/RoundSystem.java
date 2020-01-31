@@ -4,16 +4,17 @@ import Commands.CommandEvent;
 import PluginUtilities.Chat;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
-import e.main.Main;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
+import org.bukkit.Sound;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 
-import static PluginUtilities.Chat.*;
+import static PluginUtilities.Chat.divThick16;
 
 public class RoundSystem {
 
@@ -103,7 +104,6 @@ public class RoundSystem {
                 DodgeAnvils.DodgeAnvils();
                 break;
         }
-        roundTimer();
     }
 
     public static void endRound() {
@@ -178,6 +178,5 @@ public class RoundSystem {
         player.setHealth(20);
         player.setFoodLevel(20);
         player.getActivePotionEffects().clear();
-        player.setGameMode(GameMode.ADVENTURE);
     }
 }
