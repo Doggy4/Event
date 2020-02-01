@@ -3,7 +3,7 @@ package Commands;
 import Game.GameCycle;
 import PluginUtilities.Chat;
 import PluginUtilities.LocationUtulities;
-import PluginUtilities.MapRebuild;
+import PluginUtilities.MapRebuilding;
 import PluginUtilities.Utilities;
 import QueueSystem.MainScoreBoard;
 import QueueSystem.Queue;
@@ -61,7 +61,7 @@ public class CommandEvent implements TabExecutor {
         } else if (args[0].equals("broadcast"))
             broadcast(Arrays.copyOfRange(args, 1, args.length));
         else if (args[0].equals("test"))
-            MapRebuild.loadSchematic("arena");
+            MapRebuilding.loadSchematic("arena");
         else
             return false;
         return true;

@@ -19,14 +19,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-public class MapRebuild {
+public class MapRebuilding {
 
-    // Не знаю как, но это работает
-    // Ребилд карты под схематик
+    public static void loadSchematic(String schematic) {
 
-    public static void loadSchematic(String scematic) {
-
-        File myfile = new File(Main.main.getDataFolder().getAbsolutePath() + "/" + scematic + ".schem");
+        File myfile = new File(Main.main.getDataFolder().getAbsolutePath() + "/" + schematic + ".schem");
         ClipboardFormat format = ClipboardFormats.findByFile(myfile);
 
         try {

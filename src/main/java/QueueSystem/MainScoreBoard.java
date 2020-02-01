@@ -126,13 +126,16 @@ public class MainScoreBoard {
     private static void timerBar(Player player) {
         bossbar.addPlayer(player);
         if (!GameCycle.isGameStarted) return;
-        bossbar.setTitle(ChatColor.AQUA + "До следующего раунда " + (RoundSystem.roundSeconds - RoundSystem.curTicker));
-        bossbar.setProgress((RoundSystem.roundSeconds - RoundSystem.curTicker) * 1.0 / RoundSystem.roundSeconds);
+        bossbar.setTitle(ChatColor.AQUA + "До следующего раунда: " + (RoundSystem.roundSeconds - RoundSystem.curTicker));
+        if ((RoundSystem.roundSeconds - RoundSystem.curTicker) * 1.0 / RoundSystem.roundSeconds < 0)
+            bossbar.setProgress(1);
+        else
+            bossbar.setProgress((RoundSystem.roundSeconds - RoundSystem.curTicker) * 1.0 / RoundSystem.roundSeconds);
         bossbar.setVisible(true);
     }
 
     private static void countdownBar(Player player) {
-        bossbar.setTitle(ChatColor.GREEN + " До начала игры " + mainSecPreStart);
+        bossbar.setTitle(ChatColor.GREEN + " До начала игры: " + mainSecPreStart);
         bossbar.setProgress(mainSecPreStart / 60.0);
         bossbar.setVisible(true);
         bossbar.addPlayer(player);
@@ -156,6 +159,6 @@ public class MainScoreBoard {
                 // ГЛАВНЫЙ ИГРОВОЙ ЦИКЛ
                 GameCycle.mainCycle();
             }
-        }.runTaskTimer(Main.main, 10, 10);
+        }.runTaskTimer(Main.main, 60, 20);
     }
 }

@@ -16,6 +16,24 @@ import java.util.Collections;
 import java.util.List;
 
 public class EggThrow implements Listener {
+
+    private static ArrayList<String> phrases = new ArrayList<String>();
+
+    static {
+        phrases.add("Больше яиц!");
+        phrases.add("Подкати ещё!");
+        phrases.add("Яиц мало не бывает!");
+        phrases.add("Не останавливайся!");
+        phrases.add("Ещё больше!");
+        phrases.add("Швыряй еще!");
+        phrases.add("Сделай омлет!");
+        phrases.add("Сделай яишницу!");
+        phrases.add("Кидай яйцо!");
+        phrases.add("Кидай вновь!");
+        phrases.add("Кидай еще одно!");
+    }
+
+
     private static boolean isActivated = false;
 
     public static void EggThrow() {
@@ -52,7 +70,7 @@ public class EggThrow implements Listener {
 
         player.getInventory().clear();
 
-        player.sendTitle(ChatColor.GREEN + "Еще одно!", "Поторпитесь!", 40, 40, 40);
+        player.sendTitle(ChatColor.GREEN + phrases.get(Utilities.getRandom(0, phrases.size() - 1)), "Поторпитесь!", 40, 40, 40);
         player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Бросьте еще одно!");
 
         for (Material block : materials) player.getInventory().addItem(new ItemStack(block, 1));

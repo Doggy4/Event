@@ -1,8 +1,8 @@
-name: Event
+name: EVENT
 version: ${project.version}
 main: event.main.Main
 api-version: 1.13
-prefix: Event
+prefix: EVENT
 authors: [Doggy4, bob302]
 description: Minecraft Mini-Game
 commands:

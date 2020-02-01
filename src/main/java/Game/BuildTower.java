@@ -1,6 +1,6 @@
 package Game;
 
-import PluginUtilities.MapRebuild;
+import PluginUtilities.MapRebuilding;
 import QueueSystem.Queue;
 import event.main.Main;
 import org.bukkit.ChatColor;
@@ -55,7 +55,7 @@ public class BuildTower implements Listener {
 
         if (!(RoundSystem.isRoundTimerEnabled)) {
             isActivated = RoundSystem.isRoundTimerEnabled;
-            MapRebuild.loadSchematic("arena");
+            MapRebuilding.loadSchematic("arena");
         }
     }
 }

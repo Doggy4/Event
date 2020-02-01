@@ -75,7 +75,7 @@ public class RoundSystem {
         for (Player player : Bukkit.getOnlinePlayers())
             player.playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 10, 1);
 
-        int randomBattle = Utilities.getRandom(0, 8);
+        int randomBattle = Utilities.getRandom(0, 9);
         switch (randomBattle) {
             case 0:
                 PlaceBlock.PlaceBlock();
@@ -103,6 +103,9 @@ public class RoundSystem {
                 break;
             case 8:
                 DodgeAnvils.DodgeAnvils();
+                break;
+            case 9:
+                ParkourEatCake.parkour();
                 break;
         }
     }
@@ -139,7 +142,7 @@ public class RoundSystem {
             winner.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы получили " + ChatColor.GREEN + score + ChatColor.WHITE + scoreString);
         else
             winner.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы потеряли " + ChatColor.RED + score + ChatColor.WHITE + scoreString);
-        roundStats.put(winner, score);
+        roundStats.put(winner, score + roundStats.get(winner));
 
     }
 
