@@ -28,6 +28,7 @@ public class GameCycle {
             return;
         }
         // START
+
         if (isCommandStartEventTipped && !isGameStarted)
             MainScoreBoard.countdown();
 

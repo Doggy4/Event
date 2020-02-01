@@ -26,7 +26,7 @@ public class RoundSystem {
     public static boolean isRoundStarted = false;
     public static boolean isRoundTimerEnabled = false;
 
-    private static int curTicker = 0;
+    public static int curTicker = 0;
 
     public static void roundTimer() {
         Chat.broadcastToEveryone(curTicker + "/" + roundSeconds);
@@ -103,10 +103,16 @@ public class RoundSystem {
             case 8:
                 DodgeAnvils.DodgeAnvils();
                 break;
+            case 9:
+                ParkourEatCake.parkour();
+                break;
         }
     }
 
     public static void endRound() {
+
+        disableRound();
+
         isRoundStarted = false;
 
         LinkedList<Map.Entry<Player, Integer>> list = new LinkedList<>(roundStats.entrySet());
@@ -186,5 +192,10 @@ public class RoundSystem {
         player.setHealth(20);
         player.setFoodLevel(20);
         player.getActivePotionEffects().clear();
+    }
+
+    public static void disableRound() {
+        if (PlaceWool.isActivated && !RoundSystem.isRoundTimerEnabled)
+            PlaceWool.isActivated = false;
     }
 }
