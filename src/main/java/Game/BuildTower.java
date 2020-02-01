@@ -1,11 +1,10 @@
 package Game;
 
-import PluginUtilities.MapRebuild;
+import PluginUtilities.MapRebuilding;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
 import event.main.Main;
 import org.bukkit.*;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -103,7 +102,7 @@ public class BuildTower implements Listener {
 
         if (!(RoundSystem.isRoundTimerEnabled)) {
             isActivated = RoundSystem.isRoundTimerEnabled;
-            MapRebuild.loadSchematic("arena");
+            MapRebuilding.loadSchematic("arena");
         }
     }
 }
