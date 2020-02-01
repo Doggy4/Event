@@ -50,8 +50,15 @@ public class ShearSheep implements Listener {
         }
     }
 
+
     public static void disableEvents() {
         isActivated = false;
+
+    }
+
+    public void spawnSheep(Player player) {
+        Sheep sheep = (Sheep) Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).spawnEntity(Commands.CommandEvent.randLocationSpawn(), EntityType.SHEEP);
+
     }
 
     @EventHandler

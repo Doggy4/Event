@@ -15,6 +15,7 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        // Ссылка на главный класс
         main = this;
 
         Bukkit.getLogger().info(ChatColor.GOLD + "[EVENT] Plugin enabled!");
@@ -32,6 +33,7 @@ public final class Main extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new PlaceWool(), this);
         this.getServer().getPluginManager().registerEvents(new DodgeAnvils(), this);
         this.getServer().getPluginManager().registerEvents(new ParticleGUI(), this);
+        this.getServer().getPluginManager().registerEvents(new ParkourEatCake(), this);
 
         MainScoreBoard.startPluginRunnable();
         this.saveDefaultConfig();

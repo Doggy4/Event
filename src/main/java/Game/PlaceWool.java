@@ -6,7 +6,6 @@ import QueueSystem.Queue;
 import SvistoPerdelki.Particles;
 import event.main.Main;
 import org.bukkit.*;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,7 +15,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.HashMap;
 
 public class PlaceWool implements Listener {
-    private static boolean isActivated = false;
+    public static boolean isActivated = false;
     private static Material[] blockWhatNeedToPlace = {Material.WHITE_WOOL, Material.ORANGE_WOOL, Material.MAGENTA_WOOL, Material.LIGHT_BLUE_WOOL, Material.YELLOW_WOOL, Material.LIME_WOOL, Material.PINK_WOOL, Material.GRAY_WOOL, Material.LIGHT_GRAY_WOOL};
     private static Material[] blockOnWhatPlace = {Material.LIGHT_GRAY_WOOL, Material.CYAN_WOOL, Material.PURPLE_WOOL, Material.BLUE_WOOL, Material.BROWN_WOOL, Material.BROWN_WOOL, Material.GREEN_WOOL, Material.RED_WOOL, Material.BLACK_WOOL};
 
@@ -107,8 +106,12 @@ public class PlaceWool implements Listener {
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Упс, что-то пошло не так ");
             player.sendMessage(ChatColor.RED + blockWhatNeedToPlace[n].toString() + " На " + blockOnWhatPlace[n2].toString());
             Location blockLoc = e.getBlockPlaced().getLocation();
+
             Particles.createBlockSplash(blockLoc, Particle.REDSTONE);
             player.playSound(blockLoc, Sound.BLOCK_WOOL_BREAK, 1,1);
+
+            Particles.createBlockSplash(blockLoc, Particle.CRIT);
+            player.playSound(blockLoc, Sound.BLOCK_WOOL_BREAK, 1, 1);
         }
     }
 }

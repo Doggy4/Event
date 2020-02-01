@@ -28,7 +28,8 @@ public class RoundSystem {
 
     private static int randomGame;
 
-    private static int curTicker = 0;
+    public static int curTicker = 0;
+
 
     public static void roundTimer() {
         Chat.broadcastToEveryone(curTicker + "/" + roundSeconds);
@@ -105,11 +106,15 @@ public class RoundSystem {
             case 8:
                 DodgeAnvils.DodgeAnvils();
                 break;
+            case 9:
+                ParkourEatCake.parkour();
+                break;
         }
     }
 
     public static void endRound() {
         disableRoundEvents();
+
         isRoundStarted = false;
 
         LinkedList<Map.Entry<Player, Integer>> list = new LinkedList<>(roundStats.entrySet());

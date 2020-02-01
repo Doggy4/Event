@@ -2,10 +2,7 @@ package PluginUtilities;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Color;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
 
 import java.util.HashMap;
 
@@ -19,8 +16,8 @@ public class Chat {
     public static String divThick16 = "================\n";
     public static String divThick32 = "================================\n";
 
-    public static String ScoreBoardDivider1 = ".▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬";
-    public static String ScoreBoardDivider2 = "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬.";
+    public static String ScoreBoardDivider2 = ".▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬";
+    public static String ScoreBoardDivider1 = "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬.";
     public static String ScoreBoardDivider3 = ".▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬.";
 
     public static String divThicker8 = "########\n";

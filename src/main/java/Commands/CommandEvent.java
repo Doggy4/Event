@@ -22,12 +22,10 @@ import java.util.List;
 public class CommandEvent implements TabExecutor {
 
     public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
-        switch (args.length) {
-            case 1:
-                return Arrays.asList("help", "start", "setlobby", "setspawn", "broadcast", "test");
-            default:
-                return Collections.emptyList();
+        if (args.length == 1) {
+            return Arrays.asList("help", "start", "setlobby", "setspawn", "broadcast", "test", "clear");
         }
+        return Collections.emptyList();
     }
 
     @Override
@@ -38,6 +36,7 @@ public class CommandEvent implements TabExecutor {
         }
 
         Player player = (Player) sender;
+
         if (!player.isOp()) {
             player.sendMessage(ChatColor.RED + "[EVENT] Only operators can use this command!");
             return true;
@@ -46,7 +45,7 @@ public class CommandEvent implements TabExecutor {
         String divider = Chat.div;
 
         if (args.length < 1 || args[0].equals("help"))
-            player.sendMessage(ChatColor.YELLOW + divider + ChatColor.RED + "Помощь:\n" + ChatColor.GREEN + "/event start" + ChatColor.YELLOW + " - начать эвент\n" + ChatColor.GREEN + "/event setspawn" + ChatColor.YELLOW + " - установить спавн\n" + ChatColor.GREEN + "/event setlobby" + ChatColor.YELLOW + " - установить лобби\n" + ChatColor.GREEN + "/event broadcast [сообщение]" + ChatColor.YELLOW + " - отправить Title\n" + ChatColor.YELLOW + divider);
+            player.sendMessage(ChatColor.YELLOW + divider + ChatColor.RED + "Помощь:\n" + ChatColor.GREEN + "/event start" + ChatColor.YELLOW + " - начать эвент\n" + ChatColor.GREEN + "/event setspawn" + ChatColor.YELLOW + " - установить спавн\n" + ChatColor.GREEN + "/event setlobby" + ChatColor.YELLOW + " - установить лобби\n" + ChatColor.GREEN + "/event broadcast [сообщение]" + ChatColor.YELLOW + " - отправить оповещение\n" + ChatColor.YELLOW + divider);
         else if (args[0].equals("start")) {
             player.sendMessage(ChatColor.YELLOW + divider + ChatColor.GREEN + "Эвент запущен!\n" + ChatColor.YELLOW + divider);
             GameCycle.isCommandStartEventTipped = true;
@@ -59,15 +58,12 @@ public class CommandEvent implements TabExecutor {
         } else if (args[0].equals("clear")) {
             player.sendMessage(ChatColor.YELLOW + divider + ChatColor.GREEN + "Очереди очищены!\n" + ChatColor.YELLOW + divider);
             clearQueues();
-        } else if (args[0].equals("broadcast")) {
-            player.sendMessage(ChatColor.YELLOW + divider + ChatColor.GREEN + "Сообщение опубликовано!\n" + ChatColor.YELLOW + divider);
+        } else if (args[0].equals("broadcast"))
             broadcast(Arrays.copyOfRange(args, 1, args.length));
-        } else if (args[0].equals("test")) {
+        else if (args[0].equals("test"))
             MapRebuild.loadSchematic("arena");
-
-        } else {
+        else
             return false;
-        }
         return true;
     }
 

@@ -28,6 +28,7 @@ public class GameCycle {
             return;
         }
         // START
+
         if (isCommandStartEventTipped && !isGameStarted)
             MainScoreBoard.countdown();
 
@@ -113,5 +114,16 @@ public class GameCycle {
         }
     }
 
+    public static Player getWinner() {
+        int max = -1;
+        Player winner = null;
 
+        for (Player player : Queue.redQueueList)
+            if (RoundSystem.roundStats.get(player) > max) {
+                max = RoundSystem.roundStats.get(player);
+                winner = player;
+            }
+
+        return winner;
+    }
 }

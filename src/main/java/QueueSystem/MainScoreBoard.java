@@ -4,14 +4,19 @@ import Game.GameCycle;
 import Game.RoundSystem;
 import PluginUtilities.Chat;
 import event.main.Main;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Sound;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarStyle;
+import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.*;
 
-import static PluginUtilities.Chat.*;
+import static PluginUtilities.Chat.broadcastToEveryone;
 
-// КЛАСС НЕ ПЕРЕДЕЛЫВАТЬ - ОПТИМИЗИРОВАН ПО МАКСИМУМУ
+// КЛАСС НЕ ПЕРЕДЕЛЫВАТЬ: ОПТИМИЗИРОВАН ПО МАКСИМУМУ
 public class MainScoreBoard {
     // Секунды до начала
     public static int mainSecPreStart = 60;
@@ -22,7 +27,6 @@ public class MainScoreBoard {
     public static Team red = scoreboard.registerNewTeam("RED");
     public static Team yellow = scoreboard.registerNewTeam("YELLOW");
     public static Team green = scoreboard.registerNewTeam("GREEN");
-
     // Создаем объект
     public static Objective objective = scoreboard.registerNewObjective("divider1", "dummy", ChatColor.AQUA + "[" + ChatColor.YELLOW + "EVENT" + ChatColor.AQUA + "]");
 
@@ -47,7 +51,7 @@ public class MainScoreBoard {
         if (GameCycle.isGameStarted) {
             alternative = objective.getScore(ChatColor.GOLD + "Раунд: " + ChatColor.GREEN + RoundSystem.round);
             Score divider2 = objective.getScore(ChatColor.AQUA + Chat.ScoreBoardDivider3);
-            divider2.setScore(31);
+            divider2.setScore(RoundSystem.roundStats.get(GameCycle.getWinner()) + 1);
 
             for (Player player : Queue.redQueueList) {
                 Score score = objective.getScore(ChatColor.GOLD + player.getName());
@@ -64,7 +68,7 @@ public class MainScoreBoard {
         } else if (GameCycle.isCommandStartEventTipped)
             alternative = objective.getScore(ChatColor.BLUE + "До начала игры: " + ChatColor.YELLOW + mainSecPreStart);
         else
-            gameState = objective.getScore(ChatColor.GOLD + "Статус игры: " + ChatColor.GREEN + "Ожидание...");
+            gameState = objective.getScore(ChatColor.GOLD + "Статус игры: " + ChatColor.YELLOW + "Ожидание...");
 
         // Состояние игры
         gameState.setScore(-2);
@@ -77,6 +81,8 @@ public class MainScoreBoard {
         Score divider3 = objective.getScore(ChatColor.AQUA + Chat.ScoreBoardDivider2);
         divider3.setScore(-1);
     }
+
+    private static BossBar bossbar = Bukkit.getServer().createBossBar(ChatColor.GOLD + "Ожидание...", BarColor.BLUE, BarStyle.SEGMENTED_20);
 
     // Отсчет секунд до старта
     public static void countdown() {
@@ -111,7 +117,28 @@ public class MainScoreBoard {
             }
         }
 
+        for (Player player : Bukkit.getOnlinePlayers())
+            countdownBar(player);
+
         mainSecPreStart--;
+    }
+
+    private static void timerBar(Player player) {
+        bossbar.addPlayer(player);
+        if (!GameCycle.isGameStarted) return;
+        bossbar.setTitle(ChatColor.AQUA + "До следующего раунда: " + (RoundSystem.roundSeconds - RoundSystem.curTicker));
+        if ((RoundSystem.roundSeconds - RoundSystem.curTicker) * 1.0 / RoundSystem.roundSeconds < 0)
+            bossbar.setProgress(1);
+        else
+            bossbar.setProgress((RoundSystem.roundSeconds - RoundSystem.curTicker) * 1.0 / RoundSystem.roundSeconds);
+        bossbar.setVisible(true);
+    }
+
+    private static void countdownBar(Player player) {
+        bossbar.setTitle(ChatColor.GREEN + " До начала игры: " + mainSecPreStart);
+        bossbar.setProgress(mainSecPreStart / 60.0);
+        bossbar.setVisible(true);
+        bossbar.addPlayer(player);
     }
 
     // Запуск главного раннабла
@@ -123,11 +150,15 @@ public class MainScoreBoard {
                 // ГЛАВНЫЕ ЭЛЕМЕНТЫ БОРДА
                 setMainScoreBoardSettings();
                 // УСТАНОВКА БОРДА
-                for (Player player : Bukkit.getOnlinePlayers())
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    timerBar(player);
                     player.setScoreboard(scoreboard);
+                }
+
+
                 // ГЛАВНЫЙ ИГРОВОЙ ЦИКЛ
                 GameCycle.mainCycle();
             }
-        }.runTaskTimer(Main.main, 10, 10);
+        }.runTaskTimer(Main.main, 60, 20);
     }
 }
