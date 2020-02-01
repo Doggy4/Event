@@ -42,7 +42,7 @@ public class GameCycle {
     public static void StartGame() {
         for (Player player : Queue.redQueueList) {
             player.setExp(0);
-            RoundSystem.PlayerReset(player);
+            RoundSystem.playerReset(player);
             CommandEvent.teleportToSpawn(player);
             RoundSystem.roundStats.put(player, 0);
             gameStats.put(player, 0);

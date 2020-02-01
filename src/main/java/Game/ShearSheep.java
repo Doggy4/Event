@@ -52,6 +52,12 @@ public class ShearSheep implements Listener {
 
     public void spawnSheep(Player player) {
         Sheep sheep = (Sheep) Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).spawnEntity(Commands.CommandEvent.randLocationSpawn(), EntityType.SHEEP);
+        DyeColor color = Utilities.getRandomColor();
+        sheep.setColor(color);
+        sheep.setCustomName(Chat.colors.get(color.toString()) + color.toString());
+    }
+
+    public void nextSheep(Player player) {
 
     }
 
@@ -64,10 +70,12 @@ public class ShearSheep implements Listener {
 
         if (sheep.getColor() == randomColor) {
             RoundSystem.addScore(player, 1);
-            player.setGameMode(GameMode.ADVENTURE);
-            player.getInventory().clear();
         } else {
-            RoundSystem.playerLose(player);
+            RoundSystem.addScore(player, -1);
+            player.sendMessage(ChatColor.GOLD + "[EVENT]" + "Неправильный цвет!");
         }
+
+        sheep.remove();
+        spawnSheep(player);
     }
 }

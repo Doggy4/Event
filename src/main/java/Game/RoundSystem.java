@@ -1,7 +1,6 @@
 package Game;
 
 import Commands.CommandEvent;
-import PluginUtilities.Chat;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
 import org.bukkit.Bukkit;
@@ -29,8 +28,6 @@ public class RoundSystem {
     public static int curTicker = 0;
 
     public static void roundTimer() {
-        Chat.broadcastToEveryone(curTicker + "/" + roundSeconds);
-
         if (!isRoundTimerEnabled) {
             curTicker = 0;
             isRoundTimerEnabled = true;
@@ -124,29 +121,31 @@ public class RoundSystem {
         startRound();
     }
 
-    public static void addScore(Player winner, int score) {
+    public static void addScore(Player player, int score) {
         String scoreString;
 
-        if (score == 1 || score == -1) {
+        if (score == 1 || score == -1)
             scoreString = " очко ";
-        } else if (score > 1 && score < 5 || score < -1 && score > -5) {
+        else if (score > 1 && score < 5 || score < -1 && score > -5)
             scoreString = " очка ";
-        } else {
+        else
             scoreString = " очков ";
-        }
 
         if (score > 0) {
-            winner.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы получили " + ChatColor.GREEN + score + ChatColor.WHITE + scoreString);
-            roundStats.put(winner, score + roundStats.get(winner));
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы получили " + ChatColor.GREEN + score + ChatColor.WHITE + scoreString);
+            player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
         } else {
-            winner.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы потеряли " + ChatColor.RED + score + ChatColor.WHITE + scoreString);
-            if (roundStats.get(winner) <= 0) {
-                winner.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Куда уже ниже?");
-                roundStats.put(winner, 0);
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы потеряли " + ChatColor.RED + (score * -1) + ChatColor.WHITE + scoreString);
+            player.playSound(player.getLocation(), Sound.ENTITY_ITEM_BREAK, 10, 1);
+            if (roundStats.get(player) <= 0) {
+                player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Вы достигли минимального количества очков!");
+                score = 0;
             }
         }
+        roundStats.put(player, roundStats.get(player) + score);
     }
 
+    // Жопа-функция, живым не прикасаться
     public static void playerPlace(Player roundPlayer, Integer place, Integer scoreCount) {
         for (Player player : Bukkit.getOnlinePlayers()) {
             if (place <= 3) {
@@ -171,11 +170,11 @@ public class RoundSystem {
 
             if (scoreForWin <= 0) {
                 roundPlayer.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Вы не получаете очков за этот раунд");
-                PlayerReset(roundPlayer);
+                playerReset(roundPlayer);
             } else {
                 GameCycle.gameStats.put(roundPlayer, scoreForWin + GameCycle.gameStats.get(roundPlayer));
                 roundPlayer.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы получили +" + scoreForWin + scoreString + "за этот раунд");
-                PlayerReset(roundPlayer);
+                playerReset(roundPlayer);
             }
         }
     }
@@ -183,11 +182,10 @@ public class RoundSystem {
     public static void playerLose(Player loser) {
         loser.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Вы проиграли!");
         loser.playSound(loser.getLocation(), Sound.ENTITY_BAT_DEATH, 10, 1);
-
-        PlayerReset(loser);
+        playerReset(loser);
     }
 
-    public static void PlayerReset(Player player) {
+    public static void playerReset(Player player) {
         player.getInventory().clear();
         player.setHealth(20);
         player.setFoodLevel(20);

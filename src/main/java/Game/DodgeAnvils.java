@@ -36,8 +36,7 @@ public class DodgeAnvils implements Listener {
 
             @Override
             public void run() {
-                if (!(RoundSystem.isRoundTimerEnabled)) {
-                    isActivated = false;
+                if (!isActivated) {
                     endDodgeAnvils();
                     this.cancel();
                 }
@@ -70,34 +69,27 @@ public class DodgeAnvils implements Listener {
                 roundPlayer.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Вы получили +" + 2 + " очков(-а)!");
                 GameCycle.gameStats.put(roundPlayer, 2 + GameCycle.gameStats.get(roundPlayer));
 
-                RoundSystem.PlayerReset(roundPlayer);
+                RoundSystem.playerReset(roundPlayer);
             }
         }
     }
 
     @EventHandler
     public void onFallingBlockLand(EntityChangeBlockEvent event) {
+        if (!isActivated || !(event.getEntity() instanceof FallingBlock)) return;
         Block block = event.getBlock();
 
         int x = Math.round((float) block.getLocation().getX());
         int y = Math.round((float) block.getLocation().getY()) - 1;
         int z = Math.round((float) block.getLocation().getZ());
 
-        if (event.getEntity() instanceof FallingBlock) {
-            if (event.getEntity().getLocation().getWorld().getBlockAt(x, y, z).getType() != Material.AIR) {
-                event.setCancelled(true);
-            }
-        }
+        if (event.getEntity().getLocation().getWorld().getBlockAt(x, y, z).getType() != Material.AIR) event.setCancelled(true);
     }
 
     @EventHandler
     public void PlayerDamage(EntityDamageEvent event) {
-        if (!isActivated) return;
-
-        if (!(event.getEntity() instanceof Player)) return;
-
+        if (!isActivated || !(event.getEntity() instanceof Player)) return;
         Player player = (Player) event.getEntity();
-
         if (!Queue.redQueueList.contains(player)) return;
 
         player.setGameMode(GameMode.SPECTATOR);

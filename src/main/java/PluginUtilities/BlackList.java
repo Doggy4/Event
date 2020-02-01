@@ -21,6 +21,8 @@ public class BlackList {
         blacklist.add("BARRIER");
         blacklist.add("PORTAL");
         blacklist.add("MUSIC");
+        blacklist.add("BANNER");
+        blacklist.add("HEAD");
     }
 
     public static boolean isItemBlocked(String item) {
