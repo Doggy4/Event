@@ -43,7 +43,7 @@ public class DropItem implements Listener {
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Выкиньте предмет " + ChatColor.LIGHT_PURPLE + "[" + randomMaterialBlock.name() + "]");
 
             for (Material block : materialsNew)
-                player.getInventory().addItem(new ItemStack(block, 64));
+                player.getInventory().addItem(new ItemStack(block, 1));
         }
     }
 
@@ -64,7 +64,7 @@ public class DropItem implements Listener {
         player.sendTitle(ChatColor.GREEN + "Выкиньте предмет", randomMaterialBlock.name(), 40, 40, 40);
         player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Выкиньте предмет " + ChatColor.LIGHT_PURPLE + "[" + randomMaterialBlock.name() + "]");
 
-        for (Material block : materialsNew) player.getInventory().addItem(new ItemStack(block, 64));
+        for (Material block : materialsNew) player.getInventory().addItem(new ItemStack(block, 1));
 
     }
 
@@ -75,10 +75,13 @@ public class DropItem implements Listener {
         Player player = event.getPlayer();
 
         if (event.getItemDrop().getItemStack().getType().equals(randomMaterialBlock)) {
+            player.sendMessage(ChatColor.RED + "Правильно");
             RoundSystem.addScore(player, 1);
             DropNext(player);
         } else
-            RoundSystem.playerLose(player);
+            player.sendMessage(ChatColor.RED + "Неправильно");
+            RoundSystem.addScore(player, -1);
+            DropNext(player);
 
         if (!(RoundSystem.isRoundTimerEnabled)) {
             isActivated = RoundSystem.isRoundTimerEnabled;

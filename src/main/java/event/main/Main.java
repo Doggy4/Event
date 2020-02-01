@@ -29,7 +29,7 @@ public final class Main extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new EggThrow(), this);
         this.getServer().getPluginManager().registerEvents(new GameRules(), this);
         this.getServer().getPluginManager().registerEvents(new CowMilk(), this);
-        this.getServer().getPluginManager().registerEvents(new BuildTower(), this);
+        this.getServer().getPluginManager().registerEvents(new PlaceWool(), this);
         this.getServer().getPluginManager().registerEvents(new DodgeAnvils(), this);
         this.getServer().getPluginManager().registerEvents(new ParticleGUI(), this);
 

@@ -42,7 +42,7 @@ public class CowMilk implements Listener {
 
             player.getInventory().addItem(new ItemStack(Material.BUCKET, 1));
 
-            for (int i = 0; i < 16; i++) {
+            for (int i = 0; i < 10; i++) {
                 int chance = Utilities.getRandom(0, 100);
                 Cow cow = (Cow) Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).spawnEntity(Commands.CommandEvent.randLocationSpawn(), EntityType.COW);
 
@@ -108,8 +108,8 @@ public class CowMilk implements Listener {
                 spawnCow(player);
             } else if (cow.getCustomName().equals(boomCow)) {
                 RoundSystem.addScore(player, -5);
-                player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 3, 1));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 3, 1));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 60, 1));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 60, 1));
                 world.spawnParticle(Particle.EXPLOSION_LARGE, cowLoc.add(0, 0, 0), 1);
                 world.playSound(cowLoc, Sound.ENTITY_GENERIC_EXPLODE, 1, 1);
                 cow.remove();

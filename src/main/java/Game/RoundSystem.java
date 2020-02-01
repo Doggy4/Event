@@ -95,7 +95,7 @@ public class RoundSystem {
                 CowMilk.MilkCow();
                 break;
             case 6:
-                BuildTower.BuildTower();
+                PlaceWool.BuildTower();
                 break;
             case 7:
                 ReachSky.ReachSky();
@@ -129,12 +129,16 @@ public class RoundSystem {
             scoreString = " очков ";
         }
 
-        if (score > 0)
+        if (score > 0) {
             winner.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы получили " + ChatColor.GREEN + score + ChatColor.WHITE + scoreString);
-        else
+            roundStats.put(winner, score + roundStats.get(winner));
+        } else {
             winner.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы потеряли " + ChatColor.RED + score + ChatColor.WHITE + scoreString);
-        roundStats.put(winner, score);
-
+            if (roundStats.get(winner) <= 0) {
+                winner.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Куда уже ниже?");
+                roundStats.put(winner, 0);
+            }
+        }
     }
 
     public static void playerPlace(Player roundPlayer, Integer place, Integer scoreCount) {
