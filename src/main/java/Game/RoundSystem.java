@@ -26,6 +26,8 @@ public class RoundSystem {
     public static boolean isRoundStarted = false;
     public static boolean isRoundTimerEnabled = false;
 
+    private static int randomGame;
+
     private static int curTicker = 0;
 
     public static void roundTimer() {
@@ -74,8 +76,8 @@ public class RoundSystem {
         for (Player player : Bukkit.getOnlinePlayers())
             player.playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 10, 1);
 
-        int randomBattle = Utilities.getRandom(0, 8);
-        switch (randomBattle) {
+        randomGame = Utilities.getRandom(0, 8);
+        switch (randomGame) {
             case 0:
                 PlaceBlock.PlaceBlock();
                 break;
@@ -95,7 +97,7 @@ public class RoundSystem {
                 CowMilk.MilkCow();
                 break;
             case 6:
-                PlaceWool.BuildTower();
+                PlaceWool.placeWool();
                 break;
             case 7:
                 ReachSky.ReachSky();
@@ -107,6 +109,7 @@ public class RoundSystem {
     }
 
     public static void endRound() {
+        disableRoundEvents();
         isRoundStarted = false;
 
         LinkedList<Map.Entry<Player, Integer>> list = new LinkedList<>(roundStats.entrySet());
@@ -116,6 +119,38 @@ public class RoundSystem {
         System.out.println(list);
         // Сортировка, потом применение функции playerPlace()
         startRound();
+    }
+
+    private static void disableRoundEvents() {
+        switch (randomGame) {
+            case 0:
+                PlaceBlock.disableEvents();
+                break;
+            case 1:
+                DropItem.disableEvents();
+                break;
+            case 2:
+                BowShoot.disableEvents();
+                break;
+            case 3:
+                ShearSheep.disableEvents();
+                break;
+            case 4:
+                EggThrow.disableEvents();
+                break;
+            case 5:
+                CowMilk.disableEvents();
+                break;
+            case 6:
+                PlaceWool.disableEvents();
+                break;
+            case 7:
+                ReachSky.disableEvents();
+                break;
+            case 8:
+                DodgeAnvils.disableEvents();
+                break;
+        }
     }
 
     public static void addScore(Player winner, int score) {

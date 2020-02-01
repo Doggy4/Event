@@ -68,6 +68,10 @@ public class DropItem implements Listener {
 
     }
 
+    public static void disableEvents() {
+        isActivated = false;
+    }
+
     @EventHandler
     public void onPlayerDropItem(PlayerDropItemEvent event) {
         if (!isActivated) return;
@@ -82,9 +86,5 @@ public class DropItem implements Listener {
             player.sendMessage(ChatColor.RED + "Неправильно");
             RoundSystem.addScore(player, -1);
             DropNext(player);
-
-        if (!(RoundSystem.isRoundTimerEnabled)) {
-            isActivated = RoundSystem.isRoundTimerEnabled;
-        }
     }
 }

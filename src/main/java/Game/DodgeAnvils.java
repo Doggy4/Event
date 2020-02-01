@@ -36,11 +36,6 @@ public class DodgeAnvils implements Listener {
 
             @Override
             public void run() {
-                if (!(RoundSystem.isRoundTimerEnabled)) {
-                    isActivated = false;
-                    endDodgeAnvils();
-                    this.cancel();
-                }
 
                 for (int i = 0; i < 50; i++) {
                     int randX = Math.round((float) Main.main.getConfig().getDouble("spawn.x")) + Utilities.getRandom(0, 32) - 16;
@@ -73,6 +68,11 @@ public class DodgeAnvils implements Listener {
                 RoundSystem.PlayerReset(roundPlayer);
             }
         }
+    }
+
+    public static void disableEvents() {
+        endDodgeAnvils();
+        isActivated = false;
     }
 
     @EventHandler

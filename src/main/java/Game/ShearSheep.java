@@ -50,6 +50,10 @@ public class ShearSheep implements Listener {
         }
     }
 
+    public static void disableEvents() {
+        isActivated = false;
+    }
+
     @EventHandler
     public void onPlayerShearSheep(PlayerShearEntityEvent event) {
         if (!isActivated) return;

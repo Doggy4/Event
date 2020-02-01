@@ -29,14 +29,6 @@ public class ReachSky {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (!(RoundSystem.isRoundTimerEnabled)) {
-                    isActivated = RoundSystem.isRoundTimerEnabled;
-
-                    for (Player player : Queue.redQueueList) player.setAllowFlight(false);
-
-                    this.cancel();
-                }
-
                 for (Player player : Queue.redQueueList) {
                     if (player.getLocation().getY() >= 150) {
                         player.getWorld().spawnParticle(Particle.FIREWORKS_SPARK, player.getLocation(), 10);
@@ -46,5 +38,10 @@ public class ReachSky {
                 }
             }
         }.runTaskTimer(Main.main, 40, 40);
+    }
+
+    public static void disableEvents() {
+        isActivated = false;
+        for (Player player : Queue.redQueueList) player.setAllowFlight(false);
     }
 }

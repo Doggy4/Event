@@ -29,7 +29,7 @@ public class PlaceWool implements Listener {
     private static int n;
     private static int n2;
 
-    public static void BuildTower() {
+    public static void placeWool() {
         RoundSystem.roundSeconds = 30;
         isActivated = true;
         GameRules.PlaceBlockOff();
@@ -55,7 +55,7 @@ public class PlaceWool implements Listener {
 
             player.setGameMode(GameMode.SURVIVAL);
 
-            player.sendTitle(ChatColor.GREEN + "Ставьте шерсть в нужном порядке", "Быстрее", 40, 40, 40);
+            player.sendTitle(ChatColor.GREEN + "Ставьте шерсть в нужном порядке", "Быстрее", 20, 10, 20);
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Ставьте шерсть в нужном порядке");
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Поставьте " + blockWhatNeedToPlace[n].toString() + " На " + blockOnWhatPlace[n2].toString());
         }
@@ -78,10 +78,15 @@ public class PlaceWool implements Listener {
 
         for (int i = 0; i < 7; i++) player.getInventory().addItem(new ItemStack(blockWhatNeedToPlace[i]));
 
-        player.sendTitle(ChatColor.GREEN + "Ставьте шерсть в нужном порядке", "Быстрее", 40, 40, 40);
+        player.sendTitle(ChatColor.GREEN + "Ставьте шерсть в нужном порядке", "Быстрее", 20, 10, 20);
         player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Ставьте шерсть в нужном порядке");
         player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Поставьте " + blockWhatNeedToPlace[n].toString() + " На " + blockOnWhatPlace[n2].toString());
 
+    }
+
+    public static void disableEvents() {
+        isActivated = false;
+        MapRebuild.loadSchematic("arena");
     }
 
     @EventHandler
@@ -104,11 +109,6 @@ public class PlaceWool implements Listener {
             Location blockLoc = e.getBlockPlaced().getLocation();
             Particles.createBlockSplash(blockLoc, Particle.REDSTONE);
             player.playSound(blockLoc, Sound.BLOCK_WOOL_BREAK, 1,1);
-        }
-
-        if (!(RoundSystem.isRoundTimerEnabled)) {
-            isActivated = false;
-            MapRebuild.loadSchematic("arena");
         }
     }
 }

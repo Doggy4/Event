@@ -104,6 +104,18 @@ public class BowShoot implements Listener {
         }.runTaskTimer(Main.main, 20, 20);
     }
 
+    public static void disableEvents() {
+        isActivated = false;
+
+        bonusBlock.setType(Material.AIR);
+        bonusBlock.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, block.getLocation(), 1);
+        bonusBlock.getWorld().playSound(block.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 10, 1);
+
+        block.setType(Material.AIR);
+        block.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, block.getLocation(), 1);
+        block.getWorld().playSound(block.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 10, 1);
+    }
+
     @EventHandler
     public void OnProjHit(ProjectileHitEvent e) {
         if (!isActivated) return;
@@ -117,17 +129,6 @@ public class BowShoot implements Listener {
             RoundSystem.addScore(player, 1);
         } else if (hitBlock.getType().equals(bonusTarget)) {
             RoundSystem.addScore(player, 5);
-        }
-        if (!(RoundSystem.isRoundTimerEnabled)) {
-            isActivated = false;
-
-            bonusBlock.setType(Material.AIR);
-            bonusBlock.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, block.getLocation(), 1);
-            bonusBlock.getWorld().playSound(block.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 10, 1);
-
-            block.setType(Material.AIR);
-            block.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, block.getLocation(), 1);
-            block.getWorld().playSound(block.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 10, 1);
         }
     }
 }

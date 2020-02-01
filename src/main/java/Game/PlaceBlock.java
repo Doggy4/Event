@@ -104,6 +104,10 @@ public class PlaceBlock implements Listener {
         world.getBlockAt(location).setType(randomMaterialBlock);
     }
 
+    public static void disableEvents() {
+        isActivated = false;
+    }
+
     @EventHandler
     public void onPlayerPlaceBlock(BlockPlaceEvent event) {
         Player player = event.getPlayer();
@@ -116,10 +120,5 @@ public class PlaceBlock implements Listener {
             RoundSystem.addScore(player, -1);
             PlaceNext(player);
         }
-
-        if (!(RoundSystem.isRoundTimerEnabled)) {
-            isActivated = RoundSystem.isRoundTimerEnabled;
-        }
-        event.setCancelled(true);
     }
 }
