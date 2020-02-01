@@ -12,7 +12,6 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class EggThrow implements Listener {
@@ -60,11 +59,10 @@ public class EggThrow implements Listener {
     }
 
     public static void throwNext(Player player) {
-        ArrayList<Material> materials = new ArrayList<Material>();
-        Collections.addAll(materials, Material.values());
+        ArrayList<Material> materials = new ArrayList<Material>(Arrays.asList(Material.values()));
 
         int randomMaterial = Utilities.getRandom(0, materials.size() - 37);
-        materials.subList(randomMaterial, randomMaterial + 36);
+        List<Material> materialsNew = materials.subList(randomMaterial, randomMaterial + 36);
 
         int randomSlot = Utilities.getRandom(0, 35);
 
@@ -73,7 +71,7 @@ public class EggThrow implements Listener {
         player.sendTitle(ChatColor.GREEN + phrases.get(Utilities.getRandom(0, phrases.size() - 1)), "Поторпитесь!", 40, 40, 40);
         player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Бросьте еще одно!");
 
-        for (Material block : materials) player.getInventory().addItem(new ItemStack(block, 1));
+        for (Material block : materialsNew) player.getInventory().addItem(new ItemStack(block, 1));
 
         player.getInventory().setItem(randomSlot, new ItemStack(Material.EGG));
     }

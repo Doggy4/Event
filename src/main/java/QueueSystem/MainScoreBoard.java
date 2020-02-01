@@ -16,7 +16,7 @@ import org.bukkit.scoreboard.*;
 
 import static PluginUtilities.Chat.broadcastToEveryone;
 
-// КЛАСС НЕ ПЕРЕДЕЛЫВАТЬ - ОПТИМИЗИРОВАН ПО МАКСИМУМУ
+// КЛАСС НЕ ПЕРЕДЕЛЫВАТЬ: ОПТИМИЗИРОВАН ПО МАКСИМУМУ
 public class MainScoreBoard {
     // Секунды до начала
     public static int mainSecPreStart = 60;
@@ -51,7 +51,7 @@ public class MainScoreBoard {
         if (GameCycle.isGameStarted) {
             alternative = objective.getScore(ChatColor.GOLD + "Раунд: " + ChatColor.GREEN + RoundSystem.round);
             Score divider2 = objective.getScore(ChatColor.AQUA + Chat.ScoreBoardDivider3);
-            divider2.setScore(31);
+            divider2.setScore(RoundSystem.roundStats.get(GameCycle.getWinner()) + 1);
 
             for (Player player : Queue.redQueueList) {
                 Score score = objective.getScore(ChatColor.GOLD + player.getName());

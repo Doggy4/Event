@@ -75,7 +75,7 @@ public class RoundSystem {
         for (Player player : Bukkit.getOnlinePlayers())
             player.playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 10, 1);
 
-        int randomBattle = Utilities.getRandom(6, 6);
+        int randomBattle = Utilities.getRandom(0, 9);
         switch (randomBattle) {
             case 0:
                 PlaceBlock.PlaceBlock();

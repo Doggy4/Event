@@ -112,4 +112,17 @@ public class GameCycle {
             greenPlayer.playSound(greenPlayer.getLocation(), Sound.BLOCK_ANVIL_PLACE, 20, 1);
         }
     }
+
+    public static Player getWinner() {
+        int max = -1;
+        Player winner = null;
+
+        for (Player player : Queue.redQueueList)
+            if (RoundSystem.roundStats.get(player) > max) {
+                max = RoundSystem.roundStats.get(player);
+                winner = player;
+            }
+
+        return winner;
+    }
 }
