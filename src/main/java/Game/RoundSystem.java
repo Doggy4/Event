@@ -23,13 +23,14 @@ public class RoundSystem {
     public static int round = 1;
     public static int roundCount = 10;
     public static int roundSeconds = 30;
-
     public static boolean isRoundStarted = false;
     public static boolean isRoundTimerEnabled = false;
 
-    public static int curTicker = 0;
+    private static int curTicker = 0;
 
     public static void roundTimer() {
+        Chat.broadcastToEveryone(curTicker + "/" + roundSeconds);
+
         if (!isRoundTimerEnabled) {
             curTicker = 0;
             isRoundTimerEnabled = true;
@@ -52,30 +53,28 @@ public class RoundSystem {
             CommandEvent.teleportToSpawn(player);
         }
 
-        // Очистка карты
-        for (Entity entity : Bukkit.getWorld("world").getEntities())
-            if (!(entity instanceof Player && !(entity instanceof ArmorStand)))
+        for (Entity entity : Bukkit.getWorld("world").getEntities()) {
+            if (!(entity instanceof Player && !(entity instanceof ArmorStand))) {
                 entity.remove();
-
+            }
+        }
 
         for (Player player : Bukkit.getOnlinePlayers()) {
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Обработка... Выбор мини-режима...");
             player.sendTitle(ChatColor.YELLOW + "Приготовьтесь!", ChatColor.WHITE + "Выбор мини-режима...", 20, 20, 20);
             player.playSound(player.getLocation(), Sound.BLOCK_LEVER_CLICK, 10, 1);
         }
-
         for (Player player : Bukkit.getOnlinePlayers()) {
             player.sendMessage(ChatColor.YELLOW + divThick16 + ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Раунд: " + ChatColor.AQUA + round + "\n" + ChatColor.YELLOW + divThick16);
             player.sendTitle(ChatColor.YELLOW + "РАУНД " + ChatColor.AQUA + round, ChatColor.BLUE + "Начинаем!", 20, 20, 20);
             player.playSound(player.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_CURSE, 10, 1);
         }
-
         round++;
 
         for (Player player : Bukkit.getOnlinePlayers())
             player.playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 10, 1);
 
-        int randomBattle = Utilities.getRandom(0, 9);
+        int randomBattle = Utilities.getRandom(0, 8);
         switch (randomBattle) {
             case 0:
                 PlaceBlock.PlaceBlock();
@@ -96,7 +95,7 @@ public class RoundSystem {
                 CowMilk.MilkCow();
                 break;
             case 6:
-                BuildTower.BuildTower();
+                PlaceWool.BuildTower();
                 break;
             case 7:
                 ReachSky.ReachSky();
@@ -104,20 +103,12 @@ public class RoundSystem {
             case 8:
                 DodgeAnvils.DodgeAnvils();
                 break;
-            case 9:
-                ParkourEatCake.parkour();
-                break;
         }
     }
 
     public static void endRound() {
         isRoundStarted = false;
 
-        for (Player player : Bukkit.getOnlinePlayers())
-            player.playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 10, 1);
-
-        // Зачем это надо? Ты дурак?
-        // Выведи здесь через Chat.broadcastToEveryone() статистику
         LinkedList<Map.Entry<Player, Integer>> list = new LinkedList<>(roundStats.entrySet());
         Comparator<Map.Entry<Player, Integer>> comparator = Comparator.comparing(Map.Entry::getValue);
         Collections.sort(list, comparator.reversed());
@@ -130,20 +121,24 @@ public class RoundSystem {
     public static void addScore(Player winner, int score) {
         String scoreString;
 
-        if (score == 1 || score == -1)
-            scoreString = " очко!";
-        else if (score > 1 && score < 5 || score < -1 && score > -5)
-            scoreString = " очка!";
-        else
-            scoreString = " очков!";
+        if (score == 1 || score == -1) {
+            scoreString = " очко ";
+        } else if (score > 1 && score < 5 || score < -1 && score > -5) {
+            scoreString = " очка ";
+        } else {
+            scoreString = " очков ";
+        }
 
-
-        if (score > 0)
+        if (score > 0) {
             winner.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы получили " + ChatColor.GREEN + score + ChatColor.WHITE + scoreString);
-        else
+            roundStats.put(winner, score + roundStats.get(winner));
+        } else {
             winner.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы потеряли " + ChatColor.RED + score + ChatColor.WHITE + scoreString);
-        roundStats.put(winner, score + roundStats.get(winner));
-
+            if (roundStats.get(winner) <= 0) {
+                winner.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Куда уже ниже?");
+                roundStats.put(winner, 0);
+            }
+        }
     }
 
     public static void playerPlace(Player roundPlayer, Integer place, Integer scoreCount) {
@@ -182,7 +177,6 @@ public class RoundSystem {
     public static void playerLose(Player loser) {
         loser.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Вы проиграли!");
         loser.playSound(loser.getLocation(), Sound.ENTITY_BAT_DEATH, 10, 1);
-        Chat.broadcastToEveryone("Игрок " + loser.getName() + " проиграл!");
 
         PlayerReset(loser);
     }

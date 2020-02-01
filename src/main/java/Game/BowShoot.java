@@ -98,8 +98,8 @@ public class BowShoot implements Listener {
                 world.playSound(block.getLocation(), Sound.BLOCK_BELL_USE, 1, 2);
                 Particles.createBlockSplash(block.getLocation(), Particle.END_ROD);
 
-                world.playSound(bonusBlock.getLocation(), Sound.BLOCK_BELL_RESONATE, 1, 3);
-                Particles.createBlockSplash(bonusBlock.getLocation(), Particle.END_ROD);
+                world.playSound(bonusBlock.getLocation(), Sound.BLOCK_BELL_RESONATE, 1,3);
+                Particles.createBlockSplash(bonusBlock.getLocation(), Particle.DRAGON_BREATH);
             }
         }.runTaskTimer(Main.main, 20, 20);
     }
