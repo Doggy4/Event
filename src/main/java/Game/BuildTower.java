@@ -34,12 +34,10 @@ public class BuildTower implements Listener {
         isActivated = true;
         GameRules.PlaceBlockOff();
 
-        int randX = Math.round((float) Main.main.getConfig().getDouble("spawn.x")) + Utilities.getRandom(0, 32) - 16;
-        int randZ = Math.round((float) Main.main.getConfig().getDouble("spawn.z")) + Utilities.getRandom(0, 32) - 16;
-
-
-
         for (Player player : Queue.redQueueList) {
+            int randX = Math.round((float) Main.main.getConfig().getDouble("spawn.x")) + Utilities.getRandom(0, 32) - 16;
+            int randZ = Math.round((float) Main.main.getConfig().getDouble("spawn.z")) + Utilities.getRandom(0, 32) - 16;
+
             Location tpLoc = new Location(world, randX, y, randZ);
             player.teleport(tpLoc);
             player.getInventory().clear();
@@ -47,7 +45,7 @@ public class BuildTower implements Listener {
             n = (int) Math.floor(Math.random() * blockWhatNeedToPlace.length);
             n2 = (int) Math.floor(Math.random() * blockOnWhatPlace.length);
 
-            Location blockLoc = player.getLocation().add(0, -1, 0);
+            Location blockLoc = player.getLocation().add(0, 0, 0);
             blockLoc.getBlock().setType(blockOnWhatPlace[n2]);
             player.getInventory().addItem(new ItemStack(blockWhatNeedToPlace[n], 1));
 
@@ -59,13 +57,13 @@ public class BuildTower implements Listener {
             player.setGameMode(GameMode.SURVIVAL);
 
             player.sendTitle(ChatColor.GREEN + "Постройте башню из", "20 блоков", 40, 40, 40);
-            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Постройте башню из 20 блоков!");
-            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Поставьте" + blockWhatNeedToPlace.toString() + " На " + blockOnWhatPlace.toString());
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Ставьте шерсть в нужном порядке");
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Поставьте " + blockWhatNeedToPlace[n].toString() + " На " + blockOnWhatPlace[n2].toString());
         }
     }
 
 
-    private static void nextBlockToPlace(Player player) {
+    private static void nextBlockToPlace(Player player, Location blockLoc) {
         player.getInventory().clear();
 
         n = (int) Math.floor(Math.random() * blockWhatNeedToPlace.length);
@@ -73,8 +71,8 @@ public class BuildTower implements Listener {
 
         int locProp = Utilities.getRandom(-1,1);
 
-        Location blockLoc = player.getLocation().add(locProp, -1, locProp);
-        blockLoc.getBlock().setType(blockOnWhatPlace[n2]);
+        Location newBlockLoc = blockLoc.add(locProp, 0, locProp);
+        newBlockLoc.getBlock().setType(blockOnWhatPlace[n2]);
         player.getInventory().addItem(new ItemStack(blockWhatNeedToPlace[n], 1));
 
         block1.put(player, blockWhatNeedToPlace[n]);
@@ -83,8 +81,8 @@ public class BuildTower implements Listener {
         for (int i = 0; i < 7; i++) player.getInventory().addItem(new ItemStack(blockWhatNeedToPlace[i]));
 
         player.sendTitle(ChatColor.GREEN + "Постройте башню из", "20 блоков", 40, 40, 40);
-        player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Постройте башню из 20 блоков!");
-        player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Поставьте" + blockWhatNeedToPlace.toString() + " На " + blockOnWhatPlace.toString());
+        player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Ставьте шерсть в нужном порядке");
+        player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Поставьте " + blockWhatNeedToPlace[n].toString() + " На " + blockOnWhatPlace[n2].toString());
 
     }
 
@@ -92,22 +90,15 @@ public class BuildTower implements Listener {
     public void onPlaceBlock(BlockPlaceEvent e) {
         if (!isActivated) return;
 
-        int blockPlace = (int) Math.round(e.getBlockPlaced().getY() - Main.main.getConfig().getDouble("spawn.y")) + 1;
-
         Player player = e.getPlayer();
 
-        if (e.getBlockPlaced().getType().equals(block2.get(player)) && e.getBlockAgainst().getType().equals(block1.get(player))) {
+        if (e.getBlockPlaced().getType().equals(block1.get(player)) && e.getBlockAgainst().getType().equals(block2.get(player))) {
             RoundSystem.addScore(player, 1);
-            blockPlace++;
-            nextBlockToPlace(player);
-        }
-
-        if (blockPlace >= 20) {
-            player.getInventory().clear();
-            player.getWorld().spawnParticle(Particle.FIREWORKS_SPARK, e.getBlockPlaced().getLocation(), 10);
-
+            Location blockLoc = e.getBlockPlaced().getLocation();
+            nextBlockToPlace(player, blockLoc);
         } else {
-            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Вы поставили блоков: [" + blockPlace + "/20]");
+            e.setCancelled(true);
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Поставьте " + blockWhatNeedToPlace[n].toString() + " На " + blockOnWhatPlace[n2].toString());
         }
 
         if (!(RoundSystem.isRoundTimerEnabled)) {
