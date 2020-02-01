@@ -1,11 +1,10 @@
 package Game;
 
-import PluginUtilities.MapRebuild;
+import PluginUtilities.MapRebuilding;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
 import event.main.Main;
 import org.bukkit.*;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -34,12 +33,10 @@ public class BuildTower implements Listener {
         isActivated = true;
         GameRules.PlaceBlockOff();
 
-        int randX = Math.round((float) Main.main.getConfig().getDouble("spawn.x")) + Utilities.getRandom(0, 32) - 16;
-        int randZ = Math.round((float) Main.main.getConfig().getDouble("spawn.z")) + Utilities.getRandom(0, 32) - 16;
-
-
-
         for (Player player : Queue.redQueueList) {
+            int randX = Math.round((float) Main.main.getConfig().getDouble("spawn.x")) + Utilities.getRandom(0, 32) - 16;
+            int randZ = Math.round((float) Main.main.getConfig().getDouble("spawn.z")) + Utilities.getRandom(0, 32) - 16;
+
             Location tpLoc = new Location(world, randX, y, randZ);
             player.teleport(tpLoc);
             player.getInventory().clear();
@@ -60,7 +57,7 @@ public class BuildTower implements Listener {
 
             player.sendTitle(ChatColor.GREEN + "Постройте башню из", "20 блоков", 40, 40, 40);
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Постройте башню из 20 блоков!");
-            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Поставьте" + blockWhatNeedToPlace.toString() + " На " + blockOnWhatPlace.toString());
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Поставьте" + blockWhatNeedToPlace[n].toString() + " На " + blockOnWhatPlace[n2].toString());
         }
     }
 
@@ -84,7 +81,7 @@ public class BuildTower implements Listener {
 
         player.sendTitle(ChatColor.GREEN + "Постройте башню из", "20 блоков", 40, 40, 40);
         player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Постройте башню из 20 блоков!");
-        player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Поставьте" + blockWhatNeedToPlace.toString() + " На " + blockOnWhatPlace.toString());
+        player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Поставьте" + blockWhatNeedToPlace[n].toString() + " На " + blockOnWhatPlace[n2].toString());
 
     }
 
@@ -96,7 +93,7 @@ public class BuildTower implements Listener {
 
         Player player = e.getPlayer();
 
-        if (e.getBlockPlaced().getType().equals(block2.get(player)) && e.getBlockAgainst().getType().equals(block1.get(player))) {
+        if (e.getBlockPlaced().getType().equals(block1.get(player)) && e.getBlockAgainst().getType().equals(block2.get(player))) {
             RoundSystem.addScore(player, 1);
             blockPlace++;
             nextBlockToPlace(player);
@@ -112,7 +109,7 @@ public class BuildTower implements Listener {
 
         if (!(RoundSystem.isRoundTimerEnabled)) {
             isActivated = RoundSystem.isRoundTimerEnabled;
-            MapRebuild.loadSchematic("arena");
+            MapRebuilding.loadSchematic("arena");
         }
     }
 }
