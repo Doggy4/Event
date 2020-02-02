@@ -4,6 +4,7 @@ import Commands.CommandEvent;
 import PluginUtilities.MapRebuild;
 import QueueSystem.Queue;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -34,10 +35,15 @@ public class ParkourEatCake implements Listener {
 
     @EventHandler
     public void onCakeEat(PlayerInteractEvent event) {
-        if (!isActivated) return;
+        if (!isActivated || event.getClickedBlock() == null) return;
+
+
         Player player = event.getPlayer();
 
-        if (event.getClickedBlock().getType().equals(Material.CAKE))
+        if (event.getClickedBlock().getType().equals(Material.CAKE)) {
             RoundSystem.addScore(player, 1);
+            player.setGameMode(GameMode.SPECTATOR);
+        }
+
     }
 }
