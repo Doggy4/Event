@@ -34,7 +34,8 @@ public class PlaceBlock implements Listener {
 
         for (Player player : Queue.redQueueList) {
             player.getInventory().clear();
-            player.teleport(LocationUtulities.spawnLocations.get(Queue.redQueueList.indexOf(player)).add(0, 2, 0));
+            Location location = (LocationUtulities.spawnLocations.get(Queue.redQueueList.indexOf(player)));
+            player.teleport(location.add(0,2,0));
 
             ArrayList<Material> materials = new ArrayList<Material>();
 
@@ -55,8 +56,8 @@ public class PlaceBlock implements Listener {
             player.sendMessage(ChatColor.GREEN + "Поставьте блок " + Chat.translate(randomMaterialBlock.name()));
             player.setGameMode(GameMode.SURVIVAL);
 
-            LocationUtulities.spawnLocations.get(Queue.redQueueList.indexOf(player)).getWorld().getBlockAt(LocationUtulities.spawnLocations.get(Queue.redQueueList.indexOf(player))).setType(randomMaterialBlock);
-            playerRoom.put(player, LocationUtulities.spawnLocations.get(Queue.redQueueList.indexOf(player)));
+            LocationUtulities.spawnLocations.get(Queue.redQueueList.indexOf(player)).getWorld().getBlockAt(location).setType(randomMaterialBlock);
+            playerRoom.put(player, location);
         }
     }
 
