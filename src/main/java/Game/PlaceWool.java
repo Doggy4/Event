@@ -1,6 +1,5 @@
 package Game;
 
-import PluginUtilities.MapRebuild;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
 import SvistoPerdelki.Particles;
@@ -54,9 +53,9 @@ public class PlaceWool implements Listener {
 
             player.setGameMode(GameMode.SURVIVAL);
 
-            player.sendTitle(ChatColor.GREEN + "Ставьте шерсть в нужном порядке", "Быстрее", 20, 10, 20);
-            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Ставьте шерсть в нужном порядке");
-            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Поставьте " + blockWhatNeedToPlace[n].toString() + " На " + blockOnWhatPlace[n2].toString());
+            player.sendTitle(ChatColor.GREEN + "Ставьте шерсть в", "правильном порядке", 20, 10, 20);
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Ставьте шерсть в нужном порядке!");
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Поставьте " + blockWhatNeedToPlace[n].toString() + " на " + blockOnWhatPlace[n2].toString());
         }
     }
 
@@ -67,7 +66,7 @@ public class PlaceWool implements Listener {
         n = (int) Math.floor(Math.random() * blockWhatNeedToPlace.length);
         n2 = (int) Math.floor(Math.random() * blockOnWhatPlace.length);
 
-        int locProp = Utilities.getRandom(-1,1);
+        int locProp = Utilities.getRandom(-1, 1);
 
         Location newBlockLoc = blockLoc.add(locProp, 0, locProp);
         newBlockLoc.getBlock().setType(blockOnWhatPlace[n2]);
@@ -77,15 +76,10 @@ public class PlaceWool implements Listener {
 
         for (int i = 0; i < 7; i++) player.getInventory().addItem(new ItemStack(blockWhatNeedToPlace[i]));
 
-        player.sendTitle(ChatColor.GREEN + "Ставьте шерсть в нужном порядке", "Быстрее", 20, 10, 20);
-        player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Ставьте шерсть в нужном порядке");
-        player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Поставьте " + blockWhatNeedToPlace[n].toString() + " На " + blockOnWhatPlace[n2].toString());
+        player.sendTitle(ChatColor.GREEN + "Ставьте шерсть в", "правильном порядке", 20, 10, 20);
+        player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Ставьте шерсть в нужном порядке!");
+        player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Поставьте " + blockWhatNeedToPlace[n].toString() + " на " + blockOnWhatPlace[n2].toString());
 
-    }
-
-    public static void disableEvents() {
-        isActivated = false;
-        MapRebuild.loadSchematic("arena");
     }
 
     @EventHandler
@@ -102,9 +96,9 @@ public class PlaceWool implements Listener {
             nextBlockToPlace(player, blockLoc);
         } else {
             e.setCancelled(true);
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Неверный порядок!");
             RoundSystem.addScore(player, -1);
-            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Упс, что-то пошло не так ");
-            player.sendMessage(ChatColor.RED + blockWhatNeedToPlace[n].toString() + " На " + blockOnWhatPlace[n2].toString());
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Поставьте " + blockWhatNeedToPlace[n].toString() + " на " + blockOnWhatPlace[n2].toString());
             Location blockLoc = e.getBlockPlaced().getLocation();
 
             Particles.createBlockSplash(blockLoc, Particle.REDSTONE);

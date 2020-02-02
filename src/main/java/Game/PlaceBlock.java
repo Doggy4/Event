@@ -18,7 +18,7 @@ import java.util.List;
 public class PlaceBlock implements Listener {
 
     private static Material randomMaterialBlock;
-    private static boolean isActivated = false;
+    public static boolean isActivated = false;
     private static HashMap<Player, Location> playerRoom = new HashMap<Player, Location>();
 
     public static void PlaceBlock() {
@@ -104,21 +104,21 @@ public class PlaceBlock implements Listener {
         world.getBlockAt(location).setType(randomMaterialBlock);
     }
 
-    public static void disableEvents() {
-        isActivated = false;
-    }
-
     @EventHandler
     public void onPlayerPlaceBlock(BlockPlaceEvent event) {
         Player player = event.getPlayer();
         if (!isActivated) return;
 
         if (event.getBlockPlaced().getType().equals(randomMaterialBlock)) {
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Задание выполнено!");
             RoundSystem.addScore(player, 1);
             PlaceNext(player);
         } else {
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Неверный блок!");
             RoundSystem.addScore(player, -1);
             PlaceNext(player);
         }
+
+        event.setCancelled(true);
     }
 }

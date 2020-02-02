@@ -23,11 +23,6 @@ public class GameCycle {
     public static boolean isCommandStartEventTipped = false;
 
     public static void mainCycle() {
-
-        if (RoundSystem.round >= RoundSystem.roundCount && isGameStarted && !RoundSystem.isRoundStarted) {
-            endGame();
-            return;
-        }
         // START
 
         if (isCommandStartEventTipped && !isGameStarted)
@@ -43,7 +38,7 @@ public class GameCycle {
     public static void StartGame() {
         for (Player player : Queue.redQueueList) {
             player.setExp(0);
-            RoundSystem.playerReset(player);
+            RoundSystem.PlayerReset(player);
             CommandEvent.teleportToSpawn(player);
             RoundSystem.roundStats.put(player, 0);
             gameStats.put(player, 0);
@@ -59,33 +54,25 @@ public class GameCycle {
     }
 
     public static void endGame() {
+        DiscordWebhook.gameEnded();
+
         isGameStarted = false;
         MainScoreBoard.mainSecPreStart = 60;
         RoundSystem.round = 1;
 
-        int max = 0;
-        String winner = "null";
+        Player winner = getWinner();
 
-        for (Player redPlayer : Queue.redQueueList)
-            if (gameStats.get(redPlayer) > max) {
-                max = RoundSystem.roundStats.get(redPlayer);
-                winner = redPlayer.getName();
-            }
-
-
-        // Переопределение очередей
-        Player player = Bukkit.getPlayer(winner);
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-            onlinePlayer.sendTitle(ChatColor.GOLD + winner, ChatColor.BLUE + "победитель", 20, 40, 20);
+            onlinePlayer.sendTitle(ChatColor.GOLD + winner.getName(), ChatColor.BLUE + "победитель", 20, 40, 20);
 
             onlinePlayer.playSound(onlinePlayer.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 10, 1);
             onlinePlayer.spawnParticle(Particle.DRAGON_BREATH, onlinePlayer.getLocation(), 80);
-            onlinePlayer.sendMessage(ChatColor.BLUE + "Игрок " + ChatColor.GOLD + winner + ChatColor.BLUE + " победитель!");
+            onlinePlayer.sendMessage(ChatColor.BLUE + "Игрок " + ChatColor.GOLD + winner.getName() + ChatColor.BLUE + " победитель!");
         }
 
         for (Player redPlayer : Queue.redQueueList) {
             CommandEvent.teleportToLobby(redPlayer);
-            MainScoreBoard.red.removeEntry(player.getName());
+            MainScoreBoard.red.removeEntry(redPlayer.getName());
         }
 
         Queue.redQueueList.clear();

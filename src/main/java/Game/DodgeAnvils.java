@@ -15,7 +15,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 // Потом проапаю
 public class DodgeAnvils implements Listener {
-    private static boolean isActivated = false;
+    public static boolean isActivated = false;
 
     public static void DodgeAnvils() {
         isActivated = true;
@@ -36,6 +36,12 @@ public class DodgeAnvils implements Listener {
 
             @Override
             public void run() {
+
+                if (!isActivated) {
+                    this.cancel();
+                    endDodgeAnvils();
+                }
+
 
                 for (int i = 0; i < 50; i++) {
                     int randX = Math.round((float) Main.main.getConfig().getDouble("spawn.x")) + Utilities.getRandom(0, 32) - 16;
@@ -70,10 +76,6 @@ public class DodgeAnvils implements Listener {
         }
     }
 
-    public static void disableEvents() {
-        endDodgeAnvils();
-        isActivated = false;
-    }
 
     @EventHandler
     public void onFallingBlockLand(EntityChangeBlockEvent event) {

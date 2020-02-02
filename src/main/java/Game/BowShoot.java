@@ -18,7 +18,7 @@ import static PluginUtilities.Items.BowEventArrows;
 import static PluginUtilities.Items.BowEventBow;
 
 public class BowShoot implements Listener {
-    private static boolean isActivated = false;
+    public static boolean isActivated = false;
 
     private static Material[] targets = {Material.LAPIS_BLOCK, Material.GOLD_BLOCK, Material.DIAMOND_BLOCK, Material.IRON_BLOCK, Material.REDSTONE_BLOCK};
     private static Material bonusTarget = Material.GLOWSTONE;
@@ -46,9 +46,13 @@ public class BowShoot implements Listener {
             @Override
             public void run() {
                 if (!(RoundSystem.isRoundTimerEnabled)) {
-                    block.setType(Material.AIR);
-                    bonusBlock.setType(Material.AIR);
                     this.cancel();
+
+                    bonusBlock.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, block.getLocation(), 1);
+                    bonusBlock.getWorld().playSound(block.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 10, 1);
+
+                    block.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, block.getLocation(), 1);
+                    block.getWorld().playSound(block.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 10, 1);
                 }
 
                 block.setType(Material.AIR);
@@ -104,17 +108,6 @@ public class BowShoot implements Listener {
         }.runTaskTimer(Main.main, 20, 20);
     }
 
-    public static void disableEvents() {
-        isActivated = false;
-
-        bonusBlock.setType(Material.AIR);
-        bonusBlock.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, block.getLocation(), 1);
-        bonusBlock.getWorld().playSound(block.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 10, 1);
-
-        block.setType(Material.AIR);
-        block.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, block.getLocation(), 1);
-        block.getWorld().playSound(block.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 10, 1);
-    }
 
     @EventHandler
     public void OnProjHit(ProjectileHitEvent e) {

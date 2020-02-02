@@ -69,7 +69,7 @@ public class EggThrow implements Listener {
         player.getInventory().clear();
 
         player.sendTitle(ChatColor.GREEN + phrases.get(Utilities.getRandom(0, phrases.size() - 1)), "Поторпитесь!", 40, 40, 40);
-        player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Бросьте еще одно!");
+        player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + phrases.get(Utilities.getRandom(0, phrases.size() - 1)));
 
         for (Material block : materialsNew) player.getInventory().addItem(new ItemStack(block, 1));
 

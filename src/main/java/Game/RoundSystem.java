@@ -32,8 +32,6 @@ public class RoundSystem {
 
 
     public static void roundTimer() {
-        Chat.broadcastToEveryone(curTicker + "/" + roundSeconds);
-
         if (!isRoundTimerEnabled) {
             curTicker = 0;
             isRoundTimerEnabled = true;
@@ -114,8 +112,12 @@ public class RoundSystem {
 
     public static void endRound() {
         disableRoundEvents();
-
         isRoundStarted = false;
+
+        if (RoundSystem.round == RoundSystem.roundCount) {
+            GameCycle.endGame();
+            return;
+        }
 
         LinkedList<Map.Entry<Player, Integer>> list = new LinkedList<>(roundStats.entrySet());
         Comparator<Map.Entry<Player, Integer>> comparator = Comparator.comparing(Map.Entry::getValue);
@@ -129,36 +131,36 @@ public class RoundSystem {
     private static void disableRoundEvents() {
         switch (randomGame) {
             case 0:
-                PlaceBlock.disableEvents();
+                PlaceBlock.isActivated = false;
                 break;
             case 1:
-                DropItem.disableEvents();
+                DropItem.isActivated = false;
                 break;
             case 2:
-                BowShoot.disableEvents();
+                BowShoot.isActivated = false;
                 break;
             case 3:
-                ShearSheep.disableEvents();
+                ShearSheep.isActivated = false;
                 break;
             case 4:
-                EggThrow.disableEvents();
+                EggThrow.isActivated = false;
                 break;
             case 5:
-                CowMilk.disableEvents();
+                CowMilk.isActivated = false;
                 break;
             case 6:
-                PlaceWool.disableEvents();
+                PlaceWool.isActivated = false;
                 break;
             case 7:
-                ReachSky.disableEvents();
+                ReachSky.isActivated = false;
                 break;
             case 8:
-                DodgeAnvils.disableEvents();
+                DodgeAnvils.isActivated = false;
                 break;
         }
     }
 
-    public static void addScore(Player winner, int score) {
+    public static void addScore(Player player, int score) {
         String scoreString;
 
         if (score == 1 || score == -1) {
@@ -170,15 +172,18 @@ public class RoundSystem {
         }
 
         if (score > 0) {
-            winner.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы получили " + ChatColor.GREEN + score + ChatColor.WHITE + scoreString);
-            roundStats.put(winner, score + roundStats.get(winner));
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы получили " + ChatColor.GREEN + score + ChatColor.WHITE + scoreString);
+            player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
         } else {
-            winner.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы потеряли " + ChatColor.RED + score + ChatColor.WHITE + scoreString);
-            if (roundStats.get(winner) <= 0) {
-                winner.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Куда уже ниже?");
-                roundStats.put(winner, 0);
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы потеряли " + ChatColor.RED + (score * -1) + ChatColor.WHITE + scoreString);
+            player.playSound(player.getLocation(), Sound.ENTITY_ITEM_BREAK, 10, 1);
+            if (roundStats.get(player) <= 0) {
+                player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Вы достигли минимального количества очков!");
+                score = 0;
             }
         }
+
+        roundStats.put(player, score + roundStats.get(player));
     }
 
     public static void playerPlace(Player roundPlayer, Integer place, Integer scoreCount) {
@@ -215,6 +220,8 @@ public class RoundSystem {
     }
 
     public static void playerLose(Player loser) {
+        Chat.broadcastToEveryone(ChatColor.RED + "Игрок " + loser.getName() + " проиграл!");
+
         loser.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Вы проиграли!");
         loser.playSound(loser.getLocation(), Sound.ENTITY_BAT_DEATH, 10, 1);
 

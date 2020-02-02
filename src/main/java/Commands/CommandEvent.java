@@ -60,8 +60,10 @@ public class CommandEvent implements TabExecutor {
             clearQueues();
         } else if (args[0].equals("broadcast"))
             broadcast(Arrays.copyOfRange(args, 1, args.length));
-        else if (args[0].equals("test"))
+        else if (args[0].equals("rebuild"))
             MapRebuild.loadSchematic("arena");
+        else if (args[0].equals("test"))
+            Bukkit.broadcastMessage("test");
         else
             return false;
         return true;
