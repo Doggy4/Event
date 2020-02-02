@@ -37,8 +37,8 @@ public class RoundSystem {
         curTicker++;
 
         if (roundSeconds <= curTicker) {
-            RoundSystem.endRound();
             isRoundTimerEnabled = false;
+            RoundSystem.endRound();
         }
     }
 
@@ -195,23 +195,15 @@ public class RoundSystem {
     }
 
     public static void disableRound() {
-        if (PlaceWool.isActivated)
-            PlaceWool.isActivated = false;
-        else if (BowShoot.isActivated)
-            BowShoot.isActivated = false;
-        else if (CowMilk.isActivated)
-            CowMilk.isActivated = false;
-        else if (DodgeAnvils.isActivated)
-            DodgeAnvils.isActivated = false;
-        else if (DropItem.isActivated)
-            DropItem.isActivated = false;
-        else if (EggThrow.isActivated)
-            EggThrow.isActivated = false;
-        else if (ParkourEatCake.isActivated)
-            ParkourEatCake.isActivated = false;
-        else if (ReachSky.isActivated)
-            ReachSky.isActivated = false;
-        else if (ShearSheep.isActivated)
-            ShearSheep.isActivated = false;
+
+        PlaceWool.isActivated = false;
+        BowShoot.isActivated = false;
+        CowMilk.isActivated = false;
+        DodgeAnvils.isActivated = false;
+        DropItem.isActivated = false;
+        EggThrow.isActivated = false;
+        ParkourEatCake.isActivated = false;
+        ReachSky.isActivated = false;
+        ShearSheep.isActivated = false;
     }
 }

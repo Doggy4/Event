@@ -18,7 +18,7 @@ import static PluginUtilities.Items.BowEventArrows;
 import static PluginUtilities.Items.BowEventBow;
 
 public class BowShoot implements Listener {
-    private static boolean isActivated = false;
+    public static boolean isActivated = false;
 
     private static Material[] targets = {Material.LAPIS_BLOCK, Material.GOLD_BLOCK, Material.DIAMOND_BLOCK, Material.IRON_BLOCK, Material.REDSTONE_BLOCK};
     private static Material bonusTarget = Material.GLOWSTONE;
@@ -115,16 +115,15 @@ public class BowShoot implements Listener {
 
         Block hitBlock = event.getHitBlock();
 
-        if (hitBlock.getType().equals(targets[n]))
+        if (hitBlock.getType().equals(targets[n])) {
             RoundSystem.addScore(player, 1);
-        else if (hitBlock.getType().equals(bonusTarget))
+            bonusBlock.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, block.getLocation(), 1);
+            bonusBlock.getWorld().playSound(block.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 10, 1);
+
+            block.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, block.getLocation(), 1);
+            block.getWorld().playSound(block.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 10, 1);
+        } else if (hitBlock.getType().equals(bonusTarget))
             RoundSystem.addScore(player, 5);
-
-        bonusBlock.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, block.getLocation(), 1);
-        bonusBlock.getWorld().playSound(block.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 10, 1);
-
-        block.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, block.getLocation(), 1);
-        block.getWorld().playSound(block.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 10, 1);
 
     }
 }

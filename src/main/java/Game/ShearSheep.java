@@ -5,7 +5,10 @@ import PluginUtilities.Items;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
 import event.main.Main;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.DyeColor;
+import org.bukkit.Sound;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Sheep;
@@ -31,7 +34,6 @@ public class ShearSheep implements Listener {
             player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
             player.sendTitle(ChatColor.GREEN + "Подстригите овцу", Chat.colors.get(randomColor.toString()) + randomColor.name(), 40, 40, 40);
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Подстригите овцу " + ChatColor.LIGHT_PURPLE + "[" + Chat.colors.get(randomColor.toString()) + randomColor.name() + ChatColor.LIGHT_PURPLE + "]");
-            player.setGameMode(GameMode.SURVIVAL);
 
             player.getInventory().addItem(Items.ShearEventShears);
         }
@@ -58,7 +60,11 @@ public class ShearSheep implements Listener {
     }
 
     public void nextSheep(Player player) {
+        randomColor = Utilities.getRandomColor();
 
+        player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
+        player.sendTitle(ChatColor.GREEN + "Подстригите овцу", Chat.colors.get(randomColor.toString()) + randomColor.name(), 40, 40, 40);
+        player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Подстригите овцу " + ChatColor.LIGHT_PURPLE + "[" + Chat.colors.get(randomColor.toString()) + randomColor.name() + ChatColor.LIGHT_PURPLE + "]");
     }
 
     @EventHandler
@@ -70,9 +76,11 @@ public class ShearSheep implements Listener {
 
         if (sheep.getColor() == randomColor) {
             RoundSystem.addScore(player, 1);
+            nextSheep(player);
         } else {
             RoundSystem.addScore(player, -1);
-            player.sendMessage(ChatColor.GOLD + "[EVENT]" + "Неправильный цвет!");
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Неправильный цвет!");
+            nextSheep(player);
         }
 
         sheep.remove();

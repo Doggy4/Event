@@ -23,6 +23,7 @@ public class BlackList {
         blacklist.add("MUSIC");
         blacklist.add("BANNER");
         blacklist.add("HEAD");
+        blacklist.add("WALL");
     }
 
     public static boolean isItemBlocked(String item) {
