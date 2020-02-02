@@ -42,7 +42,7 @@ public class DiscordWebhook {
                     .setTitle("Игра началась!")
                     .setDescription("Ознакомиться с правилами эвента можно [тут](https://forum.excalibur-craft.ru/forum/125-BestLife/)!")
                     .setColor(Color.CYAN)
-                    .addField("**Количество игроков:**", Queue.redQueueList.size() + "", false)
+                    .addField("**Количество игроков:**", Queue.redQueueList.size() + "/10", false)
                     .addField("**Количество оставшихся раундов**", "0", false)
                     .setThumbnail("https://i.ya-webdesign.com/images/a-letter-logo-design-png-7.png")
                     .setFooter("Мы вас ждем!", "https://i.ya-webdesign.com/images/a-letter-logo-design-png-7.png")
@@ -58,18 +58,17 @@ public class DiscordWebhook {
     public static void roundStarted() {
         try {
             DiscordWebhook webhook = new DiscordWebhook("https://discordapp.com/api/webhooks/673392196493377566/aVunHRsD_JzjelGwNMygS67vo_qM_Bu1diLbInwszQt82HAuQrVcG6382dDFiYkmlI2J");
-            webhook.setContent("");
             webhook.setAvatarUrl("https://i.ya-webdesign.com/images/a-letter-logo-design-png-7.png");
             webhook.setUsername("BestLife Official Event");
             webhook.setTts(false);
             webhook.addEmbed(new DiscordWebhook.EmbedObject()
-                    .setTitle("Раунд #" + RoundSystem.round + " начался!")
+                    .setTitle("Начался новый раунд!")
                     .setDescription("Ознакомиться с правилами эвента можно [тут](https://forum.excalibur-craft.ru/forum/125-BestLife/)!")
                     .setColor(Color.CYAN)
-                    .addField("**Название раунда:**", Chat.roundNames.get(RoundSystem.randomGame), false)
-                    .addField("**Количество игроков:**", Queue.redQueueList.size() + "", false)
-                    .addField("**Количество оставшихся раундов:**", RoundSystem.roundCount - RoundSystem.round + "", false)
-                    .addField("**Лидер по количеству очков:**", GameCycle.getWinner().getName(), false)
+                    .addField("**Раунд:**", Chat.roundNames.get(RoundSystem.randomGame), false)
+                    .addField("**Количество раундов:**", RoundSystem.round - 1 + "/" + RoundSystem.roundCount, false)
+                    .addField("**Количество игроков:**", Queue.redQueueList.size() + "/10", false)
+                    .addField("**Лидер по очкам:**", GameCycle.getWinner().getName(), false)
                     .setThumbnail("https://i.ya-webdesign.com/images/a-letter-logo-design-png-7.png")
                     .setFooter("Мы вас ждем!", "https://i.ya-webdesign.com/images/a-letter-logo-design-png-7.png")
                     //.setImage("https://i.ya-webdesign.com/images/a-letter-logo-design-png-7.png")
@@ -92,8 +91,8 @@ public class DiscordWebhook {
                     .setTitle("Игра завершена!")
                     .setDescription("Ознакомиться с правилами эвента можно [тут](https://forum.excalibur-craft.ru/forum/125-BestLife/)!")
                     .setColor(Color.CYAN)
-                    .addField("**Количество игроков:**", Queue.redQueueList.size() + "", false)
-                    .addField("**Победитель:**", "\uD83D\uDC8E" + GameCycle.getWinner().getName() + "\uD83D\uDC8E", false)
+                    .addField("**Количество игроков:**", Queue.redQueueList.size() + "/10", false)
+                    .addField("**Победитель:**", "\uD83D\uDC8E " + GameCycle.getWinner().getName() + " \uD83D\uDC8E", false)
                     .setThumbnail("https://i.ya-webdesign.com/images/a-letter-logo-design-png-7.png")
                     .setFooter("Мы вас ждем!", "https://i.ya-webdesign.com/images/a-letter-logo-design-png-7.png")
                     //.setImage("https://i.ya-webdesign.com/images/a-letter-logo-design-png-7.png")

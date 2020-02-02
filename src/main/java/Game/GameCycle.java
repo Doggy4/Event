@@ -56,6 +56,7 @@ public class GameCycle {
     public static void endGame() {
         DiscordWebhook.gameEnded();
 
+        isCommandStartEventTipped = false;
         isGameStarted = false;
         MainScoreBoard.mainSecPreStart = 60;
         RoundSystem.round = 1;
