@@ -2,6 +2,7 @@ package Game;
 
 import PluginUtilities.BlackList;
 import PluginUtilities.Chat;
+import PluginUtilities.TeleportManager;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
 import event.main.Main;
@@ -30,31 +31,15 @@ public class PlaceBlock implements Listener {
 
         FileConfiguration config = Main.main.getConfig();
         World world = Bukkit.getWorld(config.getString("spawn.world"));
-        Location location = new Location(world, config.getDouble("spawn.x"), config.getDouble("spawn.y"), config.getDouble("spawn.z"));
-        ArrayList<Location> locations = new ArrayList<Location>();
-
-        locations.add(location.add(10,0,0));
-        locations.add(location.add(-10,0,0));
-        locations.add(location.add(3,0,-10));
-        locations.add(location.add(-3,0,-10));
-        locations.add(location.add(3,0,10));
-        locations.add(location.add(-3,0,10));
-        locations.add(location.add(9,0,-6));
-        locations.add(location.add(-9,0,-6));
-        locations.add(location.add(9,0,6));
-        locations.add(location.add(-9,0,6));
-
-        int l = 0;
 
         for (Player player : Queue.redQueueList) {
             player.getInventory().clear();
-            player.teleport(locations.get(l).add(0, 2, 0));
-            l++;
+            player.teleport(TeleportManager.spawnLocations.get(Queue.redQueueList.indexOf(player)).add(0, 2, 0));
 
             ArrayList<Material> materials = new ArrayList<Material>();
 
             for (Material material : Material.values())
-                if (!BlackList.isItemBlocked(material.name())) materials.add(material);
+                if (!BlackList.isItemBlocked(material.name()) && material.isBlock()) materials.add(material);
 
             int randomMaterialIndex = Utilities.getRandom(0, materials.size() - 37);
             int randomBlockIndex = Utilities.getRandom(0, 35);
@@ -70,8 +55,8 @@ public class PlaceBlock implements Listener {
             player.sendMessage(ChatColor.GREEN + "Поставьте блок " + Chat.translate(randomMaterialBlock.name()));
             player.setGameMode(GameMode.SURVIVAL);
 
-            location.getWorld().getBlockAt(locations.get(l)).setType(randomMaterialBlock);
-            playerRoom.put(player, locations.get(l));
+            TeleportManager.spawnLocations.get(Queue.redQueueList.indexOf(player)).getWorld().getBlockAt(TeleportManager.spawnLocations.get(Queue.redQueueList.indexOf(player))).setType(randomMaterialBlock);
+            playerRoom.put(player, TeleportManager.spawnLocations.get(Queue.redQueueList.indexOf(player)));
         }
     }
 
@@ -80,7 +65,7 @@ public class PlaceBlock implements Listener {
         ArrayList<Material> materials = new ArrayList<Material>();
 
         for (Material material : Material.values())
-            if (!BlackList.isItemBlocked(material.name())) materials.add(material);
+            if (!BlackList.isItemBlocked(material.name()) && material.isBlock()) materials.add(material);
 
         int randomMaterialIndex = Utilities.getRandom(0, materials.size() - 37);
         int randomBlockIndex = Utilities.getRandom(0, 35);

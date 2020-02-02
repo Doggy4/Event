@@ -11,7 +11,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
@@ -52,7 +51,7 @@ public class PlaceWool implements Listener {
             block1.put(player, blockWhatNeedToPlace[n]);
             block2.put(player, blockOnWhatPlace[n2]);
 
-            for (int i = 0; i < 7; i++) player.getInventory().addItem(new ItemStack(blockWhatNeedToPlace[i]));
+            for (Material material : blockWhatNeedToPlace) player.getInventory().addItem(new ItemStack(material));
 
             player.setGameMode(GameMode.SURVIVAL);
 
@@ -62,7 +61,7 @@ public class PlaceWool implements Listener {
 
             player.sendTitle(ChatColor.GREEN + "Ставьте шерсть в", "правильном порядке", 20, 10, 20);
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Ставьте шерсть в нужном порядке!");
-            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Поставьте " + Chat.roundNames.get(((Damageable) meta1).getDamage()) + Chat.translate(blockWhatNeedToPlace[n].name()) + ChatColor.WHITE + " на " + Chat.roundNames.get(((Damageable) meta2).getDamage()) + Chat.translate(blockOnWhatPlace[n2].name()));
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Поставьте " + Chat.colorsFromID.get(blockWhatNeedToPlace[n].name()) + Chat.translate(blockWhatNeedToPlace[n].name()) + ChatColor.WHITE + " на " + Chat.colorsFromID.get(blockOnWhatPlace[n2].name()) + Chat.translate(blockOnWhatPlace[n2].name()));
         }
     }
 
@@ -81,12 +80,12 @@ public class PlaceWool implements Listener {
         block1.put(player, blockWhatNeedToPlace[n]);
         block2.put(player, blockOnWhatPlace[n2]);
 
-        for (int i = 0; i < 7; i++) player.getInventory().addItem(new ItemStack(blockWhatNeedToPlace[i]));
+        for (Material material : blockWhatNeedToPlace) player.getInventory().addItem(new ItemStack(material));
 
 
         player.sendTitle(ChatColor.GREEN + "Ставьте шерсть в", "правильном порядке", 20, 10, 20);
         player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Ставьте шерсть в нужном порядке!");
-        player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Поставьте " + Chat.roundNames.get(blockWhatNeedToPlace[n].getData()) + Chat.translate(blockWhatNeedToPlace[n].name()) + ChatColor.WHITE + " на " + Chat.roundNames.get(blockOnWhatPlace[n2]) + Chat.translate(blockOnWhatPlace[n2].name()));
+        player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Поставьте " + Chat.colorsFromID.get(blockWhatNeedToPlace[n].name()) + Chat.translate(blockWhatNeedToPlace[n].name()) + ChatColor.WHITE + " на " + Chat.colorsFromID.get(blockOnWhatPlace[n2].name()) + Chat.translate(blockOnWhatPlace[n2].name()));
 
     }
 
@@ -106,7 +105,7 @@ public class PlaceWool implements Listener {
             e.setCancelled(true);
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Неверный порядок!");
             RoundSystem.addScore(player, -1);
-            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Поставьте " + Chat.roundNames.get(blockWhatNeedToPlace[n].getData()) + Chat.translate(blockWhatNeedToPlace[n].name()) + ChatColor.WHITE + " на " + Chat.roundNames.get(blockOnWhatPlace[n2]) + Chat.translate(blockOnWhatPlace[n2].name()));
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Поставьте " + Chat.colorsFromID.get(blockWhatNeedToPlace[n].name()) + Chat.translate(blockWhatNeedToPlace[n].name()) + ChatColor.WHITE + " на " + Chat.colorsFromID.get(blockOnWhatPlace[n2].name()) + Chat.translate(blockOnWhatPlace[n2].name()));
             Location blockLoc = e.getBlockPlaced().getLocation();
 
             Particles.createBlockSplash(blockLoc, Particle.FALLING_LAVA);
