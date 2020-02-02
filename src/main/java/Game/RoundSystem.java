@@ -3,6 +3,7 @@ package Game;
 import Commands.CommandEvent;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
+import WebHooks.DiscordWebhook;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -42,6 +43,7 @@ public class RoundSystem {
     }
 
     public static void startRound() {
+        DiscordWebhook.roundStarted();
         isRoundStarted = true;
         GameRules.TurnOnAllRules();
 
@@ -193,7 +195,23 @@ public class RoundSystem {
     }
 
     public static void disableRound() {
-        if (PlaceWool.isActivated && !RoundSystem.isRoundTimerEnabled)
+        if (PlaceWool.isActivated)
             PlaceWool.isActivated = false;
+        else if (BowShoot.isActivated)
+            BowShoot.isActivated = false;
+        else if (CowMilk.isActivated)
+            CowMilk.isActivated = false;
+        else if (DodgeAnvils.isActivated)
+            DodgeAnvils.isActivated = false;
+        else if (DropItem.isActivated)
+            DropItem.isActivated = false;
+        else if (EggThrow.isActivated)
+            EggThrow.isActivated = false;
+        else if (ParkourEatCake.isActivated)
+            ParkourEatCake.isActivated = false;
+        else if (ReachSky.isActivated)
+            ReachSky.isActivated = false;
+        else if (ShearSheep.isActivated)
+            ShearSheep.isActivated = false;
     }
 }

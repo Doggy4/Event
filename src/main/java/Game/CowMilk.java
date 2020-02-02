@@ -27,7 +27,7 @@ public class CowMilk implements Listener {
     private static int rareCowChance = 85;
     private static int specialCowChance = 95;
 
-    private static boolean isActivated = false;
+    public static boolean isActivated = false;
 
     public static void MilkCow() {
         isActivated = true;

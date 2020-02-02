@@ -2,7 +2,8 @@ package Game;
 
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
-import org.bukkit.*;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,7 +17,7 @@ import java.util.List;
 public class DropItem implements Listener {
 
     private static Material randomMaterialBlock;
-    private static boolean isActivated = false;
+    public static boolean isActivated = false;
 
     public static void DropItem() {
         isActivated = true;
@@ -83,8 +84,5 @@ public class DropItem implements Listener {
             RoundSystem.addScore(player, -1);
             DropNext(player);
 
-        if (!(RoundSystem.isRoundTimerEnabled)) {
-            isActivated = RoundSystem.isRoundTimerEnabled;
-        }
     }
 }

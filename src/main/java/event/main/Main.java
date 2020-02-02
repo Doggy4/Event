@@ -40,8 +40,17 @@ public final class Main extends JavaPlugin {
 
     }
 
-    @Override
-    public void onDisable() {
-        // Plugin shutdown logic
+    public static void logError(Exception e) {
+        Main.main.getServer().getLogger().severe("Error with DiscordWebhook " + e);
+        e.printStackTrace();
+    }
+
+    public static boolean checkUrl(String url) {
+        Bukkit.broadcastMessage(url.trim());
+        if (url.trim().isEmpty() || url.trim().equals("https://canary.discordapp.com/api/webhooks")) {
+            Main.main.getServer().getLogger().severe("The Webhook URL is empty!");
+            return false;
+        }
+        return true;
     }
 }

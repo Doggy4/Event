@@ -4,6 +4,7 @@ import Commands.CommandEvent;
 import PluginUtilities.Chat;
 import QueueSystem.MainScoreBoard;
 import QueueSystem.Queue;
+import WebHooks.DiscordWebhook;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Particle;
@@ -54,6 +55,7 @@ public class GameCycle {
             player.sendMessage(ChatColor.AQUA + Chat.divThick16 + ChatColor.GOLD + "[EVENT] " + ChatColor.BLUE + "Игра началась!\n" + ChatColor.GOLD + "Играют: " + ChatColor.RED + "[RED]\n" + ChatColor.YELLOW + Chat.divThick32);
         }
         isGameStarted = true;
+        DiscordWebhook.gameStarted();
     }
 
     public static void endGame() {

@@ -12,7 +12,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 public class ParkourEatCake implements Listener {
-    private static boolean isActivated = false;
+    public static boolean isActivated = false;
 
     public static void parkour() {
 

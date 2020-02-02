@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class ReachSky {
-    private static boolean isActivated = false;
+    public static boolean isActivated = false;
 
     public static void ReachSky() {
         isActivated = true;
@@ -29,11 +29,8 @@ public class ReachSky {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (!(RoundSystem.isRoundTimerEnabled)) {
-                    isActivated = RoundSystem.isRoundTimerEnabled;
-
+                if (!isActivated) {
                     for (Player player : Queue.redQueueList) player.setAllowFlight(false);
-
                     this.cancel();
                 }
 

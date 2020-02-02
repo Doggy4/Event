@@ -15,7 +15,7 @@ import org.bukkit.event.player.PlayerShearEntityEvent;
 
 // Доделать
 public class ShearSheep implements Listener {
-    private static boolean isActivated = false;
+    public static boolean isActivated = false;
     private static DyeColor randomColor;
 
     public static void ShearSheep() {

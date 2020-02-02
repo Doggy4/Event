@@ -15,7 +15,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 // Потом проапаю
 public class DodgeAnvils implements Listener {
-    private static boolean isActivated = false;
+    public static boolean isActivated = false;
 
     public static void DodgeAnvils() {
         isActivated = true;

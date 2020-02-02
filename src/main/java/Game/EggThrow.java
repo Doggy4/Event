@@ -33,7 +33,7 @@ public class EggThrow implements Listener {
     }
 
 
-    private static boolean isActivated = false;
+    public static boolean isActivated = false;
 
     public static void EggThrow() {
         isActivated = true;
@@ -84,9 +84,5 @@ public class EggThrow implements Listener {
 
         RoundSystem.addScore(player, 1);
         throwNext(player);
-
-        if (!(RoundSystem.isRoundTimerEnabled)) {
-            isActivated = RoundSystem.isRoundTimerEnabled;
-        }
     }
 }

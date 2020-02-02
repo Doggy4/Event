@@ -18,7 +18,7 @@ import java.util.List;
 public class PlaceBlock implements Listener {
 
     private static Material randomMaterialBlock;
-    private static boolean isActivated = false;
+    public static boolean isActivated = false;
     private static HashMap<Player, Location> playerRoom = new HashMap<Player, Location>();
 
     public static void PlaceBlock() {
@@ -117,9 +117,6 @@ public class PlaceBlock implements Listener {
             PlaceNext(player);
         }
 
-        if (!(RoundSystem.isRoundTimerEnabled)) {
-            isActivated = RoundSystem.isRoundTimerEnabled;
-        }
         event.setCancelled(true);
     }
 }
