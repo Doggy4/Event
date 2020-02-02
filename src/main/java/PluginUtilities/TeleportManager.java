@@ -11,10 +11,11 @@ import java.util.ArrayList;
 public class TeleportManager {
 
 
-    public static ArrayList<Location> spawnLocations = new ArrayList<Location>();
     private static FileConfiguration config = Main.main.getConfig();
     private static World world = Bukkit.getWorld(config.getString("spawn.world"));
     private static Location arenaCentre = new Location(world, config.getDouble("spawn.x"), config.getDouble("spawn.y"), config.getDouble("spawn.z"));
+    public static ArrayList<Location> spawnLocations = new ArrayList<Location>();
+
 
     static {
         spawnLocations.add(new Location(arenaCentre.getWorld(), arenaCentre.getX() + 10, arenaCentre.getY(), arenaCentre.getZ()));
