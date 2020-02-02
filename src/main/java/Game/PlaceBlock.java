@@ -1,5 +1,7 @@
 package Game;
 
+import PluginUtilities.BlackList;
+import PluginUtilities.Chat;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
 import event.main.Main;
@@ -46,29 +48,26 @@ public class PlaceBlock implements Listener {
 
         for (Player player : Queue.redQueueList) {
             player.getInventory().clear();
-            player.teleport(locations.get(l).add(0,2,0));
+            player.teleport(locations.get(l).add(0, 2, 0));
             l++;
 
             ArrayList<Material> materials = new ArrayList<Material>();
 
-            for (Material block : Material.values())
-                if (block.isBlock() && block.isSolid() && !block.isAir() && !block.isInteractable()) {
-                    materials.add(block);
-                }
+            for (Material material : Material.values())
+                if (!BlackList.isItemBlocked(material.name())) materials.add(material);
 
-            int randomMaterial = Utilities.getRandom(0, materials.size() - 37);
-            List<Material> materialsNew =  materials.subList(randomMaterial, randomMaterial + 36);
+            int randomMaterialIndex = Utilities.getRandom(0, materials.size() - 37);
+            int randomBlockIndex = Utilities.getRandom(0, 35);
 
-            int randomBlock = Utilities.getRandom(0, 35);
-
-            randomMaterialBlock = materialsNew.get(randomBlock);
+            List<Material> blocks = materials.subList(randomMaterialIndex, randomMaterialIndex + 36);
+            randomMaterialBlock = blocks.get(randomBlockIndex);
 
             player.getInventory().clear();
-            for (Material block : materialsNew) player.getInventory().addItem(new ItemStack(block, 1));
+            for (Material block : blocks) player.getInventory().addItem(new ItemStack(block, 1));
 
             player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
-            player.sendTitle(ChatColor.GREEN + "Поставьте блок", randomMaterialBlock.name(), 40, 40, 40);
-            player.sendMessage(ChatColor.GREEN + "Поставьте блок " + randomMaterialBlock.name());
+            player.sendTitle(ChatColor.GREEN + "Поставьте блок", Chat.translate(randomMaterialBlock.name()), 40, 40, 40);
+            player.sendMessage(ChatColor.GREEN + "Поставьте блок " + Chat.translate(randomMaterialBlock.name()));
             player.setGameMode(GameMode.SURVIVAL);
 
             location.getWorld().getBlockAt(locations.get(l)).setType(randomMaterialBlock);
@@ -80,24 +79,21 @@ public class PlaceBlock implements Listener {
         Location location = playerRoom.get(player);
         ArrayList<Material> materials = new ArrayList<Material>();
 
-        for (Material block : Material.values())
-            if (block.isBlock() && block.isSolid() && !block.isAir() && !block.isInteractable()) {
-                materials.add(block);
-            }
+        for (Material material : Material.values())
+            if (!BlackList.isItemBlocked(material.name())) materials.add(material);
 
-        int randomMaterial = Utilities.getRandom(0, materials.size() - 37);
-        List<Material> materialsNew =  materials.subList(randomMaterial, randomMaterial + 36);
+        int randomMaterialIndex = Utilities.getRandom(0, materials.size() - 37);
+        int randomBlockIndex = Utilities.getRandom(0, 35);
 
-        int randomBlock = Utilities.getRandom(0, 35);
-
-        randomMaterialBlock = materialsNew.get(randomBlock);
+        List<Material> blocks = materials.subList(randomMaterialIndex, randomMaterialIndex + 36);
+        randomMaterialBlock = blocks.get(randomBlockIndex);
 
         player.getInventory().clear();
-        for (Material block : materialsNew) player.getInventory().addItem(new ItemStack(block, 1));
+        for (Material block : blocks) player.getInventory().addItem(new ItemStack(block, 1));
 
         player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
-        player.sendTitle(ChatColor.GREEN + "Поставьте блок", randomMaterialBlock.name(), 40, 40, 40);
-        player.sendMessage(ChatColor.GREEN + "Поставьте блок " + randomMaterialBlock.name());
+        player.sendTitle(ChatColor.GREEN + "Поставьте блок", Chat.translate(randomMaterialBlock.name()), 40, 40, 40);
+        player.sendMessage(ChatColor.GREEN + "Поставьте блок " + Chat.translate(randomMaterialBlock.name()));
 
         FileConfiguration config = Main.main.getConfig();
         World world = Bukkit.getWorld(config.getString("spawn.world"));

@@ -92,7 +92,7 @@ public class DiscordWebhook {
                     .setDescription("Ознакомиться с правилами эвента можно [тут](https://forum.excalibur-craft.ru/forum/125-BestLife/)!")
                     .setColor(Color.CYAN)
                     .addField("**Количество игроков:**", Queue.redQueueList.size() + "", false)
-                    .addField("**Победитель:**", GameCycle.getWinner().getName(), false)
+                    .addField("**Победитель:**", "\uD83D\uDC8E" + GameCycle.getWinner().getName() + "\uD83D\uDC8E", false)
                     .setThumbnail("https://i.ya-webdesign.com/images/a-letter-logo-design-png-7.png")
                     .setFooter("Мы вас ждем!", "https://i.ya-webdesign.com/images/a-letter-logo-design-png-7.png")
                     //.setImage("https://i.ya-webdesign.com/images/a-letter-logo-design-png-7.png")

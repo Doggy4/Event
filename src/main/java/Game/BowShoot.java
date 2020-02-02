@@ -1,5 +1,6 @@
 package Game;
 
+import PluginUtilities.Chat;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
 import SvistoPerdelki.Particles;
@@ -37,8 +38,8 @@ public class BowShoot implements Listener {
         for (Player player : Queue.redQueueList) {
             player.getInventory().clear();
 
-            player.sendTitle(ChatColor.GREEN + "Стреляйте в блоки ", targets[n].toString(), 40, 40, 40);
-            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Попадите в блок " + ChatColor.LIGHT_PURPLE + "[" + targets[n].toString() + "]");
+            player.sendTitle(ChatColor.GREEN + "Стреляйте в блоки ", Chat.translate(targets[n].name()), 40, 40, 40);
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Попадите в блок " + ChatColor.LIGHT_PURPLE + "[" + Chat.translate(targets[n].name()) + "]");
             player.getInventory().addItem(BowEventBow);
             player.getInventory().addItem(BowEventArrows);
         }

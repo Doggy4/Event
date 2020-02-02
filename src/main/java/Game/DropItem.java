@@ -1,5 +1,7 @@
 package Game;
 
+import PluginUtilities.BlackList;
+import PluginUtilities.Chat;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
 import org.bukkit.ChatColor;
@@ -11,7 +13,6 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class DropItem implements Listener {
@@ -24,49 +25,45 @@ public class DropItem implements Listener {
         GameRules.DropItemOff();
         RoundSystem.roundSeconds = 30;
 
-        ArrayList<Material> materials = new ArrayList<Material>(Arrays.asList(Material.values()));
+        ArrayList<Material> materials = new ArrayList<Material>();
 
-        int randomMaterial = Utilities.getRandom(0, materials.size() - 37);
-        List<Material> materialsNew = materials.subList(randomMaterial, randomMaterial + 36);
+        for (Material material : Material.values())
+            if (!BlackList.isItemBlocked(material.name())) materials.add(material);
 
-        int randomBlock = Utilities.getRandom(0, 35);
-        randomMaterialBlock = materialsNew.get(randomBlock);
+        int randomMaterialIndex = Utilities.getRandom(0, materials.size() - 37);
+        int randomBlockIndex = Utilities.getRandom(0, 35);
 
-        while (randomMaterialBlock.name().contains("STEM") || randomMaterialBlock.name().contains("AIR") || randomMaterialBlock.name().contains("BAMBOO") || randomMaterialBlock.name().contains("STAND") || randomMaterialBlock.name().contains("COMMAND") || randomMaterialBlock.name().contains("BARRIER") || randomMaterialBlock.name().contains("LECTERN") || randomMaterialBlock.name().contains("BEETROOTS") || randomMaterialBlock.name().contains("CARROTS") || randomMaterialBlock.name().contains("SEEDS") || randomMaterialBlock.name().contains("POTATO") || randomMaterialBlock.name().contains("BLUET")) {
-            randomBlock = Utilities.getRandom(0, 35);
-            randomMaterialBlock = materialsNew.get(randomBlock);
-        }
+        List<Material> allowedMaterials = materials.subList(randomMaterialIndex, randomMaterialIndex + 36);
+        randomMaterialBlock = allowedMaterials.get(randomBlockIndex);
 
         for (Player player : Queue.redQueueList) {
             player.getInventory().clear();
 
-            player.sendTitle(ChatColor.GREEN + "Выкиньте предмет", randomMaterialBlock.name(), 40, 40, 40);
-            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Выкиньте предмет " + ChatColor.LIGHT_PURPLE + "[" + randomMaterialBlock.name() + "]");
+            player.sendTitle(ChatColor.GREEN + "Выкиньте предмет", Chat.translate(randomMaterialBlock.name()), 40, 40, 40);
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Выкиньте предмет " + ChatColor.LIGHT_PURPLE + "[" + Chat.translate(randomMaterialBlock.name()) + "]");
 
-            for (Material block : materialsNew)
+            for (Material block : allowedMaterials)
                 player.getInventory().addItem(new ItemStack(block, 1));
         }
     }
 
     private static void DropNext(Player player) {
-        ArrayList<Material> materials = new ArrayList<Material>(Arrays.asList(Material.values()));
+        ArrayList<Material> materials = new ArrayList<Material>();
 
-        int randomMaterial = Utilities.getRandom(0, materials.size() - 37);
-        List<Material> materialsNew = materials.subList(randomMaterial, randomMaterial + 36);
+        for (Material material : Material.values())
+            if (!BlackList.isItemBlocked(material.name())) materials.add(material);
 
-        int randomBlock = Utilities.getRandom(0, 35);
-        randomMaterialBlock = materialsNew.get(randomBlock);
+        int randomMaterialIndex = Utilities.getRandom(0, materials.size() - 37);
+        int randomBlockIndex = Utilities.getRandom(0, 35);
 
-        while (randomMaterialBlock.name().contains("STEM") || randomMaterialBlock.name().contains("AIR") || randomMaterialBlock.name().contains("BAMBOO") || randomMaterialBlock.name().contains("STAND") || randomMaterialBlock.name().contains("COMMAND") || randomMaterialBlock.name().contains("BARRIER") || randomMaterialBlock.name().contains("LECTERN") || randomMaterialBlock.name().contains("BEETROOTS") || randomMaterialBlock.name().contains("CARROTS") || randomMaterialBlock.name().contains("SEEDS") || randomMaterialBlock.name().contains("POTATO") || randomMaterialBlock.name().contains("BLUET")) {
-            randomBlock = Utilities.getRandom(0, 35);
-            randomMaterialBlock = materialsNew.get(randomBlock);
-        }
+        List<Material> allowedMaterials = materials.subList(randomMaterialIndex, randomMaterialIndex + 36);
+        randomMaterialBlock = allowedMaterials.get(randomBlockIndex);
+
         player.getInventory().clear();
-        player.sendTitle(ChatColor.GREEN + "Выкиньте предмет", randomMaterialBlock.name(), 40, 40, 40);
-        player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Выкиньте предмет " + ChatColor.LIGHT_PURPLE + "[" + randomMaterialBlock.name() + "]");
+        for (Material block : allowedMaterials) player.getInventory().addItem(new ItemStack(block, 1));
 
-        for (Material block : materialsNew) player.getInventory().addItem(new ItemStack(block, 1));
-
+        player.sendTitle(ChatColor.GREEN + "Выкиньте предмет", Chat.translate(randomMaterialBlock.name()), 40, 40, 40);
+        player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Выкиньте предмет " + ChatColor.LIGHT_PURPLE + "[" + Chat.translate(randomMaterialBlock.name()) + "]");
     }
 
     @EventHandler
