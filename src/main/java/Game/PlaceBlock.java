@@ -2,7 +2,7 @@ package Game;
 
 import PluginUtilities.BlackList;
 import PluginUtilities.Chat;
-import PluginUtilities.TeleportManager;
+import PluginUtilities.LocationUtulities;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
 import event.main.Main;
@@ -34,7 +34,7 @@ public class PlaceBlock implements Listener {
 
         for (Player player : Queue.redQueueList) {
             player.getInventory().clear();
-            player.teleport(TeleportManager.spawnLocations.get(Queue.redQueueList.indexOf(player)).add(0, 2, 0));
+            player.teleport(LocationUtulities.spawnLocations.get(Queue.redQueueList.indexOf(player)).add(0, 2, 0));
 
             ArrayList<Material> materials = new ArrayList<Material>();
 
@@ -55,8 +55,8 @@ public class PlaceBlock implements Listener {
             player.sendMessage(ChatColor.GREEN + "Поставьте блок " + Chat.translate(randomMaterialBlock.name()));
             player.setGameMode(GameMode.SURVIVAL);
 
-            TeleportManager.spawnLocations.get(Queue.redQueueList.indexOf(player)).getWorld().getBlockAt(TeleportManager.spawnLocations.get(Queue.redQueueList.indexOf(player))).setType(randomMaterialBlock);
-            playerRoom.put(player, TeleportManager.spawnLocations.get(Queue.redQueueList.indexOf(player)));
+            LocationUtulities.spawnLocations.get(Queue.redQueueList.indexOf(player)).getWorld().getBlockAt(LocationUtulities.spawnLocations.get(Queue.redQueueList.indexOf(player))).setType(randomMaterialBlock);
+            playerRoom.put(player, LocationUtulities.spawnLocations.get(Queue.redQueueList.indexOf(player)));
         }
     }
 
