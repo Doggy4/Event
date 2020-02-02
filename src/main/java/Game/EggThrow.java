@@ -76,6 +76,10 @@ public class EggThrow implements Listener {
         player.getInventory().setItem(randomSlot, new ItemStack(Material.EGG));
     }
 
+    public static void disableEvents() {
+        isActivated = false;
+    }
+
     @EventHandler
     public void onPlayerThrowEgg(PlayerEggThrowEvent e) {
         if (!isActivated) return;

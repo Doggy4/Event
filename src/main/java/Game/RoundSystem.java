@@ -1,9 +1,9 @@
 package Game;
 
 import Commands.CommandEvent;
+import PluginUtilities.Chat;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
-import WebHooks.DiscordWebhook;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -26,9 +26,14 @@ public class RoundSystem {
     public static boolean isRoundStarted = false;
     public static boolean isRoundTimerEnabled = false;
 
+    private static int randomGame;
+
     public static int curTicker = 0;
 
+
     public static void roundTimer() {
+        Chat.broadcastToEveryone(curTicker + "/" + roundSeconds);
+
         if (!isRoundTimerEnabled) {
             curTicker = 0;
             isRoundTimerEnabled = true;
@@ -37,13 +42,12 @@ public class RoundSystem {
         curTicker++;
 
         if (roundSeconds <= curTicker) {
-            isRoundTimerEnabled = false;
             RoundSystem.endRound();
+            isRoundTimerEnabled = false;
         }
     }
 
     public static void startRound() {
-        DiscordWebhook.roundStarted();
         isRoundStarted = true;
         GameRules.TurnOnAllRules();
 
@@ -73,8 +77,8 @@ public class RoundSystem {
         for (Player player : Bukkit.getOnlinePlayers())
             player.playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 10, 1);
 
-        int randomBattle = Utilities.getRandom(0, 8);
-        switch (randomBattle) {
+        randomGame = Utilities.getRandom(0, 8);
+        switch (randomGame) {
             case 0:
                 PlaceBlock.PlaceBlock();
                 break;
@@ -94,7 +98,7 @@ public class RoundSystem {
                 CowMilk.MilkCow();
                 break;
             case 6:
-                PlaceWool.BuildTower();
+                PlaceWool.placeWool();
                 break;
             case 7:
                 ReachSky.ReachSky();
@@ -109,8 +113,7 @@ public class RoundSystem {
     }
 
     public static void endRound() {
-
-        disableRound();
+        disableRoundEvents();
 
         isRoundStarted = false;
 
@@ -123,31 +126,61 @@ public class RoundSystem {
         startRound();
     }
 
-    public static void addScore(Player player, int score) {
-        String scoreString;
-
-        if (score == 1 || score == -1)
-            scoreString = " очко ";
-        else if (score > 1 && score < 5 || score < -1 && score > -5)
-            scoreString = " очка ";
-        else
-            scoreString = " очков ";
-
-        if (score > 0) {
-            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы получили " + ChatColor.GREEN + score + ChatColor.WHITE + scoreString);
-            player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
-        } else {
-            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы потеряли " + ChatColor.RED + (score * -1) + ChatColor.WHITE + scoreString);
-            player.playSound(player.getLocation(), Sound.ENTITY_ITEM_BREAK, 10, 1);
-            if (roundStats.get(player) <= 0) {
-                player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Вы достигли минимального количества очков!");
-                score = 0;
-            }
+    private static void disableRoundEvents() {
+        switch (randomGame) {
+            case 0:
+                PlaceBlock.disableEvents();
+                break;
+            case 1:
+                DropItem.disableEvents();
+                break;
+            case 2:
+                BowShoot.disableEvents();
+                break;
+            case 3:
+                ShearSheep.disableEvents();
+                break;
+            case 4:
+                EggThrow.disableEvents();
+                break;
+            case 5:
+                CowMilk.disableEvents();
+                break;
+            case 6:
+                PlaceWool.disableEvents();
+                break;
+            case 7:
+                ReachSky.disableEvents();
+                break;
+            case 8:
+                DodgeAnvils.disableEvents();
+                break;
         }
-        roundStats.put(player, roundStats.get(player) + score);
     }
 
-    // Жопа-функция, живым не прикасаться
+    public static void addScore(Player winner, int score) {
+        String scoreString;
+
+        if (score == 1 || score == -1) {
+            scoreString = " очко ";
+        } else if (score > 1 && score < 5 || score < -1 && score > -5) {
+            scoreString = " очка ";
+        } else {
+            scoreString = " очков ";
+        }
+
+        if (score > 0) {
+            winner.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы получили " + ChatColor.GREEN + score + ChatColor.WHITE + scoreString);
+            roundStats.put(winner, score + roundStats.get(winner));
+        } else {
+            winner.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы потеряли " + ChatColor.RED + score + ChatColor.WHITE + scoreString);
+            if (roundStats.get(winner) <= 0) {
+                winner.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Куда уже ниже?");
+                roundStats.put(winner, 0);
+            }
+        }
+    }
+
     public static void playerPlace(Player roundPlayer, Integer place, Integer scoreCount) {
         for (Player player : Bukkit.getOnlinePlayers()) {
             if (place <= 3) {
@@ -172,11 +205,11 @@ public class RoundSystem {
 
             if (scoreForWin <= 0) {
                 roundPlayer.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Вы не получаете очков за этот раунд");
-                playerReset(roundPlayer);
+                PlayerReset(roundPlayer);
             } else {
                 GameCycle.gameStats.put(roundPlayer, scoreForWin + GameCycle.gameStats.get(roundPlayer));
                 roundPlayer.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы получили +" + scoreForWin + scoreString + "за этот раунд");
-                playerReset(roundPlayer);
+                PlayerReset(roundPlayer);
             }
         }
     }
@@ -184,25 +217,14 @@ public class RoundSystem {
     public static void playerLose(Player loser) {
         loser.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Вы проиграли!");
         loser.playSound(loser.getLocation(), Sound.ENTITY_BAT_DEATH, 10, 1);
-        playerReset(loser);
+
+        PlayerReset(loser);
     }
 
-    public static void playerReset(Player player) {
+    public static void PlayerReset(Player player) {
         player.getInventory().clear();
         player.setHealth(20);
         player.setFoodLevel(20);
         player.getActivePotionEffects().clear();
-    }
-
-    public static void disableRound() {
-        PlaceWool.isActivated = false;
-        BowShoot.isActivated = false;
-        CowMilk.isActivated = false;
-        DodgeAnvils.isActivated = false;
-        DropItem.isActivated = false;
-        EggThrow.isActivated = false;
-        ParkourEatCake.isActivated = false;
-        ReachSky.isActivated = false;
-        ShearSheep.isActivated = false;
     }
 }

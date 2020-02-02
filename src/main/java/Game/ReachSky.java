@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class ReachSky {
-    public static boolean isActivated = false;
+    private static boolean isActivated = false;
 
     public static void ReachSky() {
         isActivated = true;
@@ -29,11 +29,6 @@ public class ReachSky {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (!isActivated) {
-                    for (Player player : Queue.redQueueList) player.setAllowFlight(false);
-                    this.cancel();
-                }
-
                 for (Player player : Queue.redQueueList) {
                     if (player.getLocation().getY() >= 150) {
                         player.getWorld().spawnParticle(Particle.FIREWORKS_SPARK, player.getLocation(), 10);
@@ -43,5 +38,10 @@ public class ReachSky {
                 }
             }
         }.runTaskTimer(Main.main, 40, 40);
+    }
+
+    public static void disableEvents() {
+        isActivated = false;
+        for (Player player : Queue.redQueueList) player.setAllowFlight(false);
     }
 }

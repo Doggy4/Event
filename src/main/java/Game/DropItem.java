@@ -2,8 +2,7 @@ package Game;
 
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,7 +16,7 @@ import java.util.List;
 public class DropItem implements Listener {
 
     private static Material randomMaterialBlock;
-    public static boolean isActivated = false;
+    private static boolean isActivated = false;
 
     public static void DropItem() {
         isActivated = true;
@@ -69,6 +68,10 @@ public class DropItem implements Listener {
 
     }
 
+    public static void disableEvents() {
+        isActivated = false;
+    }
+
     @EventHandler
     public void onPlayerDropItem(PlayerDropItemEvent event) {
         if (!isActivated) return;
@@ -76,14 +79,12 @@ public class DropItem implements Listener {
         Player player = event.getPlayer();
 
         if (event.getItemDrop().getItemStack().getType().equals(randomMaterialBlock)) {
-            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Задание выполнено!");
+            player.sendMessage(ChatColor.RED + "Правильно");
             RoundSystem.addScore(player, 1);
             DropNext(player);
-        } else {
-            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Неверный предмет!");
+        } else
+            player.sendMessage(ChatColor.RED + "Неправильно");
             RoundSystem.addScore(player, -1);
             DropNext(player);
-        }
-
     }
 }

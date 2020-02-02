@@ -3,11 +3,10 @@ package Commands;
 import Game.GameCycle;
 import PluginUtilities.Chat;
 import PluginUtilities.LocationUtulities;
-import PluginUtilities.MapRebuilding;
+import PluginUtilities.MapRebuild;
 import PluginUtilities.Utilities;
 import QueueSystem.MainScoreBoard;
 import QueueSystem.Queue;
-import WebHooks.DiscordWebhook;
 import event.main.Main;
 import org.bukkit.*;
 import org.bukkit.command.Command;
@@ -61,10 +60,8 @@ public class CommandEvent implements TabExecutor {
             clearQueues();
         } else if (args[0].equals("broadcast"))
             broadcast(Arrays.copyOfRange(args, 1, args.length));
-        else if (args[0].equals("rebuild"))
-            MapRebuilding.loadSchematic("arena");
         else if (args[0].equals("test"))
-            DiscordWebhook.gameStarted();
+            MapRebuild.loadSchematic("arena");
         else
             return false;
         return true;

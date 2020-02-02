@@ -1,7 +1,7 @@
 package Game;
 
 import Commands.CommandEvent;
-import PluginUtilities.MapRebuilding;
+import PluginUtilities.MapRebuild;
 import QueueSystem.Queue;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -10,13 +10,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
-
+// Потом раздрочу этот класс
 public class ParkourEatCake implements Listener {
     public static boolean isActivated = false;
 
     public static void parkour() {
 
-        MapRebuilding.loadSchematic("parkour-cake1");
+        MapRebuild.loadSchematic("parkour-cake1");
 
         isActivated = true;
         RoundSystem.roundSeconds = 30;
