@@ -66,7 +66,7 @@ public class DiscordWebhook {
                     .setTitle("Раунд #" + RoundSystem.round + " начался!")
                     .setDescription("Ознакомиться с правилами эвента можно [тут](https://forum.excalibur-craft.ru/forum/125-BestLife/)!")
                     .setColor(Color.CYAN)
-                    .addField("**Название раунда:**", Chat.roundNames.get(RoundSystem.round), false)
+                    .addField("**Название раунда:**", Chat.roundNames.get(RoundSystem.randomGame), false)
                     .addField("**Количество игроков:**", Queue.redQueueList.size() + "", false)
                     .addField("**Количество оставшихся раундов:**", RoundSystem.roundCount - RoundSystem.round + "", false)
                     .addField("**Лидер по количеству очков:**", GameCycle.getWinner().getName(), false)

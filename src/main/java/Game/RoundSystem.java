@@ -4,6 +4,7 @@ import Commands.CommandEvent;
 import PluginUtilities.Chat;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
+import WebHooks.DiscordWebhook;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -26,7 +27,7 @@ public class RoundSystem {
     public static boolean isRoundStarted = false;
     public static boolean isRoundTimerEnabled = false;
 
-    private static int randomGame;
+    public static int randomGame;
 
     public static int curTicker = 0;
 
@@ -75,7 +76,8 @@ public class RoundSystem {
         for (Player player : Bukkit.getOnlinePlayers())
             player.playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 10, 1);
 
-        randomGame = Utilities.getRandom(0, 0);
+        randomGame = Utilities.getRandom(0, 9);
+        DiscordWebhook.roundStarted();
         switch (randomGame) {
             case 0:
                 PlaceBlock.PlaceBlock();

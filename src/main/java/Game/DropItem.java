@@ -73,7 +73,7 @@ public class DropItem implements Listener {
         Player player = event.getPlayer();
 
         if (event.getItemDrop().getItemStack().getType().equals(randomMaterialBlock)) {
-            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Задание выполнено!");
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Задание выполнено!");
             RoundSystem.addScore(player, 1);
             DropNext(player);
         } else {
