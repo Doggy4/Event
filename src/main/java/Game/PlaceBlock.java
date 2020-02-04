@@ -52,7 +52,7 @@ public class PlaceBlock implements Listener {
 
             player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
             player.sendTitle(ChatColor.GREEN + "Поставьте блок", Chat.translate(randomMaterialBlock.name()), 40, 40, 40);
-            player.sendMessage(ChatColor.GREEN + "Поставьте блок " + Chat.translate(randomMaterialBlock.name()));
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Поставьте блок " + Chat.translate(randomMaterialBlock.name()));
             player.setGameMode(GameMode.SURVIVAL);
 
             LocationUtulities.spawnLocations.get(Queue.redQueueList.indexOf(player)).getWorld().getBlockAt(LocationUtulities.spawnLocations.get(Queue.redQueueList.indexOf(player))).setType(randomMaterialBlock);
@@ -78,7 +78,7 @@ public class PlaceBlock implements Listener {
 
         player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
         player.sendTitle(ChatColor.GREEN + "Поставьте блок", Chat.translate(randomMaterialBlock.name()), 40, 40, 40);
-        player.sendMessage(ChatColor.GREEN + "Поставьте блок " + Chat.translate(randomMaterialBlock.name()));
+        player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Поставьте блок " + Chat.translate(randomMaterialBlock.name()));
 
         FileConfiguration config = Main.main.getConfig();
         World world = Bukkit.getWorld(config.getString("spawn.world"));

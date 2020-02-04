@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
-// Потом раздрочу этот класс
+
 public class ParkourEatCake implements Listener {
     public static boolean isActivated = false;
 
@@ -29,7 +29,7 @@ public class ParkourEatCake implements Listener {
 
             player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
             player.sendTitle(ChatColor.GREEN + "Пройдите паркур", ChatColor.YELLOW + "Съешьте тортик", 40, 40, 40);
-            player.sendMessage(ChatColor.GREEN + "Пройдите паркур и съешьте тортик!");
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Пройдите паркур и съешьте тортик!");
         }
     }
 

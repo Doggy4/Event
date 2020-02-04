@@ -24,7 +24,7 @@ public class BlackList {
         blacklist.add("BANNER");
         blacklist.add("HEAD");
         blacklist.add("WALL");
-        blacklist.add("_POT");
+        blacklist.add("POT");
     }
 
     public static boolean isItemBlocked(String item) {

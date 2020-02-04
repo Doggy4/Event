@@ -1,5 +1,6 @@
 package Game;
 
+import PluginUtilities.Chat;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
 import event.main.Main;
@@ -63,14 +64,12 @@ public class DodgeAnvils implements Listener {
     private static void endDodgeAnvils() {
         for (Player roundPlayer : Queue.redQueueList) {
             if (roundPlayer.getGameMode() == GameMode.ADVENTURE) {
-                for (Player player : Bukkit.getOnlinePlayers()) player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Игрок " + player.getName() + " победил!");
+                Chat.broadcastToEveryone(ChatColor.GREEN + "Игрок " + roundPlayer.getName() + " победил в раунде!");
 
                 roundPlayer.sendTitle(ChatColor.GREEN + "Поздравляем!", "Вы победили!", 20, 20, 20);
                 roundPlayer.playSound(roundPlayer.getLocation(), Sound.BLOCK_NOTE_BLOCK_COW_BELL, 10, 1);
 
-                roundPlayer.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Вы получили +" + 2 + " очков(-а)!");
-                GameCycle.gameStats.put(roundPlayer, 2 + GameCycle.gameStats.get(roundPlayer));
-
+                RoundSystem.addScore(roundPlayer, 5);
                 RoundSystem.PlayerReset(roundPlayer);
             }
         }

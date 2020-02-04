@@ -47,7 +47,7 @@ public class GameCycle {
         for (Player player : Bukkit.getOnlinePlayers()) {
             player.sendTitle(ChatColor.BLUE + "Игра началась!", ChatColor.GOLD + "Играют: " + ChatColor.RED + "[RED]", 30, 30, 30);
             player.playSound(player.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_CURSE, 10, 1);
-            player.sendMessage(ChatColor.AQUA + Chat.divThick16 + ChatColor.GOLD + "[EVENT] " + ChatColor.BLUE + "Игра началась!\n" + ChatColor.GOLD + "Играют: " + ChatColor.RED + "[RED]\n" + ChatColor.YELLOW + Chat.divThick32);
+            player.sendMessage(ChatColor.AQUA + Chat.divThick16 + ChatColor.GOLD + "[EVENT] " + ChatColor.BLUE + "Игра началась!\n" + ChatColor.GOLD + "Играют: " + ChatColor.RED + "[RED]\n" + ChatColor.AQUA + Chat.divThick16);
         }
         isGameStarted = true;
         DiscordWebhook.gameStarted();

@@ -76,7 +76,7 @@ public class RoundSystem {
         for (Player player : Bukkit.getOnlinePlayers())
             player.playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 10, 1);
 
-        randomGame = Utilities.getRandom(0, 9);
+        randomGame = Utilities.getRandom(10, 10);
         DiscordWebhook.roundStarted();
         switch (randomGame) {
             case 0:
@@ -108,6 +108,9 @@ public class RoundSystem {
                 break;
             case 9:
                 ParkourEatCake.parkour();
+                break;
+            case 10:
+                MathRound.mathRound();
                 break;
         }
     }
@@ -158,6 +161,12 @@ public class RoundSystem {
                 break;
             case 8:
                 DodgeAnvils.isActivated = false;
+                break;
+            case 9:
+                ParkourEatCake.isActivated = false;
+                break;
+            case 10:
+                MathRound.isActivated = false;
                 break;
         }
     }
