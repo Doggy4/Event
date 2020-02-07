@@ -28,7 +28,6 @@ public class LocationUtulities {
         spawnLocations.add(new Location(arenaCentre.getWorld(), arenaCentre.getX() - 9, arenaCentre.getY(), arenaCentre.getZ() - 6));
         spawnLocations.add(new Location(arenaCentre.getWorld(), arenaCentre.getX() + 9, arenaCentre.getY(), arenaCentre.getZ() + 6));
         spawnLocations.add(new Location(arenaCentre.getWorld(), arenaCentre.getX() - 9, arenaCentre.getY(), arenaCentre.getZ() + 6));
-
     }
 
     public static String getPlayerLocation(Location location) {

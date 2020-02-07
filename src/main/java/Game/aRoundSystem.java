@@ -114,6 +114,9 @@ public class aRoundSystem {
             case 11:
                 RoundKnockEveryoneOff.knockEveryoneOff();
                 break;
+            case 12:
+                RoundFuckingHarryPotter.harryPotter();
+                break;
         }
     }
 

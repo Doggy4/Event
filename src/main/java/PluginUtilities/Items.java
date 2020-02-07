@@ -116,6 +116,12 @@ public class Items {
             .enchantment(Enchantment.DURABILITY, 10)
             .build();
 
+    public static ItemStack stickOfFuckingHarryPotter = new ItemStackConstructor(Material.BLAZE_ROD)
+            .amount(1)
+            .displayName(ChatColor.RED + "Волшебная палочка")
+            .enchantment(Enchantment.IMPALING, 1)
+            .build();
+
 
     public static ArrayList<Material> materials = new ArrayList<Material>();
 
