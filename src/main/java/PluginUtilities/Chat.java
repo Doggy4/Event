@@ -87,6 +87,7 @@ public class Chat {
         roundNames.put(8, "Железное небо");
         roundNames.put(9, "Калорийно, но вкусно");
         roundNames.put(10, "Математическая проверка");
+        roundNames.put(11, "Сумо");
     }
 
     public static void broadcastToEveryone(String message) {

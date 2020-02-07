@@ -1,28 +1,24 @@
 package Game;
 
+import PluginUtilities.MapRebuild;
 import QueueSystem.Queue;
 import event.main.Main;
 import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class ReachSky {
-    public static boolean isActivated = false;
+    protected static boolean isActivated = false;
 
     public static void ReachSky() {
         isActivated = true;
         RoundSystem.roundSeconds = 15;
+        MapRebuild.loadSchematic("arena");
 
         for (Player player : Queue.redQueueList) {
-            player.getInventory().clear();
-
-            player.setGameMode(GameMode.SURVIVAL);
-
             player.sendTitle(ChatColor.GREEN + "Летите вверх!", "Исследуйте неизвестное!", 40, 40, 40);
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Летите вверх!");
-
             player.setAllowFlight(true);
         }
 

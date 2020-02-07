@@ -1,6 +1,7 @@
 package Game;
 
 import PluginUtilities.Chat;
+import PluginUtilities.MapRebuild;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
 import SvistoPerdelki.Particles;
@@ -15,8 +16,8 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import static PluginUtilities.Items.BowEventArrows;
 import static PluginUtilities.Items.BowEventBow;
+import static PluginUtilities.Items.bowEventArrows;
 
 public class BowShoot implements Listener {
     protected static boolean isActivated = false;
@@ -30,31 +31,30 @@ public class BowShoot implements Listener {
     private static Block block = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).getBlockAt(0, 0, 0);
     private static Block bonusBlock = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).getBlockAt(1, 1, 1);
 
-    public static void BowShoot() {
-        RoundSystem.roundSeconds = 30;
-
+    public static void bowShoot() {
+        // Опционально:
         isActivated = true;
+        RoundSystem.roundSeconds = 30;
+        MapRebuild.loadSchematic("arena");
 
         for (Player player : Queue.redQueueList) {
-            player.getInventory().clear();
-
-            player.sendTitle(ChatColor.GREEN + "Стреляйте в блоки ", Chat.translate(targets[n].name()), 40, 40, 40);
-            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Попадите в блок " + ChatColor.LIGHT_PURPLE + "[" + Chat.translate(targets[n].name()) + "]");
+            gameRulesAnnouncement(player);
             player.getInventory().addItem(BowEventBow);
-            player.getInventory().addItem(BowEventArrows);
+            player.getInventory().addItem(bowEventArrows);
+
         }
 
         new BukkitRunnable() {
             @Override
             public void run() {
                 if (!(RoundSystem.isRoundTimerEnabled)) {
-                    this.cancel();
-
                     bonusBlock.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, block.getLocation(), 1);
                     bonusBlock.getWorld().playSound(block.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 10, 1);
 
                     block.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, block.getLocation(), 1);
                     block.getWorld().playSound(block.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 10, 1);
+
+                    this.cancel();
                 }
 
                 block.setType(Material.AIR);
@@ -110,22 +110,26 @@ public class BowShoot implements Listener {
         }.runTaskTimer(Main.main, 20, 20);
     }
 
+    private static void gameRulesAnnouncement(Player player) {
+        player.sendTitle(ChatColor.GREEN + "Попадите в блок ", Chat.translate(targets[n].name()), 40, 40, 40);
+        player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Попадите в блок " + ChatColor.LIGHT_PURPLE + "[" + Chat.translate(targets[n].name()) + "]");
+    }
 
     @EventHandler
-    public void OnProjectileHit(ProjectileHitEvent e) {
-        if (!isActivated) return;
-
-        Arrow arrow = (Arrow) e.getEntity();
+    public void OnProjectileHit(ProjectileHitEvent event) {
+        if (!isActivated || !(event.getEntity() instanceof Arrow)) return;
+        Arrow arrow = (Arrow) event.getEntity();
+        if (!(arrow.getShooter() instanceof Player)) return;
         Player player = (Player) arrow.getShooter();
-
-        Block hitBlock = e.getHitBlock();
+        if (!Queue.redQueueList.contains(player)) return;
+        Block hitBlock = event.getHitBlock();
 
         if (hitBlock.getType().equals(targets[n])) {
             RoundSystem.addScore(player, 1);
-            hitBlock.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, hitBlock.getLocation(), 10);
+            hitBlock.getWorld().spawnParticle(Particle.EXPLOSION_NORMAL, hitBlock.getLocation(), 10);
         } else if (hitBlock.getType().equals(bonusTarget)) {
             RoundSystem.addScore(player, 5);
-            hitBlock.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, hitBlock.getLocation(), 10);
+            hitBlock.getWorld().spawnParticle(Particle.EXPLOSION_NORMAL, hitBlock.getLocation(), 10);
         }
     }
 }

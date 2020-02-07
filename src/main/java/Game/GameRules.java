@@ -26,6 +26,15 @@ public class GameRules implements Listener {
         placeBlockRULE = true;
     }
 
+    public static void TurnOffAllRules() {
+        playerDamageRULE = false;
+        breakBlockRULE = false;
+        dropItemRULE = false;
+        pickUpItemRULE = false;
+        entityDamageRULE = false;
+        placeBlockRULE = false;
+    }
+
     public static void PlaceBlockOff() {
         placeBlockRULE = false;
     }
@@ -52,37 +61,31 @@ public class GameRules implements Listener {
 
     @EventHandler
     public void onPlayerDamage(EntityDamageEvent e) {
-        if (!playerDamageRULE) return;
-        e.setCancelled(true);
+        e.setCancelled(playerDamageRULE);
     }
 
     @EventHandler
     public void onPlayerBreakBlock(BlockBreakEvent e) {
-        if (!breakBlockRULE) return;
-        e.setCancelled(true);
+        e.setCancelled(breakBlockRULE);
     }
 
     @EventHandler
     public void onPlayerDropItem(PlayerDropItemEvent e) {
-        if (!dropItemRULE) return;
-        e.setCancelled(true);
+        e.setCancelled(dropItemRULE);
     }
 
     @EventHandler
     public void onPickItem(EntityPickupItemEvent e) {
-        if (!pickUpItemRULE) return;
-        e.setCancelled(true);
+        e.setCancelled(pickUpItemRULE);
     }
 
     @EventHandler
     public void onEntityDamage(EntityDamageEvent e) {
-        if (!entityDamageRULE) return;
-        e.setCancelled(true);
+        e.setCancelled(entityDamageRULE);
     }
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent e) {
-        if (!placeBlockRULE) return;
-        e.setCancelled(true);
+        e.setCancelled(placeBlockRULE);
     }
 }

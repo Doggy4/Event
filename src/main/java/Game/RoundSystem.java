@@ -1,7 +1,7 @@
 package Game;
 
-import Commands.CommandEvent;
 import PluginUtilities.Chat;
+import PluginUtilities.LocationUtulities;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
 import WebHooks.DiscordWebhook;
@@ -51,8 +51,9 @@ public class RoundSystem {
         GameRules.TurnOnAllRules();
 
         for (Player player : Queue.redQueueList) {
+            playerReset(player);
             player.setGameMode(GameMode.ADVENTURE);
-            CommandEvent.teleportToSpawn(player);
+            LocationUtulities.teleportToSpawn(player);
         }
 
         for (Entity entity : Bukkit.getWorld("world").getEntities()) {
@@ -76,26 +77,26 @@ public class RoundSystem {
         for (Player player : Bukkit.getOnlinePlayers())
             player.playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 10, 1);
 
-        randomGame = Utilities.getRandom(10, 10);
+        randomGame = Utilities.getRandom(11, 11);
         DiscordWebhook.roundStarted();
         switch (randomGame) {
             case 0:
-                PlaceBlock.PlaceBlock();
+                PlaceBlock.placeBlock();
                 break;
             case 1:
-                DropItem.DropItem();
+                DropItem.dropItem();
                 break;
             case 2:
-                BowShoot.BowShoot();
+                BowShoot.bowShoot();
                 break;
             case 3:
                 ShearSheep.ShearSheep();
                 break;
             case 4:
-                EggThrow.EggThrow();
+                EggThrow.eggThrow();
                 break;
             case 5:
-                CowMilk.MilkCow();
+                CowMilk.milkCow();
                 break;
             case 6:
                 PlaceWool.placeWool();
@@ -107,10 +108,13 @@ public class RoundSystem {
                 DodgeAnvils.DodgeAnvils();
                 break;
             case 9:
-                ParkourEatCake.parkour();
+                ParkourEatCake.cakeParkour();
                 break;
             case 10:
                 MathRound.mathRound();
+                break;
+            case 11:
+                KnockOff.knockOff();
                 break;
         }
     }
@@ -118,6 +122,9 @@ public class RoundSystem {
     public static void endRound() {
         disableRoundEvents();
         isRoundStarted = false;
+
+        for (Player player : Bukkit.getOnlinePlayers())
+            player.playSound(player.getLocation(), Sound.BLOCK_BEACON_DEACTIVATE, 10, 1);
 
         if (RoundSystem.round == RoundSystem.roundCount) {
             GameCycle.endGame();
@@ -134,41 +141,18 @@ public class RoundSystem {
     }
 
     private static void disableRoundEvents() {
-        switch (randomGame) {
-            case 0:
-                PlaceBlock.isActivated = false;
-                break;
-            case 1:
-                DropItem.isActivated = false;
-                break;
-            case 2:
-                BowShoot.isActivated = false;
-                break;
-            case 3:
-                ShearSheep.isActivated = false;
-                break;
-            case 4:
-                EggThrow.isActivated = false;
-                break;
-            case 5:
-                CowMilk.isActivated = false;
-                break;
-            case 6:
-                PlaceWool.isActivated = false;
-                break;
-            case 7:
-                ReachSky.isActivated = false;
-                break;
-            case 8:
-                DodgeAnvils.isActivated = false;
-                break;
-            case 9:
-                ParkourEatCake.isActivated = false;
-                break;
-            case 10:
-                MathRound.isActivated = false;
-                break;
-        }
+        PlaceBlock.isActivated = false;
+        DropItem.isActivated = false;
+        BowShoot.isActivated = false;
+        ShearSheep.isActivated = false;
+        EggThrow.isActivated = false;
+        CowMilk.isActivated = false;
+        PlaceWool.isActivated = false;
+        ReachSky.isActivated = false;
+        DodgeAnvils.isActivated = false;
+        ParkourEatCake.isActivated = false;
+        MathRound.isActivated = false;
+        KnockOff.isActivated = false;
     }
 
     public static void addScore(Player player, int score) {
@@ -221,11 +205,11 @@ public class RoundSystem {
 
             if (scoreForWin <= 0) {
                 roundPlayer.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Вы не получаете очков за этот раунд");
-                PlayerReset(roundPlayer);
+                playerReset(roundPlayer);
             } else {
                 GameCycle.gameStats.put(roundPlayer, scoreForWin + GameCycle.gameStats.get(roundPlayer));
                 roundPlayer.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы получили +" + scoreForWin + scoreString + "за этот раунд");
-                PlayerReset(roundPlayer);
+                playerReset(roundPlayer);
             }
         }
     }
@@ -233,13 +217,24 @@ public class RoundSystem {
     public static void playerLose(Player loser) {
         Chat.broadcastToEveryone(ChatColor.RED + "Игрок " + loser.getName() + " проиграл!");
 
+        loser.setGameMode(GameMode.SPECTATOR);
         loser.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Вы проиграли!");
         loser.playSound(loser.getLocation(), Sound.ENTITY_BAT_DEATH, 10, 1);
 
-        PlayerReset(loser);
+        playerReset(loser);
     }
 
-    public static void PlayerReset(Player player) {
+    public static void playerWin(Player player) {
+        Chat.broadcastToEveryone(ChatColor.GREEN + "Игрок " + player.getName() + " победил в раунде!");
+
+        player.sendTitle(ChatColor.GREEN + "Поздравляем!", "Вы победили!", 20, 20, 20);
+        player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_COW_BELL, 10, 1);
+
+        RoundSystem.addScore(player, 5);
+        RoundSystem.playerReset(player);
+    }
+
+    public static void playerReset(Player player) {
         player.getInventory().clear();
         player.setHealth(20);
         player.setFoodLevel(20);

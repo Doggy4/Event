@@ -123,35 +123,6 @@ public class CommandEvent implements TabExecutor {
         }
     }
 
-    public static void teleportToLobby(Player player) {
-        FileConfiguration config = Main.main.getConfig();
-
-        World world = Bukkit.getWorld(config.getString("lobby.world"));
-        Location location = new Location(world, config.getDouble("lobby.x"), config.getDouble("lobby.y"), config.getDouble("lobby.z"));
-
-        location.setPitch((float) config.getDouble("lobby.pitch"));
-        location.setYaw((float) config.getDouble("lobby.yaw"));
-
-        player.teleport(location);
-        player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы были телепортированы в Лобби!");
-    }
-
-    public static void teleportToSpawn(Player player) {
-        FileConfiguration config = Main.main.getConfig();
-
-        World world = Bukkit.getWorld(config.getString("spawn.world"));
-
-        Double x = config.getDouble("spawn.x") + (Utilities.getRandom(0, 20) - 10);
-        Double z = config.getDouble("spawn.z") + (Utilities.getRandom(0, 20) - 10);
-
-        Location location = new Location(world, x, config.getDouble("spawn.y"), z);
-
-        location.setPitch((float) config.getDouble("spawn.pitch"));
-        location.setYaw((float) config.getDouble("spawn.yaw"));
-
-        player.teleport(location);
-    }
-
     public static Location randLocationSpawn() {
         FileConfiguration config = Main.main.getConfig();
 

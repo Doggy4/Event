@@ -1,6 +1,7 @@
 package Game;
 
 import PluginUtilities.Chat;
+import PluginUtilities.MapRebuild;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
 import SvistoPerdelki.Particles;
@@ -11,14 +12,14 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 
 public class PlaceWool implements Listener {
-    public static boolean isActivated = false;
-    private static Material[] blockWhatNeedToPlace = {Material.WHITE_WOOL, Material.ORANGE_WOOL, Material.MAGENTA_WOOL, Material.LIGHT_BLUE_WOOL, Material.YELLOW_WOOL, Material.LIME_WOOL, Material.PINK_WOOL, Material.GRAY_WOOL, Material.LIGHT_GRAY_WOOL};
-    private static Material[] blockOnWhatPlace = {Material.LIGHT_GRAY_WOOL, Material.CYAN_WOOL, Material.PURPLE_WOOL, Material.BLUE_WOOL, Material.BROWN_WOOL, Material.BROWN_WOOL, Material.GREEN_WOOL, Material.RED_WOOL, Material.BLACK_WOOL};
+    protected static boolean isActivated = false;
+
+    private static Material[] blockToBePut = {Material.WHITE_WOOL, Material.ORANGE_WOOL, Material.MAGENTA_WOOL, Material.LIGHT_BLUE_WOOL, Material.YELLOW_WOOL, Material.LIME_WOOL, Material.PINK_WOOL, Material.GRAY_WOOL, Material.LIGHT_GRAY_WOOL};
+    private static Material[] blockToPlaceOn = {Material.LIGHT_GRAY_WOOL, Material.CYAN_WOOL, Material.PURPLE_WOOL, Material.BLUE_WOOL, Material.BROWN_WOOL, Material.BROWN_WOOL, Material.GREEN_WOOL, Material.RED_WOOL, Material.BLACK_WOOL};
 
     private static HashMap<Player, Material> block1 = new HashMap<Player, Material>();
     private static HashMap<Player, Material> block2 = new HashMap<Player, Material>();
@@ -33,6 +34,7 @@ public class PlaceWool implements Listener {
         RoundSystem.roundSeconds = 30;
         isActivated = true;
         GameRules.PlaceBlockOff();
+        MapRebuild.loadSchematic("arena");
 
         for (Player player : Queue.redQueueList) {
             int randX = Math.round((float) Main.main.getConfig().getDouble("spawn.x")) + Utilities.getRandom(0, 32) - 16;
@@ -40,28 +42,20 @@ public class PlaceWool implements Listener {
 
             Location tpLoc = new Location(world, randX, y, randZ);
             player.teleport(tpLoc);
-            player.getInventory().clear();
 
-            n = (int) Math.floor(Math.random() * blockWhatNeedToPlace.length);
-            n2 = (int) Math.floor(Math.random() * blockOnWhatPlace.length);
+            n = (int) Math.floor(Math.random() * blockToBePut.length);
+            n2 = (int) Math.floor(Math.random() * blockToPlaceOn.length);
 
             Location blockLoc = player.getLocation().add(0, 0, 0);
-            blockLoc.getBlock().setType(blockOnWhatPlace[n2]);
+            blockLoc.getBlock().setType(blockToPlaceOn[n2]);
 
-            block1.put(player, blockWhatNeedToPlace[n]);
-            block2.put(player, blockOnWhatPlace[n2]);
+            block1.put(player, blockToBePut[n]);
+            block2.put(player, blockToPlaceOn[n2]);
 
-            for (Material material : blockWhatNeedToPlace) player.getInventory().addItem(new ItemStack(material));
+            for (Material material : blockToBePut) player.getInventory().addItem(new ItemStack(material));
 
             player.setGameMode(GameMode.SURVIVAL);
-
-            ItemMeta meta1 = new ItemStack(blockWhatNeedToPlace[n], 1).getItemMeta();
-            ItemMeta meta2 = new ItemStack(blockWhatNeedToPlace[n2], 1).getItemMeta();
-
-
-            player.sendTitle(ChatColor.GREEN + "Ставьте шерсть в", "правильном порядке", 20, 10, 20);
-            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Ставьте шерсть в нужном порядке!");
-            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Поставьте " + Chat.colorsFromID.get(blockWhatNeedToPlace[n].name()) + Chat.translate(blockWhatNeedToPlace[n].name()) + ChatColor.WHITE + " на " + Chat.colorsFromID.get(blockOnWhatPlace[n2].name()) + Chat.translate(blockOnWhatPlace[n2].name()));
+            gameRulesAnnouncement(player);
         }
     }
 
@@ -69,44 +63,46 @@ public class PlaceWool implements Listener {
     private static void nextBlockToPlace(Player player, Location blockLoc) {
         player.getInventory().clear();
 
-        n = (int) Math.floor(Math.random() * blockWhatNeedToPlace.length);
-        n2 = (int) Math.floor(Math.random() * blockOnWhatPlace.length);
+        n = (int) Math.floor(Math.random() * blockToBePut.length);
+        n2 = (int) Math.floor(Math.random() * blockToPlaceOn.length);
 
         int locProp = Utilities.getRandom(-1, 1);
 
         Location newBlockLoc = blockLoc.add(locProp, 0, locProp);
-        newBlockLoc.getBlock().setType(blockOnWhatPlace[n2]);
+        newBlockLoc.getBlock().setType(blockToPlaceOn[n2]);
 
-        block1.put(player, blockWhatNeedToPlace[n]);
-        block2.put(player, blockOnWhatPlace[n2]);
+        block1.put(player, blockToBePut[n]);
+        block2.put(player, blockToPlaceOn[n2]);
 
-        for (Material material : blockWhatNeedToPlace) player.getInventory().addItem(new ItemStack(material));
+        for (Material material : blockToBePut) player.getInventory().addItem(new ItemStack(material));
 
+        gameRulesAnnouncement(player);
+    }
 
+    private static void gameRulesAnnouncement(Player player) {
         player.sendTitle(ChatColor.GREEN + "Ставьте шерсть в", "правильном порядке", 20, 10, 20);
         player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Ставьте шерсть в нужном порядке!");
-        player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Поставьте " + Chat.colorsFromID.get(blockWhatNeedToPlace[n].name()) + Chat.translate(blockWhatNeedToPlace[n].name()) + ChatColor.WHITE + " на " + Chat.colorsFromID.get(blockOnWhatPlace[n2].name()) + Chat.translate(blockOnWhatPlace[n2].name()));
-
+        player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Поставьте " + Chat.colorsFromID.get(blockToBePut[n].name()) + Chat.translate(blockToBePut[n].name()) + ChatColor.WHITE + " на " + Chat.colorsFromID.get(blockToPlaceOn[n2].name()) + Chat.translate(blockToPlaceOn[n2].name()));
     }
 
     @EventHandler
-    public void onPlaceBlock(BlockPlaceEvent e) {
+    public void onPlaceBlock(BlockPlaceEvent event) {
         if (!isActivated) return;
+        Player player = event.getPlayer();
+        if (!(Queue.redQueueList.contains(player))) return;
 
-        Player player = e.getPlayer();
-
-        if (e.getBlockPlaced().getType().equals(block1.get(player)) && e.getBlockAgainst().getType().equals(block2.get(player))) {
+        if (event.getBlockPlaced().getType().equals(block1.get(player)) && event.getBlockAgainst().getType().equals(block2.get(player))) {
             RoundSystem.addScore(player, 1);
-            Location blockLoc = e.getBlockPlaced().getLocation();
+            Location blockLoc = event.getBlockPlaced().getLocation();
             Particles.createBlockSplash(blockLoc, Particle.FIREWORKS_SPARK);
-            player.playSound(blockLoc, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1,1);
+            player.playSound(blockLoc, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
             nextBlockToPlace(player, blockLoc);
         } else {
-            e.setCancelled(true);
+            event.setCancelled(true);
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Неверный порядок!");
             RoundSystem.addScore(player, -1);
-            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Поставьте " + Chat.colorsFromID.get(blockWhatNeedToPlace[n].name()) + Chat.translate(blockWhatNeedToPlace[n].name()) + ChatColor.WHITE + " на " + Chat.colorsFromID.get(blockOnWhatPlace[n2].name()) + Chat.translate(blockOnWhatPlace[n2].name()));
-            Location blockLoc = e.getBlockPlaced().getLocation();
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Поставьте " + Chat.colorsFromID.get(blockToBePut[n].name()) + Chat.translate(blockToBePut[n].name()) + ChatColor.WHITE + " на " + Chat.colorsFromID.get(blockToPlaceOn[n2].name()) + Chat.translate(blockToPlaceOn[n2].name()));
+            Location blockLoc = event.getBlockPlaced().getLocation();
 
             Particles.createBlockSplash(blockLoc, Particle.FALLING_LAVA);
             player.playSound(blockLoc, Sound.BLOCK_WOOL_BREAK, 1, 1);

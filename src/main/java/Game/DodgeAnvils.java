@@ -1,10 +1,13 @@
 package Game;
 
-import PluginUtilities.Chat;
+import PluginUtilities.MapRebuild;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
 import event.main.Main;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
@@ -14,27 +17,21 @@ import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
-// Потом проапаю
 public class DodgeAnvils implements Listener {
-    public static boolean isActivated = false;
+    protected static boolean isActivated = false;
 
-    public static void DodgeAnvils() {
+    protected static void DodgeAnvils() {
+        // Опционально:
         isActivated = true;
         RoundSystem.roundSeconds = 15;
         GameRules.EntityDamageOff();
+        MapRebuild.loadSchematic("arena");
 
         for (Player player : Queue.redQueueList) {
-            player.getInventory().clear();
-
-            player.setGameMode(GameMode.ADVENTURE);
-
-            player.sendTitle(ChatColor.GREEN + "Спаситесь от", "падающих наковален", 40, 40, 40);
-            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Спаситесь от падающих наковален!");
+            gameRulesAnnouncement(player);
         }
 
         new BukkitRunnable() {
-            int counter;
-
             @Override
             public void run() {
 
@@ -42,7 +39,6 @@ public class DodgeAnvils implements Listener {
                     this.cancel();
                     endDodgeAnvils();
                 }
-
 
                 for (int i = 0; i < 50; i++) {
                     int randX = Math.round((float) Main.main.getConfig().getDouble("spawn.x")) + Utilities.getRandom(0, 32) - 16;
@@ -56,25 +52,20 @@ public class DodgeAnvils implements Listener {
                     }
                     Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).getBlockAt(randX, y, randZ).setType(Material.ANVIL);
                 }
-                counter++;
             }
         }.runTaskTimer(Main.main, 10, 10);
     }
 
     private static void endDodgeAnvils() {
-        for (Player roundPlayer : Queue.redQueueList) {
-            if (roundPlayer.getGameMode() == GameMode.ADVENTURE) {
-                Chat.broadcastToEveryone(ChatColor.GREEN + "Игрок " + roundPlayer.getName() + " победил в раунде!");
-
-                roundPlayer.sendTitle(ChatColor.GREEN + "Поздравляем!", "Вы победили!", 20, 20, 20);
-                roundPlayer.playSound(roundPlayer.getLocation(), Sound.BLOCK_NOTE_BLOCK_COW_BELL, 10, 1);
-
-                RoundSystem.addScore(roundPlayer, 5);
-                RoundSystem.PlayerReset(roundPlayer);
-            }
-        }
+        for (Player roundPlayer : Queue.redQueueList)
+            if (roundPlayer.getGameMode() != GameMode.ADVENTURE)
+                RoundSystem.playerWin(roundPlayer);
     }
 
+    private static void gameRulesAnnouncement(Player player) {
+        player.sendTitle(ChatColor.GREEN + "Спаситесь от", "падающих наковален", 40, 40, 40);
+        player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Спаситесь от падающих наковален!");
+    }
 
     @EventHandler
     public void onFallingBlockLand(EntityChangeBlockEvent event) {
@@ -84,24 +75,18 @@ public class DodgeAnvils implements Listener {
         int y = Math.round((float) block.getLocation().getY()) - 1;
         int z = Math.round((float) block.getLocation().getZ());
 
-        if (event.getEntity() instanceof FallingBlock) {
-            if (event.getEntity().getLocation().getWorld().getBlockAt(x, y, z).getType() != Material.AIR) {
+        if (event.getEntity() instanceof FallingBlock)
+            if (event.getEntity().getLocation().getWorld().getBlockAt(x, y, z).getType() != Material.AIR)
                 event.setCancelled(true);
-            }
-        }
     }
 
     @EventHandler
     public void PlayerDamage(EntityDamageEvent event) {
         if (!isActivated) return;
-
         if (!(event.getEntity() instanceof Player)) return;
-
         Player player = (Player) event.getEntity();
-
         if (!Queue.redQueueList.contains(player)) return;
 
-        player.setGameMode(GameMode.SPECTATOR);
         RoundSystem.playerLose(player);
     }
 }

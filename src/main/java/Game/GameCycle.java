@@ -1,7 +1,7 @@
 package Game;
 
-import Commands.CommandEvent;
 import PluginUtilities.Chat;
+import PluginUtilities.LocationUtulities;
 import QueueSystem.MainScoreBoard;
 import QueueSystem.Queue;
 import WebHooks.DiscordWebhook;
@@ -38,13 +38,14 @@ public class GameCycle {
     public static void StartGame() {
         for (Player player : Queue.redQueueList) {
             player.setExp(0);
-            RoundSystem.PlayerReset(player);
-            CommandEvent.teleportToSpawn(player);
+            RoundSystem.playerReset(player);
+            LocationUtulities.teleportToSpawn(player);
             RoundSystem.roundStats.put(player, 0);
             gameStats.put(player, 0);
         }
 
         for (Player player : Bukkit.getOnlinePlayers()) {
+            NBS.NoteBlockPlayer.playerMusic(player, "MadWorld");
             player.sendTitle(ChatColor.BLUE + "Игра началась!", ChatColor.GOLD + "Играют: " + ChatColor.RED + "[RED]", 30, 30, 30);
             player.playSound(player.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_CURSE, 10, 1);
             player.sendMessage(ChatColor.AQUA + Chat.divThick16 + ChatColor.GOLD + "[EVENT] " + ChatColor.BLUE + "Игра началась!\n" + ChatColor.GOLD + "Играют: " + ChatColor.RED + "[RED]\n" + ChatColor.AQUA + Chat.divThick16);
@@ -72,7 +73,7 @@ public class GameCycle {
         }
 
         for (Player redPlayer : Queue.redQueueList) {
-            CommandEvent.teleportToLobby(redPlayer);
+            LocationUtulities.teleportToLobby(redPlayer);
             MainScoreBoard.red.removeEntry(redPlayer.getName());
         }
 

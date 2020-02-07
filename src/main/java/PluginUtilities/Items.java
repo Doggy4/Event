@@ -6,10 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.HashMap;
-import java.util.Random;
-
-import static QueueSystem.Queue.redQueueList;
+import java.util.ArrayList;
 
 public class Items {
 
@@ -96,15 +93,21 @@ public class Items {
             .enchantment(Enchantment.ARROW_INFINITE, 1)
             .build();
 
-    public static ItemStack BowEventArrows = new ItemStackConstructor(Material.ARROW)
+    public static ItemStack bowEventArrows = new ItemStackConstructor(Material.ARROW)
             .amount(64)
             .displayName(ChatColor.RED + "Стрелы")
             .build();
 
-    public static ItemStack ShearEventShears = new ItemStackConstructor(Material.SHEARS)
+    public static ItemStack shearEventShears = new ItemStackConstructor(Material.SHEARS)
             .amount(1)
             .displayName(ChatColor.RED + "Турнирные ножницы")
             .enchantment(Enchantment.DURABILITY, 10)
+            .build();
+
+    public static ItemStack stickEventKnockOff = new ItemStackConstructor(Material.STICK)
+            .amount(1)
+            .displayName(ChatColor.RED + "Турнирная палка")
+            .enchantment(Enchantment.KNOCKBACK, 10)
             .build();
 
     public static ItemStack ParticleSample = new ItemStackConstructor(Material.GRAY_STAINED_GLASS_PANE)
@@ -112,5 +115,13 @@ public class Items {
             .displayName(ChatColor.GRAY + "Нихера не сделано")
             .enchantment(Enchantment.DURABILITY, 10)
             .build();
+
+
+    public static ArrayList<Material> materials = new ArrayList<Material>();
+
+    static {
+        for (Material material : Material.values())
+            if (!BlackList.isItemBlocked(material.name())) materials.add(material);
+    }
 
 }

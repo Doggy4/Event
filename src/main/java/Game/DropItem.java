@@ -1,7 +1,8 @@
 package Game;
 
-import PluginUtilities.BlackList;
 import PluginUtilities.Chat;
+import PluginUtilities.Items;
+import PluginUtilities.MapRebuild;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
 import org.bukkit.ChatColor;
@@ -16,19 +17,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DropItem implements Listener {
+    protected static boolean isActivated = false;
 
     private static Material randomMaterialBlock;
-    public static boolean isActivated = false;
+    private static ArrayList<Material> materials = Items.materials;
 
-    public static void DropItem() {
+    public static void dropItem() {
+        // Опциально:
         isActivated = true;
-        GameRules.DropItemOff();
         RoundSystem.roundSeconds = 30;
-
-        ArrayList<Material> materials = new ArrayList<Material>();
-
-        for (Material material : Material.values())
-            if (!BlackList.isItemBlocked(material.name())) materials.add(material);
+        GameRules.DropItemOff();
+        MapRebuild.loadSchematic("arena");
 
         int randomMaterialIndex = Utilities.getRandom(0, materials.size() - 37);
         int randomBlockIndex = Utilities.getRandom(0, 35);
@@ -37,22 +36,13 @@ public class DropItem implements Listener {
         randomMaterialBlock = allowedMaterials.get(randomBlockIndex);
 
         for (Player player : Queue.redQueueList) {
-            player.getInventory().clear();
-
-            player.sendTitle(ChatColor.GREEN + "Выкиньте предмет", Chat.translate(randomMaterialBlock.name()), 40, 40, 40);
-            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Выкиньте предмет " + ChatColor.LIGHT_PURPLE + "[" + Chat.translate(randomMaterialBlock.name()) + "]");
-
+            gameRulesAnnouncement(player);
             for (Material block : allowedMaterials)
                 player.getInventory().addItem(new ItemStack(block, 1));
         }
     }
 
-    private static void DropNext(Player player) {
-        ArrayList<Material> materials = new ArrayList<Material>();
-
-        for (Material material : Material.values())
-            if (!BlackList.isItemBlocked(material.name())) materials.add(material);
-
+    private static void dropNext(Player player) {
         int randomMaterialIndex = Utilities.getRandom(0, materials.size() - 37);
         int randomBlockIndex = Utilities.getRandom(0, 35);
 
@@ -60,8 +50,11 @@ public class DropItem implements Listener {
         randomMaterialBlock = allowedMaterials.get(randomBlockIndex);
 
         player.getInventory().clear();
+        gameRulesAnnouncement(player);
         for (Material block : allowedMaterials) player.getInventory().addItem(new ItemStack(block, 1));
+    }
 
+    private static void gameRulesAnnouncement(Player player) {
         player.sendTitle(ChatColor.GREEN + "Выкиньте предмет", Chat.translate(randomMaterialBlock.name()), 40, 40, 40);
         player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Выкиньте предмет " + ChatColor.LIGHT_PURPLE + "[" + Chat.translate(randomMaterialBlock.name()) + "]");
     }
@@ -69,17 +62,17 @@ public class DropItem implements Listener {
     @EventHandler
     public void onPlayerDropItem(PlayerDropItemEvent event) {
         if (!isActivated) return;
-
         Player player = event.getPlayer();
+        if (!(Queue.redQueueList.contains(player))) return;
 
         if (event.getItemDrop().getItemStack().getType().equals(randomMaterialBlock)) {
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Задание выполнено!");
             RoundSystem.addScore(player, 1);
-            DropNext(player);
+            dropNext(player);
         } else {
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Неверный предмет!");
             RoundSystem.addScore(player, -1);
-            DropNext(player);
+            dropNext(player);
         }
     }
 }

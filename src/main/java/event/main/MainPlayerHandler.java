@@ -1,8 +1,8 @@
 package event.main;
 
-import Commands.CommandEvent;
 import PluginUtilities.InventoryConstructor;
 import PluginUtilities.Items;
+import PluginUtilities.LocationUtulities;
 import QueueSystem.Queue;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -55,7 +55,7 @@ public class MainPlayerHandler implements Listener {
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_XYLOPHONE, 10, 1);
                 player.setGameMode(GameMode.ADVENTURE);
                 player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы вышли из режима наблюдателя!");
-                CommandEvent.teleportToLobby(player);
+                LocationUtulities.teleportToLobby(player);
             } else {
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_XYLOPHONE, 10, 1);
                 player.setGameMode(GameMode.SPECTATOR);

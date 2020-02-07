@@ -8,7 +8,6 @@ import event.main.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
-import org.bukkit.Sound;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Sheep;
@@ -16,9 +15,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerShearEntityEvent;
 
-// Доделать
 public class ShearSheep implements Listener {
     protected static boolean isActivated = false;
+
     private static DyeColor randomColor;
 
     public static void ShearSheep() {
@@ -29,13 +28,8 @@ public class ShearSheep implements Listener {
         randomColor = Utilities.getRandomColor();
 
         for (Player player : Queue.redQueueList) {
-            player.getInventory().clear();
-
-            player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
-            player.sendTitle(ChatColor.GREEN + "Подстригите овцу", Chat.colors.get(randomColor.toString()) + Chat.translate(randomColor.name()), 40, 40, 40);
-            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Подстригите овцу " + ChatColor.LIGHT_PURPLE + "[" + Chat.colors.get(randomColor.toString()) + Chat.translate(randomColor.name()) + ChatColor.LIGHT_PURPLE + "]");
-
-            player.getInventory().addItem(Items.ShearEventShears);
+            gameRulesAnnouncement(player);
+            player.getInventory().addItem(Items.shearEventShears);
         }
 
         for (int i = 0; i < 50; i++) {
@@ -44,25 +38,21 @@ public class ShearSheep implements Listener {
             sheep.setColor(color);
             sheep.setCustomName(Chat.colors.get(color.toString()) + Chat.translate(color.name()));
         }
-
-        for (int i = 0; i < 3; i++) {
-            Sheep sheep = (Sheep) Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).spawnEntity(Commands.CommandEvent.randLocationSpawn(), EntityType.SHEEP);
-            sheep.setColor(randomColor);
-            sheep.setCustomName(Chat.colors.get(randomColor.toString()) + Chat.translate(randomColor.name()));
-        }
     }
 
-    public void spawnSheep(Player player) {
+    private static void spawnSheep(Player player) {
         Sheep sheep = (Sheep) Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).spawnEntity(Commands.CommandEvent.randLocationSpawn(), EntityType.SHEEP);
         DyeColor color = Utilities.getRandomColor();
         sheep.setColor(color);
         sheep.setCustomName(Chat.colors.get(color.toString()) + Chat.translate(color.name()));
     }
 
-    public void nextSheep(Player player) {
+    private static void nextSheep(Player player) {
         randomColor = Utilities.getRandomColor();
+        gameRulesAnnouncement(player);
+    }
 
-        player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
+    private static void gameRulesAnnouncement(Player player) {
         player.sendTitle(ChatColor.GREEN + "Подстригите овцу", Chat.colors.get(randomColor.toString()) + Chat.translate(randomColor.name()), 40, 40, 40);
         player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Подстригите овцу " + ChatColor.LIGHT_PURPLE + "[" + Chat.colors.get(randomColor.toString()) + Chat.translate(randomColor.name()) + ChatColor.LIGHT_PURPLE + "]");
     }
@@ -76,13 +66,12 @@ public class ShearSheep implements Listener {
 
         if (sheep.getColor() == randomColor) {
             RoundSystem.addScore(player, 1);
-            nextSheep(player);
         } else {
             RoundSystem.addScore(player, -1);
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Неправильный цвет!");
-            nextSheep(player);
         }
 
+        nextSheep(player);
         sheep.remove();
         spawnSheep(player);
     }

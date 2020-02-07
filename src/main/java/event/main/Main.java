@@ -35,6 +35,7 @@ public final class Main extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new ParticleGUI(), this);
         this.getServer().getPluginManager().registerEvents(new ParkourEatCake(), this);
         this.getServer().getPluginManager().registerEvents(new MathRound(), this);
+        this.getServer().getPluginManager().registerEvents(new KnockOff(), this);
 
         MainScoreBoard.startPluginRunnable();
         this.saveDefaultConfig();

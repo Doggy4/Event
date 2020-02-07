@@ -1,10 +1,9 @@
 package Game;
 
-import Commands.CommandEvent;
+import PluginUtilities.MapRebuild;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
 import org.bukkit.ChatColor;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -47,30 +46,27 @@ public class MathRound implements Listener {
     private static List<String> keysAsArray = new ArrayList<String>(examples.keySet());
 
     public static void mathRound() {
+        // Опционально:
+        isActivated = true;
+        RoundSystem.roundSeconds = 30;
+        MapRebuild.loadSchematic("arena");
+
         example = keysAsArray.get(Utilities.getRandom(0, keysAsArray.size()));
         result = examples.get(example);
 
-        isActivated = true;
-        RoundSystem.roundSeconds = 30;
+        for (Player player : Queue.redQueueList)
+            gameRulesAnnouncement(player);
+    }
 
-        for (Player player : Queue.redQueueList) {
-            CommandEvent.teleportToSpawn(player);
-
-            player.getInventory().clear();
-
-            player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
-            player.sendTitle(ChatColor.GREEN + "Решите пример", ChatColor.YELLOW + example, 40, 40, 40);
-            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Решите пример: " + ChatColor.AQUA + example);
-        }
+    private static void gameRulesAnnouncement(Player player) {
+        player.sendTitle(ChatColor.GREEN + "Решите пример", ChatColor.YELLOW + example, 40, 40, 40);
+        player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Решите пример: " + ChatColor.AQUA + example);
     }
 
     public void mathRoundNext(Player player) {
         example = keysAsArray.get(new Random().nextInt(keysAsArray.size()));
         result = examples.get(example);
-
-        player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
-        player.sendTitle(ChatColor.GREEN + "Решите пример", ChatColor.YELLOW + example, 40, 40, 40);
-        player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Решите пример: " + ChatColor.AQUA + example);
+        gameRulesAnnouncement(player);
     }
 
     @EventHandler
