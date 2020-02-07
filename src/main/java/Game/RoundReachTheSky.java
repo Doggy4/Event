@@ -8,12 +8,12 @@ import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class ReachSky {
+public class RoundReachTheSky {
     protected static boolean isActivated = false;
 
-    public static void ReachSky() {
+    protected static void reachTheSky() {
         isActivated = true;
-        RoundSystem.roundSeconds = 15;
+        aRoundSystem.roundSeconds = 15;
         MapRebuild.loadSchematic("arena");
 
         for (Player player : Queue.redQueueList) {
@@ -33,7 +33,7 @@ public class ReachSky {
                     if (player.getLocation().getY() >= 150) {
                         player.getWorld().spawnParticle(Particle.FIREWORKS_SPARK, player.getLocation(), 10);
                         player.setAllowFlight(false);
-                        RoundSystem.addScore(player, 1);
+                        aRoundSystem.addScore(player, 1);
                     }
                 }
             }

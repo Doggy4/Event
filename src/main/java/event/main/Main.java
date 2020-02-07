@@ -23,19 +23,19 @@ public final class Main extends JavaPlugin {
 
         this.getServer().getPluginManager().registerEvents(new MainPlayerHandler(), this);
         this.getServer().getPluginManager().registerEvents(new InventoryConstructor(), this);
-        this.getServer().getPluginManager().registerEvents(new PlaceBlock(), this);
-        this.getServer().getPluginManager().registerEvents(new DropItem(), this);
-        this.getServer().getPluginManager().registerEvents(new BowShoot(), this);
-        this.getServer().getPluginManager().registerEvents(new ShearSheep(), this);
-        this.getServer().getPluginManager().registerEvents(new EggThrow(), this);
+        this.getServer().getPluginManager().registerEvents(new RoundPlaceTheBlock(), this);
+        this.getServer().getPluginManager().registerEvents(new RoundDropTheItem(), this);
+        this.getServer().getPluginManager().registerEvents(new RoundHitTheBlock(), this);
+        this.getServer().getPluginManager().registerEvents(new RoundTrimTheSheep(), this);
+        this.getServer().getPluginManager().registerEvents(new RoundThrowTheEgg(), this);
         this.getServer().getPluginManager().registerEvents(new GameRules(), this);
-        this.getServer().getPluginManager().registerEvents(new CowMilk(), this);
-        this.getServer().getPluginManager().registerEvents(new PlaceWool(), this);
-        this.getServer().getPluginManager().registerEvents(new DodgeAnvils(), this);
+        this.getServer().getPluginManager().registerEvents(new RoundMilkTheCow(), this);
+        this.getServer().getPluginManager().registerEvents(new RoundTheRightCombination(), this);
+        this.getServer().getPluginManager().registerEvents(new RoundAnvilEscape(), this);
         this.getServer().getPluginManager().registerEvents(new ParticleGUI(), this);
-        this.getServer().getPluginManager().registerEvents(new ParkourEatCake(), this);
-        this.getServer().getPluginManager().registerEvents(new MathRound(), this);
-        this.getServer().getPluginManager().registerEvents(new KnockOff(), this);
+        this.getServer().getPluginManager().registerEvents(new RoundCakeParkour(), this);
+        this.getServer().getPluginManager().registerEvents(new RoundMath(), this);
+        this.getServer().getPluginManager().registerEvents(new RoundKnockEveryoneOff(), this);
 
         MainScoreBoard.startPluginRunnable();
         this.saveDefaultConfig();

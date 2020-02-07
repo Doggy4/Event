@@ -15,13 +15,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerShearEntityEvent;
 
-public class ShearSheep implements Listener {
+public class RoundTrimTheSheep implements Listener {
     protected static boolean isActivated = false;
 
     private static DyeColor randomColor;
 
-    public static void ShearSheep() {
-        RoundSystem.roundSeconds = 30;
+    protected static void trimTheSheep() {
+        aRoundSystem.roundSeconds = 30;
 
         isActivated = true;
 
@@ -58,16 +58,16 @@ public class ShearSheep implements Listener {
     }
 
     @EventHandler
-    public void onPlayerShearSheep(PlayerShearEntityEvent event) {
+    public void onPlayerTrimsSheep(PlayerShearEntityEvent event) {
         if (!isActivated) return;
 
         Player player = event.getPlayer();
         Sheep sheep = (Sheep) event.getEntity();
 
         if (sheep.getColor() == randomColor) {
-            RoundSystem.addScore(player, 1);
+            aRoundSystem.addScore(player, 1);
         } else {
-            RoundSystem.addScore(player, -1);
+            aRoundSystem.addScore(player, -1);
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Неправильный цвет!");
         }
 

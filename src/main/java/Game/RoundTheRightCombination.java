@@ -15,7 +15,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 
-public class PlaceWool implements Listener {
+public class RoundTheRightCombination implements Listener {
     protected static boolean isActivated = false;
 
     private static Material[] blockToBePut = {Material.WHITE_WOOL, Material.ORANGE_WOOL, Material.MAGENTA_WOOL, Material.LIGHT_BLUE_WOOL, Material.YELLOW_WOOL, Material.LIME_WOOL, Material.PINK_WOOL, Material.GRAY_WOOL, Material.LIGHT_GRAY_WOOL};
@@ -30,8 +30,8 @@ public class PlaceWool implements Listener {
     private static int n;
     private static int n2;
 
-    public static void placeWool() {
-        RoundSystem.roundSeconds = 30;
+    protected static void rightCombination() {
+        aRoundSystem.roundSeconds = 30;
         isActivated = true;
         GameRules.PlaceBlockOff();
         MapRebuild.loadSchematic("arena");
@@ -59,8 +59,7 @@ public class PlaceWool implements Listener {
         }
     }
 
-
-    private static void nextBlockToPlace(Player player, Location blockLoc) {
+    private static void rightCombinationNext(Player player, Location blockLoc) {
         player.getInventory().clear();
 
         n = (int) Math.floor(Math.random() * blockToBePut.length);
@@ -92,15 +91,15 @@ public class PlaceWool implements Listener {
         if (!(Queue.redQueueList.contains(player))) return;
 
         if (event.getBlockPlaced().getType().equals(block1.get(player)) && event.getBlockAgainst().getType().equals(block2.get(player))) {
-            RoundSystem.addScore(player, 1);
+            aRoundSystem.addScore(player, 1);
             Location blockLoc = event.getBlockPlaced().getLocation();
             Particles.createBlockSplash(blockLoc, Particle.FIREWORKS_SPARK);
             player.playSound(blockLoc, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
-            nextBlockToPlace(player, blockLoc);
+            rightCombinationNext(player, blockLoc);
         } else {
             event.setCancelled(true);
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Неверный порядок!");
-            RoundSystem.addScore(player, -1);
+            aRoundSystem.addScore(player, -1);
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Поставьте " + Chat.colorsFromID.get(blockToBePut[n].name()) + Chat.translate(blockToBePut[n].name()) + ChatColor.WHITE + " на " + Chat.colorsFromID.get(blockToPlaceOn[n2].name()) + Chat.translate(blockToPlaceOn[n2].name()));
             Location blockLoc = event.getBlockPlaced().getLocation();
 

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class EggThrow implements Listener {
+public class RoundThrowTheEgg implements Listener {
     protected static boolean isActivated = false;
 
     private static ArrayList<String> phrases = new ArrayList<String>();
@@ -38,10 +38,10 @@ public class EggThrow implements Listener {
         phrases.add("Кидай еще одно!");
     }
 
-    public static void eggThrow() {
+    protected static void throwTheEgg() {
         // Опционально:
         isActivated = true;
-        RoundSystem.roundSeconds = 15;
+        aRoundSystem.roundSeconds = 15;
         MapRebuild.loadSchematic("arena");
 
         int randomMaterial = Utilities.getRandom(0, materials.size() - 37);
@@ -56,7 +56,7 @@ public class EggThrow implements Listener {
         }
     }
 
-    public static void throwNext(Player player) {
+    private static void throwTheEggNext(Player player) {
         ArrayList<Material> materials = new ArrayList<Material>(Arrays.asList(Material.values()));
 
         int randomMaterial = Utilities.getRandom(0, materials.size() - 37);
@@ -72,10 +72,6 @@ public class EggThrow implements Listener {
         player.getInventory().setItem(randomSlot, new ItemStack(Material.EGG));
     }
 
-    public static void disableEvents() {
-        isActivated = false;
-    }
-
     private static void gameRulesAnnouncement(Player player) {
         player.sendTitle(ChatColor.GREEN + phrases.get(Utilities.getRandom(0, phrases.size() - 1)), "Поторпитесь!", 40, 40, 40);
         player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + phrases.get(Utilities.getRandom(0, phrases.size() - 1)));
@@ -87,7 +83,7 @@ public class EggThrow implements Listener {
         Player player = e.getPlayer();
         if (!(Queue.redQueueList.contains(player))) return;
 
-        RoundSystem.addScore(player, 1);
-        throwNext(player);
+        aRoundSystem.addScore(player, 1);
+        throwTheEggNext(player);
     }
 }

@@ -65,7 +65,7 @@ public class CommandEvent implements TabExecutor {
         else if (args[0].equals("rebuild"))
             MapRebuild.loadSchematic("arena");
         else if (args[0].equals("music")) {
-            NoteBlockPlayer.playerMusic(player, args[1]);
+            NoteBlockPlayer.playMusic(player, args[1]);
         } else if (args[0].equals("test")) {
             DiscordWebhook.roundStarted();
         } else

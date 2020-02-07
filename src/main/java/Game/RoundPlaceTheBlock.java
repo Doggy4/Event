@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class PlaceBlock implements Listener {
+public class RoundPlaceTheBlock implements Listener {
     protected static boolean isActivated = false;
 
     private static Material randomMaterialBlock;
@@ -22,9 +22,9 @@ public class PlaceBlock implements Listener {
     private static World world = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world"));
     private static ArrayList<Material> materials = Items.materials;
 
-    public static void placeBlock() {
+    protected static void placeBlock() {
         isActivated = true;
-        RoundSystem.roundSeconds = 30;
+        aRoundSystem.roundSeconds = 30;
         GameRules.PlaceBlockOff();
         MapRebuild.loadSchematic("arena");
 
@@ -78,11 +78,11 @@ public class PlaceBlock implements Listener {
 
         if (event.getBlockPlaced().getType().equals(randomMaterialBlock)) {
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Задание выполнено!");
-            RoundSystem.addScore(player, 1);
+            aRoundSystem.addScore(player, 1);
             placeNext(player);
         } else {
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Неверный блок!");
-            RoundSystem.addScore(player, -1);
+            aRoundSystem.addScore(player, -1);
             placeNext(player);
         }
 

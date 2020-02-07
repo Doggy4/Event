@@ -1,7 +1,7 @@
 package WebHooks;
 
 import Game.GameCycle;
-import Game.RoundSystem;
+import Game.aRoundSystem;
 import PluginUtilities.Chat;
 import QueueSystem.Queue;
 import event.main.Main;
@@ -43,7 +43,7 @@ public class DiscordWebhook {
                     .setDescription("Ознакомиться с правилами эвента можно [тут](https://forum.excalibur-craft.ru/forum/125-BestLife/)!")
                     .setColor(Color.CYAN)
                     .addField("**Количество игроков:**", Queue.redQueueList.size() + "/10", false)
-                    .addField("**Количество раундов:**", RoundSystem.round - 1 + "/" + RoundSystem.roundCount, false)
+                    .addField("**Количество раундов:**", aRoundSystem.round - 1 + "/" + aRoundSystem.roundCount, false)
                     .setThumbnail("https://i.ya-webdesign.com/images/a-letter-logo-design-png-7.png")
                     .setFooter("Мы вас ждем!", "https://i.ya-webdesign.com/images/a-letter-logo-design-png-7.png")
                     //.setImage("https://i.ya-webdesign.com/images/a-letter-logo-design-png-7.png")
@@ -65,8 +65,8 @@ public class DiscordWebhook {
                     .setTitle("Начался новый раунд!")
                     .setDescription("Ознакомиться с правилами эвента можно [тут](https://forum.excalibur-craft.ru/forum/125-BestLife/)!")
                     .setColor(Color.CYAN)
-                    .addField("**Раунд:**", Chat.roundNames.get(RoundSystem.randomGame), false)
-                    .addField("**Количество раундов:**", RoundSystem.round - 1 + "/" + RoundSystem.roundCount, false)
+                    .addField("**Раунд:**", Chat.roundNames.get(aRoundSystem.randomGame), false)
+                    .addField("**Количество раундов:**", aRoundSystem.round - 1 + "/" + aRoundSystem.roundCount, false)
                     .addField("**Количество игроков:**", Queue.redQueueList.size() + "/10", false)
                     .addField("**Лидер по очкам:**", GameCycle.getWinner().getName(), false)
                     .setThumbnail("https://i.ya-webdesign.com/images/a-letter-logo-design-png-7.png")

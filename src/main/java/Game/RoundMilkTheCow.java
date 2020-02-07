@@ -16,7 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class CowMilk implements Listener {
+public class RoundMilkTheCow implements Listener {
     protected static boolean isActivated = false;
 
     private static String commonCow = (ChatColor.GRAY + "[✶] Милка");
@@ -30,10 +30,10 @@ public class CowMilk implements Listener {
     private static int rareCowChance = 85;
     private static int specialCowChance = 95;
 
-    public static void milkCow() {
+    protected static void milkTheCow() {
         // Опционально:
         isActivated = true;
-        RoundSystem.roundSeconds = 30;
+        aRoundSystem.roundSeconds = 30;
         MapRebuild.loadSchematic("arena");
 
         for (Player player : Queue.redQueueList) {
@@ -76,7 +76,7 @@ public class CowMilk implements Listener {
     }
 
     @EventHandler
-    public void onPlayerMilkCow(PlayerInteractEntityEvent event) {
+    public void onPlayerMilksCow(PlayerInteractEntityEvent event) {
         if (!isActivated) return;
         Player player = event.getPlayer();
         if (!(event.getRightClicked() instanceof Cow)) return;
@@ -111,7 +111,7 @@ public class CowMilk implements Listener {
                 world.playSound(cowLoc, Sound.ENTITY_GENERIC_EXPLODE, 1, 1);
             }
 
-            RoundSystem.addScore(player, aScore);
+            aRoundSystem.addScore(player, aScore);
             cow.remove();
             spawnCow(player);
         }

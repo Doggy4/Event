@@ -10,13 +10,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-public class ParkourEatCake implements Listener {
+public class RoundCakeParkour implements Listener {
     protected static boolean isActivated = false;
 
-    public static void cakeParkour() {
+    protected static void cakeParkour() {
         // Опционально:
         isActivated = true;
-        RoundSystem.roundSeconds = 20;
+        aRoundSystem.roundSeconds = 20;
         MapRebuild.loadSchematic("parkour-cake1");
 
         for (Player player : Queue.redQueueList)
@@ -35,7 +35,7 @@ public class ParkourEatCake implements Listener {
         if (!(Queue.redQueueList.contains(player))) return;
 
         if (event.getClickedBlock().getType().equals(Material.CAKE)) {
-            RoundSystem.addScore(player, 1);
+            aRoundSystem.addScore(player, 1);
             player.setGameMode(GameMode.SPECTATOR);
         }
 

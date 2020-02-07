@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-public class MathRound implements Listener {
+public class RoundMath implements Listener {
     protected static boolean isActivated = false;
 
     private static HashMap<String, Integer> examples = new HashMap<String, Integer>();
@@ -45,10 +45,10 @@ public class MathRound implements Listener {
 
     private static List<String> keysAsArray = new ArrayList<String>(examples.keySet());
 
-    public static void mathRound() {
+    protected static void math() {
         // Опционально:
         isActivated = true;
-        RoundSystem.roundSeconds = 30;
+        aRoundSystem.roundSeconds = 30;
         MapRebuild.loadSchematic("arena");
 
         example = keysAsArray.get(Utilities.getRandom(0, keysAsArray.size()));
@@ -77,10 +77,10 @@ public class MathRound implements Listener {
 
         if (event.getMessage().equals(result + "")) {
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Ответ верный!");
-            RoundSystem.addScore(player, 10);
+            aRoundSystem.addScore(player, 10);
         } else {
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Ответ неверный!");
-            RoundSystem.addScore(player, -5);
+            aRoundSystem.addScore(player, -5);
         }
 
         event.setCancelled(true);

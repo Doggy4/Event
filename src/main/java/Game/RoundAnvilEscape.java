@@ -17,13 +17,13 @@ import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class DodgeAnvils implements Listener {
+public class RoundAnvilEscape implements Listener {
     protected static boolean isActivated = false;
 
-    protected static void DodgeAnvils() {
+    protected static void anvilEscape() {
         // Опционально:
         isActivated = true;
-        RoundSystem.roundSeconds = 15;
+        aRoundSystem.roundSeconds = 15;
         GameRules.EntityDamageOff();
         MapRebuild.loadSchematic("arena");
 
@@ -59,7 +59,7 @@ public class DodgeAnvils implements Listener {
     private static void endDodgeAnvils() {
         for (Player roundPlayer : Queue.redQueueList)
             if (roundPlayer.getGameMode() != GameMode.ADVENTURE)
-                RoundSystem.playerWin(roundPlayer);
+                aRoundSystem.playerWin(roundPlayer);
     }
 
     private static void gameRulesAnnouncement(Player player) {
@@ -87,6 +87,6 @@ public class DodgeAnvils implements Listener {
         Player player = (Player) event.getEntity();
         if (!Queue.redQueueList.contains(player)) return;
 
-        RoundSystem.playerLose(player);
+        aRoundSystem.playerLose(player);
     }
 }

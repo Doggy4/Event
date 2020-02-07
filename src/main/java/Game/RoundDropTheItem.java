@@ -16,16 +16,16 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DropItem implements Listener {
+public class RoundDropTheItem implements Listener {
     protected static boolean isActivated = false;
 
     private static Material randomMaterialBlock;
     private static ArrayList<Material> materials = Items.materials;
 
-    public static void dropItem() {
+    protected static void DropTheItem() {
         // Опциально:
         isActivated = true;
-        RoundSystem.roundSeconds = 30;
+        aRoundSystem.roundSeconds = 30;
         GameRules.DropItemOff();
         MapRebuild.loadSchematic("arena");
 
@@ -67,11 +67,11 @@ public class DropItem implements Listener {
 
         if (event.getItemDrop().getItemStack().getType().equals(randomMaterialBlock)) {
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Задание выполнено!");
-            RoundSystem.addScore(player, 1);
+            aRoundSystem.addScore(player, 1);
             dropNext(player);
         } else {
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Неверный предмет!");
-            RoundSystem.addScore(player, -1);
+            aRoundSystem.addScore(player, -1);
             dropNext(player);
         }
     }

@@ -28,24 +28,24 @@ public class GameCycle {
         if (isCommandStartEventTipped && !isGameStarted)
             MainScoreBoard.countdown();
 
-        else if (isGameStarted && !RoundSystem.isRoundStarted && !RoundSystem.isRoundTimerEnabled)
-            RoundSystem.startRound();
+        else if (isGameStarted && !aRoundSystem.isRoundStarted && !aRoundSystem.isRoundTimerEnabled)
+            aRoundSystem.startRound();
 
         else if (isGameStarted)
-            RoundSystem.roundTimer();
+            aRoundSystem.roundTimer();
     }
 
     public static void StartGame() {
         for (Player player : Queue.redQueueList) {
             player.setExp(0);
-            RoundSystem.playerReset(player);
+            aRoundSystem.playerReset(player);
             LocationUtulities.teleportToSpawn(player);
-            RoundSystem.roundStats.put(player, 0);
+            aRoundSystem.roundStats.put(player, 0);
             gameStats.put(player, 0);
         }
 
         for (Player player : Bukkit.getOnlinePlayers()) {
-            NBS.NoteBlockPlayer.playerMusic(player, "MadWorld");
+            NBS.NoteBlockPlayer.playMusic(player, "MadWorld");
             player.sendTitle(ChatColor.BLUE + "Игра началась!", ChatColor.GOLD + "Играют: " + ChatColor.RED + "[RED]", 30, 30, 30);
             player.playSound(player.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_CURSE, 10, 1);
             player.sendMessage(ChatColor.AQUA + Chat.divThick16 + ChatColor.GOLD + "[EVENT] " + ChatColor.BLUE + "Игра началась!\n" + ChatColor.GOLD + "Играют: " + ChatColor.RED + "[RED]\n" + ChatColor.AQUA + Chat.divThick16);
@@ -60,7 +60,7 @@ public class GameCycle {
         isCommandStartEventTipped = false;
         isGameStarted = false;
         MainScoreBoard.mainSecPreStart = 60;
-        RoundSystem.round = 1;
+        aRoundSystem.round = 1;
 
         Player winner = getWinner();
 
@@ -110,8 +110,8 @@ public class GameCycle {
         Player winner = null;
 
         for (Player player : Queue.redQueueList)
-            if (RoundSystem.roundStats.get(player) > max) {
-                max = RoundSystem.roundStats.get(player);
+            if (aRoundSystem.roundStats.get(player) > max) {
+                max = aRoundSystem.roundStats.get(player);
                 winner = player;
             }
 

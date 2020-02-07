@@ -17,7 +17,7 @@ import java.util.*;
 
 import static PluginUtilities.Chat.divThick16;
 
-public class RoundSystem {
+public class aRoundSystem {
 
     public static HashMap<Player, Integer> roundStats = new HashMap<Player, Integer>();
 
@@ -28,9 +28,7 @@ public class RoundSystem {
     public static boolean isRoundTimerEnabled = false;
 
     public static int randomGame;
-
     public static int curTicker = 0;
-
 
     public static void roundTimer() {
         if (!isRoundTimerEnabled) {
@@ -41,7 +39,7 @@ public class RoundSystem {
         curTicker++;
 
         if (roundSeconds <= curTicker) {
-            RoundSystem.endRound();
+            aRoundSystem.endRound();
             isRoundTimerEnabled = false;
         }
     }
@@ -81,40 +79,40 @@ public class RoundSystem {
         DiscordWebhook.roundStarted();
         switch (randomGame) {
             case 0:
-                PlaceBlock.placeBlock();
+                RoundPlaceTheBlock.placeBlock();
                 break;
             case 1:
-                DropItem.dropItem();
+                RoundDropTheItem.DropTheItem();
                 break;
             case 2:
-                BowShoot.bowShoot();
+                RoundHitTheBlock.hitTheBlock();
                 break;
             case 3:
-                ShearSheep.ShearSheep();
+                RoundTrimTheSheep.trimTheSheep();
                 break;
             case 4:
-                EggThrow.eggThrow();
+                RoundThrowTheEgg.throwTheEgg();
                 break;
             case 5:
-                CowMilk.milkCow();
+                RoundMilkTheCow.milkTheCow();
                 break;
             case 6:
-                PlaceWool.placeWool();
+                RoundTheRightCombination.rightCombination();
                 break;
             case 7:
-                ReachSky.ReachSky();
+                RoundReachTheSky.reachTheSky();
                 break;
             case 8:
-                DodgeAnvils.DodgeAnvils();
+                RoundAnvilEscape.anvilEscape();
                 break;
             case 9:
-                ParkourEatCake.cakeParkour();
+                RoundCakeParkour.cakeParkour();
                 break;
             case 10:
-                MathRound.mathRound();
+                RoundMath.math();
                 break;
             case 11:
-                KnockOff.knockOff();
+                RoundKnockEveryoneOff.knockEveryoneOff();
                 break;
         }
     }
@@ -126,7 +124,7 @@ public class RoundSystem {
         for (Player player : Bukkit.getOnlinePlayers())
             player.playSound(player.getLocation(), Sound.BLOCK_BEACON_DEACTIVATE, 10, 1);
 
-        if (RoundSystem.round == RoundSystem.roundCount) {
+        if (aRoundSystem.round == aRoundSystem.roundCount) {
             GameCycle.endGame();
             return;
         }
@@ -141,18 +139,18 @@ public class RoundSystem {
     }
 
     private static void disableRoundEvents() {
-        PlaceBlock.isActivated = false;
-        DropItem.isActivated = false;
-        BowShoot.isActivated = false;
-        ShearSheep.isActivated = false;
-        EggThrow.isActivated = false;
-        CowMilk.isActivated = false;
-        PlaceWool.isActivated = false;
-        ReachSky.isActivated = false;
-        DodgeAnvils.isActivated = false;
-        ParkourEatCake.isActivated = false;
-        MathRound.isActivated = false;
-        KnockOff.isActivated = false;
+        RoundPlaceTheBlock.isActivated = false;
+        RoundDropTheItem.isActivated = false;
+        RoundHitTheBlock.isActivated = false;
+        RoundTrimTheSheep.isActivated = false;
+        RoundThrowTheEgg.isActivated = false;
+        RoundMilkTheCow.isActivated = false;
+        RoundTheRightCombination.isActivated = false;
+        RoundReachTheSky.isActivated = false;
+        RoundAnvilEscape.isActivated = false;
+        RoundCakeParkour.isActivated = false;
+        RoundMath.isActivated = false;
+        RoundKnockEveryoneOff.isActivated = false;
     }
 
     public static void addScore(Player player, int score) {
@@ -230,8 +228,8 @@ public class RoundSystem {
         player.sendTitle(ChatColor.GREEN + "Поздравляем!", "Вы победили!", 20, 20, 20);
         player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_COW_BELL, 10, 1);
 
-        RoundSystem.addScore(player, 5);
-        RoundSystem.playerReset(player);
+        aRoundSystem.addScore(player, 5);
+        aRoundSystem.playerReset(player);
     }
 
     public static void playerReset(Player player) {

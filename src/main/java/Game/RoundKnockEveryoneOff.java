@@ -13,12 +13,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class KnockOff implements Listener {
+public class RoundKnockEveryoneOff implements Listener {
     protected static boolean isActivated = false;
 
-    public static void knockOff() {
+    protected static void knockEveryoneOff() {
         isActivated = true;
-        RoundSystem.roundSeconds = 60;
+        aRoundSystem.roundSeconds = 60;
         GameRules.EntityDamageOff();
         MapRebuild.loadSchematic("arena");
 
@@ -46,7 +46,7 @@ public class KnockOff implements Listener {
     private static void endKnockOff() {
         for (Player player : Queue.redQueueList)
             if (player.getGameMode() != GameMode.SPECTATOR)
-                RoundSystem.playerWin(player);
+                aRoundSystem.playerWin(player);
     }
 
     @EventHandler
@@ -55,7 +55,7 @@ public class KnockOff implements Listener {
         if (!(event.getEntity() instanceof Player)) return;
         Player player = (Player) event.getEntity();
         if (event.getDamage() > 2) {
-            RoundSystem.playerLose(player);
+            aRoundSystem.playerLose(player);
             LocationUtulities.teleportToSpawn(player);
         }
     }

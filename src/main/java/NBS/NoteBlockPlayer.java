@@ -10,7 +10,7 @@ import java.io.File;
 
 public class NoteBlockPlayer {
 
-    public static void playerMusic(Player player, String songName) {
+    public static void playMusic(Player player, String songName) {
         Song song = NBSDecoder.parse(new File(Main.main.getDataFolder().getAbsolutePath() + "/songs/" + songName + ".nbs"));
         RadioSongPlayer rsp = new RadioSongPlayer(song);
         rsp.addPlayer(player);

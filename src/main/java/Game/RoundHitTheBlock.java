@@ -19,7 +19,7 @@ import org.bukkit.util.Vector;
 import static PluginUtilities.Items.BowEventBow;
 import static PluginUtilities.Items.bowEventArrows;
 
-public class BowShoot implements Listener {
+public class RoundHitTheBlock implements Listener {
     protected static boolean isActivated = false;
 
     private static Material[] targets = {Material.LAPIS_BLOCK, Material.GOLD_BLOCK, Material.DIAMOND_BLOCK, Material.IRON_BLOCK, Material.REDSTONE_BLOCK};
@@ -31,10 +31,10 @@ public class BowShoot implements Listener {
     private static Block block = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).getBlockAt(0, 0, 0);
     private static Block bonusBlock = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).getBlockAt(1, 1, 1);
 
-    public static void bowShoot() {
+    protected static void hitTheBlock() {
         // Опционально:
         isActivated = true;
-        RoundSystem.roundSeconds = 30;
+        aRoundSystem.roundSeconds = 30;
         MapRebuild.loadSchematic("arena");
 
         for (Player player : Queue.redQueueList) {
@@ -47,7 +47,7 @@ public class BowShoot implements Listener {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (!(RoundSystem.isRoundTimerEnabled)) {
+                if (!(aRoundSystem.isRoundTimerEnabled)) {
                     bonusBlock.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, block.getLocation(), 1);
                     bonusBlock.getWorld().playSound(block.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 10, 1);
 
@@ -125,10 +125,10 @@ public class BowShoot implements Listener {
         Block hitBlock = event.getHitBlock();
 
         if (hitBlock.getType().equals(targets[n])) {
-            RoundSystem.addScore(player, 1);
+            aRoundSystem.addScore(player, 1);
             hitBlock.getWorld().spawnParticle(Particle.EXPLOSION_NORMAL, hitBlock.getLocation(), 10);
         } else if (hitBlock.getType().equals(bonusTarget)) {
-            RoundSystem.addScore(player, 5);
+            aRoundSystem.addScore(player, 5);
             hitBlock.getWorld().spawnParticle(Particle.EXPLOSION_NORMAL, hitBlock.getLocation(), 10);
         }
     }
