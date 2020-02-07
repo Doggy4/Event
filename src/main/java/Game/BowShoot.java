@@ -19,16 +19,16 @@ import static PluginUtilities.Items.BowEventArrows;
 import static PluginUtilities.Items.BowEventBow;
 
 public class BowShoot implements Listener {
-    public static boolean isActivated = false;
+    protected static boolean isActivated = false;
 
     private static Material[] targets = {Material.LAPIS_BLOCK, Material.GOLD_BLOCK, Material.DIAMOND_BLOCK, Material.IRON_BLOCK, Material.REDSTONE_BLOCK};
     private static Material bonusTarget = Material.GLOWSTONE;
 
-    private static int blockChance = Utilities.getRandom(0,100);
+    private static int blockChance = Utilities.getRandom(0, 100);
     private static int n = (int) Math.floor(Math.random() * targets.length);
 
     private static Block block = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).getBlockAt(0, 0, 0);
-    private static Block bonusBlock = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).getBlockAt(0, 0, 0);
+    private static Block bonusBlock = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).getBlockAt(1, 1, 1);
 
     public static void BowShoot() {
         RoundSystem.roundSeconds = 30;
@@ -43,6 +43,7 @@ public class BowShoot implements Listener {
             player.getInventory().addItem(BowEventBow);
             player.getInventory().addItem(BowEventArrows);
         }
+
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -73,12 +74,12 @@ public class BowShoot implements Listener {
                 Location targetLoc = block.getLocation();
                 Location bonusLoc = bonusBlock.getLocation();
 
-                if (blockChance >=35) bonusBlock.setType(bonusTarget);
+                if (blockChance >= 35) bonusBlock.setType(bonusTarget);
                 block.setType(targets[n]);
 
                 double step = 0.5D;
 
-                Vector line = targetLoc.add(rand_x,0,rand_z).toVector().subtract(targetLoc.toVector());
+                Vector line = targetLoc.add(rand_x, 0, rand_z).toVector().subtract(targetLoc.toVector());
                 for (double d = 0; d < line.length(); d += step) {
                     line.multiply(d);
                     targetLoc.add(line);
@@ -89,7 +90,7 @@ public class BowShoot implements Listener {
                     line.normalize();
                 }
 
-                Vector bonusLine = bonusLoc.add(rand_x,0,rand_z).toVector().subtract(bonusLoc.toVector());
+                Vector bonusLine = bonusLoc.add(rand_x, 0, rand_z).toVector().subtract(bonusLoc.toVector());
                 for (double d = 0; d < bonusLine.length(); d += step) {
                     bonusLine.multiply(d);
                     bonusLoc.add(bonusLine);
@@ -103,7 +104,7 @@ public class BowShoot implements Listener {
                 world.playSound(block.getLocation(), Sound.BLOCK_BELL_USE, 1, 2);
                 Particles.createBlockSplash(block.getLocation(), Particle.END_ROD);
 
-                world.playSound(bonusBlock.getLocation(), Sound.BLOCK_BELL_RESONATE, 1,3);
+                world.playSound(bonusBlock.getLocation(), Sound.BLOCK_BELL_RESONATE, 1, 3);
                 Particles.createBlockSplash(bonusBlock.getLocation(), Particle.DRAGON_BREATH);
             }
         }.runTaskTimer(Main.main, 20, 20);
@@ -111,7 +112,7 @@ public class BowShoot implements Listener {
 
 
     @EventHandler
-    public void OnProjHit(ProjectileHitEvent e) {
+    public void OnProjectileHit(ProjectileHitEvent e) {
         if (!isActivated) return;
 
         Arrow arrow = (Arrow) e.getEntity();
@@ -121,8 +122,10 @@ public class BowShoot implements Listener {
 
         if (hitBlock.getType().equals(targets[n])) {
             RoundSystem.addScore(player, 1);
+            hitBlock.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, hitBlock.getLocation(), 10);
         } else if (hitBlock.getType().equals(bonusTarget)) {
             RoundSystem.addScore(player, 5);
+            hitBlock.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, hitBlock.getLocation(), 10);
         }
     }
 }

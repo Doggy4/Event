@@ -4,12 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>RavagerRush</groupId>
-    <artifactId>RavagerRush</artifactId>
+    <groupId>EVENT</groupId>
+    <artifactId>EVENT</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 
-    <name>RavagerRush</name>
+    <name>EVENT</name>
 
     <description>Minecraft Mini-Game</description>
     <properties>
@@ -63,6 +63,10 @@
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -73,4 +77,6 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
+
+
 </project>

@@ -26,7 +26,7 @@ public class MapRebuild {
 
     public static void loadSchematic(String scematic) {
 
-        File myfile = new File(Main.main.getDataFolder().getAbsolutePath() + "/" + scematic + ".schem");
+        File myfile = new File(Main.main.getDataFolder().getAbsolutePath() + "/schematics/" + scematic + ".schem");
         ClipboardFormat format = ClipboardFormats.findByFile(myfile);
 
         try {

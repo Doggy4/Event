@@ -1,6 +1,7 @@
 package Game;
 
 import Commands.CommandEvent;
+import PluginUtilities.Utilities;
 import QueueSystem.Queue;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -15,10 +16,9 @@ import java.util.List;
 import java.util.Random;
 
 public class MathRound implements Listener {
-    public static boolean isActivated = false;
+    protected static boolean isActivated = false;
 
     private static HashMap<String, Integer> examples = new HashMap<String, Integer>();
-    private static List<String> keysAsArray = new ArrayList<String>(examples.keySet());
     private static int result = 0;
     private static String example = null;
 
@@ -44,8 +44,10 @@ public class MathRound implements Listener {
         examples.put("16 = 2х", 8);
     }
 
+    private static List<String> keysAsArray = new ArrayList<String>(examples.keySet());
+
     public static void mathRound() {
-        example = keysAsArray.get(new Random().nextInt(keysAsArray.size()));
+        example = keysAsArray.get(Utilities.getRandom(0, keysAsArray.size()));
         result = examples.get(example);
 
         isActivated = true;
@@ -85,7 +87,7 @@ public class MathRound implements Listener {
             RoundSystem.addScore(player, -5);
         }
 
-        event.setMessage(ChatColor.BLUE + "<Здесь была попытка>");
+        event.setCancelled(true);
 
         mathRoundNext(player);
     }

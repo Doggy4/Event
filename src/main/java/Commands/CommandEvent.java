@@ -1,12 +1,14 @@
 package Commands;
 
 import Game.GameCycle;
+import NBS.NoteBlockPlayer;
 import PluginUtilities.Chat;
 import PluginUtilities.LocationUtulities;
 import PluginUtilities.MapRebuild;
 import PluginUtilities.Utilities;
 import QueueSystem.MainScoreBoard;
 import QueueSystem.Queue;
+import WebHooks.DiscordWebhook;
 import event.main.Main;
 import org.bukkit.*;
 import org.bukkit.command.Command;
@@ -62,8 +64,10 @@ public class CommandEvent implements TabExecutor {
             broadcast(Arrays.copyOfRange(args, 1, args.length));
         else if (args[0].equals("rebuild"))
             MapRebuild.loadSchematic("arena");
-        else if (args[0].equals("test")) {
-
+        else if (args[0].equals("music")) {
+            NoteBlockPlayer.playerMusic(player, args[1]);
+        } else if (args[0].equals("test")) {
+            DiscordWebhook.roundStarted();
         } else
             return false;
         return true;
