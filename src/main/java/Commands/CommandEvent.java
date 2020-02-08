@@ -67,7 +67,7 @@ public class CommandEvent implements TabExecutor {
         else if (args[0].equals("music")) {
             NoteBlockPlayer.playMusic(player, args[1]);
         } else if (args[0].equals("test")) {
-            DiscordWebhook.roundStarted();
+            DiscordWebhook.roundEnded();
         } else
             return false;
         return true;

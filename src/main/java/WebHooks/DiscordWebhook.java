@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Array;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.*;
 
@@ -55,20 +56,20 @@ public class DiscordWebhook {
         }
     }
 
-    public static void roundStarted() {
+    public static void roundEnded() {
         try {
             DiscordWebhook webhook = new DiscordWebhook("https://discordapp.com/api/webhooks/673392196493377566/aVunHRsD_JzjelGwNMygS67vo_qM_Bu1diLbInwszQt82HAuQrVcG6382dDFiYkmlI2J");
             webhook.setAvatarUrl("https://i.ya-webdesign.com/images/a-letter-logo-design-png-7.png");
             webhook.setUsername("BestLife Official Event");
             webhook.setTts(false);
             webhook.addEmbed(new DiscordWebhook.EmbedObject()
-                    .setTitle("Начался новый раунд!")
+                    .setTitle("Раунд завершен!")
                     .setDescription("Ознакомиться с правилами эвента можно [тут](https://forum.excalibur-craft.ru/forum/125-BestLife/)!")
                     .setColor(Color.CYAN)
                     .addField("**Раунд:**", Chat.roundNames.get(aRoundSystem.randomGame), false)
                     .addField("**Количество раундов:**", aRoundSystem.round - 1 + "/" + aRoundSystem.roundCount, false)
                     .addField("**Количество игроков:**", Queue.redQueueList.size() + "/10", false)
-                    .addField("**Лидер по очкам:**", GameCycle.getWinner().getName(), false)
+                    .addField("**Текущий лидер:**", GameCycle.getWinner().getName() + " [" + aRoundSystem.roundStats.get(GameCycle.getWinner()) + "]", false)
                     .setThumbnail("https://i.ya-webdesign.com/images/a-letter-logo-design-png-7.png")
                     .setFooter("Мы вас ждем!", "https://i.ya-webdesign.com/images/a-letter-logo-design-png-7.png")
                     //.setImage("https://i.ya-webdesign.com/images/a-letter-logo-design-png-7.png")
@@ -218,7 +219,7 @@ public class DiscordWebhook {
         connection.setRequestMethod("POST");
 
         DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
-        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(wr, "UTF-8"));
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(wr, StandardCharsets.UTF_8));
         writer.write(json.toString());
         writer.flush();
         writer.close();

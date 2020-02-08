@@ -82,7 +82,7 @@ public class MainScoreBoard {
         divider3.setScore(-1);
     }
 
-    private static BossBar bossbar = Bukkit.getServer().createBossBar(ChatColor.GOLD + "Ожидание...", BarColor.BLUE, BarStyle.SEGMENTED_20);
+    public static BossBar bossbar = Bukkit.getServer().createBossBar(ChatColor.GOLD + "Ожидание...", BarColor.BLUE, BarStyle.SEGMENTED_20);
 
     // Отсчет секунд до старта
     public static void countdown() {
@@ -126,6 +126,7 @@ public class MainScoreBoard {
     private static void timerBar(Player player) {
         bossbar.addPlayer(player);
         if (!GameCycle.isGameStarted) return;
+        MainScoreBoard.bossbar.setColor(BarColor.BLUE);
         bossbar.setTitle(ChatColor.AQUA + "До следующего раунда: " + (aRoundSystem.roundSeconds - aRoundSystem.curTicker));
         if ((aRoundSystem.roundSeconds - aRoundSystem.curTicker) * 1.0 / aRoundSystem.roundSeconds < 0)
             bossbar.setProgress(1);
@@ -136,6 +137,7 @@ public class MainScoreBoard {
 
     private static void countdownBar(Player player) {
         bossbar.setTitle(ChatColor.GREEN + " До начала игры: " + mainSecPreStart);
+        MainScoreBoard.bossbar.setColor(BarColor.GREEN);
         bossbar.setProgress(mainSecPreStart / 60.0);
         bossbar.setVisible(true);
         bossbar.addPlayer(player);

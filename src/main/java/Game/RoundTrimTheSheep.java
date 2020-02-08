@@ -2,6 +2,7 @@ package Game;
 
 import PluginUtilities.Chat;
 import PluginUtilities.Items;
+import PluginUtilities.MapRebuild;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
 import event.main.Main;
@@ -21,9 +22,9 @@ public class RoundTrimTheSheep implements Listener {
     private static DyeColor randomColor;
 
     protected static void trimTheSheep() {
-        aRoundSystem.roundSeconds = 30;
-
         isActivated = true;
+        aRoundSystem.roundSeconds = 30;
+        MapRebuild.loadSchematic("arena");
 
         randomColor = Utilities.getRandomColor();
 

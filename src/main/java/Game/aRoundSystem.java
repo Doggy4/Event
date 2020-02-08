@@ -14,7 +14,9 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import static PluginUtilities.Chat.divThick16;
 
@@ -76,8 +78,7 @@ public class aRoundSystem {
         for (Player player : Bukkit.getOnlinePlayers())
             player.playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 10, 1);
 
-        randomGame = Utilities.getRandom(12, 12);
-        DiscordWebhook.roundStarted();
+        randomGame = Utilities.getRandom(0, 14);
         switch (randomGame) {
             case 0:
                 RoundPlaceTheBlock.placeBlock();
@@ -121,6 +122,9 @@ public class aRoundSystem {
             case 13:
                 RoundSlimePvP.slimePvP();
                 break;
+            case 14:
+                RoundLavaFloor.lavaFloor();
+                break;
         }
     }
 
@@ -136,14 +140,12 @@ public class aRoundSystem {
             return;
         }
 
-        LinkedList<Map.Entry<Player, Integer>> list = new LinkedList<>(roundStats.entrySet());
-        Comparator<Map.Entry<Player, Integer>> comparator = Comparator.comparing(Map.Entry::getValue);
-        Collections.sort(list, comparator.reversed());
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            player.sendMessage(ChatColor.YELLOW + divThick16 + ChatColor.WHITE + "\nРаунд " + ChatColor.AQUA + round + ChatColor.WHITE + " завершен! \nСтатистика: \n" + ChatColor.GREEN + String.join("\n", getStats()) + ChatColor.YELLOW + "\n" + divThick16);
+        }
+        DiscordWebhook.roundEnded();
 
-        System.out.println(list);
-        // Сортировка, потом применение функции playerPlace()
         startRound();
-
     }
 
     private static void disableRoundEvents() {
@@ -162,6 +164,26 @@ public class aRoundSystem {
 
         if (RoundKnockEveryoneOff.isActivated) RoundKnockEveryoneOff.endKnockOff();
         if (RoundSlimePvP.isActivated) RoundSlimePvP.endSlimePvP();
+        if (RoundLavaFloor.isActivated) RoundLavaFloor.endLavaFloor();
+    }
+
+    public static List<String> getStats() {
+        List<String> stats = new ArrayList<String>();
+        List<Player> winners = new ArrayList<Player>();
+
+        for (Player player : Queue.redQueueList) {
+            int max = -1;
+            if (roundStats.get(player) > max && !(winners.contains(player))) {
+                max = roundStats.get(player);
+                winners.add(player);
+            }
+        }
+
+        for (int i = 0; i < 3; i++) {
+            stats.add((i + 1) + ". " + winners.get(i).getName() + " [" + roundStats.get(winners.get(i)) + "]");
+        }
+
+        return stats;
     }
 
     public static void addScore(Player player, int score) {
@@ -224,7 +246,7 @@ public class aRoundSystem {
     }
 
     public static void playerLose(Player loser) {
-        Chat.broadcastToEveryone(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Игрок " + loser.getName() + " проиграл!");
+        Chat.broadcastToEveryone(ChatColor.RED + "Игрок " + loser.getName() + " проиграл!");
 
         loser.setGameMode(GameMode.SPECTATOR);
         loser.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Вы проиграли!");

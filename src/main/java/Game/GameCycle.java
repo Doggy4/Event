@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
+import org.bukkit.boss.BarColor;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -56,6 +57,9 @@ public class GameCycle {
 
     public static void endGame() {
         DiscordWebhook.gameEnded();
+        MainScoreBoard.bossbar.setTitle(ChatColor.GOLD + "Ожидание...");
+        MainScoreBoard.bossbar.setColor(BarColor.YELLOW);
+        MainScoreBoard.bossbar.setProgress(1);
 
         isCommandStartEventTipped = false;
         isGameStarted = false;
@@ -65,10 +69,10 @@ public class GameCycle {
         Player winner = getWinner();
 
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-            onlinePlayer.sendTitle(ChatColor.GOLD + winner.getName(), ChatColor.BLUE + "победитель", 20, 40, 20);
-
             onlinePlayer.playSound(onlinePlayer.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 10, 1);
             onlinePlayer.spawnParticle(Particle.DRAGON_BREATH, onlinePlayer.getLocation(), 80);
+
+            onlinePlayer.sendTitle(ChatColor.GOLD + winner.getName(), ChatColor.BLUE + "победитель", 20, 40, 20);
             onlinePlayer.sendMessage(ChatColor.BLUE + "Игрок " + ChatColor.GOLD + winner.getName() + ChatColor.BLUE + " победитель!");
         }
 
