@@ -1,6 +1,7 @@
 package Commands;
 
 import Game.GameCycle;
+import Game.RoundHideUnderBlocks;
 import NBS.NoteBlockPlayer;
 import PluginUtilities.Chat;
 import PluginUtilities.LocationUtulities;
@@ -8,7 +9,6 @@ import PluginUtilities.MapRebuild;
 import PluginUtilities.Utilities;
 import QueueSystem.MainScoreBoard;
 import QueueSystem.Queue;
-import WebHooks.DiscordWebhook;
 import event.main.Main;
 import org.bukkit.*;
 import org.bukkit.command.Command;
@@ -67,7 +67,7 @@ public class CommandEvent implements TabExecutor {
         else if (args[0].equals("music")) {
             NoteBlockPlayer.playMusic(player, args[1]);
         } else if (args[0].equals("test")) {
-            DiscordWebhook.roundEnded();
+            RoundHideUnderBlocks.hideUnderBlocks();
         } else
             return false;
         return true;

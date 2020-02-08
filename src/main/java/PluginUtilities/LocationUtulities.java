@@ -5,10 +5,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class LocationUtulities {
 
@@ -63,5 +65,36 @@ public class LocationUtulities {
         location.setYaw((float) config.getDouble("spawn.yaw"));
 
         player.teleport(location);
+    }
+
+    public static List<Block> getblocksFromTwoPoints(Location loc1, Location loc2) {
+        List<Block> blocks = new ArrayList<Block>();
+
+        int topBlockX = (Math.max(loc1.getBlockX(), loc2.getBlockX()));
+        int bottomBlockX = (Math.min(loc1.getBlockX(), loc2.getBlockX()));
+
+        int topBlockY = (Math.max(loc1.getBlockY(), loc2.getBlockY()));
+        int bottomBlockY = (Math.min(loc1.getBlockY(), loc2.getBlockY()));
+
+        int topBlockZ = (Math.max(loc1.getBlockZ(), loc2.getBlockZ()));
+        int bottomBlockZ = (Math.min(loc1.getBlockZ(), loc2.getBlockZ()));
+
+        for (int x = bottomBlockX; x <= topBlockX; x++)
+            for (int z = bottomBlockZ; z <= topBlockZ; z++)
+                for (int y = bottomBlockY; y <= topBlockY; y++)
+                    blocks.add(loc1.getWorld().getBlockAt(x, y, z));
+
+        return blocks;
+    }
+
+    public static Location getSpawnLocation() {
+        FileConfiguration config = Main.main.getConfig();
+        double x = config.getDouble("spawn.x");
+        double y = config.getDouble("spawn.y");
+        double z = config.getDouble("spawn.z");
+        World world = Bukkit.getWorld(config.getString("spawn.world"));
+
+        Location location = new Location(world, x, y, z);
+        return location;
     }
 }
