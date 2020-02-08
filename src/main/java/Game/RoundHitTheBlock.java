@@ -126,10 +126,10 @@ public class RoundHitTheBlock implements Listener {
 
         if (hitBlock.getType().equals(targets[n])) {
             aRoundSystem.addScore(player, 1);
-            hitBlock.getWorld().spawnParticle(Particle.EXPLOSION_NORMAL, hitBlock.getLocation(), 10);
+            hitBlock.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, hitBlock.getLocation(), 10);
         } else if (hitBlock.getType().equals(bonusTarget)) {
             aRoundSystem.addScore(player, 5);
-            hitBlock.getWorld().spawnParticle(Particle.EXPLOSION_NORMAL, hitBlock.getLocation(), 10);
+            hitBlock.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, hitBlock.getLocation(), 10);
         }
     }
 }

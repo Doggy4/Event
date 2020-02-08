@@ -11,6 +11,7 @@ import org.bukkit.GameMode;
 import org.bukkit.Sound;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -55,7 +56,7 @@ public class aRoundSystem {
         }
 
         for (Entity entity : Bukkit.getWorld("world").getEntities()) {
-            if (!(entity instanceof Player && !(entity instanceof ArmorStand))) {
+            if (!(entity instanceof Player && !(entity instanceof ArmorStand)) && !(entity instanceof ItemFrame)) {
                 entity.remove();
             }
         }
@@ -75,7 +76,7 @@ public class aRoundSystem {
         for (Player player : Bukkit.getOnlinePlayers())
             player.playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 10, 1);
 
-        randomGame = Utilities.getRandom(11, 11);
+        randomGame = Utilities.getRandom(12, 12);
         DiscordWebhook.roundStarted();
         switch (randomGame) {
             case 0:

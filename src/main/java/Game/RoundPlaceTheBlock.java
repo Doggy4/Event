@@ -22,6 +22,10 @@ public class RoundPlaceTheBlock implements Listener {
     private static World world = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world"));
     private static ArrayList<Material> materials = Items.materials;
 
+    static {
+        materials.removeIf(material -> !material.isBlock());
+    }
+
     protected static void placeBlock() {
         isActivated = true;
         aRoundSystem.roundSeconds = 30;
