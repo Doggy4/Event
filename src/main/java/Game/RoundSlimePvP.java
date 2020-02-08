@@ -11,39 +11,41 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 
-public class RoundKnockEveryoneOff implements Listener {
+public class RoundSlimePvP implements Listener {
     protected static boolean isActivated = false;
 
-    protected static void knockEveryoneOff() {
+    protected static void slimePvP() {
         isActivated = true;
-        aRoundSystem.roundSeconds = 60;
+        aRoundSystem.roundSeconds = 20;
+        MapRebuild.loadSchematic("cactus-arena");
         GameRules.EntityDamageOff();
-        MapRebuild.loadSchematic("arena");
 
         for (Player player : Queue.redQueueList) {
-            player.getInventory().addItem(Items.stickEventKnockOff);
             gameRulesAnnouncement(player);
+            player.getInventory().addItem(Items.slimeEventSlimePvP);
         }
     }
 
-    private static void gameRulesAnnouncement(Player player) {
-        player.sendTitle(ChatColor.GREEN + "Столкните соперников", "в бездну", 40, 40, 40);
-        player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Столкните соперников в бездну!");
-    }
-
-    protected static void endKnockOff() {
+    protected static void endSlimePvP() {
         isActivated = false;
         for (Player player : Queue.redQueueList)
             if (player.getGameMode() != GameMode.SPECTATOR)
                 aRoundSystem.playerWin(player);
     }
 
+    private static void gameRulesAnnouncement(Player player) {
+        player.sendTitle(ChatColor.GREEN + "Столкните соперников", "в кактусы", 40, 40, 40);
+        player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Столкните соперников в кактусы!");
+    }
+
     @EventHandler
-    public void onDamage(EntityDamageEvent event) {
+    public void onCactusHit(EntityDamageEvent event) {
         if (!isActivated) return;
         if (!(event.getEntity() instanceof Player)) return;
         Player player = (Player) event.getEntity();
-        if (event.getCause() == EntityDamageEvent.DamageCause.VOID) {
+        if (!(Queue.redQueueList.contains(player))) return;
+
+        if (event.getCause() == EntityDamageEvent.DamageCause.CONTACT) {
             aRoundSystem.playerLose(player);
             LocationUtulities.teleportToSpawn(player);
         }

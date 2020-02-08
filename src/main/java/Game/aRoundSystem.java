@@ -116,7 +116,10 @@ public class aRoundSystem {
                 RoundKnockEveryoneOff.knockEveryoneOff();
                 break;
             case 12:
-                RoundFuckingHarryPotter.harryPotter();
+                RoundHarryPotter.harryPotter();
+                break;
+            case 13:
+                RoundSlimePvP.slimePvP();
                 break;
         }
     }
@@ -140,6 +143,7 @@ public class aRoundSystem {
         System.out.println(list);
         // Сортировка, потом применение функции playerPlace()
         startRound();
+
     }
 
     private static void disableRoundEvents() {
@@ -154,7 +158,10 @@ public class aRoundSystem {
         RoundAnvilEscape.isActivated = false;
         RoundCakeParkour.isActivated = false;
         RoundMath.isActivated = false;
-        RoundKnockEveryoneOff.isActivated = false;
+        RoundHarryPotter.isActivated = false;
+
+        if (RoundKnockEveryoneOff.isActivated) RoundKnockEveryoneOff.endKnockOff();
+        if (RoundSlimePvP.isActivated) RoundSlimePvP.endSlimePvP();
     }
 
     public static void addScore(Player player, int score) {
@@ -217,7 +224,7 @@ public class aRoundSystem {
     }
 
     public static void playerLose(Player loser) {
-        Chat.broadcastToEveryone(ChatColor.RED + "Игрок " + loser.getName() + " проиграл!");
+        Chat.broadcastToEveryone(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Игрок " + loser.getName() + " проиграл!");
 
         loser.setGameMode(GameMode.SPECTATOR);
         loser.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Вы проиграли!");

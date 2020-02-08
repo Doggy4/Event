@@ -36,7 +36,8 @@ public final class Main extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new RoundCakeParkour(), this);
         this.getServer().getPluginManager().registerEvents(new RoundMath(), this);
         this.getServer().getPluginManager().registerEvents(new RoundKnockEveryoneOff(), this);
-        this.getServer().getPluginManager().registerEvents(new RoundFuckingHarryPotter(), this);
+        this.getServer().getPluginManager().registerEvents(new RoundHarryPotter(), this);
+        this.getServer().getPluginManager().registerEvents(new RoundSlimePvP(), this);
 
         MainScoreBoard.startPluginRunnable();
         this.saveDefaultConfig();

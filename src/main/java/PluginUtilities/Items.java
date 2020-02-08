@@ -107,7 +107,13 @@ public class Items {
     public static ItemStack stickEventKnockOff = new ItemStackConstructor(Material.STICK)
             .amount(1)
             .displayName(ChatColor.RED + "Турнирная палка")
-            .enchantment(Enchantment.KNOCKBACK, 10)
+            .enchantment(Enchantment.KNOCKBACK, 2)
+            .build();
+
+    public static ItemStack slimeEventSlimePvP = new ItemStackConstructor(Material.STICK)
+            .amount(1)
+            .displayName(ChatColor.RED + "Турнирный слизень")
+            .enchantment(Enchantment.KNOCKBACK, 2)
             .build();
 
     public static ItemStack ParticleSample = new ItemStackConstructor(Material.GRAY_STAINED_GLASS_PANE)
@@ -116,7 +122,7 @@ public class Items {
             .enchantment(Enchantment.DURABILITY, 10)
             .build();
 
-    public static ItemStack stickOfFuckingHarryPotter = new ItemStackConstructor(Material.BLAZE_ROD)
+    public static ItemStack stickEventHarryPotter = new ItemStackConstructor(Material.BLAZE_ROD)
             .amount(1)
             .displayName(ChatColor.RED + "Волшебная палочка")
             .enchantment(Enchantment.IMPALING, 1)
