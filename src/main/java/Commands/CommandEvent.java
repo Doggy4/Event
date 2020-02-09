@@ -1,7 +1,7 @@
 package Commands;
 
 import Game.GameCycle;
-import Game.RoundHideUnderBlocks;
+import Game.RoundJumpOfToilet;
 import NBS.NoteBlockPlayer;
 import PluginUtilities.Chat;
 import PluginUtilities.LocationUtulities;
@@ -67,7 +67,7 @@ public class CommandEvent implements TabExecutor {
         else if (args[0].equals("music")) {
             NoteBlockPlayer.playMusic(player, args[1]);
         } else if (args[0].equals("test")) {
-            RoundHideUnderBlocks.hideUnderBlocks();
+            RoundJumpOfToilet.setupArena();
         } else
             return false;
         return true;
