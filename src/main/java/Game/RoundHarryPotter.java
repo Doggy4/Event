@@ -1,5 +1,6 @@
 package Game;
 
+import PluginUtilities.CooldownManager;
 import PluginUtilities.Items;
 import PluginUtilities.MapRebuild;
 import QueueSystem.Queue;
@@ -23,10 +24,9 @@ public class RoundHarryPotter implements Listener {
 
     protected static boolean isActivated = false;
 
-    private static List<Player> cooldown = new ArrayList<Player>();
+    private final CooldownManager cooldownManager = new CooldownManager();
 
     protected static void harryPotter() {
-        cooldown.clear();
         isActivated = true;
         aRoundSystem.roundSeconds = 30;
         MapRebuild.loadSchematic("arena");
@@ -42,52 +42,53 @@ public class RoundHarryPotter implements Listener {
     public void onInteract(PlayerInteractEvent e) {
         if (!isActivated) return;
         Player player = e.getPlayer();
-        if (!(Queue.redQueueList.contains(player))) return;
-        if (cooldown.contains(player)) {
-            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Пожалуйста, подождите!");
-            return;
-        }
-        cooldown.add(player);
-        if (e.getItem() == null) return;
         ItemStack item = e.getItem();
+        int cd = 2;
+        int timeLeft = cooldownManager.getCooldown(player.getUniqueId(), "PotterWandCD");
 
-        if (e.getAction() == Action.RIGHT_CLICK_AIR && item.getItemMeta().getDisplayName().equals(Items.stickEventHarryPotter.getItemMeta().getDisplayName())) {
-            new BukkitRunnable() {
-                double t = 0;
-                Location location = player.getLocation();
-                World world = location.getWorld();
-                Vector direction = location.getDirection().normalize();
+        if (!(Queue.redQueueList.contains(player))) return;
+        if (e.getItem() == null) return;
+        if (timeLeft == 0) {
+            if (e.getAction() == Action.RIGHT_CLICK_AIR && item.getItemMeta().getDisplayName().equals(Items.stickEventHarryPotter.getItemMeta().getDisplayName())) {
+                cooldownManager.setCooldown(player.getUniqueId(), "PotterWandCD", cd);
+                new BukkitRunnable() {
+                    double t = 16;
+                    Location location = player.getLocation();
+                    World world = location.getWorld();
+                    Vector direction = location.getDirection().normalize();
 
-                public void run() {
-                    t += 0.5;
+                    public void run() {
+                        double x = direction.getX() * t;
+                        double y = direction.getY() * t + 1.5;
+                        double z = direction.getZ() * t;
 
-                    double x = direction.getX() * t;
-                    double y = direction.getY() * t + 1.5;
-                    double z = direction.getZ() * t;
+                        location.add(x, y, z);
+                        location.getWorld().spawnParticle(Particle.END_ROD, location, 0, 0, 0, 0, 1);
+                        Collection<Entity> nearbyEntities = world.getNearbyEntities(location, 0, 0, 0);
+                        location.subtract(x, y, z);
 
-                    location.add(x, y, z);
-                    location.getWorld().spawnParticle(Particle.END_ROD, location, 0, 0, 0, 0, 1);
-                    Collection<Entity> nearbyEntities = world.getNearbyEntities(location, 0, 0, 0);
-                    location.subtract(x, y, z);
+                        for (Entity entity : nearbyEntities) {
+                            if (!(entity instanceof Player)) return;
+                            Player hited = ((Player) entity).getPlayer();
+                            if (hited == player) return;
 
-                    for (Entity entity : nearbyEntities) {
-                        if (!(entity instanceof Player)) return;
-                        Player hited = ((Player) entity).getPlayer();
-                        if (hited == player) return;
+                            aRoundSystem.addScore(player, 1);
+                            aRoundSystem.addScore(hited, -1);
 
-                        aRoundSystem.addScore(player, 1);
-                        aRoundSystem.addScore(hited, -1);
+                            hited.getLocation().getWorld().spawnParticle(Particle.FLAME, hited.getLocation(), 0);
+                            hited.getLocation().getWorld().playSound(hited.getLocation(), Sound.ENTITY_VILLAGER_HURT, 2, 1);
+                        }
 
-                        hited.getLocation().getWorld().spawnParticle(Particle.FLAME, hited.getLocation(), 0);
-                        hited.getLocation().getWorld().playSound(hited.getLocation(), Sound.ENTITY_VILLAGER_HURT, 2, 1);
+                        t--;
+
+                        if (t == 0) {
+                            this.cancel();
+                        }
                     }
-
-                    if (t > 8) {
-                        cooldown.remove(player);
-                        this.cancel();
-                    }
-                }
-            }.runTaskTimer(Main.main, 0, 1);
+                }.runTaskTimer(Main.main, 0, 1);
+            }
+        } else {
+            player.sendMessage(ChatColor.DARK_RED + player.getDisplayName() + ChatColor.RED + " Похоже моя палочка еще не готова, еще " + ChatColor.DARK_RED + timeLeft + ChatColor.RED + " секунд.");
         }
     }
 }
