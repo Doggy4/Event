@@ -67,7 +67,7 @@ public class LocationUtulities {
         player.teleport(location);
     }
 
-    public static List<Block> getblocksFromTwoPoints(Location loc1, Location loc2) {
+    public static List<Block> getBlocksFromTwoPoints(Location loc1, Location loc2) {
         List<Block> blocks = new ArrayList<Block>();
 
         int topBlockX = (Math.max(loc1.getBlockX(), loc2.getBlockX()));
@@ -94,7 +94,19 @@ public class LocationUtulities {
         double z = config.getDouble("spawn.z");
         World world = Bukkit.getWorld(config.getString("spawn.world"));
 
-        Location location = new Location(world, x, y, z);
-        return location;
+        return new Location(world, x, y, z);
+    }
+
+    public static Location getCenter(Location loc) {
+        return new Location(loc.getWorld(),
+                getRelativeCoordination(loc.getBlockX()),
+                getRelativeCoordination(loc.getBlockY()),
+                getRelativeCoordination(loc.getBlockZ()));
+    }
+
+    private static double getRelativeCoordination(int i) {
+        double d = i;
+        d = d < 0 ? d - .5 : d + .5;
+        return d;
     }
 }

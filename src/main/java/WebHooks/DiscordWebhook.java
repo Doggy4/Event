@@ -52,7 +52,7 @@ public class DiscordWebhook {
             //.setUrl("https://forum.excalibur-craft.ru/forum/125-BestLife/"));
             webhook.execute();
         } catch (IOException e) {
-            Main.logError(e);
+            Main.main.getLogger().severe(e.getMessage());
         }
     }
 
@@ -77,7 +77,7 @@ public class DiscordWebhook {
             //.setUrl("https://forum.excalibur-craft.ru/forum/125-BestLife/"));
             webhook.execute();
         } catch (IOException e) {
-            Main.logError(e);
+            Main.main.getLogger().severe(e.getMessage());
         }
     }
 
@@ -101,7 +101,7 @@ public class DiscordWebhook {
             //.setUrl("https://forum.excalibur-craft.ru/forum/125-BestLife/"));
             webhook.execute();
         } catch (IOException e) {
-            Main.logError(e);
+            Main.main.getLogger().severe(e.getMessage());
         }
     }
 

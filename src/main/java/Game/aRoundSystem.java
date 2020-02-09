@@ -78,7 +78,7 @@ public class aRoundSystem {
         for (Player player : Bukkit.getOnlinePlayers())
             player.playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 10, 1);
 
-        randomGame = Utilities.getRandom(0, 14);
+        randomGame = Utilities.getRandom(14, 15);
         switch (randomGame) {
             case 0:
                 RoundPlaceTheBlock.placeBlock();
@@ -125,6 +125,9 @@ public class aRoundSystem {
             case 14:
                 RoundLavaFloor.lavaFloor();
                 break;
+            case 15:
+                RoundHideUnderBlocks.hideUnderBlocks();
+                break;
         }
     }
 
@@ -165,6 +168,7 @@ public class aRoundSystem {
         if (RoundKnockEveryoneOff.isActivated) RoundKnockEveryoneOff.endKnockOff();
         if (RoundSlimePvP.isActivated) RoundSlimePvP.endSlimePvP();
         if (RoundLavaFloor.isActivated) RoundLavaFloor.endLavaFloor();
+        if (RoundHideUnderBlocks.isActivated) RoundHideUnderBlocks.endHideUnderBlocks();
     }
 
     public static List<String> getStats() {
