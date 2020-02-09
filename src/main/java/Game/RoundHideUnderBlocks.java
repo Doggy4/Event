@@ -9,47 +9,75 @@ import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.util.Vector;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
+
+import java.util.List;
 
 public class RoundHideUnderBlocks implements Listener {
     protected static boolean isActivated = false;
 
+    private static World world = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world"));
+
+    private static Location loc1 = new Location(world, LocationUtulities.getSpawnLocation().getX() + 17, LocationUtulities.getSpawnLocation().getY() + 16, LocationUtulities.getSpawnLocation().getZ() + 16);
+    private static Location loc2 = new Location(world, LocationUtulities.getSpawnLocation().getX() - 15, LocationUtulities.getSpawnLocation().getY() + 16, LocationUtulities.getSpawnLocation().getZ() - 16);
+
+    private static List<Block> blocks = LocationUtulities.getBlocksFromTwoPoints(loc1, loc2);
+    private static BukkitTask runnable;
+
     public static void hideUnderBlocks() {
         isActivated = true;
         aRoundSystem.roundSeconds = 60;
-        MapRebuild.loadSchematic("arena");
         GameRules.EntityDamageOff();
 
-        World world = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world"));
 
-        for (int i = 0; i < 5; i++) {
-            int randX = Math.round((float) Main.main.getConfig().getDouble("spawn.x")) + Utilities.getRandom(0, 32) - 16;
-            int randZ = Math.round((float) Main.main.getConfig().getDouble("spawn.z")) + Utilities.getRandom(0, 32) - 16;
-            int y = Math.round((float) Main.main.getConfig().getDouble("spawn.y")) + 4;
+        runnable = new BukkitRunnable() {
 
-            world.getBlockAt(randX, y, randZ).setType(Material.DIORITE_SLAB);
-        }
+            @Override
+            public void run() {
+                MapRebuild.loadSchematic("hide-arena");
 
-        Location loc1 = new Location(world, LocationUtulities.getSpawnLocation().getX() + 16, LocationUtulities.getSpawnLocation().getY() + 16, LocationUtulities.getSpawnLocation().getZ() + 16);
-        Location loc2 = new Location(world, LocationUtulities.getSpawnLocation().getX() - 16, LocationUtulities.getSpawnLocation().getY() + 16, LocationUtulities.getSpawnLocation().getZ() - 16);
+                for (int i = 0; i < 8; i++) {
+                    int randX = Math.round((float) Main.main.getConfig().getDouble("spawn.x")) + Utilities.getRandom(0, 32) - 16;
+                    int randZ = Math.round((float) Main.main.getConfig().getDouble("spawn.z")) + Utilities.getRandom(0, 32) - 16;
+                    int y = Math.round((float) Main.main.getConfig().getDouble("spawn.y")) + 2;
 
+                    world.getBlockAt(randX, y, randZ).setType(Material.DIORITE_SLAB);
+                }
 
-        for (Player player : Queue.redQueueList) {
-            player.sendTitle(ChatColor.GREEN + "Спрячьтесь от", "снежков", 20, 20, 20);
-            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Спрячьтесь от снежков!");
+                for (Player player : Queue.redQueueList) {
+                    gameRulesAnnouncement(player);
+                }
 
-
-        }
-
-        for (Block block : LocationUtulities.getblocksFromTwoPoints(loc2, loc1)) {
-            Snowball snowball = world.spawn(block.getLocation(), Snowball.class);
-            Vector vector = new Vector();
-            snowball.setVelocity(vector);
-        }
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        for (Block block : blocks)
+                            if ((block.getX() + block.getZ()) % 2 == 0)
+                                world.spawn(LocationUtulities.getCenter(block.getLocation()), Snowball.class);
+                    }
+                }.runTaskLater(Main.main, 60);
+            }
+        }.runTaskTimer(Main.main, 40, 160);
     }
 
+    private static void gameRulesAnnouncement(Player player) {
+        player.sendTitle(ChatColor.GREEN + "Спрячьтесь от", "снежков", 20, 20, 20);
+        player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Спрячьтесь от снежков!");
+    }
+
+    protected static void endHideUnderBlocks() {
+        isActivated = false;
+        runnable.cancel();
+        for (Player player : Queue.redQueueList)
+            if (player.getGameMode() != GameMode.SPECTATOR)
+                aRoundSystem.playerWin(player);
+    }
+
+    @EventHandler
     public void onSnowball(EntityDamageEvent event) {
         if (!isActivated) return;
         if (!(event.getEntity() instanceof Player)) return;
@@ -59,4 +87,5 @@ public class RoundHideUnderBlocks implements Listener {
         if (event.getCause() == EntityDamageEvent.DamageCause.PROJECTILE)
             aRoundSystem.playerLose(player);
     }
+
 }
