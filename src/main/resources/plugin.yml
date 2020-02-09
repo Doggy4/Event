@@ -9,4 +9,7 @@ commands:
   event:
     usage: Неизвестная команда! Введите /event help
     description: Main Event Commands
+  image:
+    usage: Неизвестная команда! Введите /event help
+    description: Main Event Commands
 depend: [NoteBlockAPI]

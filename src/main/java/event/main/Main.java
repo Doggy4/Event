@@ -2,14 +2,20 @@ package event.main;
 
 
 import Game.*;
+import ImageMaps.FastSendTask;
+import ImageMaps.ImageMapCommands;
+import ImageMaps.ImageMaps;
 import PluginUtilities.InventoryConstructor;
 import QueueSystem.MainScoreBoard;
 import SvistoPerdelki.ParticleGUI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class Main extends JavaPlugin {
+import java.io.File;
+
+public final class Main extends JavaPlugin implements Listener {
 
     public static Main main;
 
@@ -20,6 +26,7 @@ public final class Main extends JavaPlugin {
 
         Bukkit.getLogger().info(ChatColor.GOLD + "[EVENT] Plugin enabled!");
         Bukkit.getPluginCommand("event").setExecutor(new Commands.CommandEvent());
+        Bukkit.getPluginCommand("image").setExecutor(new ImageMapCommands());
 
         this.getServer().getPluginManager().registerEvents(new MainPlayerHandler(), this);
         this.getServer().getPluginManager().registerEvents(new InventoryConstructor(), this);
@@ -39,20 +46,31 @@ public final class Main extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new RoundHarryPotter(), this);
         this.getServer().getPluginManager().registerEvents(new RoundSlimePvP(), this);
         this.getServer().getPluginManager().registerEvents(new RoundHideUnderBlocks(), this);
+        this.getServer().getPluginManager().registerEvents(this, this);
+        this.getServer().getPluginManager().registerEvents(new ImageMaps(), this);
 
+        if (!(new File(getDataFolder(), "images")).exists())
+            (new File(getDataFolder(), "images")).mkdirs();
+
+        int sendPerTicks = getConfig().getInt("sendPerTicks", 20);
+        int mapsPerSend = getConfig().getInt("mapsPerSend", 8);
+
+        ImageMaps.loadMaps();
+
+        ImageMaps.sendTask = new FastSendTask(this, mapsPerSend);
+        ImageMaps.sendTask.runTaskTimer(this, sendPerTicks, sendPerTicks);
 
         MainScoreBoard.startPluginRunnable();
         this.saveDefaultConfig();
-
     }
 
-    public static void logError(Exception e) {
-        Main.main.getServer().getLogger().severe("Error with DiscordWebhook " + e);
-        e.printStackTrace();
+    @Override
+    public void onDisable() {
+        ImageMaps.saveMaps();
+        getServer().getScheduler().cancelTasks(this);
     }
 
     public static boolean checkUrl(String url) {
-        Bukkit.broadcastMessage(url.trim());
         if (url.trim().isEmpty() || url.trim().equals("https://canary.discordapp.com/api/webhooks")) {
             Main.main.getServer().getLogger().severe("The Webhook URL is empty!");
             return false;

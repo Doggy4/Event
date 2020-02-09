@@ -82,7 +82,7 @@ public class MainScoreBoard {
         divider3.setScore(-1);
     }
 
-    public static BossBar bossbar = Bukkit.getServer().createBossBar(ChatColor.GOLD + "Ожидание...", BarColor.BLUE, BarStyle.SEGMENTED_20);
+    public static BossBar bossbar = Bukkit.getServer().createBossBar(ChatColor.GOLD + "Ожидание...", BarColor.YELLOW, BarStyle.SEGMENTED_20);
 
     // Отсчет секунд до старта
     public static void countdown() {

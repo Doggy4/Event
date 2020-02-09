@@ -25,6 +25,8 @@ public class BlackList {
         blacklist.add("HEAD");
         blacklist.add("WALL");
         blacklist.add("POTTED");
+        blacklist.add("LAVA");
+        blacklist.add("WATER");
     }
 
     public static boolean isItemBlocked(String item) {
