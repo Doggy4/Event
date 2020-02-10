@@ -10,8 +10,8 @@ import org.bukkit.block.Block;
 
 public class RoundJumpOfToilet {
 
-    final int HEIGHT = 33;
-    final int WEIGHT = 33;
+    final static int HEIGHT = 33;
+    final static int WEIGHT = 33;
 
     private static Material Q = Material.WHITE_WOOL;
     private static Material W = Material.ORANGE_WOOL;
@@ -30,7 +30,7 @@ public class RoundJumpOfToilet {
     private static Material G = Material.RED_WOOL;
     private static Material H = Material.BLACK_WOOL;
 
-    private Material defaultArena[][] = new Material[][] {
+    private static Material[][] defaultArena = new Material[][]{
             {Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q},
             {Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q},
             {Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q},
@@ -66,7 +66,7 @@ public class RoundJumpOfToilet {
             {Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q},
     };
 
-    private Material area1[][] = new Material[][] {
+    private static Material[][] area1 = new Material[][]{
             {Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q},
             {Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q},
             {Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q},
@@ -102,14 +102,14 @@ public class RoundJumpOfToilet {
             {Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q, Q},
     };
 
-    private void setupArena() {
+    public static void setupArena() {
         World world = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world"));
         Block blockPlaceLoc;
 
         for (int i = 0; i < HEIGHT; i++) {
             for (int j = 0; j < WEIGHT; j++) {
                 Location leftUpCorner = new Location(world, LocationUtulities.getSpawnLocation().getX() + 16, LocationUtulities.getSpawnLocation().getY() + 16, LocationUtulities.getSpawnLocation().getZ() + 16);
-                blockPlaceLoc = leftUpCorner.add((double) i,0, (double) j).getBlock();
+                blockPlaceLoc = leftUpCorner.add(i, 0, j).getBlock();
                 blockPlaceLoc.setType(area1[i][j]);
             }
         }
