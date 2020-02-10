@@ -1,6 +1,7 @@
 package PluginUtilities;
 
 import org.bukkit.Material;
+
 import java.awt.image.BufferedImage;
 
 public class GetMapFromImage {
@@ -33,37 +34,37 @@ public class GetMapFromImage {
                 int blue = (imgGrid[j][i]) & 0xff;
 
                 if (red == 255 && green == 255 && blue == 255)
-                    pattern[j][i] = Material.WHITE_WOOL;
+                    pattern[j][i] = Material.WHITE_TERRACOTTA;
                 else if (red == 255 && green == 165 && blue == 0)
-                    pattern[j][i] = Material.ORANGE_WOOL;
+                    pattern[j][i] = Material.ORANGE_TERRACOTTA;
                 else if (red == 255 && green == 0 && blue == 255)
-                    pattern[j][i] = Material.MAGENTA_WOOL;
+                    pattern[j][i] = Material.MAGENTA_TERRACOTTA;
                 else if (red == 173 && green == 216 && blue == 230)
-                    pattern[j][i] = Material.LIGHT_BLUE_WOOL;
+                    pattern[j][i] = Material.LIGHT_BLUE_TERRACOTTA;
                 else if (red == 255 && green == 255 && blue == 0)
-                    pattern[j][i] = Material.YELLOW_WOOL;
+                    pattern[j][i] = Material.YELLOW_TERRACOTTA;
                 else if (red == 0 && green == 255 && blue == 0)
-                    pattern[j][i] = Material.LIME_WOOL;
+                    pattern[j][i] = Material.LIME_TERRACOTTA;
                 else if (red == 255 && green == 192 && blue == 203)
-                    pattern[j][i] = Material.PINK_WOOL;
+                    pattern[j][i] = Material.PINK_TERRACOTTA;
                 else if (red == 128 && green == 128 && blue == 128)
-                    pattern[j][i] = Material.GRAY_WOOL;
+                    pattern[j][i] = Material.GRAY_TERRACOTTA;
                 else if (red == 211 && green == 211 && blue == 211)
-                    pattern[j][i] = Material.LIGHT_GRAY_WOOL;
+                    pattern[j][i] = Material.LIGHT_GRAY_TERRACOTTA;
                 else if (red == 0 && green == 255 && blue == 255)
-                    pattern[j][i] = Material.CYAN_WOOL;
+                    pattern[j][i] = Material.CYAN_TERRACOTTA;
                 else if (red == 128 && green == 0 && blue == 128)
-                    pattern[j][i] = Material.PURPLE_WOOL;
+                    pattern[j][i] = Material.PURPLE_TERRACOTTA;
                 else if (red == 0 && green == 0 && blue == 255)
-                    pattern[j][i] = Material.BLUE_WOOL;
+                    pattern[j][i] = Material.BLUE_TERRACOTTA;
                 else if (red == 165 && green == 42 && blue == 42)
-                    pattern[j][i] = Material.BROWN_WOOL;
+                    pattern[j][i] = Material.BROWN_TERRACOTTA;
                 else if (red == 0 && green == 128 && blue == 0)
-                    pattern[j][i] = Material.GREEN_WOOL;
+                    pattern[j][i] = Material.GREEN_TERRACOTTA;
                 else if (red == 255 && green == 0 && blue == 0)
-                    pattern[j][i] = Material.RED_WOOL;
+                    pattern[j][i] = Material.RED_TERRACOTTA;
                 else if (red == 0 && green == 0 && blue == 0)
-                    pattern[j][i] = Material.BLACK_WOOL;
+                    pattern[j][i] = Material.BLACK_TERRACOTTA;
                 else
                     pattern[j][i] = Material.BEDROCK;
 

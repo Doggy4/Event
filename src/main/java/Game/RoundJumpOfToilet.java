@@ -17,22 +17,30 @@ import java.io.IOException;
 
 public class RoundJumpOfToilet {
 
-    private static int random = Utilities.getRandom(1,1);
-    private static File imgFile = new File("areaPattern" + random + ".png");
+    public static void setupArena() {
+        int random = Utilities.getRandom(1, 1);
+        File imgFile = new File(Main.main.getDataFolder().getAbsolutePath() + "/plots/plot" + random + ".png");
 
-    private void setupArena() throws IOException {
         World world = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world"));
-        BufferedImage img = ImageIO.read(imgFile);
-        Material[][] woolMatrix = GetMapFromImage.makeWoolPattern(img);
-        Block blockPlaceLoc;
 
-        for (int i = 0; i < img.getHeight(); i++) {
-            for (int j = 0; j < img.getWidth(); j++) {
-                Location leftUpCorner = new Location(world, LocationUtulities.getSpawnLocation().getX() + 16, LocationUtulities.getSpawnLocation().getY() + 16, LocationUtulities.getSpawnLocation().getZ() + 16);
-                blockPlaceLoc = leftUpCorner.add((double) i,0, (double) j).getBlock();
-                blockPlaceLoc.setType(woolMatrix[i][j]);
-            }
+        try {
+            BufferedImage img = ImageIO.read(imgFile);
+            Material[][] woolMatrix = GetMapFromImage.makeWoolPattern(img);
+
+            Block blockPlaceLoc;
+
+            for (int i = 0; i < img.getHeight(); i++)
+                for (int j = 0; j < img.getWidth(); j++) {
+                    Location leftUpCorner = new Location(world, LocationUtulities.getSpawnLocation().getX() + 16, LocationUtulities.getSpawnLocation().getY() + 16, LocationUtulities.getSpawnLocation().getZ() + 16);
+                    blockPlaceLoc = leftUpCorner.add(i, 0, j).getBlock();
+                    blockPlaceLoc.setType(woolMatrix[i][j]);
+                }
+
+        } catch (IOException e) {
+            Main.main.getLogger().severe(e.getMessage());
         }
+
+
     }
 }
 
