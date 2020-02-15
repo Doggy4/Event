@@ -82,12 +82,10 @@ public class ImageMaps implements Listener {
                 xMod = -1;
                 break;
             default:
-                Main.main.getLogger().severe("Invalid block facing!");
                 return false;
         }
         BufferedImage image = loadImage(cache.getImage());
         if (image == null) {
-            Main.main.getLogger().severe("Invalid file!");
             return false;
         }
         Block b = block.getRelative(face);
@@ -108,7 +106,6 @@ public class ImageMaps implements Listener {
                     setItemFrame(b.getRelative(x * xMod, -y, x * zMod), image, face, x * 128, y * 128, cache);
             }
         } catch (IllegalArgumentException e) {
-            Main.main.getLogger().info("Error!");
             return false;
         }
         return true;
@@ -206,7 +203,7 @@ public class ImageMaps implements Listener {
         if (!placing.containsKey(e.getPlayer().getUniqueId()))
             return;
         if (e.getAction() == Action.RIGHT_CLICK_AIR) {
-            e.getPlayer().sendMessage("Отменено!");
+            e.getPlayer().sendMessage(ChatColor.RED + "Отменено!");
             placing.remove(e.getPlayer().getUniqueId());
             return;
         }

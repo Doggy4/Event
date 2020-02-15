@@ -2,9 +2,9 @@ package Commands;
 
 import Game.GameCycle;
 import Game.RoundJumpOfToilet;
+import ImageMaps.ImageMapCommands;
 import NBS.NoteBlockPlayer;
 import PluginUtilities.Chat;
-import PluginUtilities.LocationUtulities;
 import PluginUtilities.MapRebuild;
 import PluginUtilities.Utilities;
 import QueueSystem.MainScoreBoard;
@@ -17,6 +17,8 @@ import org.bukkit.command.TabExecutor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -24,9 +26,38 @@ import java.util.List;
 public class CommandEvent implements TabExecutor {
 
     public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
+
         if (args.length == 1) {
-            return Arrays.asList("help", "start", "setlobby", "setspawn", "broadcast", "test", "clear");
+            return Arrays.asList("help", "start", "setlobby", "setspawn", "broadcast", "test", "clear", "music", "build", "image");
         }
+
+        if (args.length == 2 && args[0].equals("music")) {
+            File[] files = new File(Main.main.getDataFolder().getAbsolutePath() + "/songs/").listFiles();
+            List<String> fileNames = new ArrayList<String>();
+            for (File file : files) {
+                fileNames.add(file.getName());
+            }
+            return fileNames;
+        }
+
+        if (args.length == 2 && args[0].equals("build")) {
+            File[] files = new File(Main.main.getDataFolder().getAbsolutePath() + "/schematics/").listFiles();
+            List<String> fileNames = new ArrayList<String>();
+            for (File file : files) {
+                fileNames.add(file.getName());
+            }
+            return fileNames;
+        }
+
+        if (args.length == 2 && args[0].equals("image")) {
+            File[] files = new File(Main.main.getDataFolder().getAbsolutePath() + "/images/").listFiles();
+            List<String> fileNames = new ArrayList<String>();
+            for (File file : files) {
+                fileNames.add(file.getName());
+            }
+            return fileNames;
+        }
+
         return Collections.emptyList();
     }
 
@@ -46,30 +77,36 @@ public class CommandEvent implements TabExecutor {
 
         String divider = Chat.div;
 
-        if (args.length < 1 || args[0].equals("help"))
-            player.sendMessage(ChatColor.YELLOW + divider + ChatColor.RED + "Помощь:\n" + ChatColor.GREEN + "/event start" + ChatColor.YELLOW + " - начать эвент\n" + ChatColor.GREEN + "/event setspawn" + ChatColor.YELLOW + " - установить спавн\n" + ChatColor.GREEN + "/event setlobby" + ChatColor.YELLOW + " - установить лобби\n" + ChatColor.GREEN + "/event broadcast [сообщение]" + ChatColor.YELLOW + " - отправить оповещение\n" + ChatColor.YELLOW + divider);
-        else if (args[0].equals("start")) {
-            player.sendMessage(ChatColor.YELLOW + divider + ChatColor.GREEN + "Эвент запущен!\n" + ChatColor.YELLOW + divider);
+        if (args.length < 1 || args[0].equals("help")) {
+            player.sendMessage(ChatColor.YELLOW + divider + ChatColor.RED + "Помощь:\n" + ChatColor.GREEN + "/event start" + ChatColor.YELLOW + " - начать эвент\n" + ChatColor.GREEN + "/event setspawn" + ChatColor.YELLOW + " - установить спавн\n" + ChatColor.GREEN + "/event setlobby" + ChatColor.YELLOW + " - установить лобби\n" + ChatColor.GREEN + "/event broadcast [сообщение]" + ChatColor.YELLOW + " - отправить оповещение\n" + ChatColor.GREEN + "/event clear" + ChatColor.YELLOW + " - очистить очереди\n" + ChatColor.GREEN + "/event music [музыка] " + ChatColor.YELLOW + "- проиграть музыку\n" + ChatColor.GREEN + "/event build [арена]" + ChatColor.YELLOW + " - построить арену\n" + ChatColor.GREEN + "/event image [файл.png] " + ChatColor.YELLOW + " - настройка карты изображений\n" + ChatColor.YELLOW + divider);
+        } else if (args[0].equals("start")) {
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Эвент успешно запущен");
             GameCycle.isCommandStartEventTipped = true;
         } else if (args[0].equals("setspawn")) {
-            player.sendMessage(ChatColor.YELLOW + divider + ChatColor.GREEN + "Спавн установлен!\n" + LocationUtulities.getPlayerLocation(player.getLocation()) + ChatColor.YELLOW + "\n" + divider);
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Центр арены успешно установлен!");
             saveSpawnLoc(player.getLocation());
         } else if (args[0].equals("setlobby")) {
-            player.sendMessage(ChatColor.YELLOW + divider + ChatColor.GREEN + "Лобби установлено!\n" + LocationUtulities.getPlayerLocation(player.getLocation()) + ChatColor.YELLOW + "\n" + divider);
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Лобби успешно установлено!");
             saveLobbyLoc(player.getLocation());
         } else if (args[0].equals("clear")) {
-            player.sendMessage(ChatColor.YELLOW + divider + ChatColor.GREEN + "Очереди очищены!\n" + ChatColor.YELLOW + divider);
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Очереди успешно очищены!");
             clearQueues();
-        } else if (args[0].equals("broadcast"))
+        } else if (args[0].equals("broadcast")) {
             broadcast(Arrays.copyOfRange(args, 1, args.length));
-        else if (args[0].equals("rebuild"))
-            MapRebuild.loadSchematic("arena");
-        else if (args[0].equals("music")) {
+        } else if (args[0].equals("build")) {
+            MapRebuild.loadSchematic(args[1]);
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Арена успешно загружена!");
+        } else if (args[0].equals("music")) {
             NoteBlockPlayer.playMusic(player, args[1]);
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Мелодия успешно запущена!");
+        } else if (args[0].equals("image")) {
+            ImageMapCommands.imageMapCommand(player, args);
         } else if (args[0].equals("test")) {
             RoundJumpOfToilet.setupArena();
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Тест выполнен!");
         } else
             return false;
+
         return true;
     }
 

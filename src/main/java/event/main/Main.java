@@ -3,7 +3,6 @@ package event.main;
 
 import Game.*;
 import ImageMaps.FastSendTask;
-import ImageMaps.ImageMapCommands;
 import ImageMaps.ImageMaps;
 import PluginUtilities.InventoryConstructor;
 import QueueSystem.MainScoreBoard;
@@ -26,7 +25,6 @@ public final class Main extends JavaPlugin implements Listener {
 
         Bukkit.getLogger().info(ChatColor.GOLD + "[EVENT] Plugin enabled!");
         Bukkit.getPluginCommand("event").setExecutor(new Commands.CommandEvent());
-        Bukkit.getPluginCommand("image").setExecutor(new ImageMapCommands());
 
         this.getServer().getPluginManager().registerEvents(new MainPlayerHandler(), this);
         this.getServer().getPluginManager().registerEvents(new InventoryConstructor(), this);

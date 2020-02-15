@@ -14,9 +14,8 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static PluginUtilities.Chat.divThick16;
 
@@ -175,15 +174,22 @@ public class aRoundSystem {
         List<String> stats = new ArrayList<String>();
         List<Player> winners = new ArrayList<Player>();
 
-        for (Player player : Queue.redQueueList) {
-            int max = -1;
-            if (roundStats.get(player) > max && !(winners.contains(player))) {
-                max = roundStats.get(player);
-                winners.add(player);
-            }
+        Map<Player, Integer> sortedMap =
+                roundStats.entrySet().stream()
+                        .sorted(Map.Entry.comparingByValue())
+                        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                                (e1, e2) -> e1, LinkedHashMap::new));
+
+        for (Map.Entry<Player, Integer> entry : sortedMap.entrySet()) {
+            winners.add(entry.getKey());
+            Bukkit.broadcastMessage(entry.getKey().getName());
         }
 
-        for (int i = 0; i < 3; i++) {
+        int c = 3;
+        if (Queue.redQueueList.size() < 3)
+            c = Queue.redQueueList.size();
+
+        for (int i = 0; i < c; i++) {
             stats.add((i + 1) + ". " + winners.get(i).getName() + " [" + roundStats.get(winners.get(i)) + "]");
         }
 

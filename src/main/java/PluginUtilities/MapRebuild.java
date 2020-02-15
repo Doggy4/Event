@@ -24,9 +24,13 @@ public class MapRebuild {
     // Не знаю как, но это работает
     // Ребилд карты под схематик
 
-    public static void loadSchematic(String scematic) {
+    public static void loadSchematic(String schematic) {
 
-        File myfile = new File(Main.main.getDataFolder().getAbsolutePath() + "/schematics/" + scematic + ".schem");
+        File myfile = new File(Main.main.getDataFolder().getAbsolutePath() + "/schematics/" + schematic + ".schem");
+
+        if (schematic.endsWith(".schem"))
+            myfile = new File(Main.main.getDataFolder().getAbsolutePath() + "/schematics/" + schematic);
+
         ClipboardFormat format = ClipboardFormats.findByFile(myfile);
 
         try {

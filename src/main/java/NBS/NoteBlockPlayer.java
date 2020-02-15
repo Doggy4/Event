@@ -11,7 +11,7 @@ import java.io.File;
 public class NoteBlockPlayer {
 
     public static void playMusic(Player player, String songName) {
-        Song song = NBSDecoder.parse(new File(Main.main.getDataFolder().getAbsolutePath() + "/songs/" + songName + ".nbs"));
+        Song song = NBSDecoder.parse(new File(Main.main.getDataFolder().getAbsolutePath() + "/songs/" + songName));
         RadioSongPlayer rsp = new RadioSongPlayer(song);
         rsp.addPlayer(player);
         rsp.setPlaying(true);

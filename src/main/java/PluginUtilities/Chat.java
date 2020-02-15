@@ -28,7 +28,7 @@ public class Chat {
     public static String divThicker16 = "################\n";
     public static String divThicker32 = "################################\n";
 
-    public static String div = "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n";
+    public static String div = "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n";
 
 
     public static HashMap<String, ChatColor> colors = new HashMap<String, ChatColor>();

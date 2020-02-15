@@ -21,6 +21,7 @@ public class RoundPlaceTheBlock implements Listener {
     private static HashMap<Player, Location> playerRoom = new HashMap<Player, Location>();
     private static World world = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world"));
     private static ArrayList<Material> materials = Items.materials;
+    private static HashMap<Player, Material> univPlayerMaterialHashMap = new HashMap<Player, Material>();
 
     static {
         materials.removeIf(material -> !material.isBlock());
@@ -33,6 +34,8 @@ public class RoundPlaceTheBlock implements Listener {
         MapRebuild.loadSchematic("arena");
 
         for (Player player : Queue.redQueueList) {
+            univPlayerMaterialHashMap.clear();
+
             player.setGameMode(GameMode.SURVIVAL);
 
             Location location = (LocationUtulities.spawnLocations.get(Queue.redQueueList.indexOf(player)));
@@ -43,6 +46,8 @@ public class RoundPlaceTheBlock implements Listener {
 
             List<Material> blocks = materials.subList(randomMaterialIndex, randomMaterialIndex + 36);
             randomMaterialBlock = blocks.get(randomBlockIndex);
+
+            univPlayerMaterialHashMap.put(player, randomMaterialBlock);
 
             for (Material block : blocks) player.getInventory().addItem(new ItemStack(block, 1));
 
@@ -62,6 +67,8 @@ public class RoundPlaceTheBlock implements Listener {
         List<Material> blocks = materials.subList(randomMaterialIndex, randomMaterialIndex + 36);
         randomMaterialBlock = blocks.get(randomBlockIndex);
 
+        univPlayerMaterialHashMap.put(player, randomMaterialBlock);
+
         player.getInventory().clear();
         for (Material block : blocks) player.getInventory().addItem(new ItemStack(block, 1));
 
@@ -80,7 +87,7 @@ public class RoundPlaceTheBlock implements Listener {
         if (!(Queue.redQueueList.contains(player))) return;
 
 
-        if (event.getBlockPlaced().getType().equals(randomMaterialBlock)) {
+        if (event.getBlockPlaced().getType().equals(univPlayerMaterialHashMap.get(player))) {
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Задание выполнено!");
             aRoundSystem.addScore(player, 1);
             placeNext(player);
