@@ -4,6 +4,7 @@ import Game.GameCycle;
 import Game.RoundJumpOfToilet;
 import ImageMaps.ImageMapCommands;
 import NBS.NoteBlockPlayer;
+import PluginUtilities.ArmorStandConstructor;
 import PluginUtilities.Chat;
 import PluginUtilities.MapRebuild;
 import PluginUtilities.Utilities;
@@ -80,7 +81,7 @@ public class CommandEvent implements TabExecutor {
         if (args.length < 1 || args[0].equals("help")) {
             player.sendMessage(ChatColor.YELLOW + divider + ChatColor.RED + "Помощь:\n" + ChatColor.GREEN + "/event start" + ChatColor.YELLOW + " - начать эвент\n" + ChatColor.GREEN + "/event setspawn" + ChatColor.YELLOW + " - установить спавн\n" + ChatColor.GREEN + "/event setlobby" + ChatColor.YELLOW + " - установить лобби\n" + ChatColor.GREEN + "/event broadcast [сообщение]" + ChatColor.YELLOW + " - отправить оповещение\n" + ChatColor.GREEN + "/event clear" + ChatColor.YELLOW + " - очистить очереди\n" + ChatColor.GREEN + "/event music [музыка] " + ChatColor.YELLOW + "- проиграть музыку\n" + ChatColor.GREEN + "/event build [арена]" + ChatColor.YELLOW + " - построить арену\n" + ChatColor.GREEN + "/event image [файл.png] " + ChatColor.YELLOW + " - настройка карты изображений\n" + ChatColor.YELLOW + divider);
         } else if (args[0].equals("start")) {
-            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Эвент успешно запущен");
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Эвент успешно запущен!");
             GameCycle.isCommandStartEventTipped = true;
         } else if (args[0].equals("setspawn")) {
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Центр арены успешно установлен!");
@@ -101,6 +102,8 @@ public class CommandEvent implements TabExecutor {
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Мелодия успешно запущена!");
         } else if (args[0].equals("image")) {
             ImageMapCommands.imageMapCommand(player, args);
+        } else if (args[0].equals("statue")) {
+            ArmorStandConstructor.ArmorStandConstructor(player.getLocation(), args[1]);
         } else if (args[0].equals("test")) {
             RoundJumpOfToilet.setupArena();
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Тест выполнен!");

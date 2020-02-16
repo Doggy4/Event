@@ -1,15 +1,23 @@
 package PluginUtilities;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Skull;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 
 public class ArmorStandConstructor {
-    public static ArmorStand ArmorStandConstructor(Location location, ItemStack head, String name) {
+    public static ArmorStand ArmorStandConstructor(Location location, String name) {
+        ItemStack head = new ItemStack(Material.PLAYER_HEAD);
+        SkullMeta skullMeta = (SkullMeta) head.getItemMeta();
+
+        skullMeta.setOwningPlayer(Bukkit.getPlayer(name));
+        head.setItemMeta(skullMeta);
+
         ArmorStand stand = (ArmorStand) location.getWorld().spawnEntity(location, EntityType.ARMOR_STAND);
 
         ItemStack chestplate = new ItemStack(Material.LEATHER_CHESTPLATE, 1);
@@ -34,7 +42,7 @@ public class ArmorStandConstructor {
         stand.setLeggings(leggings);
         stand.setBoots(boots);
 
-        stand.setCustomName(name);
+        stand.setCustomName(ChatColor.GREEN + name);
         stand.setCustomNameVisible(true);
 
         return stand;
