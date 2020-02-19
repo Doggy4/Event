@@ -1,5 +1,6 @@
 package Game;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -81,6 +82,7 @@ public class GameRules implements Listener {
 
     @EventHandler
     public void onEntityDamage(EntityDamageEvent e) {
+        if (e.getEntity() instanceof Player) return;
         e.setCancelled(entityDamageRULE);
     }
 

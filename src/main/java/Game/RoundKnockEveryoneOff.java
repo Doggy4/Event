@@ -17,7 +17,7 @@ public class RoundKnockEveryoneOff implements Listener {
     protected static void knockEveryoneOff() {
         isActivated = true;
         aRoundSystem.roundSeconds = 60;
-        GameRules.EntityDamageOff();
+        GameRules.PlayerDamageOff();
         MapRebuild.loadSchematic("arena");
 
         for (Player player : Queue.redQueueList) {

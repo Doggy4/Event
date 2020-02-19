@@ -18,7 +18,7 @@ public class RoundSlimePvP implements Listener {
         isActivated = true;
         aRoundSystem.roundSeconds = 20;
         MapRebuild.loadSchematic("cactus-arena");
-        GameRules.EntityDamageOff();
+        GameRules.PlayerDamageOff();
 
         for (Player player : Queue.redQueueList) {
             gameRulesAnnouncement(player);

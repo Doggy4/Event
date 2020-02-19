@@ -1,7 +1,7 @@
 package Commands;
 
 import Game.GameCycle;
-import Game.RoundJumpOfToilet;
+import Game.RoundFeedBob;
 import ImageMaps.ImageMapCommands;
 import NBS.NoteBlockPlayer;
 import PluginUtilities.ArmorStandConstructor;
@@ -105,7 +105,7 @@ public class CommandEvent implements TabExecutor {
         } else if (args[0].equals("statue")) {
             ArmorStandConstructor.ArmorStandConstructor(player.getLocation(), args[1]);
         } else if (args[0].equals("test")) {
-            RoundJumpOfToilet.setupArena();
+            RoundFeedBob.spawnMob();
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Тест выполнен!");
         } else
             return false;

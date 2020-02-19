@@ -24,7 +24,7 @@ public class RoundAnvilEscape implements Listener {
         // Опционально:
         isActivated = true;
         aRoundSystem.roundSeconds = 15;
-        GameRules.EntityDamageOff();
+        GameRules.PlayerDamageOff();
         MapRebuild.loadSchematic("arena");
 
         for (Player player : Queue.redQueueList) {
