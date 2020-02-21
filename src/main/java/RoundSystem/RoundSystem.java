@@ -15,8 +15,9 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import static PluginUtilities.Chat.divThick16;
 
@@ -78,7 +79,7 @@ public class RoundSystem {
         for (Player player : Bukkit.getOnlinePlayers())
             player.playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 10, 1);
 
-        randomGame = Utilities.getRandom(0, 15);
+        randomGame = Utilities.getRandom(0, 16);
         switch (randomGame) {
             case 0:
                 RoundPlaceTheBlock.placeBlock();
@@ -128,6 +129,9 @@ public class RoundSystem {
             case 15:
                 RoundHideUnderBlocks.hideUnderBlocks();
                 break;
+            case 16:
+                RoundFeedBob.feedBob();
+                break;
         }
     }
 
@@ -175,23 +179,25 @@ public class RoundSystem {
         List<String> stats = new ArrayList<String>();
         List<Player> winners = new ArrayList<Player>();
 
-        Map<Player, Integer> sortedMap =
-                roundStats.entrySet().stream()
-                        .sorted(Map.Entry.comparingByValue())
-                        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
-                                (e1, e2) -> e1, LinkedHashMap::new));
+        int winnersAmount = 3;
+        if (Queue.redQueueList.size() < 3)
+            winnersAmount = Queue.redQueueList.size();
 
-        for (Map.Entry<Player, Integer> entry : sortedMap.entrySet()) {
-            winners.add(entry.getKey());
-            Bukkit.broadcastMessage(entry.getKey().getName());
+        for (int i = 0; i < winnersAmount; i++) {
+            Player winner = null;
+            int max = -1;
+
+            for (Player player : Queue.redQueueList) {
+                if (roundStats.get(player) > max && !winners.contains(player)) {
+                    max = roundStats.get(player);
+                    winner = player;
+                }
+            }
+            winners.add(winner);
         }
 
-        int c = 3;
-        if (Queue.redQueueList.size() < 3)
-            c = Queue.redQueueList.size();
-
-        for (int i = 0; i < c; i++) {
-            stats.add((i + 1) + ". " + winners.get(i).getName() + " [" + roundStats.get(winners.get(i)) + "]");
+        for (Player winner : winners) {
+            stats.add((winners.indexOf(winner) + 1) + ". " + winner.getName() + " [" + roundStats.get(winner) + "]");
         }
 
         return stats;

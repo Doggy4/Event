@@ -93,10 +93,8 @@ public class GameCycle {
         Queue.yellowQueueList.clear();
 
         for (int i = 0; i < 10; i++) {
+            if (Queue.greenQueueList.get(i) == null) break;
             Player greenPlayer = Queue.greenQueueList.get(i);
-
-            if (greenPlayer == null) break;
-
             Queue.greenQueueList.remove(i);
             Queue.yellowQueueList.add(greenPlayer);
 

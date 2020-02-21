@@ -1,13 +1,11 @@
 package PluginUtilities;
 
 import event.main.Main;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,5 +106,19 @@ public class LocationUtulities {
         double d = i;
         d = d < 0 ? d - .5 : d + .5;
         return d;
+    }
+
+    public static void vectorsBetweenLocations(Location fromLocation, Location toLocation, Particle particle) {
+        Vector target = new Vector(fromLocation.getX(), fromLocation.getY(), fromLocation.getZ());
+
+        toLocation.setDirection(target.subtract(toLocation.toVector()));
+        Vector increase = toLocation.getDirection();
+
+        int distance = (int) fromLocation.distance(toLocation) + 1;
+
+        for (int counter = 0; counter < distance; counter++) {
+            Location loc = toLocation.add(increase);
+            fromLocation.getWorld().spawnParticle(particle, loc, 0, 0, 0, 0, 1);
+        }
     }
 }

@@ -2,6 +2,7 @@ package RoundList;
 
 import Particles.Particles;
 import PluginUtilities.Chat;
+import PluginUtilities.LocationUtulities;
 import PluginUtilities.MapRebuild;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
@@ -15,7 +16,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Vector;
 
 import static PluginUtilities.Items.BowEventBow;
 import static PluginUtilities.Items.bowEventArrows;
@@ -26,11 +26,11 @@ public class RoundHitTheBlock implements Listener {
     private static Material[] targets = {Material.LAPIS_BLOCK, Material.GOLD_BLOCK, Material.DIAMOND_BLOCK, Material.IRON_BLOCK, Material.REDSTONE_BLOCK};
     private static Material bonusTarget = Material.GLOWSTONE;
 
-    private static int blockChance = Utilities.getRandom(0, 100);
     private static int n = (int) Math.floor(Math.random() * targets.length);
 
     private static Block block = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).getBlockAt(0, 0, 0);
     private static Block bonusBlock = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).getBlockAt(1, 1, 1);
+    private static BukkitRunnable runnable;
 
     public static void hitTheBlock() {
         // Опционально:
@@ -48,18 +48,11 @@ public class RoundHitTheBlock implements Listener {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (!(RoundSystem.isRoundTimerEnabled)) {
-                    bonusBlock.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, block.getLocation(), 1);
-                    bonusBlock.getWorld().playSound(block.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 10, 1);
-
-                    block.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, block.getLocation(), 1);
-                    block.getWorld().playSound(block.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 10, 1);
-
-                    this.cancel();
-                }
+                runnable = this;
 
                 block.setType(Material.AIR);
                 bonusBlock.setType(Material.AIR);
+
 
                 int rand_x = Main.main.getConfig().getInt("spawn.x") + Utilities.getRandom(1, 20) - 10;
                 int rand_z = Main.main.getConfig().getInt("spawn.z") + Utilities.getRandom(1, 20) - 10;
@@ -69,38 +62,20 @@ public class RoundHitTheBlock implements Listener {
 
                 World world = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world"));
 
+                LocationUtulities.vectorsBetweenLocations(LocationUtulities.getCenter(block.getLocation()), LocationUtulities.getCenter(new Location(block.getWorld(), rand_x, Main.main.getConfig().getInt("spawn.y") + 5, rand_z)), Particle.FLAME);
+                LocationUtulities.vectorsBetweenLocations(LocationUtulities.getCenter(bonusBlock.getLocation()), LocationUtulities.getCenter(new Location(bonusBlock.getWorld(), rand_bonus_x, Main.main.getConfig().getInt("spawn.y") + 10, rand_bonus_z)), Particle.FLAME);
+
+
                 block = world.getBlockAt(rand_x, Main.main.getConfig().getInt("spawn.y") + 5, rand_z);
                 bonusBlock = world.getBlockAt(rand_bonus_x, Main.main.getConfig().getInt("spawn.y") + 10, rand_bonus_z);
 
                 Location targetLoc = block.getLocation();
                 Location bonusLoc = bonusBlock.getLocation();
 
-                if (blockChance >= 35) bonusBlock.setType(bonusTarget);
+                bonusBlock.setType(bonusTarget);
                 block.setType(targets[n]);
 
                 double step = 0.5D;
-
-                Vector line = targetLoc.add(rand_x, 0, rand_z).toVector().subtract(targetLoc.toVector());
-                for (double d = 0; d < line.length(); d += step) {
-                    line.multiply(d);
-                    targetLoc.add(line);
-
-                    world.spawnParticle(Particle.END_ROD, targetLoc, 1);
-
-                    targetLoc.subtract(line);
-                    line.normalize();
-                }
-
-                Vector bonusLine = bonusLoc.add(rand_x, 0, rand_z).toVector().subtract(bonusLoc.toVector());
-                for (double d = 0; d < bonusLine.length(); d += step) {
-                    bonusLine.multiply(d);
-                    bonusLoc.add(bonusLine);
-
-                    world.spawnParticle(Particle.FLAME, targetLoc, 1);
-
-                    bonusLoc.subtract(bonusLine);
-                    bonusLine.normalize();
-                }
 
                 world.playSound(block.getLocation(), Sound.BLOCK_BELL_USE, 1, 2);
                 Particles.createBlockSplash(block.getLocation(), Particle.END_ROD);
@@ -114,6 +89,16 @@ public class RoundHitTheBlock implements Listener {
     private static void gameRulesAnnouncement(Player player) {
         player.sendTitle(ChatColor.GREEN + "Попадите в блок ", Chat.translate(targets[n].name()), 40, 40, 40);
         player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Попадите в блок " + ChatColor.LIGHT_PURPLE + "[" + Chat.translate(targets[n].name()) + "]");
+    }
+
+    public static void endHitTheBlock() {
+        bonusBlock.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, block.getLocation(), 1);
+        bonusBlock.getWorld().playSound(block.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 10, 1);
+
+        block.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, block.getLocation(), 1);
+        block.getWorld().playSound(block.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 10, 1);
+
+        runnable.cancel();
     }
 
     @EventHandler

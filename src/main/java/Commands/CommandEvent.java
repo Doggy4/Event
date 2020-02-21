@@ -107,7 +107,9 @@ public class CommandEvent implements TabExecutor {
             ArmorStandConstructor.ArmorStandConstructor(player.getLocation(), args[1]);
         } else if (args[0].equals("test")) {
             RoundFeedBob.spawnMob();
+            RoundFeedBob.spawnBob();
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Тест выполнен!");
+
         } else
             return false;
 

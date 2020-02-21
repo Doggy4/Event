@@ -1,5 +1,6 @@
 package RoundList;
 
+import PluginUtilities.InventoryUtils;
 import PluginUtilities.LocationUtulities;
 import PluginUtilities.MapRebuild;
 import PluginUtilities.Utilities;
@@ -11,17 +12,26 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Panda;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 
 // ~~~~~~~~ TEST ~~~~~~~~
-public class RoundFeedBob {
+public class RoundFeedBob implements Listener {
     public static boolean isActivated = false;
+    private static BukkitRunnable runnable;
 
     private static ArrayList<ItemStack> foods = new ArrayList<ItemStack>();
 
@@ -29,16 +39,19 @@ public class RoundFeedBob {
         for (Material mat : Material.values()) if (mat.isEdible()) foods.add(new ItemStack(mat));
     }
 
-    protected static void DropTheItem() {
+    public static void feedBob() {
         // Опциально:
         isActivated = true;
         RoundSystem.roundSeconds = 60;
         GameRules.EntityDamageOff();
-        MapRebuild.loadSchematic("arena");
+        MapRebuild.loadSchematic("default-arena");
 
-        for (Player player : Queue.redQueueList) {
+        for (Player player : Queue.redQueueList)
             gameRulesAnnouncement(player);
-        }
+
+        for (int i = 0; i < 20; i++)
+            spawnMob();
+        spawnBob();
 
     }
 
@@ -50,9 +63,7 @@ public class RoundFeedBob {
     public static void spawnMob() {
         Zombie zombie = (Zombie) Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).spawnEntity(LocationUtulities.getSpawnLocation(), EntityType.ZOMBIE);
 
-        ItemStack food = foods.get(Utilities.getRandom(0, foods.size()));
-        zombie.setCustomName(ChatColor.GREEN + "Вкусность");
-        zombie.setCustomNameVisible(true);
+        ItemStack food = foods.get(Utilities.getRandom(0, foods.size() - 1));
         zombie.setGlowing(true);
         zombie.setBaby(true);
 
@@ -60,6 +71,36 @@ public class RoundFeedBob {
         zombie.getEquipment().setItemInOffHand(food);
         zombie.getEquipment().setHelmet(new ItemStack(Material.FURNACE));
 
+        zombie.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 99999, 9999));
+
+        zombie.setCustomName(ChatColor.GREEN + "Вкусность");
+        zombie.setCustomNameVisible(true);
+    }
+
+    public static void spawnBob() {
+        Panda panda = (Panda) Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).spawnEntity(LocationUtulities.getSpawnLocation(), EntityType.PANDA);
+
+        panda.setGlowing(true);
+        panda.setBaby();
+
+        panda.setCustomName(ChatColor.YELLOW + "Боб :3");
+        panda.setCustomNameVisible(true);
+
+        panda.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 99999, 9999));
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                runnable = this;
+                panda.teleport(LocationUtulities.getSpawnLocation());
+            }
+        }.runTaskTimer(Main.main, 1, 1);
+    }
+
+    public static void endFeedBob() {
+        for (Player player : Queue.redQueueList)
+            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Поздравляю! Боб теперь сыт!");
+        runnable.cancel();
     }
 
     @EventHandler
@@ -68,7 +109,36 @@ public class RoundFeedBob {
         Player player = event.getPlayer();
         if (!(Queue.redQueueList.contains(player))) return;
 
+        if (event.getHand().equals(EquipmentSlot.HAND)) return;
+        if (event.getRightClicked().getCustomName() == null) return;
         if (!event.getRightClicked().getCustomName().contains("Боб")) return;
-        RoundSystem.addScore(player, 1);
+        if (player.getInventory().getItemInMainHand().getType().isEdible()) {
+            player.sendMessage(ChatColor.GOLD + "<Боб> " + ChatColor.WHITE + "Спасибо, что покормил меня, " + player.getName() + "! :3");
+            InventoryUtils.removeItem(player, player.getInventory().getItemInMainHand().getType(), 1);
+            RoundSystem.addScore(player, 1);
+        } else
+            player.sendMessage(ChatColor.GOLD + "<Боб> " + ChatColor.WHITE + "Я хочу кушать, это смешно, " + player.getName() + "? :c");
+
+    }
+
+    @EventHandler
+    public void onEntityDeath(EntityDeathEvent event) {
+        if (!isActivated) return;
+        if (event.getEntity().getCustomName() == null) return;
+        if (!(event.getEntity() instanceof Zombie)) return;
+        if (!event.getEntity().getCustomName().contains("Вкусность")) return;
+        spawnMob();
+        event.getDrops().clear();
+        event.setDroppedExp(0);
+        event.getEntity().getKiller().getInventory().addItem(foods.get(Utilities.getRandom(0, foods.size() - 1)));
+    }
+
+    @EventHandler
+    public void onEntityDamage(EntityDamageEvent event) {
+        if (!isActivated) return;
+        if (event.getEntity().getCustomName() == null) return;
+        if (!(event.getEntity() instanceof Panda)) return;
+        if (!event.getEntity().getCustomName().contains("Боб")) return;
+        event.setCancelled(true);
     }
 }

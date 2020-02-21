@@ -45,7 +45,7 @@ public final class Main extends JavaPlugin implements Listener {
         this.getServer().getPluginManager().registerEvents(new RoundHarryPotter(), this);
         this.getServer().getPluginManager().registerEvents(new RoundSlimePvP(), this);
         this.getServer().getPluginManager().registerEvents(new RoundHideUnderBlocks(), this);
-        this.getServer().getPluginManager().registerEvents(this, this);
+        this.getServer().getPluginManager().registerEvents(new RoundFeedBob(), this);
         this.getServer().getPluginManager().registerEvents(new ImageMaps(), this);
 
         if (!(new File(getDataFolder(), "images")).exists())

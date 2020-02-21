@@ -40,11 +40,7 @@ public class RoundTheRightCombination implements Listener {
         MapRebuild.loadSchematic("arena");
 
         for (Player player : Queue.redQueueList) {
-            int randX = Utilities.getRandom((int) LocationUtulities.getSpawnLocation().getX() + Utilities.getRandom(0, 32) - 17, (int) LocationUtulities.getSpawnLocation().getX() + Utilities.getRandom(0, 32) + 15);
-            int randZ = Utilities.getRandom((int) LocationUtulities.getSpawnLocation().getZ() + Utilities.getRandom(0, 32) - 16, (int) LocationUtulities.getSpawnLocation().getZ() + Utilities.getRandom(0, 32) + 16);
-
-            Location tpLoc = new Location(world, randX, y, randZ);
-            player.teleport(tpLoc);
+            LocationUtulities.teleportToSpawn(player);
 
             n = (int) Math.floor(Math.random() * blockToBePut.length);
             n2 = (int) Math.floor(Math.random() * blockToPlaceOn.length);
