@@ -1,9 +1,11 @@
-package Game;
+package RoundList;
 
 import PluginUtilities.Items;
 import PluginUtilities.LocationUtulities;
 import PluginUtilities.MapRebuild;
 import QueueSystem.Queue;
+import RoundSystem.GameRules;
+import RoundSystem.aRoundSystem;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -12,9 +14,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 public class RoundSlimePvP implements Listener {
-    protected static boolean isActivated = false;
+    public static boolean isActivated = false;
 
-    protected static void slimePvP() {
+    public static void slimePvP() {
         isActivated = true;
         aRoundSystem.roundSeconds = 20;
         MapRebuild.loadSchematic("cactus-arena");
@@ -26,7 +28,7 @@ public class RoundSlimePvP implements Listener {
         }
     }
 
-    protected static void endSlimePvP() {
+    public static void endSlimePvP() {
         isActivated = false;
         for (Player player : Queue.redQueueList)
             if (player.getGameMode() != GameMode.SPECTATOR)

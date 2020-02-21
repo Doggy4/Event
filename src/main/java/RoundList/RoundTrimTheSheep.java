@@ -1,10 +1,11 @@
-package Game;
+package RoundList;
 
 import PluginUtilities.Chat;
 import PluginUtilities.Items;
 import PluginUtilities.MapRebuild;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
+import RoundSystem.aRoundSystem;
 import event.main.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -16,12 +17,17 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerShearEntityEvent;
 
+import java.util.HashMap;
+
 public class RoundTrimTheSheep implements Listener {
-    protected static boolean isActivated = false;
+    public static boolean isActivated = false;
 
     private static DyeColor randomColor;
+    private static HashMap<Player, DyeColor> univPlayerColorHashMap = new HashMap<Player, DyeColor>();
 
-    protected static void trimTheSheep() {
+    public static void trimTheSheep() {
+        univPlayerColorHashMap.clear();
+
         isActivated = true;
         aRoundSystem.roundSeconds = 30;
         MapRebuild.loadSchematic("arena");
@@ -30,6 +36,7 @@ public class RoundTrimTheSheep implements Listener {
 
         for (Player player : Queue.redQueueList) {
             gameRulesAnnouncement(player);
+            univPlayerColorHashMap.put(player, randomColor);
             player.getInventory().addItem(Items.shearEventShears);
         }
 
@@ -50,6 +57,7 @@ public class RoundTrimTheSheep implements Listener {
 
     private static void nextSheep(Player player) {
         randomColor = Utilities.getRandomColor();
+        univPlayerColorHashMap.put(player, randomColor);
         gameRulesAnnouncement(player);
     }
 
@@ -65,7 +73,7 @@ public class RoundTrimTheSheep implements Listener {
         Player player = event.getPlayer();
         Sheep sheep = (Sheep) event.getEntity();
 
-        if (sheep.getColor() == randomColor) {
+        if (sheep.getColor() == univPlayerColorHashMap.get(player)) {
             aRoundSystem.addScore(player, 1);
         } else {
             aRoundSystem.addScore(player, -1);

@@ -1,9 +1,11 @@
-package Game;
+package RoundList;
 
 import PluginUtilities.LocationUtulities;
 import PluginUtilities.MapRebuild;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
+import RoundSystem.GameRules;
+import RoundSystem.aRoundSystem;
 import event.main.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -19,7 +21,7 @@ import java.util.ArrayList;
 
 // ~~~~~~~~ TEST ~~~~~~~~
 public class RoundFeedBob {
-    protected static boolean isActivated = false;
+    public static boolean isActivated = false;
 
     private static ArrayList<ItemStack> foods = new ArrayList<ItemStack>();
 
@@ -68,6 +70,5 @@ public class RoundFeedBob {
 
         if (!event.getRightClicked().getCustomName().contains("Боб")) return;
         aRoundSystem.addScore(player, 1);
-
     }
 }

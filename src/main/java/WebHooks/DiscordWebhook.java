@@ -1,9 +1,9 @@
 package WebHooks;
 
-import Game.GameCycle;
-import Game.aRoundSystem;
 import PluginUtilities.Chat;
 import QueueSystem.Queue;
+import RoundSystem.GameCycle;
+import RoundSystem.aRoundSystem;
 import event.main.Main;
 
 import javax.net.ssl.HttpsURLConnection;

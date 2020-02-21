@@ -1,8 +1,9 @@
 package QueueSystem;
 
-import Game.GameCycle;
-import Game.aRoundSystem;
 import PluginUtilities.Chat;
+import RoundSystem.GameCycle;
+import RoundSystem.GameState;
+import RoundSystem.aRoundSystem;
 import event.main.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -48,7 +49,7 @@ public class MainScoreBoard {
         Score alternative = null;
 
         // Если игра запущена:
-        if (GameCycle.isGameStarted) {
+        if (GameCycle.gameState == GameState.IN_GAME) {
             alternative = objective.getScore(ChatColor.GOLD + "Раунд: " + ChatColor.GREEN + aRoundSystem.round);
             Score divider2 = objective.getScore(ChatColor.AQUA + Chat.ScoreBoardDivider3);
             divider2.setScore(aRoundSystem.roundStats.get(GameCycle.getWinner()) + 1);
@@ -65,7 +66,7 @@ public class MainScoreBoard {
                     player.setLevel(GameCycle.gameStats.get(player));
                 }
             }
-        } else if (GameCycle.isCommandStartEventTipped)
+        } else if (GameCycle.gameState == GameState.STARTING)
             alternative = objective.getScore(ChatColor.BLUE + "До начала игры: " + ChatColor.YELLOW + mainSecPreStart);
         else
             gameState = objective.getScore(ChatColor.GOLD + "Статус игры: " + ChatColor.YELLOW + "Ожидание...");
@@ -125,7 +126,7 @@ public class MainScoreBoard {
 
     private static void timerBar(Player player) {
         bossbar.addPlayer(player);
-        if (!GameCycle.isGameStarted) return;
+        if (GameCycle.gameState != GameState.IN_GAME) return;
         MainScoreBoard.bossbar.setColor(BarColor.BLUE);
         bossbar.setTitle(ChatColor.AQUA + "До следующего раунда: " + (aRoundSystem.roundSeconds - aRoundSystem.curTicker));
         if ((aRoundSystem.roundSeconds - aRoundSystem.curTicker) * 1.0 / aRoundSystem.roundSeconds < 0)

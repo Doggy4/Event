@@ -1,4 +1,4 @@
-package SvistoPerdelki;
+package Particles;
 
 import org.bukkit.Location;
 import org.bukkit.Particle;

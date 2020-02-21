@@ -1,4 +1,4 @@
-package Game;
+package RoundList;
 
 import PluginUtilities.GetMapFromImage;
 import PluginUtilities.LocationUtulities;
@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class RoundJumpOfToilet {
+    public static boolean isActivated = false;
 
     public static void setupArena() {
         int random = Utilities.getRandom(1, 1);

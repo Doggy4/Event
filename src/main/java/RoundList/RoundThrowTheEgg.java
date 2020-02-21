@@ -1,8 +1,9 @@
-package Game;
+package RoundList;
 
 import PluginUtilities.MapRebuild;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
+import RoundSystem.aRoundSystem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -16,7 +17,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class RoundThrowTheEgg implements Listener {
-    protected static boolean isActivated = false;
+    public static boolean isActivated = false;
+
 
     private static ArrayList<String> phrases = new ArrayList<String>();
     private static ArrayList<Material> materials = new ArrayList<Material>(Arrays.asList(Material.values()));
@@ -38,7 +40,7 @@ public class RoundThrowTheEgg implements Listener {
         phrases.add("Кидай еще одно!");
     }
 
-    protected static void throwTheEgg() {
+    public static void throwTheEgg() {
         // Опционально:
         isActivated = true;
         aRoundSystem.roundSeconds = 15;

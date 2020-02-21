@@ -1,8 +1,9 @@
-package Game;
+package RoundList;
 
 import PluginUtilities.MapRebuild;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
+import RoundSystem.aRoundSystem;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,7 +16,7 @@ import java.util.List;
 import java.util.Random;
 
 public class RoundMath implements Listener {
-    protected static boolean isActivated = false;
+    public static boolean isActivated = false;
 
     private static HashMap<String, Integer> examples = new HashMap<String, Integer>();
     private static int result = 0;
@@ -45,7 +46,7 @@ public class RoundMath implements Listener {
 
     private static List<String> keysAsArray = new ArrayList<String>(examples.keySet());
 
-    protected static void math() {
+    public static void math() {
         // Опционально:
         isActivated = true;
         aRoundSystem.roundSeconds = 30;

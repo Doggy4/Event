@@ -1,9 +1,11 @@
-package Game;
+package RoundList;
 
 import PluginUtilities.Items;
 import PluginUtilities.LocationUtulities;
 import PluginUtilities.MapRebuild;
 import QueueSystem.Queue;
+import RoundSystem.GameRules;
+import RoundSystem.aRoundSystem;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -12,9 +14,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 public class RoundKnockEveryoneOff implements Listener {
-    protected static boolean isActivated = false;
+    public static boolean isActivated = false;
 
-    protected static void knockEveryoneOff() {
+    public static void knockEveryoneOff() {
         isActivated = true;
         aRoundSystem.roundSeconds = 60;
         GameRules.PlayerDamageOff();
@@ -31,7 +33,7 @@ public class RoundKnockEveryoneOff implements Listener {
         player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Столкните соперников в бездну!");
     }
 
-    protected static void endKnockOff() {
+    public static void endKnockOff() {
         isActivated = false;
         for (Player player : Queue.redQueueList)
             if (player.getGameMode() != GameMode.SPECTATOR)

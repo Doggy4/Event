@@ -1,8 +1,10 @@
-package Game;
+package RoundList;
 
 import PluginUtilities.MapRebuild;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
+import RoundSystem.GameRules;
+import RoundSystem.aRoundSystem;
 import event.main.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -18,9 +20,9 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class RoundAnvilEscape implements Listener {
-    protected static boolean isActivated = false;
+    public static boolean isActivated = false;
 
-    protected static void anvilEscape() {
+    public static void anvilEscape() {
         // Опционально:
         isActivated = true;
         aRoundSystem.roundSeconds = 15;

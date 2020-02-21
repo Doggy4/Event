@@ -1,8 +1,9 @@
-package Game;
+package RoundList;
 
 import PluginUtilities.MapRebuild;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
+import RoundSystem.aRoundSystem;
 import event.main.Main;
 import org.bukkit.*;
 import org.bukkit.entity.Cow;
@@ -17,7 +18,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public class RoundMilkTheCow implements Listener {
-    protected static boolean isActivated = false;
+    public static boolean isActivated = false;
 
     private static String commonCow = (ChatColor.GRAY + "[✶] Милка");
     private static String uncommonCow = (ChatColor.GREEN + "[✷] Милка");
@@ -30,7 +31,7 @@ public class RoundMilkTheCow implements Listener {
     private static int rareCowChance = 85;
     private static int specialCowChance = 95;
 
-    protected static void milkTheCow() {
+    public static void milkTheCow() {
         // Опционально:
         isActivated = true;
         aRoundSystem.roundSeconds = 30;

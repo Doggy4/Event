@@ -1,7 +1,8 @@
-package Game;
+package RoundList;
 
 import PluginUtilities.MapRebuild;
 import QueueSystem.Queue;
+import RoundSystem.aRoundSystem;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -11,9 +12,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 public class RoundCakeParkour implements Listener {
-    protected static boolean isActivated = false;
+    public static boolean isActivated = false;
 
-    protected static void cakeParkour() {
+    public static void cakeParkour() {
         // Опционально:
         isActivated = true;
         aRoundSystem.roundSeconds = 20;

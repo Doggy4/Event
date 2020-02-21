@@ -1,7 +1,9 @@
-package Game;
+package RoundList;
 
 import PluginUtilities.*;
 import QueueSystem.Queue;
+import RoundSystem.GameRules;
+import RoundSystem.aRoundSystem;
 import event.main.Main;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -15,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class RoundPlaceTheBlock implements Listener {
-    protected static boolean isActivated = false;
+    public static boolean isActivated = false;
 
     private static Material randomMaterialBlock;
     private static HashMap<Player, Location> playerRoom = new HashMap<Player, Location>();
@@ -27,7 +29,7 @@ public class RoundPlaceTheBlock implements Listener {
         materials.removeIf(material -> !material.isBlock());
     }
 
-    protected static void placeBlock() {
+    public static void placeBlock() {
         isActivated = true;
         aRoundSystem.roundSeconds = 30;
         GameRules.PlaceBlockOff();
@@ -86,16 +88,18 @@ public class RoundPlaceTheBlock implements Listener {
         Player player = event.getPlayer();
         if (!(Queue.redQueueList.contains(player))) return;
 
+        int score = 0;
 
         if (event.getBlockPlaced().getType().equals(univPlayerMaterialHashMap.get(player))) {
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Задание выполнено!");
-            aRoundSystem.addScore(player, 1);
-            placeNext(player);
+            score = 1;
         } else {
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Неверный блок!");
-            aRoundSystem.addScore(player, -1);
-            placeNext(player);
+            score = -1;
         }
+
+        aRoundSystem.addScore(player, score);
+        placeNext(player);
 
         event.setCancelled(true);
     }

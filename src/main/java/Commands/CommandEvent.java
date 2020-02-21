@@ -1,7 +1,5 @@
 package Commands;
 
-import Game.GameCycle;
-import Game.RoundFeedBob;
 import ImageMaps.ImageMapCommands;
 import NBS.NoteBlockPlayer;
 import PluginUtilities.ArmorStandConstructor;
@@ -10,6 +8,9 @@ import PluginUtilities.MapRebuild;
 import PluginUtilities.Utilities;
 import QueueSystem.MainScoreBoard;
 import QueueSystem.Queue;
+import RoundList.RoundFeedBob;
+import RoundSystem.GameCycle;
+import RoundSystem.GameState;
 import event.main.Main;
 import org.bukkit.*;
 import org.bukkit.command.Command;
@@ -82,7 +83,7 @@ public class CommandEvent implements TabExecutor {
             player.sendMessage(ChatColor.YELLOW + divider + ChatColor.RED + "Помощь:\n" + ChatColor.GREEN + "/event start" + ChatColor.YELLOW + " - начать эвент\n" + ChatColor.GREEN + "/event setspawn" + ChatColor.YELLOW + " - установить спавн\n" + ChatColor.GREEN + "/event setlobby" + ChatColor.YELLOW + " - установить лобби\n" + ChatColor.GREEN + "/event broadcast [сообщение]" + ChatColor.YELLOW + " - отправить оповещение\n" + ChatColor.GREEN + "/event clear" + ChatColor.YELLOW + " - очистить очереди\n" + ChatColor.GREEN + "/event music [музыка] " + ChatColor.YELLOW + "- проиграть музыку\n" + ChatColor.GREEN + "/event build [арена]" + ChatColor.YELLOW + " - построить арену\n" + ChatColor.GREEN + "/event image [файл.png] " + ChatColor.YELLOW + " - настройка карты изображений\n" + ChatColor.YELLOW + divider);
         } else if (args[0].equals("start")) {
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Эвент успешно запущен!");
-            GameCycle.isCommandStartEventTipped = true;
+            GameCycle.gameState = GameState.STARTING;
         } else if (args[0].equals("setspawn")) {
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Центр арены успешно установлен!");
             saveSpawnLoc(player.getLocation());

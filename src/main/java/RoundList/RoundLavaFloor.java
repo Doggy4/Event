@@ -1,9 +1,10 @@
-package Game;
+package RoundList;
 
 import PluginUtilities.LocationUtulities;
 import PluginUtilities.MapRebuild;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
+import RoundSystem.aRoundSystem;
 import event.main.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -15,11 +16,11 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 public class RoundLavaFloor {
-    protected static boolean isActivated = false;
+    public static boolean isActivated = false;
 
     private static BukkitTask runnable;
 
-    protected static void lavaFloor() {
+    public static void lavaFloor() {
         isActivated = true;
         aRoundSystem.roundSeconds = 30;
         MapRebuild.loadSchematic("lavafloor-arena");
@@ -58,7 +59,7 @@ public class RoundLavaFloor {
                 runTaskTimer(Main.main, 5, 5);
     }
 
-    protected static void endLavaFloor() {
+    public static void endLavaFloor() {
         isActivated = false;
         runnable.cancel();
         for (Player player : Queue.redQueueList)

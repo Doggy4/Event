@@ -1,10 +1,12 @@
-package Game;
+package RoundList;
 
 import PluginUtilities.Chat;
 import PluginUtilities.Items;
 import PluginUtilities.MapRebuild;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
+import RoundSystem.GameRules;
+import RoundSystem.aRoundSystem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -18,14 +20,14 @@ import java.util.HashMap;
 import java.util.List;
 
 public class RoundDropTheItem implements Listener {
-    protected static boolean isActivated = false;
+    public static boolean isActivated = false;
 
     private static HashMap<Player, Material> univPlayerMaterialHashMap = new HashMap<Player, Material>();
 
     private static Material randomMaterialBlock;
     private static ArrayList<Material> materials = Items.materials;
 
-    protected static void DropTheItem() {
+    public static void DropTheItem() {
         // Опциально:
         isActivated = true;
         aRoundSystem.roundSeconds = 30;

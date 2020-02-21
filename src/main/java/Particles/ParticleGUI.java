@@ -1,4 +1,4 @@
-package SvistoPerdelki;
+package Particles;
 
 import PluginUtilities.ItemStackConstructor;
 import PluginUtilities.Items;

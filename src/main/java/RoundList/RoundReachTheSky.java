@@ -1,7 +1,8 @@
-package Game;
+package RoundList;
 
 import PluginUtilities.MapRebuild;
 import QueueSystem.Queue;
+import RoundSystem.aRoundSystem;
 import event.main.Main;
 import org.bukkit.ChatColor;
 import org.bukkit.Particle;
@@ -9,9 +10,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class RoundReachTheSky {
-    protected static boolean isActivated = false;
+    public static boolean isActivated = false;
 
-    protected static void reachTheSky() {
+    public static void reachTheSky() {
         isActivated = true;
         aRoundSystem.roundSeconds = 15;
         MapRebuild.loadSchematic("arena");

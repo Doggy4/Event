@@ -1,4 +1,4 @@
-package Game;
+package RoundSystem;
 
 import PluginUtilities.Chat;
 import PluginUtilities.LocationUtulities;
@@ -19,20 +19,18 @@ public class GameCycle {
 
     public static HashMap<Player, Integer> gameStats = new HashMap<Player, Integer>();
 
-    public static boolean isGameStarted = false;
-    public static boolean isGameTimerStarted = false;
-    public static boolean isCommandStartEventTipped = false;
+    public static GameState gameState = GameState.WAITING;
 
     public static void mainCycle() {
         // START
 
-        if (isCommandStartEventTipped && !isGameStarted)
+        if (gameState == GameState.STARTING)
             MainScoreBoard.countdown();
 
-        else if (isGameStarted && !aRoundSystem.isRoundStarted && !aRoundSystem.isRoundTimerEnabled)
+        else if (gameState == GameState.IN_GAME && !aRoundSystem.isRoundStarted && !aRoundSystem.isRoundTimerEnabled)
             aRoundSystem.startRound();
 
-        else if (isGameStarted)
+        else if (gameState == GameState.IN_GAME)
             aRoundSystem.roundTimer();
     }
 
@@ -46,12 +44,13 @@ public class GameCycle {
         }
 
         for (Player player : Bukkit.getOnlinePlayers()) {
-            NBS.NoteBlockPlayer.playMusic(player, "MadWorld");
+            NBS.NoteBlockPlayer.playMusic(player, "MadWorld.nbs");
             player.sendTitle(ChatColor.BLUE + "Игра началась!", ChatColor.GOLD + "Играют: " + ChatColor.RED + "[RED]", 30, 30, 30);
             player.playSound(player.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_CURSE, 10, 1);
             player.sendMessage(ChatColor.AQUA + Chat.divThick16 + ChatColor.GOLD + "[EVENT] " + ChatColor.BLUE + "Игра началась!\n" + ChatColor.GOLD + "Играют: " + ChatColor.RED + "[RED]\n" + ChatColor.AQUA + Chat.divThick16);
         }
-        isGameStarted = true;
+
+        gameState = GameState.IN_GAME;
         DiscordWebhook.gameStarted();
     }
 
@@ -61,8 +60,7 @@ public class GameCycle {
         MainScoreBoard.bossbar.setColor(BarColor.YELLOW);
         MainScoreBoard.bossbar.setProgress(1);
 
-        isCommandStartEventTipped = false;
-        isGameStarted = false;
+        gameState = GameState.WAITING;
         MainScoreBoard.mainSecPreStart = 60;
         aRoundSystem.round = 1;
 

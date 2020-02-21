@@ -1,9 +1,10 @@
-package Game;
+package RoundList;
 
 import PluginUtilities.CooldownManager;
 import PluginUtilities.Items;
 import PluginUtilities.MapRebuild;
 import QueueSystem.Queue;
+import RoundSystem.aRoundSystem;
 import event.main.Main;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
@@ -16,17 +17,15 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 public class RoundHarryPotter implements Listener {
 
-    protected static boolean isActivated = false;
+    public static boolean isActivated = false;
 
     private final CooldownManager cooldownManager = new CooldownManager();
 
-    protected static void harryPotter() {
+    public static void harryPotter() {
         isActivated = true;
         aRoundSystem.roundSeconds = 30;
         MapRebuild.loadSchematic("arena");

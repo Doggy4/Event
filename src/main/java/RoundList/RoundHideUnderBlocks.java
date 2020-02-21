@@ -1,9 +1,11 @@
-package Game;
+package RoundList;
 
 import PluginUtilities.LocationUtulities;
 import PluginUtilities.MapRebuild;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
+import RoundSystem.GameRules;
+import RoundSystem.aRoundSystem;
 import event.main.Main;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -18,7 +20,7 @@ import org.bukkit.scheduler.BukkitTask;
 import java.util.List;
 
 public class RoundHideUnderBlocks implements Listener {
-    protected static boolean isActivated = false;
+    public static boolean isActivated = false;
 
     private static World world = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world"));
 
@@ -69,7 +71,7 @@ public class RoundHideUnderBlocks implements Listener {
         player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Спрячьтесь от снежков!");
     }
 
-    protected static void endHideUnderBlocks() {
+    public static void endHideUnderBlocks() {
         isActivated = false;
         runnable.cancel();
         for (Player player : Queue.redQueueList)

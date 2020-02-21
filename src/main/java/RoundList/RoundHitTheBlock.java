@@ -1,10 +1,11 @@
-package Game;
+package RoundList;
 
+import Particles.Particles;
 import PluginUtilities.Chat;
 import PluginUtilities.MapRebuild;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
-import SvistoPerdelki.Particles;
+import RoundSystem.aRoundSystem;
 import event.main.Main;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -20,7 +21,7 @@ import static PluginUtilities.Items.BowEventBow;
 import static PluginUtilities.Items.bowEventArrows;
 
 public class RoundHitTheBlock implements Listener {
-    protected static boolean isActivated = false;
+    public static boolean isActivated = false;
 
     private static Material[] targets = {Material.LAPIS_BLOCK, Material.GOLD_BLOCK, Material.DIAMOND_BLOCK, Material.IRON_BLOCK, Material.REDSTONE_BLOCK};
     private static Material bonusTarget = Material.GLOWSTONE;
@@ -31,7 +32,7 @@ public class RoundHitTheBlock implements Listener {
     private static Block block = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).getBlockAt(0, 0, 0);
     private static Block bonusBlock = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).getBlockAt(1, 1, 1);
 
-    protected static void hitTheBlock() {
+    public static void hitTheBlock() {
         // Опционально:
         isActivated = true;
         aRoundSystem.roundSeconds = 30;

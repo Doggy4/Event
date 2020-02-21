@@ -1,10 +1,12 @@
-package Game;
+package RoundList;
 
+import Particles.Particles;
 import PluginUtilities.Chat;
 import PluginUtilities.MapRebuild;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
-import SvistoPerdelki.Particles;
+import RoundSystem.GameRules;
+import RoundSystem.aRoundSystem;
 import event.main.Main;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -16,7 +18,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.HashMap;
 
 public class RoundTheRightCombination implements Listener {
-    protected static boolean isActivated = false;
+    public static boolean isActivated = false;
 
     private static Material[] blockToBePut = {Material.WHITE_WOOL, Material.ORANGE_WOOL, Material.MAGENTA_WOOL, Material.LIGHT_BLUE_WOOL, Material.YELLOW_WOOL, Material.LIME_WOOL, Material.PINK_WOOL, Material.GRAY_WOOL, Material.LIGHT_GRAY_WOOL};
     private static Material[] blockToPlaceOn = {Material.LIGHT_GRAY_WOOL, Material.CYAN_WOOL, Material.PURPLE_WOOL, Material.BLUE_WOOL, Material.BROWN_WOOL, Material.BROWN_WOOL, Material.GREEN_WOOL, Material.RED_WOOL, Material.BLACK_WOOL};
@@ -30,7 +32,7 @@ public class RoundTheRightCombination implements Listener {
     private static int n;
     private static int n2;
 
-    protected static void rightCombination() {
+    public static void rightCombination() {
         aRoundSystem.roundSeconds = 30;
         isActivated = true;
         GameRules.PlaceBlockOff();

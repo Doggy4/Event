@@ -1,4 +1,4 @@
-package Game;
+package RoundSystem;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

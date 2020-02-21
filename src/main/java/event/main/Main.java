@@ -1,12 +1,13 @@
 package event.main;
 
 
-import Game.*;
 import ImageMaps.FastSendTask;
 import ImageMaps.ImageMaps;
+import Particles.ParticleGUI;
 import PluginUtilities.InventoryConstructor;
 import QueueSystem.MainScoreBoard;
-import SvistoPerdelki.ParticleGUI;
+import RoundList.*;
+import RoundSystem.GameRules;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.Listener;
