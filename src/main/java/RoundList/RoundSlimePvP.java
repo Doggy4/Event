@@ -5,7 +5,7 @@ import PluginUtilities.LocationUtulities;
 import PluginUtilities.MapRebuild;
 import QueueSystem.Queue;
 import RoundSystem.GameRules;
-import RoundSystem.aRoundSystem;
+import RoundSystem.RoundSystem;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -18,7 +18,7 @@ public class RoundSlimePvP implements Listener {
 
     public static void slimePvP() {
         isActivated = true;
-        aRoundSystem.roundSeconds = 20;
+        RoundSystem.roundSeconds = 20;
         MapRebuild.loadSchematic("cactus-arena");
         GameRules.PlayerDamageOff();
 
@@ -32,7 +32,7 @@ public class RoundSlimePvP implements Listener {
         isActivated = false;
         for (Player player : Queue.redQueueList)
             if (player.getGameMode() != GameMode.SPECTATOR)
-                aRoundSystem.playerWin(player);
+                RoundSystem.playerWin(player);
     }
 
     private static void gameRulesAnnouncement(Player player) {
@@ -48,7 +48,7 @@ public class RoundSlimePvP implements Listener {
         if (!(Queue.redQueueList.contains(player))) return;
 
         if (event.getCause() == EntityDamageEvent.DamageCause.CONTACT) {
-            aRoundSystem.playerLose(player);
+            RoundSystem.playerLose(player);
             LocationUtulities.teleportToSpawn(player);
         }
     }

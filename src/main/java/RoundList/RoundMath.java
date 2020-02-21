@@ -3,7 +3,7 @@ package RoundList;
 import PluginUtilities.MapRebuild;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
-import RoundSystem.aRoundSystem;
+import RoundSystem.RoundSystem;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -49,7 +49,7 @@ public class RoundMath implements Listener {
     public static void math() {
         // Опционально:
         isActivated = true;
-        aRoundSystem.roundSeconds = 30;
+        RoundSystem.roundSeconds = 30;
         MapRebuild.loadSchematic("arena");
 
         example = keysAsArray.get(Utilities.getRandom(0, keysAsArray.size()));
@@ -78,10 +78,10 @@ public class RoundMath implements Listener {
 
         if (event.getMessage().equals(result + "")) {
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Ответ верный!");
-            aRoundSystem.addScore(player, 10);
+            RoundSystem.addScore(player, 10);
         } else {
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Ответ неверный!");
-            aRoundSystem.addScore(player, -5);
+            RoundSystem.addScore(player, -5);
         }
 
         event.setCancelled(true);

@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 import static PluginUtilities.Chat.divThick16;
 
-public class aRoundSystem {
+public class RoundSystem {
 
     public static HashMap<Player, Integer> roundStats = new HashMap<Player, Integer>();
 
@@ -42,7 +42,7 @@ public class aRoundSystem {
         curTicker++;
 
         if (roundSeconds <= curTicker) {
-            aRoundSystem.endRound();
+            RoundSystem.endRound();
             isRoundTimerEnabled = false;
         }
     }
@@ -138,7 +138,7 @@ public class aRoundSystem {
         for (Player player : Bukkit.getOnlinePlayers())
             player.playSound(player.getLocation(), Sound.BLOCK_BEACON_DEACTIVATE, 10, 1);
 
-        if (aRoundSystem.round == aRoundSystem.roundCount) {
+        if (RoundSystem.round == RoundSystem.roundCount) {
             GameCycle.endGame();
             return;
         }
@@ -272,8 +272,8 @@ public class aRoundSystem {
         player.sendTitle(ChatColor.GREEN + "Поздравляем!", "Вы победили!", 20, 20, 20);
         player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_COW_BELL, 10, 1);
 
-        aRoundSystem.addScore(player, 5);
-        aRoundSystem.playerReset(player);
+        RoundSystem.addScore(player, 5);
+        RoundSystem.playerReset(player);
     }
 
     public static void playerReset(Player player) {

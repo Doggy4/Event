@@ -3,7 +3,7 @@ package RoundList;
 import PluginUtilities.MapRebuild;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
-import RoundSystem.aRoundSystem;
+import RoundSystem.RoundSystem;
 import event.main.Main;
 import org.bukkit.*;
 import org.bukkit.entity.Cow;
@@ -34,7 +34,7 @@ public class RoundMilkTheCow implements Listener {
     public static void milkTheCow() {
         // Опционально:
         isActivated = true;
-        aRoundSystem.roundSeconds = 30;
+        RoundSystem.roundSeconds = 30;
         MapRebuild.loadSchematic("arena");
 
         for (Player player : Queue.redQueueList) {
@@ -112,7 +112,7 @@ public class RoundMilkTheCow implements Listener {
                 world.playSound(cowLoc, Sound.ENTITY_GENERIC_EXPLODE, 1, 1);
             }
 
-            aRoundSystem.addScore(player, aScore);
+            RoundSystem.addScore(player, aScore);
             cow.remove();
             spawnCow(player);
         }

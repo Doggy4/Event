@@ -5,7 +5,7 @@ import PluginUtilities.MapRebuild;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
 import RoundSystem.GameRules;
-import RoundSystem.aRoundSystem;
+import RoundSystem.RoundSystem;
 import event.main.Main;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -32,8 +32,8 @@ public class RoundHideUnderBlocks implements Listener {
 
     public static void hideUnderBlocks() {
         isActivated = true;
-        aRoundSystem.roundSeconds = 60;
-        GameRules.EntityDamageOff();
+        RoundSystem.roundSeconds = 60;
+        GameRules.PlayerDamageOff();
 
 
         runnable = new BukkitRunnable() {
@@ -58,8 +58,7 @@ public class RoundHideUnderBlocks implements Listener {
                     @Override
                     public void run() {
                         for (Block block : blocks)
-                            if ((block.getX() + block.getZ()) % 2 == 0)
-                                world.spawn(LocationUtulities.getCenter(block.getLocation()), Snowball.class);
+                            world.spawn(LocationUtulities.getCenter(block.getLocation()), Snowball.class);
                     }
                 }.runTaskLater(Main.main, 60);
             }
@@ -76,7 +75,7 @@ public class RoundHideUnderBlocks implements Listener {
         runnable.cancel();
         for (Player player : Queue.redQueueList)
             if (player.getGameMode() != GameMode.SPECTATOR)
-                aRoundSystem.playerWin(player);
+                RoundSystem.playerWin(player);
     }
 
     @EventHandler
@@ -87,7 +86,7 @@ public class RoundHideUnderBlocks implements Listener {
         if (!(Queue.redQueueList.contains(player))) return;
 
         if (event.getCause() == EntityDamageEvent.DamageCause.PROJECTILE)
-            aRoundSystem.playerLose(player);
+            RoundSystem.playerLose(player);
     }
 
 }

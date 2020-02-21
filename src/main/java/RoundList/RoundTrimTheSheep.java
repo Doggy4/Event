@@ -5,7 +5,7 @@ import PluginUtilities.Items;
 import PluginUtilities.MapRebuild;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
-import RoundSystem.aRoundSystem;
+import RoundSystem.RoundSystem;
 import event.main.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -29,7 +29,7 @@ public class RoundTrimTheSheep implements Listener {
         univPlayerColorHashMap.clear();
 
         isActivated = true;
-        aRoundSystem.roundSeconds = 30;
+        RoundSystem.roundSeconds = 30;
         MapRebuild.loadSchematic("arena");
 
         randomColor = Utilities.getRandomColor();
@@ -74,9 +74,9 @@ public class RoundTrimTheSheep implements Listener {
         Sheep sheep = (Sheep) event.getEntity();
 
         if (sheep.getColor() == univPlayerColorHashMap.get(player)) {
-            aRoundSystem.addScore(player, 1);
+            RoundSystem.addScore(player, 1);
         } else {
-            aRoundSystem.addScore(player, -1);
+            RoundSystem.addScore(player, -1);
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Неправильный цвет!");
         }
 

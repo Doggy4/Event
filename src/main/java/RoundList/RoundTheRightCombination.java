@@ -2,11 +2,12 @@ package RoundList;
 
 import Particles.Particles;
 import PluginUtilities.Chat;
+import PluginUtilities.LocationUtulities;
 import PluginUtilities.MapRebuild;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
 import RoundSystem.GameRules;
-import RoundSystem.aRoundSystem;
+import RoundSystem.RoundSystem;
 import event.main.Main;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -33,14 +34,14 @@ public class RoundTheRightCombination implements Listener {
     private static int n2;
 
     public static void rightCombination() {
-        aRoundSystem.roundSeconds = 30;
+        RoundSystem.roundSeconds = 30;
         isActivated = true;
         GameRules.PlaceBlockOff();
         MapRebuild.loadSchematic("arena");
 
         for (Player player : Queue.redQueueList) {
-            int randX = Math.round((float) Main.main.getConfig().getDouble("spawn.x")) + Utilities.getRandom(0, 32) - 16;
-            int randZ = Math.round((float) Main.main.getConfig().getDouble("spawn.z")) + Utilities.getRandom(0, 32) - 16;
+            int randX = Utilities.getRandom((int) LocationUtulities.getSpawnLocation().getX() + Utilities.getRandom(0, 32) - 17, (int) LocationUtulities.getSpawnLocation().getX() + Utilities.getRandom(0, 32) + 15);
+            int randZ = Utilities.getRandom((int) LocationUtulities.getSpawnLocation().getZ() + Utilities.getRandom(0, 32) - 16, (int) LocationUtulities.getSpawnLocation().getZ() + Utilities.getRandom(0, 32) + 16);
 
             Location tpLoc = new Location(world, randX, y, randZ);
             player.teleport(tpLoc);
@@ -93,7 +94,7 @@ public class RoundTheRightCombination implements Listener {
         if (!(Queue.redQueueList.contains(player))) return;
 
         if (event.getBlockPlaced().getType().equals(block1.get(player)) && event.getBlockAgainst().getType().equals(block2.get(player))) {
-            aRoundSystem.addScore(player, 1);
+            RoundSystem.addScore(player, 1);
             Location blockLoc = event.getBlockPlaced().getLocation();
             Particles.createBlockSplash(blockLoc, Particle.FIREWORKS_SPARK);
             player.playSound(blockLoc, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
@@ -101,7 +102,7 @@ public class RoundTheRightCombination implements Listener {
         } else {
             event.setCancelled(true);
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Неверный порядок!");
-            aRoundSystem.addScore(player, -1);
+            RoundSystem.addScore(player, -1);
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Поставьте " + Chat.colorsFromID.get(blockToBePut[n].name()) + Chat.translate(blockToBePut[n].name()) + ChatColor.WHITE + " на " + Chat.colorsFromID.get(blockToPlaceOn[n2].name()) + Chat.translate(blockToPlaceOn[n2].name()));
             Location blockLoc = event.getBlockPlaced().getLocation();
 

@@ -5,7 +5,7 @@ import PluginUtilities.MapRebuild;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
 import RoundSystem.GameRules;
-import RoundSystem.aRoundSystem;
+import RoundSystem.RoundSystem;
 import event.main.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -32,7 +32,7 @@ public class RoundFeedBob {
     protected static void DropTheItem() {
         // Опциально:
         isActivated = true;
-        aRoundSystem.roundSeconds = 60;
+        RoundSystem.roundSeconds = 60;
         GameRules.EntityDamageOff();
         MapRebuild.loadSchematic("arena");
 
@@ -69,6 +69,6 @@ public class RoundFeedBob {
         if (!(Queue.redQueueList.contains(player))) return;
 
         if (!event.getRightClicked().getCustomName().contains("Боб")) return;
-        aRoundSystem.addScore(player, 1);
+        RoundSystem.addScore(player, 1);
     }
 }

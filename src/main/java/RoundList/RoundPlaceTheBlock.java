@@ -3,7 +3,7 @@ package RoundList;
 import PluginUtilities.*;
 import QueueSystem.Queue;
 import RoundSystem.GameRules;
-import RoundSystem.aRoundSystem;
+import RoundSystem.RoundSystem;
 import event.main.Main;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -31,7 +31,7 @@ public class RoundPlaceTheBlock implements Listener {
 
     public static void placeBlock() {
         isActivated = true;
-        aRoundSystem.roundSeconds = 30;
+        RoundSystem.roundSeconds = 30;
         GameRules.PlaceBlockOff();
         MapRebuild.loadSchematic("arena");
 
@@ -98,7 +98,7 @@ public class RoundPlaceTheBlock implements Listener {
             score = -1;
         }
 
-        aRoundSystem.addScore(player, score);
+        RoundSystem.addScore(player, score);
         placeNext(player);
 
         event.setCancelled(true);

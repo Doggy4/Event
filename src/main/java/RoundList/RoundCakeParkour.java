@@ -2,7 +2,7 @@ package RoundList;
 
 import PluginUtilities.MapRebuild;
 import QueueSystem.Queue;
-import RoundSystem.aRoundSystem;
+import RoundSystem.RoundSystem;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -17,7 +17,7 @@ public class RoundCakeParkour implements Listener {
     public static void cakeParkour() {
         // Опционально:
         isActivated = true;
-        aRoundSystem.roundSeconds = 20;
+        RoundSystem.roundSeconds = 20;
         MapRebuild.loadSchematic("parkour-cake1");
 
         for (Player player : Queue.redQueueList)
@@ -36,7 +36,7 @@ public class RoundCakeParkour implements Listener {
         if (!(Queue.redQueueList.contains(player))) return;
 
         if (event.getClickedBlock().getType().equals(Material.CAKE)) {
-            aRoundSystem.addScore(player, 1);
+            RoundSystem.addScore(player, 1);
             player.setGameMode(GameMode.SPECTATOR);
         }
 

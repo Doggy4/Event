@@ -3,7 +3,7 @@ package QueueSystem;
 import PluginUtilities.Chat;
 import RoundSystem.GameCycle;
 import RoundSystem.GameState;
-import RoundSystem.aRoundSystem;
+import RoundSystem.RoundSystem;
 import event.main.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -50,17 +50,17 @@ public class MainScoreBoard {
 
         // Если игра запущена:
         if (GameCycle.gameState == GameState.IN_GAME) {
-            alternative = objective.getScore(ChatColor.GOLD + "Раунд: " + ChatColor.GREEN + aRoundSystem.round);
+            alternative = objective.getScore(ChatColor.GOLD + "Раунд: " + ChatColor.GREEN + RoundSystem.round);
             Score divider2 = objective.getScore(ChatColor.AQUA + Chat.ScoreBoardDivider3);
-            divider2.setScore(aRoundSystem.roundStats.get(GameCycle.getWinner()) + 1);
+            divider2.setScore(RoundSystem.roundStats.get(GameCycle.getWinner()) + 1);
 
             for (Player player : Queue.redQueueList) {
                 Score score = objective.getScore(ChatColor.GOLD + player.getName());
 
                 // Если раунд запущен
-                if (aRoundSystem.isRoundStarted) {
-                    score.setScore(aRoundSystem.roundStats.get(player));
-                    player.setLevel(aRoundSystem.roundStats.get(player));
+                if (RoundSystem.isRoundStarted) {
+                    score.setScore(RoundSystem.roundStats.get(player));
+                    player.setLevel(RoundSystem.roundStats.get(player));
                 } else {
                     score.setScore(GameCycle.gameStats.get(player));
                     player.setLevel(GameCycle.gameStats.get(player));
@@ -128,11 +128,11 @@ public class MainScoreBoard {
         bossbar.addPlayer(player);
         if (GameCycle.gameState != GameState.IN_GAME) return;
         MainScoreBoard.bossbar.setColor(BarColor.BLUE);
-        bossbar.setTitle(ChatColor.AQUA + "До следующего раунда: " + (aRoundSystem.roundSeconds - aRoundSystem.curTicker));
-        if ((aRoundSystem.roundSeconds - aRoundSystem.curTicker) * 1.0 / aRoundSystem.roundSeconds < 0)
+        bossbar.setTitle(ChatColor.AQUA + "До следующего раунда: " + (RoundSystem.roundSeconds - RoundSystem.curTicker));
+        if ((RoundSystem.roundSeconds - RoundSystem.curTicker) * 1.0 / RoundSystem.roundSeconds < 0)
             bossbar.setProgress(1);
         else
-            bossbar.setProgress((aRoundSystem.roundSeconds - aRoundSystem.curTicker) * 1.0 / aRoundSystem.roundSeconds);
+            bossbar.setProgress((RoundSystem.roundSeconds - RoundSystem.curTicker) * 1.0 / RoundSystem.roundSeconds);
         bossbar.setVisible(true);
     }
 

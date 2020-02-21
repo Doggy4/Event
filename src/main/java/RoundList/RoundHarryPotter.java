@@ -4,7 +4,7 @@ import PluginUtilities.CooldownManager;
 import PluginUtilities.Items;
 import PluginUtilities.MapRebuild;
 import QueueSystem.Queue;
-import RoundSystem.aRoundSystem;
+import RoundSystem.RoundSystem;
 import event.main.Main;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
@@ -27,7 +27,7 @@ public class RoundHarryPotter implements Listener {
 
     public static void harryPotter() {
         isActivated = true;
-        aRoundSystem.roundSeconds = 30;
+        RoundSystem.roundSeconds = 30;
         MapRebuild.loadSchematic("arena");
 
         for (Player player : Queue.redQueueList) {
@@ -71,8 +71,8 @@ public class RoundHarryPotter implements Listener {
                             Player hited = ((Player) entity).getPlayer();
                             if (hited == player) return;
 
-                            aRoundSystem.addScore(player, 1);
-                            aRoundSystem.addScore(hited, -1);
+                            RoundSystem.addScore(player, 1);
+                            RoundSystem.addScore(hited, -1);
 
                             hited.getLocation().getWorld().spawnParticle(Particle.FLAME, hited.getLocation(), 0);
                             hited.getLocation().getWorld().playSound(hited.getLocation(), Sound.ENTITY_VILLAGER_HURT, 2, 1);

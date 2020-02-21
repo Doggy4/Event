@@ -27,19 +27,19 @@ public class GameCycle {
         if (gameState == GameState.STARTING)
             MainScoreBoard.countdown();
 
-        else if (gameState == GameState.IN_GAME && !aRoundSystem.isRoundStarted && !aRoundSystem.isRoundTimerEnabled)
-            aRoundSystem.startRound();
+        else if (gameState == GameState.IN_GAME && !RoundSystem.isRoundStarted && !RoundSystem.isRoundTimerEnabled)
+            RoundSystem.startRound();
 
         else if (gameState == GameState.IN_GAME)
-            aRoundSystem.roundTimer();
+            RoundSystem.roundTimer();
     }
 
     public static void StartGame() {
         for (Player player : Queue.redQueueList) {
             player.setExp(0);
-            aRoundSystem.playerReset(player);
+            RoundSystem.playerReset(player);
             LocationUtulities.teleportToSpawn(player);
-            aRoundSystem.roundStats.put(player, 0);
+            RoundSystem.roundStats.put(player, 0);
             gameStats.put(player, 0);
         }
 
@@ -62,7 +62,7 @@ public class GameCycle {
 
         gameState = GameState.WAITING;
         MainScoreBoard.mainSecPreStart = 60;
-        aRoundSystem.round = 1;
+        RoundSystem.round = 1;
 
         Player winner = getWinner();
 
@@ -112,8 +112,8 @@ public class GameCycle {
         Player winner = null;
 
         for (Player player : Queue.redQueueList)
-            if (aRoundSystem.roundStats.get(player) > max) {
-                max = aRoundSystem.roundStats.get(player);
+            if (RoundSystem.roundStats.get(player) > max) {
+                max = RoundSystem.roundStats.get(player);
                 winner = player;
             }
 

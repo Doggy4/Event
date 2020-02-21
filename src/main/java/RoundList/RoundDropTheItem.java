@@ -6,7 +6,7 @@ import PluginUtilities.MapRebuild;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
 import RoundSystem.GameRules;
-import RoundSystem.aRoundSystem;
+import RoundSystem.RoundSystem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -30,7 +30,7 @@ public class RoundDropTheItem implements Listener {
     public static void DropTheItem() {
         // Опциально:
         isActivated = true;
-        aRoundSystem.roundSeconds = 30;
+        RoundSystem.roundSeconds = 30;
         GameRules.DropItemOff();
         MapRebuild.loadSchematic("arena");
 
@@ -79,11 +79,11 @@ public class RoundDropTheItem implements Listener {
 
         if (event.getItemDrop().getItemStack().getType().equals(univPlayerMaterialHashMap.get(player))) {
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Задание выполнено!");
-            aRoundSystem.addScore(player, 1);
+            RoundSystem.addScore(player, 1);
             dropNext(player);
         } else {
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Неверный предмет!");
-            aRoundSystem.addScore(player, -1);
+            RoundSystem.addScore(player, -1);
             dropNext(player);
         }
     }

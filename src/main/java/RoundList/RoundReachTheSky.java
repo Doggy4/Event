@@ -1,8 +1,9 @@
 package RoundList;
 
+import PluginUtilities.LocationUtulities;
 import PluginUtilities.MapRebuild;
 import QueueSystem.Queue;
-import RoundSystem.aRoundSystem;
+import RoundSystem.RoundSystem;
 import event.main.Main;
 import org.bukkit.ChatColor;
 import org.bukkit.Particle;
@@ -14,7 +15,7 @@ public class RoundReachTheSky {
 
     public static void reachTheSky() {
         isActivated = true;
-        aRoundSystem.roundSeconds = 15;
+        RoundSystem.roundSeconds = 15;
         MapRebuild.loadSchematic("arena");
 
         for (Player player : Queue.redQueueList) {
@@ -31,10 +32,10 @@ public class RoundReachTheSky {
                 }
 
                 for (Player player : Queue.redQueueList) {
-                    if (player.getLocation().getY() >= 150) {
+                    if (player.getLocation().getY() >= LocationUtulities.getSpawnLocation().getY() + 50) {
                         player.getWorld().spawnParticle(Particle.FIREWORKS_SPARK, player.getLocation(), 10);
                         player.setAllowFlight(false);
-                        aRoundSystem.addScore(player, 1);
+                        RoundSystem.addScore(player, 1);
                     }
                 }
             }

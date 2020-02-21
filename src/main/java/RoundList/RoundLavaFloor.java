@@ -4,7 +4,7 @@ import PluginUtilities.LocationUtulities;
 import PluginUtilities.MapRebuild;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
-import RoundSystem.aRoundSystem;
+import RoundSystem.RoundSystem;
 import event.main.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -22,7 +22,7 @@ public class RoundLavaFloor {
 
     public static void lavaFloor() {
         isActivated = true;
-        aRoundSystem.roundSeconds = 30;
+        RoundSystem.roundSeconds = 30;
         MapRebuild.loadSchematic("lavafloor-arena");
 
         for (Player player : Queue.redQueueList) {
@@ -49,7 +49,7 @@ public class RoundLavaFloor {
                 for (Player player : Queue.redQueueList)
                     if (player.getLocation().getY() < Math.round((float) Main.main.getConfig().getDouble("spawn.y") - 3)) {
                         if (!(player.getGameMode() == GameMode.SPECTATOR))
-                            aRoundSystem.playerLose(player);
+                            RoundSystem.playerLose(player);
                         LocationUtulities.teleportToSpawn(player);
                     }
             }
@@ -64,7 +64,7 @@ public class RoundLavaFloor {
         runnable.cancel();
         for (Player player : Queue.redQueueList)
             if (player.getGameMode() != GameMode.SPECTATOR)
-                aRoundSystem.playerWin(player);
+                RoundSystem.playerWin(player);
     }
 
 }

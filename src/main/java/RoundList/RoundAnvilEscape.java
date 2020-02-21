@@ -4,7 +4,7 @@ import PluginUtilities.MapRebuild;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
 import RoundSystem.GameRules;
-import RoundSystem.aRoundSystem;
+import RoundSystem.RoundSystem;
 import event.main.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -25,7 +25,7 @@ public class RoundAnvilEscape implements Listener {
     public static void anvilEscape() {
         // Опционально:
         isActivated = true;
-        aRoundSystem.roundSeconds = 15;
+        RoundSystem.roundSeconds = 15;
         GameRules.PlayerDamageOff();
         MapRebuild.loadSchematic("arena");
 
@@ -61,7 +61,7 @@ public class RoundAnvilEscape implements Listener {
     private static void endDodgeAnvils() {
         for (Player roundPlayer : Queue.redQueueList)
             if (roundPlayer.getGameMode() != GameMode.ADVENTURE)
-                aRoundSystem.playerWin(roundPlayer);
+                RoundSystem.playerWin(roundPlayer);
     }
 
     private static void gameRulesAnnouncement(Player player) {
@@ -89,6 +89,6 @@ public class RoundAnvilEscape implements Listener {
         Player player = (Player) event.getEntity();
         if (!Queue.redQueueList.contains(player)) return;
 
-        aRoundSystem.playerLose(player);
+        RoundSystem.playerLose(player);
     }
 }

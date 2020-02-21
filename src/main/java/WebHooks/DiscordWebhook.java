@@ -3,7 +3,7 @@ package WebHooks;
 import PluginUtilities.Chat;
 import QueueSystem.Queue;
 import RoundSystem.GameCycle;
-import RoundSystem.aRoundSystem;
+import RoundSystem.RoundSystem;
 import event.main.Main;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -44,7 +44,7 @@ public class DiscordWebhook {
                     .setDescription("Ознакомиться с правилами эвента можно [тут](https://forum.excalibur-craft.ru/forum/125-BestLife/)!")
                     .setColor(Color.CYAN)
                     .addField("**Количество игроков:**", Queue.redQueueList.size() + "/10", false)
-                    .addField("**Количество раундов:**", aRoundSystem.round - 1 + "/" + aRoundSystem.roundCount, false)
+                    .addField("**Количество раундов:**", RoundSystem.round - 1 + "/" + RoundSystem.roundCount, false)
                     .setThumbnail("https://i.ya-webdesign.com/images/a-letter-logo-design-png-7.png")
                     .setFooter("Мы вас ждем!", "https://i.ya-webdesign.com/images/a-letter-logo-design-png-7.png")
                     //.setImage("https://i.ya-webdesign.com/images/a-letter-logo-design-png-7.png")
@@ -66,10 +66,10 @@ public class DiscordWebhook {
                     .setTitle("Раунд завершен!")
                     .setDescription("Ознакомиться с правилами эвента можно [тут](https://forum.excalibur-craft.ru/forum/125-BestLife/)!")
                     .setColor(Color.CYAN)
-                    .addField("**Раунд:**", Chat.roundNames.get(aRoundSystem.randomGame), false)
-                    .addField("**Количество раундов:**", aRoundSystem.round - 1 + "/" + aRoundSystem.roundCount, false)
+                    .addField("**Раунд:**", Chat.roundNames.get(RoundSystem.randomGame), false)
+                    .addField("**Количество раундов:**", RoundSystem.round - 1 + "/" + RoundSystem.roundCount, false)
                     .addField("**Количество игроков:**", Queue.redQueueList.size() + "/10", false)
-                    .addField("**Текущий лидер:**", GameCycle.getWinner().getName() + " [" + aRoundSystem.roundStats.get(GameCycle.getWinner()) + "]", false)
+                    .addField("**Текущий лидер:**", GameCycle.getWinner().getName() + " [" + RoundSystem.roundStats.get(GameCycle.getWinner()) + "]", false)
                     .setThumbnail("https://i.ya-webdesign.com/images/a-letter-logo-design-png-7.png")
                     .setFooter("Мы вас ждем!", "https://i.ya-webdesign.com/images/a-letter-logo-design-png-7.png")
                     //.setImage("https://i.ya-webdesign.com/images/a-letter-logo-design-png-7.png")

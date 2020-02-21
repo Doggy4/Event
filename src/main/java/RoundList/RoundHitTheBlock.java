@@ -5,7 +5,7 @@ import PluginUtilities.Chat;
 import PluginUtilities.MapRebuild;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
-import RoundSystem.aRoundSystem;
+import RoundSystem.RoundSystem;
 import event.main.Main;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -35,7 +35,7 @@ public class RoundHitTheBlock implements Listener {
     public static void hitTheBlock() {
         // Опционально:
         isActivated = true;
-        aRoundSystem.roundSeconds = 30;
+        RoundSystem.roundSeconds = 30;
         MapRebuild.loadSchematic("arena");
 
         for (Player player : Queue.redQueueList) {
@@ -48,7 +48,7 @@ public class RoundHitTheBlock implements Listener {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (!(aRoundSystem.isRoundTimerEnabled)) {
+                if (!(RoundSystem.isRoundTimerEnabled)) {
                     bonusBlock.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, block.getLocation(), 1);
                     bonusBlock.getWorld().playSound(block.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 10, 1);
 
@@ -126,10 +126,10 @@ public class RoundHitTheBlock implements Listener {
         Block hitBlock = event.getHitBlock();
 
         if (hitBlock.getType().equals(targets[n])) {
-            aRoundSystem.addScore(player, 1);
+            RoundSystem.addScore(player, 1);
             hitBlock.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, hitBlock.getLocation(), 10);
         } else if (hitBlock.getType().equals(bonusTarget)) {
-            aRoundSystem.addScore(player, 5);
+            RoundSystem.addScore(player, 5);
             hitBlock.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, hitBlock.getLocation(), 10);
         }
     }

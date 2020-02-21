@@ -3,7 +3,7 @@ package RoundList;
 import PluginUtilities.MapRebuild;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
-import RoundSystem.aRoundSystem;
+import RoundSystem.RoundSystem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -43,7 +43,7 @@ public class RoundThrowTheEgg implements Listener {
     public static void throwTheEgg() {
         // Опционально:
         isActivated = true;
-        aRoundSystem.roundSeconds = 15;
+        RoundSystem.roundSeconds = 15;
         MapRebuild.loadSchematic("arena");
 
         int randomMaterial = Utilities.getRandom(0, materials.size() - 37);
@@ -85,7 +85,7 @@ public class RoundThrowTheEgg implements Listener {
         Player player = e.getPlayer();
         if (!(Queue.redQueueList.contains(player))) return;
 
-        aRoundSystem.addScore(player, 1);
+        RoundSystem.addScore(player, 1);
         throwTheEggNext(player);
     }
 }

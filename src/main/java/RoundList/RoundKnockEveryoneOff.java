@@ -5,7 +5,7 @@ import PluginUtilities.LocationUtulities;
 import PluginUtilities.MapRebuild;
 import QueueSystem.Queue;
 import RoundSystem.GameRules;
-import RoundSystem.aRoundSystem;
+import RoundSystem.RoundSystem;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -18,7 +18,7 @@ public class RoundKnockEveryoneOff implements Listener {
 
     public static void knockEveryoneOff() {
         isActivated = true;
-        aRoundSystem.roundSeconds = 60;
+        RoundSystem.roundSeconds = 60;
         GameRules.PlayerDamageOff();
         MapRebuild.loadSchematic("arena");
 
@@ -37,7 +37,7 @@ public class RoundKnockEveryoneOff implements Listener {
         isActivated = false;
         for (Player player : Queue.redQueueList)
             if (player.getGameMode() != GameMode.SPECTATOR)
-                aRoundSystem.playerWin(player);
+                RoundSystem.playerWin(player);
     }
 
     @EventHandler
@@ -46,7 +46,7 @@ public class RoundKnockEveryoneOff implements Listener {
         if (!(event.getEntity() instanceof Player)) return;
         Player player = (Player) event.getEntity();
         if (event.getCause() == EntityDamageEvent.DamageCause.VOID) {
-            aRoundSystem.playerLose(player);
+            RoundSystem.playerLose(player);
             LocationUtulities.teleportToSpawn(player);
         }
     }
