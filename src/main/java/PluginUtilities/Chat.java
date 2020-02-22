@@ -93,6 +93,7 @@ public class Chat {
         roundNames.put(14, "Пол - это лава");
         roundNames.put(15, "Снегопад");
         roundNames.put(16, "Голодный Боб");
+        roundNames.put(17, "Крафт-мастер");
     }
 
     public static void broadcastToEveryone(String message) {

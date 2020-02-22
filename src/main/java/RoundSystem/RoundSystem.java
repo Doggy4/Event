@@ -79,7 +79,7 @@ public class RoundSystem {
         for (Player player : Bukkit.getOnlinePlayers())
             player.playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 10, 1);
 
-        randomGame = Utilities.getRandom(0, 16);
+        randomGame = Utilities.getRandom(17, 17);
         switch (randomGame) {
             case 0:
                 RoundPlaceTheBlock.placeBlock();
@@ -132,6 +132,9 @@ public class RoundSystem {
             case 16:
                 RoundFeedBob.feedBob();
                 break;
+            case 17:
+                RoundCraftItem.craftItem();
+                break;
         }
     }
 
@@ -168,6 +171,7 @@ public class RoundSystem {
         RoundCakeParkour.isActivated = false;
         RoundMath.isActivated = false;
         RoundHarryPotter.isActivated = false;
+        RoundCraftItem.isActivated = false;
 
         if (RoundKnockEveryoneOff.isActivated) RoundKnockEveryoneOff.endKnockOff();
         if (RoundSlimePvP.isActivated) RoundSlimePvP.endSlimePvP();

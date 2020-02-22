@@ -6,8 +6,6 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-
 public class Items {
 
     public static ItemStack particleSelect = new ItemStackConstructor(Material.FIREWORK_STAR)
@@ -129,11 +127,6 @@ public class Items {
             .build();
 
 
-    public static ArrayList<Material> materials = new ArrayList<Material>();
 
-    static {
-        for (Material material : Material.values())
-            if (!BlackList.isItemBlocked(material.name())) materials.add(material);
-    }
 
 }

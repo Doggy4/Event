@@ -22,7 +22,7 @@ public class RoundPlaceTheBlock implements Listener {
     private static Material randomMaterialBlock;
     private static HashMap<Player, Location> playerRoom = new HashMap<Player, Location>();
     private static World world = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world"));
-    private static ArrayList<Material> materials = Items.materials;
+    private static ArrayList<Material> materials = ItemUtil.materials;
     private static HashMap<Player, Material> univPlayerMaterialHashMap = new HashMap<Player, Material>();
 
     static {

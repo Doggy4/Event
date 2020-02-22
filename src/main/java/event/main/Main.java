@@ -47,6 +47,7 @@ public final class Main extends JavaPlugin implements Listener {
         this.getServer().getPluginManager().registerEvents(new RoundHideUnderBlocks(), this);
         this.getServer().getPluginManager().registerEvents(new RoundFeedBob(), this);
         this.getServer().getPluginManager().registerEvents(new ImageMaps(), this);
+        this.getServer().getPluginManager().registerEvents(new RoundCraftItem(), this);
 
         if (!(new File(getDataFolder(), "images")).exists())
             (new File(getDataFolder(), "images")).mkdirs();

@@ -1,7 +1,7 @@
 package RoundList;
 
 import PluginUtilities.Chat;
-import PluginUtilities.Items;
+import PluginUtilities.ItemUtil;
 import PluginUtilities.MapRebuild;
 import PluginUtilities.Utilities;
 import QueueSystem.Queue;
@@ -25,7 +25,7 @@ public class RoundDropTheItem implements Listener {
     private static HashMap<Player, Material> univPlayerMaterialHashMap = new HashMap<Player, Material>();
 
     private static Material randomMaterialBlock;
-    private static ArrayList<Material> materials = Items.materials;
+    private static ArrayList<Material> materials = ItemUtil.materials;
 
     public static void DropTheItem() {
         // Опциально:
@@ -80,11 +80,10 @@ public class RoundDropTheItem implements Listener {
         if (event.getItemDrop().getItemStack().getType().equals(univPlayerMaterialHashMap.get(player))) {
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Задание выполнено!");
             RoundSystem.addScore(player, 1);
-            dropNext(player);
         } else {
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Неверный предмет!");
             RoundSystem.addScore(player, -1);
-            dropNext(player);
         }
+        dropNext(player);
     }
 }

@@ -8,7 +8,7 @@ import PluginUtilities.MapRebuild;
 import PluginUtilities.Utilities;
 import QueueSystem.MainScoreBoard;
 import QueueSystem.Queue;
-import RoundList.RoundFeedBob;
+import RoundList.RoundCraftItem;
 import RoundSystem.GameCycle;
 import RoundSystem.GameState;
 import event.main.Main;
@@ -106,8 +106,7 @@ public class CommandEvent implements TabExecutor {
         } else if (args[0].equals("statue")) {
             ArmorStandConstructor.ArmorStandConstructor(player.getLocation(), args[1]);
         } else if (args[0].equals("test")) {
-            RoundFeedBob.spawnMob();
-            RoundFeedBob.spawnBob();
+            RoundCraftItem.craftItem();
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Тест выполнен!");
 
         } else
