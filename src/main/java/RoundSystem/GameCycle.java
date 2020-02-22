@@ -1,7 +1,7 @@
 package RoundSystem;
 
-import PluginUtilities.Chat;
-import PluginUtilities.LocationUtulities;
+import PluginUtils.Chat;
+import PluginUtils.LocationUtils;
 import QueueSystem.MainScoreBoard;
 import QueueSystem.Queue;
 import WebHooks.DiscordWebhook;
@@ -38,7 +38,7 @@ public class GameCycle {
         for (Player player : Queue.redQueueList) {
             player.setExp(0);
             RoundSystem.playerReset(player);
-            LocationUtulities.teleportToSpawn(player);
+            LocationUtils.teleportToSpawn(player);
             RoundSystem.roundStats.put(player, 0);
             gameStats.put(player, 0);
         }
@@ -75,7 +75,7 @@ public class GameCycle {
         }
 
         for (Player redPlayer : Queue.redQueueList) {
-            LocationUtulities.teleportToLobby(redPlayer);
+            LocationUtils.teleportToLobby(redPlayer);
             MainScoreBoard.red.removeEntry(redPlayer.getName());
         }
 

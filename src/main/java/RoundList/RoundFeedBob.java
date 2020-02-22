@@ -1,12 +1,12 @@
 package RoundList;
 
-import PluginUtilities.InventoryUtils;
-import PluginUtilities.LocationUtulities;
-import PluginUtilities.MapRebuild;
-import PluginUtilities.Utilities;
+import PluginUtils.InventoryUtils;
+import PluginUtils.LocationUtils;
+import PluginUtils.Utils;
 import QueueSystem.Queue;
 import RoundSystem.GameRules;
 import RoundSystem.RoundSystem;
+import RoundUtils.MapRebuild;
 import event.main.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -61,9 +61,9 @@ public class RoundFeedBob implements Listener {
     }
 
     public static void spawnMob() {
-        Zombie zombie = (Zombie) Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).spawnEntity(LocationUtulities.getSpawnLocation(), EntityType.ZOMBIE);
+        Zombie zombie = (Zombie) Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).spawnEntity(LocationUtils.getSpawnLocation(), EntityType.ZOMBIE);
 
-        ItemStack food = foods.get(Utilities.getRandom(0, foods.size() - 1));
+        ItemStack food = foods.get(Utils.getRandom(0, foods.size() - 1));
         zombie.setGlowing(true);
         zombie.setBaby(true);
 
@@ -78,7 +78,7 @@ public class RoundFeedBob implements Listener {
     }
 
     public static void spawnBob() {
-        Panda panda = (Panda) Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).spawnEntity(LocationUtulities.getSpawnLocation(), EntityType.PANDA);
+        Panda panda = (Panda) Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).spawnEntity(LocationUtils.getSpawnLocation(), EntityType.PANDA);
 
         panda.setGlowing(true);
         panda.setBaby();
@@ -92,7 +92,7 @@ public class RoundFeedBob implements Listener {
             @Override
             public void run() {
                 runnable = this;
-                panda.teleport(LocationUtulities.getSpawnLocation());
+                panda.teleport(LocationUtils.getSpawnLocation());
             }
         }.runTaskTimer(Main.main, 1, 1);
     }
@@ -131,7 +131,7 @@ public class RoundFeedBob implements Listener {
         spawnMob();
         event.getDrops().clear();
         event.setDroppedExp(0);
-        event.getEntity().getKiller().getInventory().addItem(foods.get(Utilities.getRandom(0, foods.size() - 1)));
+        event.getEntity().getKiller().getInventory().addItem(foods.get(Utils.getRandom(0, foods.size() - 1)));
     }
 
     @EventHandler

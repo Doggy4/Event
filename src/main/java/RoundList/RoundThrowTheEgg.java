@@ -1,9 +1,9 @@
 package RoundList;
 
-import PluginUtilities.MapRebuild;
-import PluginUtilities.Utilities;
+import PluginUtils.Utils;
 import QueueSystem.Queue;
 import RoundSystem.RoundSystem;
+import RoundUtils.MapRebuild;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -46,10 +46,10 @@ public class RoundThrowTheEgg implements Listener {
         RoundSystem.roundSeconds = 15;
         MapRebuild.loadSchematic("arena");
 
-        int randomMaterial = Utilities.getRandom(0, materials.size() - 37);
+        int randomMaterial = Utils.getRandom(0, materials.size() - 37);
         List<Material> materialsNew = materials.subList(randomMaterial, randomMaterial + 36);
 
-        int randomSlot = Utilities.getRandom(0, 35);
+        int randomSlot = Utils.getRandom(0, 35);
 
         for (Player player : Queue.redQueueList) {
             gameRulesAnnouncement(player);
@@ -61,7 +61,7 @@ public class RoundThrowTheEgg implements Listener {
     private static void throwTheEggNext(Player player) {
         ArrayList<Material> materials = new ArrayList<Material>(Arrays.asList(Material.values()));
 
-        int randomMaterial = Utilities.getRandom(0, materials.size() - 37);
+        int randomMaterial = Utils.getRandom(0, materials.size() - 37);
         List<Material> materialsNew = materials.subList(randomMaterial, randomMaterial + 36);
 
 
@@ -70,13 +70,13 @@ public class RoundThrowTheEgg implements Listener {
         player.getInventory().clear();
         for (Material block : materialsNew) player.getInventory().addItem(new ItemStack(block, 1));
 
-        int randomSlot = Utilities.getRandom(0, 35);
+        int randomSlot = Utils.getRandom(0, 35);
         player.getInventory().setItem(randomSlot, new ItemStack(Material.EGG));
     }
 
     private static void gameRulesAnnouncement(Player player) {
-        player.sendTitle(ChatColor.GREEN + phrases.get(Utilities.getRandom(0, phrases.size() - 1)), "Поторпитесь!", 40, 40, 40);
-        player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + phrases.get(Utilities.getRandom(0, phrases.size() - 1)));
+        player.sendTitle(ChatColor.GREEN + phrases.get(Utils.getRandom(0, phrases.size() - 1)), "Поторпитесь!", 40, 40, 40);
+        player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + phrases.get(Utils.getRandom(0, phrases.size() - 1)));
     }
 
     @EventHandler

@@ -1,4 +1,4 @@
-package PluginUtilities;
+package PluginUtils;
 
 import org.bukkit.DyeColor;
 
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 
-public class Utilities {
+public class Utils {
 
     public static int getRandom(int min, int max) {
         Random rand = new Random();
@@ -19,7 +19,7 @@ public class Utilities {
         for (DyeColor color : DyeColor.values())
             colors.add(color);
 
-        int randomColorIndex = Utilities.getRandom(0, colors.size() - 1);
+        int randomColorIndex = Utils.getRandom(0, colors.size() - 1);
 
         return colors.get(randomColorIndex);
     }

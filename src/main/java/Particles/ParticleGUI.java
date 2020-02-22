@@ -1,7 +1,7 @@
 package Particles;
 
-import PluginUtilities.ItemStackConstructor;
-import PluginUtilities.Items;
+import Constructors.ItemStackConstructor;
+import PluginUtils.Items;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -13,7 +13,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import static PluginUtilities.Items.ParticleSample;
+import static PluginUtils.Items.ParticleSample;
 
 public class ParticleGUI implements Listener {
 

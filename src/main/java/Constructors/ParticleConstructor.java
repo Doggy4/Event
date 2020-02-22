@@ -1,7 +1,8 @@
-package PluginUtilities;
+package Constructors;
 
-import org.bukkit.*;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.plugin.Plugin;
 
 import java.util.HashMap;

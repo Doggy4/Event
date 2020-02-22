@@ -1,8 +1,8 @@
 package RoundSystem;
 
-import PluginUtilities.Chat;
-import PluginUtilities.LocationUtulities;
-import PluginUtilities.Utilities;
+import PluginUtils.Chat;
+import PluginUtils.LocationUtils;
+import PluginUtils.Utils;
 import QueueSystem.Queue;
 import RoundList.*;
 import WebHooks.DiscordWebhook;
@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static PluginUtilities.Chat.divThick16;
+import static PluginUtils.Chat.divThick16;
 
 public class RoundSystem {
 
@@ -55,7 +55,7 @@ public class RoundSystem {
         for (Player player : Queue.redQueueList) {
             playerReset(player);
             player.setGameMode(GameMode.ADVENTURE);
-            LocationUtulities.teleportToSpawn(player);
+            LocationUtils.teleportToSpawn(player);
         }
 
         for (Entity entity : Bukkit.getWorld("world").getEntities()) {
@@ -79,7 +79,7 @@ public class RoundSystem {
         for (Player player : Bukkit.getOnlinePlayers())
             player.playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 10, 1);
 
-        randomGame = Utilities.getRandom(17, 17);
+        randomGame = Utils.getRandom(17, 17);
         switch (randomGame) {
             case 0:
                 RoundPlaceTheBlock.placeBlock();

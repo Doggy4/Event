@@ -1,4 +1,4 @@
-package PluginUtilities;
+package PluginUtils;
 
 import event.main.Main;
 import org.bukkit.*;
@@ -10,7 +10,7 @@ import org.bukkit.util.Vector;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LocationUtulities {
+public class LocationUtils {
 
     public static ArrayList<Location> spawnLocations = new ArrayList<Location>();
     private static FileConfiguration config = Main.main.getConfig();
@@ -54,8 +54,8 @@ public class LocationUtulities {
 
         World world = Bukkit.getWorld(config.getString("spawn.world"));
 
-        Double x = config.getDouble("spawn.x") + (Utilities.getRandom(0, 20) - 10);
-        Double z = config.getDouble("spawn.z") + (Utilities.getRandom(0, 20) - 10);
+        Double x = config.getDouble("spawn.x") + (Utils.getRandom(0, 20) - 10);
+        Double z = config.getDouble("spawn.z") + (Utils.getRandom(0, 20) - 10);
 
         Location location = new Location(world, x, config.getDouble("spawn.y"), z);
 

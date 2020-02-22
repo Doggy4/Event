@@ -1,10 +1,10 @@
 package RoundList;
 
-import PluginUtilities.LocationUtulities;
-import PluginUtilities.MapRebuild;
-import PluginUtilities.Utilities;
+import PluginUtils.LocationUtils;
+import PluginUtils.Utils;
 import QueueSystem.Queue;
 import RoundSystem.RoundSystem;
+import RoundUtils.MapRebuild;
 import event.main.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -34,8 +34,8 @@ public class RoundLavaFloor {
             @Override
             public void run() {
                 for (int i = 0; i < 50; i++) {
-                    int randX = Math.round((float) Main.main.getConfig().getDouble("spawn.x")) + Utilities.getRandom(0, 34) - 17;
-                    int randZ = Math.round((float) Main.main.getConfig().getDouble("spawn.z")) + Utilities.getRandom(0, 34) - 17;
+                    int randX = Math.round((float) Main.main.getConfig().getDouble("spawn.x")) + Utils.getRandom(0, 34) - 17;
+                    int randZ = Math.round((float) Main.main.getConfig().getDouble("spawn.z")) + Utils.getRandom(0, 34) - 17;
                     int y = Math.round((float) Main.main.getConfig().getDouble("spawn.y") - 1);
 
                     Block block = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).getBlockAt(randX, y, randZ);
@@ -50,7 +50,7 @@ public class RoundLavaFloor {
                     if (player.getLocation().getY() < Math.round((float) Main.main.getConfig().getDouble("spawn.y") - 3)) {
                         if (!(player.getGameMode() == GameMode.SPECTATOR))
                             RoundSystem.playerLose(player);
-                        LocationUtulities.teleportToSpawn(player);
+                        LocationUtils.teleportToSpawn(player);
                     }
             }
 

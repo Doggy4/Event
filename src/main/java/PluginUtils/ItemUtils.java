@@ -1,4 +1,4 @@
-package PluginUtilities;
+package PluginUtils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -10,19 +10,19 @@ import org.bukkit.inventory.ShapelessRecipe;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemUtil {
+public class ItemUtils {
 
     public static ArrayList<Material> materials = new ArrayList<Material>();
     public static ArrayList<Material> craftableMaterials = new ArrayList<Material>();
 
     static {
         for (Material material : Material.values())
-            if (!BlackList.isItemBlocked(material.name())) ItemUtil.materials.add(material);
+            if (!BlackList.isItemBlocked(material.name())) ItemUtils.materials.add(material);
     }
 
     static {
         for (Material material : Material.values())
-            if (isCraftable(material)) ItemUtil.craftableMaterials.add(material);
+            if (isCraftable(material)) ItemUtils.craftableMaterials.add(material);
     }
 
     private static boolean isCraftable(Material mat) {

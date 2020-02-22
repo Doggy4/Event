@@ -1,4 +1,4 @@
-package PluginUtilities;
+package Constructors;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

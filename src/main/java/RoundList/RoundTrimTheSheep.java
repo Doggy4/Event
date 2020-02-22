@@ -1,11 +1,11 @@
 package RoundList;
 
-import PluginUtilities.Chat;
-import PluginUtilities.Items;
-import PluginUtilities.MapRebuild;
-import PluginUtilities.Utilities;
+import PluginUtils.Chat;
+import PluginUtils.Items;
+import PluginUtils.Utils;
 import QueueSystem.Queue;
 import RoundSystem.RoundSystem;
+import RoundUtils.MapRebuild;
 import event.main.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -32,7 +32,7 @@ public class RoundTrimTheSheep implements Listener {
         RoundSystem.roundSeconds = 30;
         MapRebuild.loadSchematic("arena");
 
-        randomColor = Utilities.getRandomColor();
+        randomColor = Utils.getRandomColor();
 
         for (Player player : Queue.redQueueList) {
             gameRulesAnnouncement(player);
@@ -42,7 +42,7 @@ public class RoundTrimTheSheep implements Listener {
 
         for (int i = 0; i < 50; i++) {
             Sheep sheep = (Sheep) Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).spawnEntity(Commands.CommandEvent.randLocationSpawn(), EntityType.SHEEP);
-            DyeColor color = Utilities.getRandomColor();
+            DyeColor color = Utils.getRandomColor();
             sheep.setColor(color);
             sheep.setCustomName(Chat.colors.get(color.toString()) + Chat.translate(color.name()));
         }
@@ -50,13 +50,13 @@ public class RoundTrimTheSheep implements Listener {
 
     private static void spawnSheep(Player player) {
         Sheep sheep = (Sheep) Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).spawnEntity(Commands.CommandEvent.randLocationSpawn(), EntityType.SHEEP);
-        DyeColor color = Utilities.getRandomColor();
+        DyeColor color = Utils.getRandomColor();
         sheep.setColor(color);
         sheep.setCustomName(Chat.colors.get(color.toString()) + Chat.translate(color.name()));
     }
 
     private static void nextSheep(Player player) {
-        randomColor = Utilities.getRandomColor();
+        randomColor = Utils.getRandomColor();
         univPlayerColorHashMap.put(player, randomColor);
         gameRulesAnnouncement(player);
     }

@@ -1,12 +1,12 @@
 package RoundList;
 
-import PluginUtilities.Chat;
-import PluginUtilities.ItemUtil;
-import PluginUtilities.MapRebuild;
-import PluginUtilities.Utilities;
+import PluginUtils.Chat;
+import PluginUtils.ItemUtils;
+import PluginUtils.Utils;
 import QueueSystem.Queue;
 import RoundSystem.GameRules;
 import RoundSystem.RoundSystem;
+import RoundUtils.MapRebuild;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -25,7 +25,7 @@ public class RoundDropTheItem implements Listener {
     private static HashMap<Player, Material> univPlayerMaterialHashMap = new HashMap<Player, Material>();
 
     private static Material randomMaterialBlock;
-    private static ArrayList<Material> materials = ItemUtil.materials;
+    private static ArrayList<Material> materials = ItemUtils.materials;
 
     public static void DropTheItem() {
         // Опциально:
@@ -36,8 +36,8 @@ public class RoundDropTheItem implements Listener {
 
         univPlayerMaterialHashMap.clear();
 
-        int randomMaterialIndex = Utilities.getRandom(0, materials.size() - 37);
-        int randomBlockIndex = Utilities.getRandom(0, 35);
+        int randomMaterialIndex = Utils.getRandom(0, materials.size() - 37);
+        int randomBlockIndex = Utils.getRandom(0, 35);
 
         List<Material> allowedMaterials = materials.subList(randomMaterialIndex, randomMaterialIndex + 36);
         randomMaterialBlock = allowedMaterials.get(randomBlockIndex);
@@ -53,8 +53,8 @@ public class RoundDropTheItem implements Listener {
     }
 
     private static void dropNext(Player player) {
-        int randomMaterialIndex = Utilities.getRandom(0, materials.size() - 37);
-        int randomBlockIndex = Utilities.getRandom(0, 35);
+        int randomMaterialIndex = Utils.getRandom(0, materials.size() - 37);
+        int randomBlockIndex = Utils.getRandom(0, 35);
 
         List<Material> allowedMaterials = materials.subList(randomMaterialIndex, randomMaterialIndex + 36);
         randomMaterialBlock = allowedMaterials.get(randomBlockIndex);

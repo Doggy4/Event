@@ -1,4 +1,4 @@
-package PluginUtilities;
+package RoundUtils;
 
 import com.sk89q.worldedit.EditSession;
 import com.sk89q.worldedit.WorldEdit;
@@ -26,16 +26,16 @@ public class MapRebuild {
 
     public static void loadSchematic(String schematic) {
 
-        File myfile = new File(Main.main.getDataFolder().getAbsolutePath() + "/schematics/" + schematic + ".schem");
+        File myFile = new File(Main.main.getDataFolder().getAbsolutePath() + "/schematics/" + schematic + ".schem");
 
         if (schematic.endsWith(".schem"))
-            myfile = new File(Main.main.getDataFolder().getAbsolutePath() + "/schematics/" + schematic);
+            myFile = new File(Main.main.getDataFolder().getAbsolutePath() + "/schematics/" + schematic);
 
-        ClipboardFormat format = ClipboardFormats.findByFile(myfile);
+        ClipboardFormat format = ClipboardFormats.findByFile(myFile);
 
         try {
 
-            ClipboardReader reader = format.getReader(new FileInputStream(myfile));
+            ClipboardReader reader = format.getReader(new FileInputStream(myFile));
             Clipboard clipboard = reader.read();
 
             com.sk89q.worldedit.world.World adaptedWorld = BukkitAdapter.adapt(Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")));

@@ -1,6 +1,6 @@
 package QueueSystem;
 
-import PluginUtilities.Chat;
+import PluginUtils.Chat;
 import RoundSystem.GameCycle;
 import RoundSystem.GameState;
 import RoundSystem.RoundSystem;
@@ -15,7 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.*;
 
-import static PluginUtilities.Chat.broadcastToEveryone;
+import static PluginUtils.Chat.broadcastToEveryone;
 
 // КЛАСС НЕ ПЕРЕДЕЛЫВАТЬ: ОПТИМИЗИРОВАН ПО МАКСИМУМУ
 public class MainScoreBoard {

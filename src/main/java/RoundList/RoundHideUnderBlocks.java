@@ -1,11 +1,11 @@
 package RoundList;
 
-import PluginUtilities.LocationUtulities;
-import PluginUtilities.MapRebuild;
-import PluginUtilities.Utilities;
+import PluginUtils.LocationUtils;
+import PluginUtils.Utils;
 import QueueSystem.Queue;
 import RoundSystem.GameRules;
 import RoundSystem.RoundSystem;
+import RoundUtils.MapRebuild;
 import event.main.Main;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -24,10 +24,10 @@ public class RoundHideUnderBlocks implements Listener {
 
     private static World world = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world"));
 
-    private static Location loc1 = new Location(world, LocationUtulities.getSpawnLocation().getX() + 17, LocationUtulities.getSpawnLocation().getY() + 16, LocationUtulities.getSpawnLocation().getZ() + 16);
-    private static Location loc2 = new Location(world, LocationUtulities.getSpawnLocation().getX() - 15, LocationUtulities.getSpawnLocation().getY() + 16, LocationUtulities.getSpawnLocation().getZ() - 16);
+    private static Location loc1 = new Location(world, LocationUtils.getSpawnLocation().getX() + 17, LocationUtils.getSpawnLocation().getY() + 16, LocationUtils.getSpawnLocation().getZ() + 16);
+    private static Location loc2 = new Location(world, LocationUtils.getSpawnLocation().getX() - 15, LocationUtils.getSpawnLocation().getY() + 16, LocationUtils.getSpawnLocation().getZ() - 16);
 
-    private static List<Block> blocks = LocationUtulities.getBlocksFromTwoPoints(loc1, loc2);
+    private static List<Block> blocks = LocationUtils.getBlocksFromTwoPoints(loc1, loc2);
     private static BukkitTask runnable;
 
     public static void hideUnderBlocks() {
@@ -43,8 +43,8 @@ public class RoundHideUnderBlocks implements Listener {
                 MapRebuild.loadSchematic("hide-arena");
 
                 for (int i = 0; i < 8; i++) {
-                    int randX = Math.round((float) Main.main.getConfig().getDouble("spawn.x")) + Utilities.getRandom(0, 32) - 16;
-                    int randZ = Math.round((float) Main.main.getConfig().getDouble("spawn.z")) + Utilities.getRandom(0, 32) - 16;
+                    int randX = Math.round((float) Main.main.getConfig().getDouble("spawn.x")) + Utils.getRandom(0, 32) - 16;
+                    int randZ = Math.round((float) Main.main.getConfig().getDouble("spawn.z")) + Utils.getRandom(0, 32) - 16;
                     int y = Math.round((float) Main.main.getConfig().getDouble("spawn.y")) + 2;
 
                     world.getBlockAt(randX, y, randZ).setType(Material.DIORITE_SLAB);
@@ -58,7 +58,7 @@ public class RoundHideUnderBlocks implements Listener {
                     @Override
                     public void run() {
                         for (Block block : blocks)
-                            world.spawn(LocationUtulities.getCenter(block.getLocation()), Snowball.class);
+                            world.spawn(LocationUtils.getCenter(block.getLocation()), Snowball.class);
                     }
                 }.runTaskLater(Main.main, 60);
             }

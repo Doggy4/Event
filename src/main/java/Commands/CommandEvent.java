@@ -1,16 +1,16 @@
 package Commands;
 
+import Constructors.ArmorStandConstructor;
 import ImageMaps.ImageMapCommands;
 import NBS.NoteBlockPlayer;
-import PluginUtilities.ArmorStandConstructor;
-import PluginUtilities.Chat;
-import PluginUtilities.MapRebuild;
-import PluginUtilities.Utilities;
+import PluginUtils.Chat;
+import PluginUtils.Utils;
 import QueueSystem.MainScoreBoard;
 import QueueSystem.Queue;
 import RoundList.RoundCraftItem;
 import RoundSystem.GameCycle;
 import RoundSystem.GameState;
+import RoundUtils.MapRebuild;
 import event.main.Main;
 import org.bukkit.*;
 import org.bukkit.command.Command;
@@ -170,8 +170,8 @@ public class CommandEvent implements TabExecutor {
 
         World world = Bukkit.getWorld(config.getString("spawn.world"));
 
-        Double x = config.getDouble("spawn.x") + (Utilities.getRandom(0, 20) - 10);
-        Double z = config.getDouble("spawn.z") + (Utilities.getRandom(0, 20) - 10);
+        Double x = config.getDouble("spawn.x") + (Utils.getRandom(0, 20) - 10);
+        Double z = config.getDouble("spawn.z") + (Utils.getRandom(0, 20) - 10);
 
         Location location = new Location(world, x, config.getDouble("spawn.y"), z);
 

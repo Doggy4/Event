@@ -1,10 +1,10 @@
 package event.main;
 
 
+import Constructors.InventoryConstructor;
 import ImageMaps.FastSendTask;
 import ImageMaps.ImageMaps;
 import Particles.ParticleGUI;
-import PluginUtilities.InventoryConstructor;
 import QueueSystem.MainScoreBoard;
 import RoundList.*;
 import RoundSystem.GameRules;

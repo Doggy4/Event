@@ -1,9 +1,13 @@
 package RoundList;
 
-import PluginUtilities.*;
+import PluginUtils.Chat;
+import PluginUtils.ItemUtils;
+import PluginUtils.LocationUtils;
+import PluginUtils.Utils;
 import QueueSystem.Queue;
 import RoundSystem.GameRules;
 import RoundSystem.RoundSystem;
+import RoundUtils.MapRebuild;
 import event.main.Main;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -22,7 +26,7 @@ public class RoundPlaceTheBlock implements Listener {
     private static Material randomMaterialBlock;
     private static HashMap<Player, Location> playerRoom = new HashMap<Player, Location>();
     private static World world = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world"));
-    private static ArrayList<Material> materials = ItemUtil.materials;
+    private static ArrayList<Material> materials = ItemUtils.materials;
     private static HashMap<Player, Material> univPlayerMaterialHashMap = new HashMap<Player, Material>();
 
     static {
@@ -40,11 +44,11 @@ public class RoundPlaceTheBlock implements Listener {
 
             player.setGameMode(GameMode.SURVIVAL);
 
-            Location location = (LocationUtulities.spawnLocations.get(Queue.redQueueList.indexOf(player)));
+            Location location = (LocationUtils.spawnLocations.get(Queue.redQueueList.indexOf(player)));
             player.teleport(location.add(0, 2, 0));
 
-            int randomMaterialIndex = Utilities.getRandom(0, materials.size() - 37);
-            int randomBlockIndex = Utilities.getRandom(0, 35);
+            int randomMaterialIndex = Utils.getRandom(0, materials.size() - 37);
+            int randomBlockIndex = Utils.getRandom(0, 35);
 
             List<Material> blocks = materials.subList(randomMaterialIndex, randomMaterialIndex + 36);
             randomMaterialBlock = blocks.get(randomBlockIndex);
@@ -55,7 +59,7 @@ public class RoundPlaceTheBlock implements Listener {
 
             gameRulesAnnouncement(player);
 
-            LocationUtulities.spawnLocations.get(Queue.redQueueList.indexOf(player)).getWorld().getBlockAt(location).setType(randomMaterialBlock);
+            LocationUtils.spawnLocations.get(Queue.redQueueList.indexOf(player)).getWorld().getBlockAt(location).setType(randomMaterialBlock);
             playerRoom.put(player, location);
         }
     }
@@ -63,8 +67,8 @@ public class RoundPlaceTheBlock implements Listener {
     private static void placeNext(Player player) {
         Location location = playerRoom.get(player);
 
-        int randomMaterialIndex = Utilities.getRandom(0, materials.size() - 37);
-        int randomBlockIndex = Utilities.getRandom(0, 35);
+        int randomMaterialIndex = Utils.getRandom(0, materials.size() - 37);
+        int randomBlockIndex = Utils.getRandom(0, 35);
 
         List<Material> blocks = materials.subList(randomMaterialIndex, randomMaterialIndex + 36);
         randomMaterialBlock = blocks.get(randomBlockIndex);

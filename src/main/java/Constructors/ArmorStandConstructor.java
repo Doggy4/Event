@@ -1,5 +1,6 @@
-package PluginUtilities;
+package Constructors;
 
+import PluginUtils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -25,15 +26,15 @@ public class ArmorStandConstructor {
         ItemStack boots = new ItemStack(Material.LEATHER_BOOTS, 1);
 
         LeatherArmorMeta meta = (LeatherArmorMeta) chestplate.getItemMeta();
-        meta.setColor(Utilities.getRandomColor().getColor());
+        meta.setColor(Utils.getRandomColor().getColor());
         chestplate.setItemMeta(meta);
 
         meta = (LeatherArmorMeta) leggings.getItemMeta();
-        meta.setColor(Utilities.getRandomColor().getColor());
+        meta.setColor(Utils.getRandomColor().getColor());
         leggings.setItemMeta(meta);
 
         meta = (LeatherArmorMeta) boots.getItemMeta();
-        meta.setColor(Utilities.getRandomColor().getColor());
+        meta.setColor(Utils.getRandomColor().getColor());
         boots.setItemMeta(meta);
 
         stand.setArms(true);

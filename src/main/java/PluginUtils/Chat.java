@@ -1,4 +1,4 @@
-package PluginUtilities;
+package PluginUtils;
 
 import event.main.Main;
 import org.bukkit.Bukkit;

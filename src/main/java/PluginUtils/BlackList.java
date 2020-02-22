@@ -1,4 +1,4 @@
-package PluginUtilities;
+package PluginUtils;
 
 import java.util.ArrayList;
 

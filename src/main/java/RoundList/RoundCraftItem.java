@@ -1,12 +1,12 @@
 package RoundList;
 
-import PluginUtilities.Chat;
-import PluginUtilities.ItemUtil;
-import PluginUtilities.MapRebuild;
-import PluginUtilities.Utilities;
+import PluginUtils.Chat;
+import PluginUtils.ItemUtils;
+import PluginUtils.Utils;
 import QueueSystem.Queue;
 import RoundSystem.GameRules;
 import RoundSystem.RoundSystem;
+import RoundUtils.MapRebuild;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -23,8 +23,8 @@ import java.util.List;
 public class RoundCraftItem implements Listener {
     public static boolean isActivated = false;
     private static HashMap<Player, Material> playerMaterialHashMap = new HashMap<Player, Material>();
-    private static ArrayList<Material> craftableMaterials = ItemUtil.craftableMaterials;
-    private static ArrayList<Material> materials = ItemUtil.materials;
+    private static ArrayList<Material> craftableMaterials = ItemUtils.craftableMaterials;
+    private static ArrayList<Material> materials = ItemUtils.materials;
 
     public static void craftItem() {
         // Опциально:
@@ -35,8 +35,8 @@ public class RoundCraftItem implements Listener {
 
         Bukkit.getLogger().info(craftableMaterials.toString());
 
-        int randomMaterialIndex = Utilities.getRandom(0, materials.size() - 37);
-        int randomBlockIndex = Utilities.getRandom(0, 35);
+        int randomMaterialIndex = Utils.getRandom(0, materials.size() - 37);
+        int randomBlockIndex = Utils.getRandom(0, 35);
 
         List<Material> allowedMaterials = materials.subList(randomMaterialIndex, randomMaterialIndex + 36);
 
@@ -44,16 +44,16 @@ public class RoundCraftItem implements Listener {
 
         for (Player player : Queue.redQueueList) {
 
-            playerMaterialHashMap.put(player, craftableMaterials.get(Utilities.getRandom(0, craftableMaterials.size() - 1)));
+            playerMaterialHashMap.put(player, craftableMaterials.get(Utils.getRandom(0, craftableMaterials.size() - 1)));
 
             for (Material material : allowedMaterials) player.getInventory().addItem(new ItemStack(material, 1));
 
             gameRulesAnnouncements(player);
 
-            for (ItemStack material : ItemUtil.getIngredients(playerMaterialHashMap.get(player))) {
-                int random = Utilities.getRandom(0, 35);
-                while (ItemUtil.isContains(ItemUtil.getIngredients(playerMaterialHashMap.get(player)), player.getInventory().getItem(random))) {
-                    random = Utilities.getRandom(0, 35);
+            for (ItemStack material : ItemUtils.getIngredients(playerMaterialHashMap.get(player))) {
+                int random = Utils.getRandom(0, 35);
+                while (ItemUtils.isContains(ItemUtils.getIngredients(playerMaterialHashMap.get(player)), player.getInventory().getItem(random))) {
+                    random = Utils.getRandom(0, 35);
                 }
                 player.getInventory().setItem(random, material);
             }
@@ -61,14 +61,14 @@ public class RoundCraftItem implements Listener {
     }
 
     private static void nextItem(Player player) {
-        int randomMaterialIndex = Utilities.getRandom(0, materials.size() - 37);
-        int randomBlockIndex = Utilities.getRandom(0, 35);
+        int randomMaterialIndex = Utils.getRandom(0, materials.size() - 37);
+        int randomBlockIndex = Utils.getRandom(0, 35);
 
         List<Material> allowedMaterials = materials.subList(randomMaterialIndex, randomMaterialIndex + 36);
 
         playerMaterialHashMap.clear();
 
-        Material randomMaterial = craftableMaterials.get(Utilities.getRandom(0, craftableMaterials.size() - 1));
+        Material randomMaterial = craftableMaterials.get(Utils.getRandom(0, craftableMaterials.size() - 1));
 
         player.getInventory().clear();
 
@@ -78,10 +78,10 @@ public class RoundCraftItem implements Listener {
 
         gameRulesAnnouncements(player);
 
-        for (ItemStack material : ItemUtil.getIngredients(playerMaterialHashMap.get(player))) {
-            int random = Utilities.getRandom(0, 35);
-            while (ItemUtil.isContains(ItemUtil.getIngredients(playerMaterialHashMap.get(player)), player.getInventory().getItem(random))) {
-                random = Utilities.getRandom(0, 35);
+        for (ItemStack material : ItemUtils.getIngredients(playerMaterialHashMap.get(player))) {
+            int random = Utils.getRandom(0, 35);
+            while (ItemUtils.isContains(ItemUtils.getIngredients(playerMaterialHashMap.get(player)), player.getInventory().getItem(random))) {
+                random = Utils.getRandom(0, 35);
             }
             player.getInventory().setItem(random, material);
         }

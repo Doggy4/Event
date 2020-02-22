@@ -1,8 +1,8 @@
 package RoundList;
 
-import PluginUtilities.GetMapFromImage;
-import PluginUtilities.LocationUtulities;
-import PluginUtilities.Utilities;
+import PluginUtils.LocationUtils;
+import PluginUtils.Utils;
+import RoundUtils.GetMapFromImage;
 import event.main.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -19,7 +19,7 @@ public class RoundJumpOfToilet {
     public static boolean isActivated = false;
 
     public static void setupArena() {
-        int random = Utilities.getRandom(1, 1);
+        int random = Utils.getRandom(1, 1);
         File imgFile = new File(Main.main.getDataFolder().getAbsolutePath() + "/plots/plot" + random + ".png");
 
         World world = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world"));
@@ -32,7 +32,7 @@ public class RoundJumpOfToilet {
 
             for (int i = 0; i < img.getHeight(); i++)
                 for (int j = 0; j < img.getWidth(); j++) {
-                    Location leftUpCorner = new Location(world, LocationUtulities.getSpawnLocation().getX() + 16, LocationUtulities.getSpawnLocation().getY() + 16, LocationUtulities.getSpawnLocation().getZ() + 16);
+                    Location leftUpCorner = new Location(world, LocationUtils.getSpawnLocation().getX() + 16, LocationUtils.getSpawnLocation().getY() + 16, LocationUtils.getSpawnLocation().getZ() + 16);
                     blockPlaceLoc = leftUpCorner.add(i, 0, j).getBlock();
                     blockPlaceLoc.setType(woolMatrix[i][j]);
                 }

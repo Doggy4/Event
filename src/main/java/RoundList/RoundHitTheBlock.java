@@ -1,12 +1,12 @@
 package RoundList;
 
 import Particles.Particles;
-import PluginUtilities.Chat;
-import PluginUtilities.LocationUtulities;
-import PluginUtilities.MapRebuild;
-import PluginUtilities.Utilities;
+import PluginUtils.Chat;
+import PluginUtils.LocationUtils;
+import PluginUtils.Utils;
 import QueueSystem.Queue;
 import RoundSystem.RoundSystem;
+import RoundUtils.MapRebuild;
 import event.main.Main;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -17,8 +17,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import static PluginUtilities.Items.BowEventBow;
-import static PluginUtilities.Items.bowEventArrows;
+import static PluginUtils.Items.BowEventBow;
+import static PluginUtils.Items.bowEventArrows;
 
 public class RoundHitTheBlock implements Listener {
     public static boolean isActivated = false;
@@ -54,16 +54,16 @@ public class RoundHitTheBlock implements Listener {
                 bonusBlock.setType(Material.AIR);
 
 
-                int rand_x = Main.main.getConfig().getInt("spawn.x") + Utilities.getRandom(1, 20) - 10;
-                int rand_z = Main.main.getConfig().getInt("spawn.z") + Utilities.getRandom(1, 20) - 10;
+                int rand_x = Main.main.getConfig().getInt("spawn.x") + Utils.getRandom(1, 20) - 10;
+                int rand_z = Main.main.getConfig().getInt("spawn.z") + Utils.getRandom(1, 20) - 10;
 
-                int rand_bonus_x = Main.main.getConfig().getInt("spawn.x") + Utilities.getRandom(1, 20) - 10;
-                int rand_bonus_z = Main.main.getConfig().getInt("spawn.z") + Utilities.getRandom(1, 20) - 10;
+                int rand_bonus_x = Main.main.getConfig().getInt("spawn.x") + Utils.getRandom(1, 20) - 10;
+                int rand_bonus_z = Main.main.getConfig().getInt("spawn.z") + Utils.getRandom(1, 20) - 10;
 
                 World world = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world"));
 
-                LocationUtulities.vectorsBetweenLocations(LocationUtulities.getCenter(block.getLocation()), LocationUtulities.getCenter(new Location(block.getWorld(), rand_x, Main.main.getConfig().getInt("spawn.y") + 5, rand_z)), Particle.FLAME);
-                LocationUtulities.vectorsBetweenLocations(LocationUtulities.getCenter(bonusBlock.getLocation()), LocationUtulities.getCenter(new Location(bonusBlock.getWorld(), rand_bonus_x, Main.main.getConfig().getInt("spawn.y") + 10, rand_bonus_z)), Particle.FLAME);
+                LocationUtils.vectorsBetweenLocations(LocationUtils.getCenter(block.getLocation()), LocationUtils.getCenter(new Location(block.getWorld(), rand_x, Main.main.getConfig().getInt("spawn.y") + 5, rand_z)), Particle.FLAME);
+                LocationUtils.vectorsBetweenLocations(LocationUtils.getCenter(bonusBlock.getLocation()), LocationUtils.getCenter(new Location(bonusBlock.getWorld(), rand_bonus_x, Main.main.getConfig().getInt("spawn.y") + 10, rand_bonus_z)), Particle.FLAME);
 
 
                 block = world.getBlockAt(rand_x, Main.main.getConfig().getInt("spawn.y") + 5, rand_z);

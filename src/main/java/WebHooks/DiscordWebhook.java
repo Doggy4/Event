@@ -1,6 +1,6 @@
 package WebHooks;
 
-import PluginUtilities.Chat;
+import PluginUtils.Chat;
 import QueueSystem.Queue;
 import RoundSystem.GameCycle;
 import RoundSystem.RoundSystem;

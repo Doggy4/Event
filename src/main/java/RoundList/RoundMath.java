@@ -1,9 +1,9 @@
 package RoundList;
 
-import PluginUtilities.MapRebuild;
-import PluginUtilities.Utilities;
+import PluginUtils.Utils;
 import QueueSystem.Queue;
 import RoundSystem.RoundSystem;
+import RoundUtils.MapRebuild;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -52,7 +52,7 @@ public class RoundMath implements Listener {
         RoundSystem.roundSeconds = 30;
         MapRebuild.loadSchematic("arena");
 
-        example = keysAsArray.get(Utilities.getRandom(0, keysAsArray.size()));
+        example = keysAsArray.get(Utils.getRandom(0, keysAsArray.size()));
         result = examples.get(example);
 
         for (Player player : Queue.redQueueList)

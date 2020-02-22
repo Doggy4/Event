@@ -1,13 +1,13 @@
 package RoundList;
 
 import Particles.Particles;
-import PluginUtilities.Chat;
-import PluginUtilities.LocationUtulities;
-import PluginUtilities.MapRebuild;
-import PluginUtilities.Utilities;
+import PluginUtils.Chat;
+import PluginUtils.LocationUtils;
+import PluginUtils.Utils;
 import QueueSystem.Queue;
 import RoundSystem.GameRules;
 import RoundSystem.RoundSystem;
+import RoundUtils.MapRebuild;
 import event.main.Main;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -40,7 +40,7 @@ public class RoundTheRightCombination implements Listener {
         MapRebuild.loadSchematic("arena");
 
         for (Player player : Queue.redQueueList) {
-            LocationUtulities.teleportToSpawn(player);
+            LocationUtils.teleportToSpawn(player);
 
             n = (int) Math.floor(Math.random() * blockToBePut.length);
             n2 = (int) Math.floor(Math.random() * blockToPlaceOn.length);
@@ -64,7 +64,7 @@ public class RoundTheRightCombination implements Listener {
         n = (int) Math.floor(Math.random() * blockToBePut.length);
         n2 = (int) Math.floor(Math.random() * blockToPlaceOn.length);
 
-        int locProp = Utilities.getRandom(-1, 1);
+        int locProp = Utils.getRandom(-1, 1);
 
         Location newBlockLoc = blockLoc.add(locProp, 0, locProp);
         newBlockLoc.getBlock().setType(blockToPlaceOn[n2]);

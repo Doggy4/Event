@@ -1,9 +1,9 @@
 package RoundList;
 
-import PluginUtilities.MapRebuild;
-import PluginUtilities.Utilities;
+import PluginUtils.Utils;
 import QueueSystem.Queue;
 import RoundSystem.RoundSystem;
+import RoundUtils.MapRebuild;
 import event.main.Main;
 import org.bukkit.*;
 import org.bukkit.entity.Cow;
@@ -42,7 +42,7 @@ public class RoundMilkTheCow implements Listener {
             player.getInventory().addItem(new ItemStack(Material.BUCKET, 1));
 
             for (int i = 0; i < 10; i++) {
-                int chance = Utilities.getRandom(0, 100);
+                int chance = Utils.getRandom(0, 100);
                 Cow cow = (Cow) Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).spawnEntity(Commands.CommandEvent.randLocationSpawn(), EntityType.COW);
 
                 if (chance > boomCowChance && chance < uncommonCowChance) cow.setCustomName(boomCow);
@@ -65,7 +65,7 @@ public class RoundMilkTheCow implements Listener {
         player.getInventory().clear();
         player.getInventory().addItem(new ItemStack(Material.BUCKET, 1));
 
-        int chance = Utilities.getRandom(0, 100);
+        int chance = Utils.getRandom(0, 100);
         Cow cow = (Cow) Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).spawnEntity(Commands.CommandEvent.randLocationSpawn(), EntityType.COW);
 
         if (chance > boomCowChance && chance < uncommonCowChance) cow.setCustomName(boomCow);

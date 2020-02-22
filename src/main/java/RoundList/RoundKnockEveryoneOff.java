@@ -1,11 +1,11 @@
 package RoundList;
 
-import PluginUtilities.Items;
-import PluginUtilities.LocationUtulities;
-import PluginUtilities.MapRebuild;
+import PluginUtils.Items;
+import PluginUtils.LocationUtils;
 import QueueSystem.Queue;
 import RoundSystem.GameRules;
 import RoundSystem.RoundSystem;
+import RoundUtils.MapRebuild;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -47,7 +47,7 @@ public class RoundKnockEveryoneOff implements Listener {
         Player player = (Player) event.getEntity();
         if (event.getCause() == EntityDamageEvent.DamageCause.VOID) {
             RoundSystem.playerLose(player);
-            LocationUtulities.teleportToSpawn(player);
+            LocationUtils.teleportToSpawn(player);
         }
     }
 }
