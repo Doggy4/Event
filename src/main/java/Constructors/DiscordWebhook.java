@@ -1,10 +1,4 @@
-package WebHooks;
-
-import PluginUtils.Chat;
-import QueueSystem.Queue;
-import RoundSystem.GameCycle;
-import RoundSystem.RoundSystem;
-import event.main.Main;
+package Constructors;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.awt.*;
@@ -30,79 +24,6 @@ public class DiscordWebhook {
 
     public DiscordWebhook(String url) {
         this.url = url;
-    }
-
-    public static void gameStarted() {
-        try {
-            DiscordWebhook webhook = new DiscordWebhook("https://discordapp.com/api/webhooks/673392196493377566/aVunHRsD_JzjelGwNMygS67vo_qM_Bu1diLbInwszQt82HAuQrVcG6382dDFiYkmlI2J");
-            webhook.setContent("");
-            webhook.setAvatarUrl("https://i.ya-webdesign.com/images/a-letter-logo-design-png-7.png");
-            webhook.setUsername("BestLife Official Event");
-            webhook.setTts(false);
-            webhook.addEmbed(new DiscordWebhook.EmbedObject()
-                    .setTitle("Игра началась!")
-                    .setDescription("Ознакомиться с правилами эвента можно [тут](https://forum.excalibur-craft.ru/forum/125-BestLife/)!")
-                    .setColor(Color.CYAN)
-                    .addField("**Количество игроков:**", Queue.redQueueList.size() + "/10", false)
-                    .addField("**Количество раундов:**", RoundSystem.round - 1 + "/" + RoundSystem.roundCount, false)
-                    .setThumbnail("https://i.ya-webdesign.com/images/a-letter-logo-design-png-7.png")
-                    .setFooter("Мы вас ждем!", "https://i.ya-webdesign.com/images/a-letter-logo-design-png-7.png")
-                    //.setImage("https://i.ya-webdesign.com/images/a-letter-logo-design-png-7.png")
-                    .setAuthor("BestLife Official Event", "https://forum.excalibur-craft.ru/forum/125-BestLife/", "https://i.ya-webdesign.com/images/a-letter-logo-design-png-7.png"));
-            //.setUrl("https://forum.excalibur-craft.ru/forum/125-BestLife/"));
-            webhook.execute();
-        } catch (IOException e) {
-            Main.main.getLogger().severe(e.getMessage());
-        }
-    }
-
-    public static void roundEnded() {
-        try {
-            DiscordWebhook webhook = new DiscordWebhook("https://discordapp.com/api/webhooks/673392196493377566/aVunHRsD_JzjelGwNMygS67vo_qM_Bu1diLbInwszQt82HAuQrVcG6382dDFiYkmlI2J");
-            webhook.setAvatarUrl("https://i.ya-webdesign.com/images/a-letter-logo-design-png-7.png");
-            webhook.setUsername("BestLife Official Event");
-            webhook.setTts(false);
-            webhook.addEmbed(new DiscordWebhook.EmbedObject()
-                    .setTitle("Раунд завершен!")
-                    .setDescription("Ознакомиться с правилами эвента можно [тут](https://forum.excalibur-craft.ru/forum/125-BestLife/)!")
-                    .setColor(Color.CYAN)
-                    .addField("**Раунд:**", Chat.roundNames.get(RoundSystem.randomGame), false)
-                    .addField("**Количество раундов:**", RoundSystem.round - 1 + "/" + RoundSystem.roundCount, false)
-                    .addField("**Количество игроков:**", Queue.redQueueList.size() + "/10", false)
-                    .addField("**Текущий лидер:**", GameCycle.getWinner().getName() + " [" + RoundSystem.roundStats.get(GameCycle.getWinner()) + "]", false)
-                    .setThumbnail("https://i.ya-webdesign.com/images/a-letter-logo-design-png-7.png")
-                    .setFooter("Мы вас ждем!", "https://i.ya-webdesign.com/images/a-letter-logo-design-png-7.png")
-                    //.setImage("https://i.ya-webdesign.com/images/a-letter-logo-design-png-7.png")
-                    .setAuthor("BestLife Official Event", "https://forum.excalibur-craft.ru/forum/125-BestLife/", "https://i.ya-webdesign.com/images/a-letter-logo-design-png-7.png"));
-            //.setUrl("https://forum.excalibur-craft.ru/forum/125-BestLife/"));
-            webhook.execute();
-        } catch (IOException e) {
-            Main.main.getLogger().severe(e.getMessage());
-        }
-    }
-
-    public static void gameEnded() {
-        try {
-            DiscordWebhook webhook = new DiscordWebhook("https://discordapp.com/api/webhooks/673392196493377566/aVunHRsD_JzjelGwNMygS67vo_qM_Bu1diLbInwszQt82HAuQrVcG6382dDFiYkmlI2J");
-            webhook.setContent("");
-            webhook.setAvatarUrl("https://i.ya-webdesign.com/images/a-letter-logo-design-png-7.png");
-            webhook.setUsername("BestLife Official Event");
-            webhook.setTts(false);
-            webhook.addEmbed(new DiscordWebhook.EmbedObject()
-                    .setTitle("Игра завершена!")
-                    .setDescription("Ознакомиться с правилами эвента можно [тут](https://forum.excalibur-craft.ru/forum/125-BestLife/)!")
-                    .setColor(Color.CYAN)
-                    .addField("**Количество игроков:**", Queue.redQueueList.size() + "/10", false)
-                    .addField("**Победитель:**", "\uD83D\uDC8E " + GameCycle.getWinner().getName() + " \uD83D\uDC8E", false)
-                    .setThumbnail("https://i.ya-webdesign.com/images/a-letter-logo-design-png-7.png")
-                    .setFooter("Мы вас ждем!", "https://i.ya-webdesign.com/images/a-letter-logo-design-png-7.png")
-                    //.setImage("https://i.ya-webdesign.com/images/a-letter-logo-design-png-7.png")
-                    .setAuthor("BestLife Official Event", "https://forum.excalibur-craft.ru/forum/125-BestLife/", "https://i.ya-webdesign.com/images/a-letter-logo-design-png-7.png"));
-            //.setUrl("https://forum.excalibur-craft.ru/forum/125-BestLife/"));
-            webhook.execute();
-        } catch (IOException e) {
-            Main.main.getLogger().severe(e.getMessage());
-        }
     }
 
     public void setContent(String content) {

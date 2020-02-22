@@ -1,10 +1,10 @@
 package RoundSystem;
 
 import PluginUtils.Chat;
+import PluginUtils.DiscordWebHooks;
 import PluginUtils.LocationUtils;
 import QueueSystem.MainScoreBoard;
 import QueueSystem.Queue;
-import WebHooks.DiscordWebhook;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Particle;
@@ -51,11 +51,11 @@ public class GameCycle {
         }
 
         gameState = GameState.IN_GAME;
-        DiscordWebhook.gameStarted();
+        DiscordWebHooks.gameStarted();
     }
 
     public static void endGame() {
-        DiscordWebhook.gameEnded();
+        DiscordWebHooks.gameEnded();
         MainScoreBoard.bossbar.setTitle(ChatColor.GOLD + "Ожидание...");
         MainScoreBoard.bossbar.setColor(BarColor.YELLOW);
         MainScoreBoard.bossbar.setProgress(1);

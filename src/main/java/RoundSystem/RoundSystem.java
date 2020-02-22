@@ -1,11 +1,11 @@
 package RoundSystem;
 
 import PluginUtils.Chat;
+import PluginUtils.DiscordWebHooks;
 import PluginUtils.LocationUtils;
 import PluginUtils.Utils;
 import QueueSystem.Queue;
 import RoundList.*;
-import WebHooks.DiscordWebhook;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -79,7 +79,7 @@ public class RoundSystem {
         for (Player player : Bukkit.getOnlinePlayers())
             player.playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 10, 1);
 
-        randomGame = Utils.getRandom(17, 17);
+        randomGame = Utils.getRandom(0, 17);
         switch (randomGame) {
             case 0:
                 RoundPlaceTheBlock.placeBlock();
@@ -153,7 +153,7 @@ public class RoundSystem {
         for (Player player : Bukkit.getOnlinePlayers()) {
             player.sendMessage(ChatColor.YELLOW + divThick16 + ChatColor.WHITE + "\nРаунд " + ChatColor.AQUA + round + ChatColor.WHITE + " завершен! \nСтатистика: \n" + ChatColor.GREEN + String.join("\n", getStats()) + ChatColor.YELLOW + "\n" + divThick16);
         }
-        DiscordWebhook.roundEnded();
+        DiscordWebHooks.roundEnded();
 
         startRound();
     }

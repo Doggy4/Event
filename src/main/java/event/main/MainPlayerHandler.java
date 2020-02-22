@@ -1,6 +1,7 @@
 package event.main;
 
 import Constructors.InventoryConstructor;
+import PluginUtils.DiscordWebHooks;
 import PluginUtils.Items;
 import PluginUtils.LocationUtils;
 import QueueSystem.Queue;
@@ -30,6 +31,8 @@ public class MainPlayerHandler implements Listener {
         player.getInventory().setItem(0, Items.joinQueue);
         player.getInventory().addItem(Items.particleSelect);
         player.getInventory().setItem(8, Items.spectatorMode);
+
+        DiscordWebHooks.playerJoin(player.getName());
     }
 
     @EventHandler

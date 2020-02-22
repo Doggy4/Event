@@ -7,7 +7,6 @@ import QueueSystem.Queue;
 import RoundSystem.GameRules;
 import RoundSystem.RoundSystem;
 import RoundUtils.MapRebuild;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -32,8 +31,6 @@ public class RoundCraftItem implements Listener {
         RoundSystem.roundSeconds = 60;
         GameRules.EntityDamageOff();
         MapRebuild.loadSchematic("craft-arena");
-
-        Bukkit.getLogger().info(craftableMaterials.toString());
 
         int randomMaterialIndex = Utils.getRandom(0, materials.size() - 37);
         int randomBlockIndex = Utils.getRandom(0, 35);
