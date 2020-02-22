@@ -135,6 +135,9 @@ public class RoundSystem {
             case 17:
                 RoundCraftItem.craftItem();
                 break;
+            case 18:
+                RoundTNTRun.TNTRun();
+                break;
         }
     }
 
@@ -178,6 +181,7 @@ public class RoundSystem {
         if (RoundLavaFloor.isActivated) RoundLavaFloor.endLavaFloor();
         if (RoundHideUnderBlocks.isActivated) RoundHideUnderBlocks.endHideUnderBlocks();
         if (RoundFeedBob.isActivated) RoundFeedBob.endFeedBob();
+        if (RoundTNTRun.isActivated) RoundTNTRun.endTNTRun();
     }
 
     public static List<String> getStats() {

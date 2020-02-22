@@ -64,7 +64,6 @@ public class RoundThrowTheEgg implements Listener {
         int randomMaterial = Utils.getRandom(0, materials.size() - 37);
         List<Material> materialsNew = materials.subList(randomMaterial, randomMaterial + 36);
 
-
         gameRulesAnnouncement(player);
 
         player.getInventory().clear();

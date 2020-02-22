@@ -7,7 +7,7 @@ import PluginUtils.Chat;
 import PluginUtils.Utils;
 import QueueSystem.MainScoreBoard;
 import QueueSystem.Queue;
-import RoundList.RoundCraftItem;
+import RoundList.RoundTNTRun;
 import RoundSystem.GameCycle;
 import RoundSystem.GameState;
 import RoundUtils.MapRebuild;
@@ -106,7 +106,7 @@ public class CommandEvent implements TabExecutor {
         } else if (args[0].equals("statue")) {
             ArmorStandConstructor.ArmorStandConstructor(player.getLocation(), args[1]);
         } else if (args[0].equals("test")) {
-            RoundCraftItem.craftItem();
+            RoundTNTRun.TNTRun();
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Тест выполнен!");
 
         } else
