@@ -1,10 +1,12 @@
 package RoundList;
 
+import PluginUtils.LocationUtils;
 import QueueSystem.Queue;
 import RoundSystem.RoundSystem;
 import RoundUtils.MapRebuild;
 import event.main.Main;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -28,9 +30,14 @@ public class RoundTNTRun {
             @Override
             public void run() {
                 runnable1 = this;
-                for (Player player : Queue.redQueueList)
+                for (Player player : Queue.redQueueList) {
+                    Location location = player.getLocation();
+                    if (location.getY() < LocationUtils.getSpawnLocation().getY() - 5) {
+                        RoundSystem.playerLose(player);
+                    }
+
                     if (player.isOnGround()) {
-                        Location location = player.getLocation();
+
 
                         int x1 = (int) Math.ceil(location.getX());
                         int x2 = (int) Math.floor(location.getX());
@@ -53,8 +60,9 @@ public class RoundTNTRun {
                                 location.getWorld().getBlockAt(x1, y - 2, z2).setType(Material.AIR);
                             }
                         }.runTaskLater(Main.main, 10);
-
                     }
+                }
+
             }
         }.runTaskTimer(Main.main, 1, 1);
     }
@@ -69,6 +77,10 @@ public class RoundTNTRun {
 
         runnable1.cancel();
         runnable2.cancel();
+
+        for (Player player : Queue.redQueueList)
+            if (player.getGameMode() != GameMode.SPECTATOR)
+                RoundSystem.playerWin(player);
     }
 
 }

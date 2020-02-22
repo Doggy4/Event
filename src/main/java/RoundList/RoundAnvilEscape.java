@@ -22,6 +22,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class RoundAnvilEscape implements Listener {
     public static boolean isActivated = false;
 
+    private static BukkitRunnable runnable;
+
     public static void anvilEscape() {
         // Опционально:
         isActivated = true;
@@ -36,11 +38,7 @@ public class RoundAnvilEscape implements Listener {
         new BukkitRunnable() {
             @Override
             public void run() {
-
-                if (!isActivated) {
-                    this.cancel();
-                    endDodgeAnvils();
-                }
+                runnable = this;
 
                 for (int i = 0; i < 50; i++) {
                     int randX = Math.round((float) Main.main.getConfig().getDouble("spawn.x")) + Utils.getRandom(0, 32) - 16;
@@ -59,6 +57,8 @@ public class RoundAnvilEscape implements Listener {
     }
 
     private static void endDodgeAnvils() {
+        isActivated = false;
+        runnable.cancel();
         for (Player roundPlayer : Queue.redQueueList)
             if (roundPlayer.getGameMode() != GameMode.ADVENTURE)
                 RoundSystem.playerWin(roundPlayer);
