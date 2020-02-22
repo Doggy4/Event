@@ -57,7 +57,7 @@ public class LocationUtils {
         Double x = config.getDouble("spawn.x") + (Utils.getRandom(0, 20) - 10);
         Double z = config.getDouble("spawn.z") + (Utils.getRandom(0, 20) - 10);
 
-        Location location = new Location(world, x, config.getDouble("spawn.y"), z);
+        Location location = new Location(world, x, config.getDouble("spawn.y") + 1, z);
 
         location.setPitch((float) config.getDouble("spawn.pitch"));
         location.setYaw((float) config.getDouble("spawn.yaw"));

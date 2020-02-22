@@ -15,7 +15,7 @@ public class DiscordWebHooks {
         try {
             DiscordWebhook webhook = new DiscordWebhook("https://discordapp.com/api/webhooks/673392196493377566/aVunHRsD_JzjelGwNMygS67vo_qM_Bu1diLbInwszQt82HAuQrVcG6382dDFiYkmlI2J");
             webhook.setAvatarUrl("https://i.ibb.co/YfvrWVZ/image.png");
-            webhook.setUsername("Amphitheatrum Flavium");
+            webhook.setUsername("BestLife Official Event");
             webhook.setTts(false);
             webhook.addEmbed(new DiscordWebhook.EmbedObject()
                     .setTitle("Игра началась!")
@@ -27,7 +27,7 @@ public class DiscordWebHooks {
                     .setThumbnail("https://i.ibb.co/YfvrWVZ/image.png")
                     .setFooter("Мы вас ждем!", "https://i.ibb.co/YfvrWVZ/image.png")
                     .setImage("https://i.ibb.co/vDgfV1p/title-small.png")
-                    .setAuthor("BestLife Official Event", "https://forum.excalibur-craft.ru/forum/125-BestLife/", "https://i.ibb.co/YfvrWVZ/image.png"));
+                    .setAuthor("Amphitheatrum Flavium", "https://forum.excalibur-craft.ru/forum/125-BestLife/", "https://i.ibb.co/YfvrWVZ/image.png"));
             //.setUrl("https://forum.excalibur-craft.ru/forum/125-BestLife/"));
             webhook.execute();
         } catch (IOException e) {
@@ -39,7 +39,7 @@ public class DiscordWebHooks {
         try {
             DiscordWebhook webhook = new DiscordWebhook("https://discordapp.com/api/webhooks/673392196493377566/aVunHRsD_JzjelGwNMygS67vo_qM_Bu1diLbInwszQt82HAuQrVcG6382dDFiYkmlI2J");
             webhook.setAvatarUrl("https://i.ibb.co/YfvrWVZ/image.png");
-            webhook.setUsername("Amphitheatrum Flavium");
+            webhook.setUsername("BestLife Official Event");
             webhook.setTts(false);
             webhook.addEmbed(new DiscordWebhook.EmbedObject()
                     .setTitle("Раунд завершен!")
@@ -53,7 +53,7 @@ public class DiscordWebHooks {
                     .setThumbnail("https://i.ibb.co/YfvrWVZ/image.png")
                     .setFooter("Мы вас ждем!", "https://i.ibb.co/YfvrWVZ/image.png")
                     .setImage("https://i.ibb.co/vDgfV1p/title-small.png")
-                    .setAuthor("BestLife Official Event", "https://forum.excalibur-craft.ru/forum/125-BestLife/", "https://i.ibb.co/YfvrWVZ/image.png"));
+                    .setAuthor("Amphitheatrum Flavium", "https://forum.excalibur-craft.ru/forum/125-BestLife/", "https://i.ibb.co/YfvrWVZ/image.png"));
             //.setUrl("https://forum.excalibur-craft.ru/forum/125-BestLife/"));
             webhook.execute();
         } catch (IOException e) {
@@ -65,7 +65,7 @@ public class DiscordWebHooks {
         try {
             DiscordWebhook webhook = new DiscordWebhook("https://discordapp.com/api/webhooks/673392196493377566/aVunHRsD_JzjelGwNMygS67vo_qM_Bu1diLbInwszQt82HAuQrVcG6382dDFiYkmlI2J");
             webhook.setAvatarUrl("https://i.ibb.co/YfvrWVZ/image.png");
-            webhook.setUsername("Amphitheatrum Flavium");
+            webhook.setUsername("BestLife Official Event");
             webhook.setTts(false);
             webhook.addEmbed(new DiscordWebhook.EmbedObject()
                     .setTitle("Игра завершена!")
@@ -77,7 +77,7 @@ public class DiscordWebHooks {
                     .setThumbnail("https://i.ibb.co/YfvrWVZ/image.png")
                     .setFooter("Мы вас ждем!", "https://i.ibb.co/YfvrWVZ/image.png")
                     .setImage("https://i.ibb.co/vDgfV1p/title-small.png")
-                    .setAuthor("BestLife Official Event", "https://forum.excalibur-craft.ru/forum/125-BestLife/", "https://i.ibb.co/YfvrWVZ/image.png"));
+                    .setAuthor("Amphitheatrum Flavium", "https://forum.excalibur-craft.ru/forum/125-BestLife/", "https://i.ibb.co/YfvrWVZ/image.png"));
             //.setUrl("https://forum.excalibur-craft.ru/forum/125-BestLife/"));
             webhook.execute();
         } catch (IOException e) {
@@ -89,7 +89,7 @@ public class DiscordWebHooks {
         try {
             DiscordWebhook webhook = new DiscordWebhook("https://discordapp.com/api/webhooks/673392196493377566/aVunHRsD_JzjelGwNMygS67vo_qM_Bu1diLbInwszQt82HAuQrVcG6382dDFiYkmlI2J");
             webhook.setAvatarUrl("https://i.ibb.co/YfvrWVZ/image.png");
-            webhook.setUsername("Amphitheatrum Flavium");
+            webhook.setUsername("BestLife Official Event");
             webhook.setTts(false);
             webhook.addEmbed(new DiscordWebhook.EmbedObject()
                     .setTitle("Игрок __" + playerName + "__ зашел на сервер!")
@@ -99,7 +99,7 @@ public class DiscordWebHooks {
                     .setThumbnail("https://excalibur-craft.ru/engine/ajax/lk/skin3d.php?login=" + playerName + "&format=png&displayHairs=true&headOnly=true")
                     .setFooter("Поторпись!", "https://i.ibb.co/YfvrWVZ/image.png")
                     .setImage("https://i.ibb.co/vDgfV1p/title-small.png")
-                    .setAuthor("BestLife Official Event", "https://forum.excalibur-craft.ru/forum/125-BestLife/", "https://i.ibb.co/YfvrWVZ/image.png"));
+                    .setAuthor("Amphitheatrum Flavium", "https://forum.excalibur-craft.ru/forum/125-BestLife/", "https://i.ibb.co/YfvrWVZ/image.png"));
             //.setUrl("https://forum.excalibur-craft.ru/forum/125-BestLife/"));
             webhook.execute();
         } catch (IOException e) {
