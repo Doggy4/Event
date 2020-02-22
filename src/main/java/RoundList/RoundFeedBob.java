@@ -67,6 +67,8 @@ public class RoundFeedBob implements Listener {
         zombie.setGlowing(true);
         zombie.setBaby(true);
 
+        zombie.setHealth(1.0);
+
         zombie.getEquipment().setItemInMainHand(food);
         zombie.getEquipment().setItemInOffHand(food);
         zombie.getEquipment().setHelmet(new ItemStack(Material.FURNACE));
