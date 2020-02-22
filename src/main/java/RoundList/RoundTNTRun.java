@@ -33,11 +33,12 @@ public class RoundTNTRun {
                 for (Player player : Queue.redQueueList) {
                     Location location = player.getLocation();
                     if (location.getY() < LocationUtils.getSpawnLocation().getY() - 5) {
-                        RoundSystem.playerLose(player);
+                        if (player.getGameMode() != GameMode.SPECTATOR)
+                            RoundSystem.playerLose(player);
+                        LocationUtils.teleportToSpawn(player);
                     }
 
                     if (player.isOnGround()) {
-
 
                         int x1 = (int) Math.ceil(location.getX());
                         int x2 = (int) Math.floor(location.getX());

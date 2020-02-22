@@ -79,7 +79,7 @@ public class RoundSystem {
         for (Player player : Bukkit.getOnlinePlayers())
             player.playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 10, 1);
 
-        randomGame = Utils.getRandom(0, 18);
+        randomGame = Utils.getRandom(18, 18);
         switch (randomGame) {
             case 0:
                 RoundPlaceTheBlock.placeBlock();
