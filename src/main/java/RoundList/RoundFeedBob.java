@@ -56,8 +56,8 @@ public class RoundFeedBob implements Listener {
     }
 
     private static void gameRulesAnnouncement(Player player) {
-        player.sendTitle(ChatColor.GREEN + "Соберите еду", "Покормите Боба", 40, 40, 40);
-        player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Соберите еду и покормите Боба!");
+        player.sendTitle(ChatColor.GREEN + "Соберите еду", "Накормите Боба", 40, 40, 40);
+        player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Соберите еду и накормите Боба!");
     }
 
     public static void spawnMob() {
@@ -98,6 +98,7 @@ public class RoundFeedBob implements Listener {
     }
 
     public static void endFeedBob() {
+        isActivated = false;
         for (Player player : Queue.redQueueList)
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Поздравляю! Боб теперь сыт!");
         runnable.cancel();
@@ -113,7 +114,7 @@ public class RoundFeedBob implements Listener {
         if (event.getRightClicked().getCustomName() == null) return;
         if (!event.getRightClicked().getCustomName().contains("Боб")) return;
         if (player.getInventory().getItemInMainHand().getType().isEdible()) {
-            player.sendMessage(ChatColor.GOLD + "<Боб> " + ChatColor.WHITE + "Спасибо, что покормил меня, " + player.getName() + "! :3");
+            player.sendMessage(ChatColor.GOLD + "<Боб> " + ChatColor.WHITE + "Спасибо, что накормил меня, " + player.getName() + "! :3");
             InventoryUtils.removeItem(player, player.getInventory().getItemInMainHand().getType(), 1);
             RoundSystem.addScore(player, 1);
         } else

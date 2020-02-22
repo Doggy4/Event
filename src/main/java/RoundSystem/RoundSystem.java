@@ -173,6 +173,7 @@ public class RoundSystem {
         if (RoundSlimePvP.isActivated) RoundSlimePvP.endSlimePvP();
         if (RoundLavaFloor.isActivated) RoundLavaFloor.endLavaFloor();
         if (RoundHideUnderBlocks.isActivated) RoundHideUnderBlocks.endHideUnderBlocks();
+        if (RoundFeedBob.isActivated) RoundFeedBob.endFeedBob();
     }
 
     public static List<String> getStats() {
