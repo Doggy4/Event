@@ -56,7 +56,7 @@ public class RoundAnvilEscape implements Listener {
         }.runTaskTimer(Main.main, 10, 10);
     }
 
-    private static void endDodgeAnvils() {
+    public static void endDodgeAnvils() {
         isActivated = false;
         runnable.cancel();
         for (Player roundPlayer : Queue.redQueueList)

@@ -56,7 +56,7 @@ public class RoundLavaFloor {
 
         }.
 
-                runTaskTimer(Main.main, 5, 5);
+                runTaskTimer(Main.main, 3, 3);
     }
 
     public static void endLavaFloor() {

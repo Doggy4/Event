@@ -78,6 +78,8 @@ public class RoundPlaceTheBlock implements Listener {
         player.getInventory().clear();
         for (Material block : blocks) player.getInventory().addItem(new ItemStack(block, 1));
 
+        gameRulesAnnouncement(player);
+
         world.getBlockAt(location).setType(randomMaterialBlock);
     }
 

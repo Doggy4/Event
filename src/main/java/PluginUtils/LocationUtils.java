@@ -54,8 +54,8 @@ public class LocationUtils {
 
         World world = Bukkit.getWorld(config.getString("spawn.world"));
 
-        Double x = config.getDouble("spawn.x") + (Utils.getRandom(0, 20) - 10);
-        Double z = config.getDouble("spawn.z") + (Utils.getRandom(0, 20) - 10);
+        double x = config.getDouble("spawn.x") + (Utils.getRandom(0, 20) - 10);
+        double z = config.getDouble("spawn.z") + (Utils.getRandom(0, 20) - 10);
 
         Location location = new Location(world, x, config.getDouble("spawn.y") + 1, z);
 

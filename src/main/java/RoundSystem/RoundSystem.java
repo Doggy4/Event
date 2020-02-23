@@ -182,6 +182,8 @@ public class RoundSystem {
         if (RoundHideUnderBlocks.isActivated) RoundHideUnderBlocks.endHideUnderBlocks();
         if (RoundFeedBob.isActivated) RoundFeedBob.endFeedBob();
         if (RoundTNTRun.isActivated) RoundTNTRun.endTNTRun();
+        if (RoundAnvilEscape.isActivated) RoundAnvilEscape.endDodgeAnvils();
+        if (RoundHitTheBlock.isActivated) RoundHitTheBlock.endHitTheBlock();
     }
 
     public static List<String> getStats() {
