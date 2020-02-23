@@ -2,12 +2,11 @@ package RoundList;
 
 import PluginUtils.Chat;
 import PluginUtils.Items;
+import PluginUtils.LocationUtils;
 import PluginUtils.Utils;
 import QueueSystem.Queue;
 import RoundSystem.RoundSystem;
 import RoundUtils.MapRebuild;
-import event.main.Main;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.entity.EntityType;
@@ -41,7 +40,7 @@ public class RoundTrimTheSheep implements Listener {
         }
 
         for (int i = 0; i < 50; i++) {
-            Sheep sheep = (Sheep) Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).spawnEntity(Commands.CommandEvent.randLocationSpawn(), EntityType.SHEEP);
+            Sheep sheep = (Sheep) LocationUtils.world.spawnEntity(LocationUtils.getRandomLocation().add(0, 1, 0), EntityType.SHEEP);
             DyeColor color = Utils.getRandomColor();
             sheep.setColor(color);
             sheep.setCustomName(Chat.colors.get(color.toString()) + Chat.translate(color.name()));
@@ -49,7 +48,7 @@ public class RoundTrimTheSheep implements Listener {
     }
 
     private static void spawnSheep(Player player) {
-        Sheep sheep = (Sheep) Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).spawnEntity(Commands.CommandEvent.randLocationSpawn(), EntityType.SHEEP);
+        Sheep sheep = (Sheep) LocationUtils.world.spawnEntity(LocationUtils.getRandomLocation().add(0, 1, 0), EntityType.SHEEP);
         DyeColor color = Utils.getRandomColor();
         sheep.setColor(color);
         sheep.setCustomName(Chat.colors.get(color.toString()) + Chat.translate(color.name()));

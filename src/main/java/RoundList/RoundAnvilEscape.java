@@ -1,12 +1,11 @@
 package RoundList;
 
-import PluginUtils.Utils;
+import PluginUtils.LocationUtils;
 import QueueSystem.Queue;
 import RoundSystem.GameRules;
 import RoundSystem.RoundSystem;
 import RoundUtils.MapRebuild;
 import event.main.Main;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -39,19 +38,8 @@ public class RoundAnvilEscape implements Listener {
             @Override
             public void run() {
                 runnable = this;
-
-                for (int i = 0; i < 50; i++) {
-                    int randX = Math.round((float) Main.main.getConfig().getDouble("spawn.x")) + Utils.getRandom(0, 32) - 16;
-                    int randZ = Math.round((float) Main.main.getConfig().getDouble("spawn.z")) + Utils.getRandom(0, 32) - 16;
-                    int y = Math.round((float) Main.main.getConfig().getDouble("spawn.y")) + 10;
-
-                    while (Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).getBlockAt(randX, y, randZ).getType() != Material.AIR) {
-                        randX = Math.round((float) Main.main.getConfig().getDouble("spawn.x")) + Utils.getRandom(0, 32) - 16;
-                        randZ = Math.round((float) Main.main.getConfig().getDouble("spawn.z")) + Utils.getRandom(0, 32) - 16;
-                        y = Math.round((float) Main.main.getConfig().getDouble("spawn.y")) + 10;
-                    }
-                    Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).getBlockAt(randX, y, randZ).setType(Material.ANVIL);
-                }
+                for (int i = 0; i < 50; i++)
+                    LocationUtils.world.getBlockAt(LocationUtils.getRandomLocation()).setType(Material.ANVIL);
             }
         }.runTaskTimer(Main.main, 10, 10);
     }

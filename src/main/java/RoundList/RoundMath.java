@@ -60,7 +60,6 @@ public class RoundMath implements Listener {
             gameRulesAnnouncement(player);
             playerStringHashMap.put(player, result + "");
         }
-
     }
 
     private static void gameRulesAnnouncement(Player player) {

@@ -4,7 +4,6 @@ import Constructors.ArmorStandConstructor;
 import ImageMaps.ImageMapCommands;
 import NBS.NoteBlockPlayer;
 import PluginUtils.Chat;
-import PluginUtils.Utils;
 import QueueSystem.MainScoreBoard;
 import QueueSystem.Queue;
 import RoundList.RoundTNTRun;
@@ -12,7 +11,10 @@ import RoundSystem.GameCycle;
 import RoundSystem.GameState;
 import RoundUtils.MapRebuild;
 import event.main.Main;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -163,21 +165,5 @@ public class CommandEvent implements TabExecutor {
             player.sendTitle(ChatColor.RED + "Внимание!", ChatColor.YELLOW + String.join(" ", message), 40, 60, 40);
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 10, 1);
         }
-    }
-
-    public static Location randLocationSpawn() {
-        FileConfiguration config = Main.main.getConfig();
-
-        World world = Bukkit.getWorld(config.getString("spawn.world"));
-
-        Double x = config.getDouble("spawn.x") + (Utils.getRandom(0, 20) - 10);
-        Double z = config.getDouble("spawn.z") + (Utils.getRandom(0, 20) - 10);
-
-        Location location = new Location(world, x, config.getDouble("spawn.y"), z);
-
-        location.setPitch((float) config.getDouble("spawn.pitch"));
-        location.setYaw((float) config.getDouble("spawn.yaw"));
-
-        return location;
     }
 }

@@ -14,7 +14,7 @@ public class LocationUtils {
 
     public static ArrayList<Location> spawnLocations = new ArrayList<Location>();
     private static FileConfiguration config = Main.main.getConfig();
-    private static World world = Bukkit.getWorld(config.getString("spawn.world"));
+    public static World world = Bukkit.getWorld(config.getString("spawn.world"));
     private static Location arenaCentre = new Location(world, config.getDouble("spawn.x"), config.getDouble("spawn.y"), config.getDouble("spawn.z"));
 
     static {
@@ -30,24 +30,7 @@ public class LocationUtils {
         spawnLocations.add(new Location(arenaCentre.getWorld(), arenaCentre.getX() - 9, arenaCentre.getY(), arenaCentre.getZ() + 6));
     }
 
-    public static String getPlayerLocation(Location location) {
-
-        String result = ChatColor.WHITE + "Мир: " + ChatColor.GREEN + location.getWorld().getName() + ChatColor.WHITE + "\nКоординаты: " + ChatColor.GREEN + "[" + Math.ceil(location.getX()) + "], [" + Math.ceil(location.getY()) + "], [" + Math.ceil(location.getZ()) + "]";
-        return result;
-    }
-
-    public static void teleportToLobby(Player player) {
-        FileConfiguration config = Main.main.getConfig();
-
-        World world = Bukkit.getWorld(config.getString("lobby.world"));
-        Location location = new Location(world, config.getDouble("lobby.x"), config.getDouble("lobby.y"), config.getDouble("lobby.z"));
-
-        location.setPitch((float) config.getDouble("lobby.pitch"));
-        location.setYaw((float) config.getDouble("lobby.yaw"));
-
-        player.teleport(location);
-        player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы были телепортированы в Лобби!");
-    }
+    public static List<Location> availableSpawnLocations;
 
     public static void teleportToSpawn(Player player) {
         FileConfiguration config = Main.main.getConfig();
@@ -83,6 +66,28 @@ public class LocationUtils {
                     blocks.add(loc1.getWorld().getBlockAt(x, y, z));
 
         return blocks;
+    }
+
+    static {
+        for (int x = (int) Math.round(arenaCentre.getX()) - 16; x <= arenaCentre.getX() + 16; x++)
+            for (int z = (int) Math.round(arenaCentre.getZ()) - 16; z <= arenaCentre.getZ() + 16; z++)
+                availableSpawnLocations.add(new Location(world, x, arenaCentre.getY(), z));
+    }
+
+    public static void teleportToLobby(Player player) {
+        FileConfiguration config = Main.main.getConfig();
+
+        Location location = new Location(world, config.getDouble("lobby.x"), config.getDouble("lobby.y"), config.getDouble("lobby.z"));
+
+        location.setPitch((float) config.getDouble("lobby.pitch"));
+        location.setYaw((float) config.getDouble("lobby.yaw"));
+
+        player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы были телепортированы в Лобби!");
+        player.teleport(location);
+    }
+
+    public static Location getRandomLocation() {
+        return availableSpawnLocations.get(Utils.getRandom(0, availableSpawnLocations.size() - 1));
     }
 
     public static Location getSpawnLocation() {

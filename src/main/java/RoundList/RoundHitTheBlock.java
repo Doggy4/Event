@@ -3,7 +3,6 @@ package RoundList;
 import Particles.Particles;
 import PluginUtils.Chat;
 import PluginUtils.LocationUtils;
-import PluginUtils.Utils;
 import QueueSystem.Queue;
 import RoundSystem.RoundSystem;
 import RoundUtils.MapRebuild;
@@ -28,8 +27,8 @@ public class RoundHitTheBlock implements Listener {
 
     private static int n = (int) Math.floor(Math.random() * targets.length);
 
-    private static Block block = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).getBlockAt(0, 0, 0);
-    private static Block bonusBlock = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).getBlockAt(1, 1, 1);
+    private static Block block = null;
+    private static Block bonusBlock = null;
     private static BukkitRunnable runnable;
 
     public static void hitTheBlock() {
@@ -53,29 +52,18 @@ public class RoundHitTheBlock implements Listener {
                 block.setType(Material.AIR);
                 bonusBlock.setType(Material.AIR);
 
+                World world = LocationUtils.world;
+                Location blockLocation = LocationUtils.getRandomLocation().add(0, 5, 0);
+                Location bonusBlockLocation = LocationUtils.getRandomLocation().add(0, 10, 0);
 
-                int rand_x = Main.main.getConfig().getInt("spawn.x") + Utils.getRandom(1, 20) - 10;
-                int rand_z = Main.main.getConfig().getInt("spawn.z") + Utils.getRandom(1, 20) - 10;
+                LocationUtils.vectorsBetweenLocations(LocationUtils.getCenter(block.getLocation()), LocationUtils.getCenter(blockLocation), Particle.FLAME);
+                LocationUtils.vectorsBetweenLocations(LocationUtils.getCenter(bonusBlock.getLocation()), LocationUtils.getCenter(bonusBlockLocation), Particle.FLAME);
 
-                int rand_bonus_x = Main.main.getConfig().getInt("spawn.x") + Utils.getRandom(1, 20) - 10;
-                int rand_bonus_z = Main.main.getConfig().getInt("spawn.z") + Utils.getRandom(1, 20) - 10;
-
-                World world = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world"));
-
-                LocationUtils.vectorsBetweenLocations(LocationUtils.getCenter(block.getLocation()), LocationUtils.getCenter(new Location(block.getWorld(), rand_x, Main.main.getConfig().getInt("spawn.y") + 5, rand_z)), Particle.FLAME);
-                LocationUtils.vectorsBetweenLocations(LocationUtils.getCenter(bonusBlock.getLocation()), LocationUtils.getCenter(new Location(bonusBlock.getWorld(), rand_bonus_x, Main.main.getConfig().getInt("spawn.y") + 10, rand_bonus_z)), Particle.FLAME);
-
-
-                block = world.getBlockAt(rand_x, Main.main.getConfig().getInt("spawn.y") + 5, rand_z);
-                bonusBlock = world.getBlockAt(rand_bonus_x, Main.main.getConfig().getInt("spawn.y") + 10, rand_bonus_z);
-
-                Location targetLoc = block.getLocation();
-                Location bonusLoc = bonusBlock.getLocation();
+                block = world.getBlockAt(blockLocation);
+                bonusBlock = world.getBlockAt(bonusBlockLocation);
 
                 bonusBlock.setType(bonusTarget);
                 block.setType(targets[n]);
-
-                double step = 0.5D;
 
                 world.playSound(block.getLocation(), Sound.BLOCK_BELL_USE, 1, 2);
                 Particles.createBlockSplash(block.getLocation(), Particle.END_ROD);

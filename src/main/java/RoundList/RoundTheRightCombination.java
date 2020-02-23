@@ -2,7 +2,6 @@ package RoundList;
 
 import Particles.Particles;
 import PluginUtils.Chat;
-import PluginUtils.LocationUtils;
 import PluginUtils.Utils;
 import QueueSystem.Queue;
 import RoundSystem.GameRules;
@@ -40,8 +39,6 @@ public class RoundTheRightCombination implements Listener {
         MapRebuild.loadSchematic("arena");
 
         for (Player player : Queue.redQueueList) {
-            LocationUtils.teleportToSpawn(player);
-
             n = (int) Math.floor(Math.random() * blockToBePut.length);
             n2 = (int) Math.floor(Math.random() * blockToPlaceOn.length);
 

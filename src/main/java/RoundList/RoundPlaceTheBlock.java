@@ -93,9 +93,9 @@ public class RoundPlaceTheBlock implements Listener {
         if (!isActivated) return;
         Player player = event.getPlayer();
         if (!(Queue.redQueueList.contains(player))) return;
+        event.setCancelled(true);
 
-        int score = 0;
-
+        int score;
         if (event.getBlockPlaced().getType().equals(univPlayerMaterialHashMap.get(player))) {
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Задание выполнено!");
             score = 1;
@@ -106,7 +106,5 @@ public class RoundPlaceTheBlock implements Listener {
 
         RoundSystem.addScore(player, score);
         placeNext(player);
-
-        event.setCancelled(true);
     }
 }

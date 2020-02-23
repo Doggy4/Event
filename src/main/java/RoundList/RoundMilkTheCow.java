@@ -1,10 +1,10 @@
 package RoundList;
 
+import PluginUtils.LocationUtils;
 import PluginUtils.Utils;
 import QueueSystem.Queue;
 import RoundSystem.RoundSystem;
 import RoundUtils.MapRebuild;
-import event.main.Main;
 import org.bukkit.*;
 import org.bukkit.entity.Cow;
 import org.bukkit.entity.EntityType;
@@ -43,7 +43,7 @@ public class RoundMilkTheCow implements Listener {
 
             for (int i = 0; i < 10; i++) {
                 int chance = Utils.getRandom(0, 100);
-                Cow cow = (Cow) Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).spawnEntity(Commands.CommandEvent.randLocationSpawn(), EntityType.COW);
+                Cow cow = (Cow) LocationUtils.world.spawnEntity(LocationUtils.getRandomLocation().add(0, 2, 0), EntityType.COW);
 
                 if (chance > boomCowChance && chance < uncommonCowChance) cow.setCustomName(boomCow);
                 else if (chance < uncommonCowChance) cow.setCustomName(commonCow);
@@ -60,13 +60,12 @@ public class RoundMilkTheCow implements Listener {
         player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Подоите корову!");
     }
 
-
     private static void spawnCow(Player player) {
         player.getInventory().clear();
         player.getInventory().addItem(new ItemStack(Material.BUCKET, 1));
 
         int chance = Utils.getRandom(0, 100);
-        Cow cow = (Cow) Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).spawnEntity(Commands.CommandEvent.randLocationSpawn(), EntityType.COW);
+        Cow cow = (Cow) LocationUtils.world.spawnEntity(LocationUtils.getRandomLocation().add(0, 2, 0), EntityType.COW);
 
         if (chance > boomCowChance && chance < uncommonCowChance) cow.setCustomName(boomCow);
         else if (chance < uncommonCowChance) cow.setCustomName(commonCow);

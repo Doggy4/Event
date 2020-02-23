@@ -61,7 +61,7 @@ public class RoundFeedBob implements Listener {
     }
 
     public static void spawnMob() {
-        Zombie zombie = (Zombie) Bukkit.getWorld(Main.main.getConfig().getString("spawn.world")).spawnEntity(LocationUtils.getSpawnLocation(), EntityType.ZOMBIE);
+        Zombie zombie = (Zombie) LocationUtils.world.spawnEntity(LocationUtils.getRandomLocation(), EntityType.ZOMBIE);
 
         ItemStack food = foods.get(Utils.getRandom(0, foods.size() - 1));
         zombie.setGlowing(true);

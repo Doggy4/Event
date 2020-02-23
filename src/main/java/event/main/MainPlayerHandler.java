@@ -58,13 +58,12 @@ public class MainPlayerHandler implements Listener {
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_XYLOPHONE, 10, 1);
                 player.setGameMode(GameMode.ADVENTURE);
                 player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы вышли из режима наблюдателя!");
-                LocationUtils.teleportToLobby(player);
             } else {
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_XYLOPHONE, 10, 1);
                 player.setGameMode(GameMode.SPECTATOR);
                 player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы вошли в режим наблюдателя! Выйти из режима: " + ChatColor.BLUE + "ЛКМ");
-                LocationUtils.teleportToLobby(player);
             }
+            LocationUtils.teleportToLobby(player);
         }
     }
 }

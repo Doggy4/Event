@@ -1,14 +1,12 @@
 package RoundList;
 
 import PluginUtils.LocationUtils;
-import PluginUtils.Utils;
 import QueueSystem.Queue;
 import RoundSystem.GameRules;
 import RoundSystem.RoundSystem;
 import RoundUtils.MapRebuild;
 import event.main.Main;
 import org.bukkit.*;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
@@ -17,17 +15,11 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.util.List;
-
 public class RoundHideUnderBlocks implements Listener {
     public static boolean isActivated = false;
 
     private static World world = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world"));
 
-    private static Location loc1 = new Location(world, LocationUtils.getSpawnLocation().getX() + 17, LocationUtils.getSpawnLocation().getY() + 16, LocationUtils.getSpawnLocation().getZ() + 16);
-    private static Location loc2 = new Location(world, LocationUtils.getSpawnLocation().getX() - 15, LocationUtils.getSpawnLocation().getY() + 16, LocationUtils.getSpawnLocation().getZ() - 16);
-
-    private static List<Block> blocks = LocationUtils.getBlocksFromTwoPoints(loc1, loc2);
     private static BukkitTask runnable;
 
     public static void hideUnderBlocks() {
@@ -42,23 +34,19 @@ public class RoundHideUnderBlocks implements Listener {
             public void run() {
                 MapRebuild.loadSchematic("hide-arena");
 
-                for (int i = 0; i < 8; i++) {
-                    int randX = Math.round((float) Main.main.getConfig().getDouble("spawn.x")) + Utils.getRandom(0, 32) - 16;
-                    int randZ = Math.round((float) Main.main.getConfig().getDouble("spawn.z")) + Utils.getRandom(0, 32) - 16;
-                    int y = Math.round((float) Main.main.getConfig().getDouble("spawn.y")) + 2;
+                for (int i = 0; i < 8; i++)
+                    world.getBlockAt(LocationUtils.getRandomLocation()).setType(Material.DIORITE_SLAB);
 
-                    world.getBlockAt(randX, y, randZ).setType(Material.DIORITE_SLAB);
-                }
-
-                for (Player player : Queue.redQueueList) {
+                for (Player player : Queue.redQueueList)
                     gameRulesAnnouncement(player);
-                }
 
                 new BukkitRunnable() {
                     @Override
                     public void run() {
-                        for (Block block : blocks)
-                            world.spawn(LocationUtils.getCenter(block.getLocation()), Snowball.class);
+                        for (Location location : LocationUtils.availableSpawnLocations) {
+                            location.add(0, 15, 0);
+                            world.spawn(LocationUtils.getCenter(location), Snowball.class);
+                        }
                     }
                 }.runTaskLater(Main.main, 60);
             }
