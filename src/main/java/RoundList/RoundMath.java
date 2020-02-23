@@ -19,6 +19,7 @@ public class RoundMath implements Listener {
     public static boolean isActivated = false;
 
     private static HashMap<String, Integer> examples = new HashMap<String, Integer>();
+    private static HashMap<Player, String> playerStringHashMap = new HashMap<Player, String>();
     private static int result = 0;
     private static String example = null;
 
@@ -55,8 +56,11 @@ public class RoundMath implements Listener {
         example = keysAsArray.get(Utils.getRandom(0, keysAsArray.size()));
         result = examples.get(example);
 
-        for (Player player : Queue.redQueueList)
+        for (Player player : Queue.redQueueList) {
             gameRulesAnnouncement(player);
+            playerStringHashMap.put(player, result + "");
+        }
+
     }
 
     private static void gameRulesAnnouncement(Player player) {
@@ -68,6 +72,7 @@ public class RoundMath implements Listener {
         example = keysAsArray.get(new Random().nextInt(keysAsArray.size()));
         result = examples.get(example);
         gameRulesAnnouncement(player);
+        playerStringHashMap.put(player, result + "");
     }
 
     @EventHandler
@@ -76,7 +81,7 @@ public class RoundMath implements Listener {
         Player player = event.getPlayer();
         if (!Queue.redQueueList.contains(player)) return;
 
-        if (event.getMessage().equals(result + "")) {
+        if (event.getMessage().equals(playerStringHashMap.get(player))) {
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Ответ верный!");
             RoundSystem.addScore(player, 10);
         } else {
