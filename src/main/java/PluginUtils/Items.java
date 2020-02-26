@@ -127,7 +127,11 @@ public class Items {
             .enchantment(Enchantment.IMPALING, 1)
             .build();
 
-
+    public static ItemStack hotPotato = new ItemStackConstructor(Material.POTATO, 64)
+            .amount(1)
+            .displayName(ChatColor.RED + "Горячая картошка")
+            .enchantment(Enchantment.FIRE_ASPECT, 1)
+            .build();
 
 
 }

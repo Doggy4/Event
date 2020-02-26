@@ -6,6 +6,7 @@ import NBS.NoteBlockPlayer;
 import PluginUtils.Chat;
 import QueueSystem.MainScoreBoard;
 import QueueSystem.Queue;
+import RoundList.RoundHotPotato;
 import RoundSystem.GameCycle;
 import RoundSystem.GameState;
 import RoundUtils.MapRebuild;
@@ -108,6 +109,7 @@ public class CommandEvent implements TabExecutor {
             ArmorStandConstructor.ArmorStandConstructor(player.getLocation(), args[1]);
         } else if (args[0].equals("test")) {
             player.sendMessage("Test");
+            RoundHotPotato.hotPotato();
         } else
             return false;
 

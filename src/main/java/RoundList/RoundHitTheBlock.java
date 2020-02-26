@@ -41,7 +41,6 @@ public class RoundHitTheBlock implements Listener {
             gameRulesAnnouncement(player);
             player.getInventory().addItem(BowEventBow);
             player.getInventory().addItem(bowEventArrows);
-
         }
 
         new BukkitRunnable() {

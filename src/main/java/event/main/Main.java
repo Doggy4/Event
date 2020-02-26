@@ -42,6 +42,8 @@ public final class Main extends JavaPlugin implements Listener {
 
         MainScoreBoard.startPluginRunnable();
         this.saveDefaultConfig();
+
+        registerEvents();
     }
 
     private void registerEvents() {
@@ -66,6 +68,7 @@ public final class Main extends JavaPlugin implements Listener {
         this.getServer().getPluginManager().registerEvents(new RoundFeedBob(), this);
         this.getServer().getPluginManager().registerEvents(new ImageMaps(), this);
         this.getServer().getPluginManager().registerEvents(new RoundCraftItem(), this);
+        this.getServer().getPluginManager().registerEvents(new RoundHotPotato(), this);
     }
 
     @Override
