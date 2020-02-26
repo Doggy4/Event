@@ -140,13 +140,13 @@ public class InventoryConstructor implements Listener {
     public void onPlayerDropEvent(PlayerDropItemEvent event) {
         Player player = event.getPlayer();
         String displayName = event.getItemDrop().getItemStack().getItemMeta().getDisplayName();
-        event.setCancelled(true);
 
         if (displayName.equals(Items.joinQueue.getItemMeta().getDisplayName()) || displayName.equals(Items.spectatorMode.getItemMeta().getDisplayName())) {
             event.setCancelled(true);
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Вы не можете это сделать!");
             player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 10, 1);
         }
+
     }
 }
 

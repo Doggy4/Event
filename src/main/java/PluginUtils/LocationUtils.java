@@ -17,6 +17,14 @@ public class LocationUtils {
     public static World world = Bukkit.getWorld(config.getString("spawn.world"));
     private static Location arenaCentre = new Location(world, config.getDouble("spawn.x"), config.getDouble("spawn.y"), config.getDouble("spawn.z"));
 
+    public static List<Location> availableSpawnLocations = new ArrayList<Location>();
+
+    static {
+        for (int x = (int) Math.round(arenaCentre.getX()) - 16; x <= (int) Math.round(arenaCentre.getX()) + 16; x++)
+            for (int z = (int) Math.round(arenaCentre.getZ()) - 16; z <= (int) Math.round(arenaCentre.getZ()) + 16; z++)
+                availableSpawnLocations.add(new Location(world, x, arenaCentre.getY(), z));
+    }
+
     static {
         spawnLocations.add(new Location(arenaCentre.getWorld(), arenaCentre.getX() + 10, arenaCentre.getY(), arenaCentre.getZ()));
         spawnLocations.add(new Location(arenaCentre.getWorld(), arenaCentre.getX() - 10, arenaCentre.getY(), arenaCentre.getZ()));
@@ -30,22 +38,8 @@ public class LocationUtils {
         spawnLocations.add(new Location(arenaCentre.getWorld(), arenaCentre.getX() - 9, arenaCentre.getY(), arenaCentre.getZ() + 6));
     }
 
-    public static List<Location> availableSpawnLocations;
-
     public static void teleportToSpawn(Player player) {
-        FileConfiguration config = Main.main.getConfig();
-
-        World world = Bukkit.getWorld(config.getString("spawn.world"));
-
-        double x = config.getDouble("spawn.x") + (Utils.getRandom(0, 20) - 10);
-        double z = config.getDouble("spawn.z") + (Utils.getRandom(0, 20) - 10);
-
-        Location location = new Location(world, x, config.getDouble("spawn.y") + 1, z);
-
-        location.setPitch((float) config.getDouble("spawn.pitch"));
-        location.setYaw((float) config.getDouble("spawn.yaw"));
-
-        player.teleport(location);
+        player.teleport(getRandomLocation());
     }
 
     public static List<Block> getBlocksFromTwoPoints(Location loc1, Location loc2) {
@@ -68,15 +62,7 @@ public class LocationUtils {
         return blocks;
     }
 
-    static {
-        for (int x = (int) Math.round(arenaCentre.getX()) - 16; x <= arenaCentre.getX() + 16; x++)
-            for (int z = (int) Math.round(arenaCentre.getZ()) - 16; z <= arenaCentre.getZ() + 16; z++)
-                availableSpawnLocations.add(new Location(world, x, arenaCentre.getY(), z));
-    }
-
     public static void teleportToLobby(Player player) {
-        FileConfiguration config = Main.main.getConfig();
-
         Location location = new Location(world, config.getDouble("lobby.x"), config.getDouble("lobby.y"), config.getDouble("lobby.z"));
 
         location.setPitch((float) config.getDouble("lobby.pitch"));

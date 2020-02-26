@@ -54,16 +54,17 @@ public class MainPlayerHandler implements Listener {
             player.openInventory(InventoryConstructor.queueInventory());
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_GUITAR, 10, 1);
         } else if (player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equals(Items.spectatorMode.getItemMeta().getDisplayName())) {
-            if (player.getGameMode() == GameMode.SPECTATOR){
-                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_XYLOPHONE, 10, 1);
+            if (player.getGameMode() == GameMode.SPECTATOR) {
                 player.setGameMode(GameMode.ADVENTURE);
                 player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы вышли из режима наблюдателя!");
+                LocationUtils.teleportToLobby(player);
             } else {
-                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_XYLOPHONE, 10, 1);
                 player.setGameMode(GameMode.SPECTATOR);
                 player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы вошли в режим наблюдателя! Выйти из режима: " + ChatColor.BLUE + "ЛКМ");
+                LocationUtils.teleportToSpawn(player);
             }
-            LocationUtils.teleportToLobby(player);
+            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_XYLOPHONE, 10, 1);
+
         }
     }
 }

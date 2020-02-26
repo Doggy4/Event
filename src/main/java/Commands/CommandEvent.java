@@ -4,9 +4,9 @@ import Constructors.ArmorStandConstructor;
 import ImageMaps.ImageMapCommands;
 import NBS.NoteBlockPlayer;
 import PluginUtils.Chat;
+import PluginUtils.LocationUtils;
 import QueueSystem.MainScoreBoard;
 import QueueSystem.Queue;
-import RoundList.RoundTNTRun;
 import RoundSystem.GameCycle;
 import RoundSystem.GameState;
 import RoundUtils.MapRebuild;
@@ -108,7 +108,7 @@ public class CommandEvent implements TabExecutor {
         } else if (args[0].equals("statue")) {
             ArmorStandConstructor.ArmorStandConstructor(player.getLocation(), args[1]);
         } else if (args[0].equals("test")) {
-            RoundTNTRun.TNTRun();
+            Bukkit.broadcastMessage(LocationUtils.availableSpawnLocations + "");
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Тест выполнен!");
 
         } else
