@@ -4,7 +4,6 @@ import Constructors.ArmorStandConstructor;
 import ImageMaps.ImageMapCommands;
 import NBS.NoteBlockPlayer;
 import PluginUtils.Chat;
-import PluginUtils.LocationUtils;
 import QueueSystem.MainScoreBoard;
 import QueueSystem.Queue;
 import RoundSystem.GameCycle;
@@ -108,9 +107,7 @@ public class CommandEvent implements TabExecutor {
         } else if (args[0].equals("statue")) {
             ArmorStandConstructor.ArmorStandConstructor(player.getLocation(), args[1]);
         } else if (args[0].equals("test")) {
-            Bukkit.broadcastMessage(LocationUtils.availableSpawnLocations + "");
-            player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Тест выполнен!");
-
+            player.sendMessage("Test");
         } else
             return false;
 

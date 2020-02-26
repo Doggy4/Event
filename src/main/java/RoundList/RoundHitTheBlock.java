@@ -1,6 +1,6 @@
 package RoundList;
 
-import Particles.Particles;
+import Particles.ParticleUtil;
 import PluginUtils.Chat;
 import PluginUtils.LocationUtils;
 import QueueSystem.Queue;
@@ -66,10 +66,10 @@ public class RoundHitTheBlock implements Listener {
                 block.setType(targets[n]);
 
                 world.playSound(block.getLocation(), Sound.BLOCK_BELL_USE, 1, 2);
-                Particles.createBlockSplash(block.getLocation(), Particle.END_ROD);
+                ParticleUtil.createBlockSplash(block.getLocation(), Particle.END_ROD);
 
                 world.playSound(bonusBlock.getLocation(), Sound.BLOCK_BELL_RESONATE, 1, 3);
-                Particles.createBlockSplash(bonusBlock.getLocation(), Particle.DRAGON_BREATH);
+                ParticleUtil.createBlockSplash(bonusBlock.getLocation(), Particle.DRAGON_BREATH);
             }
         }.runTaskTimer(Main.main, 20, 20);
     }

@@ -64,7 +64,6 @@ public class MainPlayerHandler implements Listener {
                 LocationUtils.teleportToSpawn(player);
             }
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_XYLOPHONE, 10, 1);
-
         }
     }
 }

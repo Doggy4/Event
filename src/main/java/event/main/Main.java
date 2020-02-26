@@ -24,9 +24,27 @@ public final class Main extends JavaPlugin implements Listener {
         // Ссылка на главный класс
         main = this;
 
+        // Сделать проверку на состояние файлов + автозаполнение конфигов
         Bukkit.getLogger().info(ChatColor.GOLD + "[EVENT] Plugin enabled!");
         Bukkit.getPluginCommand("event").setExecutor(new Commands.CommandEvent());
 
+        if (!(new File(getDataFolder(), "images")).exists())
+            (new File(getDataFolder(), "images")).mkdirs();
+
+        int sendPerTicks = getConfig().getInt("sendPerTicks", 20);
+        int mapsPerSend = getConfig().getInt("mapsPerSend", 8);
+
+        // Дичь: переписать
+        ImageMaps.loadMaps();
+
+        ImageMaps.sendTask = new FastSendTask(this, mapsPerSend);
+        ImageMaps.sendTask.runTaskTimer(this, sendPerTicks, sendPerTicks);
+
+        MainScoreBoard.startPluginRunnable();
+        this.saveDefaultConfig();
+    }
+
+    private void registerEvents() {
         this.getServer().getPluginManager().registerEvents(new MainPlayerHandler(), this);
         this.getServer().getPluginManager().registerEvents(new InventoryConstructor(), this);
         this.getServer().getPluginManager().registerEvents(new RoundPlaceTheBlock(), this);
@@ -48,20 +66,6 @@ public final class Main extends JavaPlugin implements Listener {
         this.getServer().getPluginManager().registerEvents(new RoundFeedBob(), this);
         this.getServer().getPluginManager().registerEvents(new ImageMaps(), this);
         this.getServer().getPluginManager().registerEvents(new RoundCraftItem(), this);
-
-        if (!(new File(getDataFolder(), "images")).exists())
-            (new File(getDataFolder(), "images")).mkdirs();
-
-        int sendPerTicks = getConfig().getInt("sendPerTicks", 20);
-        int mapsPerSend = getConfig().getInt("mapsPerSend", 8);
-
-        ImageMaps.loadMaps();
-
-        ImageMaps.sendTask = new FastSendTask(this, mapsPerSend);
-        ImageMaps.sendTask.runTaskTimer(this, sendPerTicks, sendPerTicks);
-
-        MainScoreBoard.startPluginRunnable();
-        this.saveDefaultConfig();
     }
 
     @Override

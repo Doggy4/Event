@@ -1,6 +1,6 @@
 package RoundList;
 
-import Particles.Particles;
+import Particles.ParticleUtil;
 import PluginUtils.Chat;
 import PluginUtils.Utils;
 import QueueSystem.Queue;
@@ -89,7 +89,7 @@ public class RoundTheRightCombination implements Listener {
         if (event.getBlockPlaced().getType().equals(block1.get(player)) && event.getBlockAgainst().getType().equals(block2.get(player))) {
             RoundSystem.addScore(player, 1);
             Location blockLoc = event.getBlockPlaced().getLocation();
-            Particles.createBlockSplash(blockLoc, Particle.FIREWORKS_SPARK);
+            ParticleUtil.createBlockSplash(blockLoc, Particle.FIREWORKS_SPARK);
             player.playSound(blockLoc, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
             rightCombinationNext(player, blockLoc);
         } else {
@@ -99,10 +99,10 @@ public class RoundTheRightCombination implements Listener {
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Поставьте " + Chat.colorsFromID.get(blockToBePut[n].name()) + Chat.translate(blockToBePut[n].name()) + ChatColor.WHITE + " на " + Chat.colorsFromID.get(blockToPlaceOn[n2].name()) + Chat.translate(blockToPlaceOn[n2].name()));
             Location blockLoc = event.getBlockPlaced().getLocation();
 
-            Particles.createBlockSplash(blockLoc, Particle.FALLING_LAVA);
+            ParticleUtil.createBlockSplash(blockLoc, Particle.FALLING_LAVA);
             player.playSound(blockLoc, Sound.BLOCK_WOOL_BREAK, 1, 1);
 
-            Particles.createBlockSplash(blockLoc, Particle.CRIT);
+            ParticleUtil.createBlockSplash(blockLoc, Particle.CRIT);
             player.playSound(blockLoc, Sound.BLOCK_WOOL_BREAK, 1, 1);
         }
     }
