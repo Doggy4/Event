@@ -27,7 +27,7 @@ public class RoundDropTheItem implements Listener {
     private static Material randomMaterialBlock;
     private static ArrayList<Material> materials = ItemUtils.materials;
 
-    public static void DropTheItem() {
+    public static void startRound() {
         // Опциально:
         isActivated = true;
         RoundSystem.roundSeconds = 30;

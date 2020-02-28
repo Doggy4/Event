@@ -22,7 +22,7 @@ public class RoundHideUnderBlocks implements Listener {
 
     private static BukkitTask runnable;
 
-    public static void hideUnderBlocks() {
+    public static void startRound() {
         isActivated = true;
         RoundSystem.roundSeconds = 60;
         RoundRules.PlayerDamageOff();

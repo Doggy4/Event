@@ -25,7 +25,7 @@ public class RoundHarryPotter implements Listener {
 
     private final CooldownManager cooldownManager = new CooldownManager();
 
-    public static void harryPotter() {
+    public static void startRound() {
         isActivated = true;
         RoundSystem.roundSeconds = 30;
         MapRebuild.loadSchematic("arena");

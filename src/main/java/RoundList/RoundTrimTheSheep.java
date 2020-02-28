@@ -24,7 +24,7 @@ public class RoundTrimTheSheep implements Listener {
     private static DyeColor randomColor;
     private static HashMap<Player, DyeColor> univPlayerColorHashMap = new HashMap<Player, DyeColor>();
 
-    public static void trimTheSheep() {
+    public static void startRound() {
         univPlayerColorHashMap.clear();
 
         isActivated = true;

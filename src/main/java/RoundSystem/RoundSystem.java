@@ -79,70 +79,73 @@ public class RoundSystem {
         for (Player player : Bukkit.getOnlinePlayers())
             player.playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 10, 1);
 
-        randomGame = Utils.getRandom(0, 20);
+        randomGame = Utils.getRandom(0, 21);
         switch (randomGame) {
             case 0:
-                RoundPlaceTheBlock.placeBlock();
+                RoundPlaceTheBlock.startRound();
                 break;
             case 1:
-                RoundDropTheItem.DropTheItem();
+                RoundDropTheItem.startRound();
                 break;
             case 2:
-                RoundHitTheBlock.hitTheBlock();
+                RoundHitTheBlock.startRound();
                 break;
             case 3:
-                RoundTrimTheSheep.trimTheSheep();
+                RoundTrimTheSheep.startRound();
                 break;
             case 4:
-                RoundThrowTheEgg.throwTheEgg();
+                RoundThrowTheEgg.startRound();
                 break;
             case 5:
-                RoundMilkTheCow.milkTheCow();
+                RoundMilkTheCow.startRound();
                 break;
             case 6:
-                RoundTheRightCombination.rightCombination();
+                RoundTheRightCombination.startRound();
                 break;
             case 7:
-                RoundReachTheSky.reachTheSky();
+                RoundReachTheSky.startRound();
                 break;
             case 8:
-                RoundAnvilEscape.anvilEscape();
+                RoundAnvilEscape.startRound();
                 break;
             case 9:
-                RoundCakeParkour.cakeParkour();
+                RoundCakeParkour.startRound();
                 break;
             case 10:
-                RoundMath.math();
+                RoundMath.startRound();
                 break;
             case 11:
-                RoundKnockEveryoneOff.knockEveryoneOff();
+                RoundKnockEveryoneOff.startRound();
                 break;
             case 12:
-                RoundHarryPotter.harryPotter();
+                RoundHarryPotter.startRound();
                 break;
             case 13:
-                RoundSlimePvP.slimePvP();
+                RoundSlimePvP.startRound();
                 break;
             case 14:
-                RoundLavaFloor.lavaFloor();
+                RoundLavaFloor.startRound();
                 break;
             case 15:
-                RoundHideUnderBlocks.hideUnderBlocks();
+                RoundHideUnderBlocks.startRound();
                 break;
             case 16:
-                RoundFeedBob.feedBob();
+                RoundFeedBob.startRound();
                 break;
             case 17:
-                RoundCraftItem.craftItem();
+                RoundCraftItem.startRound();
                 break;
             case 18:
-                RoundTNTRun.TNTRun();
+                RoundTNTRun.startRound();
                 break;
             case 19:
-                RoundHotPotato.hotPotato();
+                RoundHotPotato.startRound();
                 break;
             case 20:
-                RoundMineAnOre.mineAnOre();
+                RoundMineAnOre.startRound();
+                break;
+            case 21:
+                RoundSnowFight.startRound();
                 break;
         }
     }
@@ -181,6 +184,7 @@ public class RoundSystem {
         RoundMath.isActivated = false;
         RoundHarryPotter.isActivated = false;
         RoundCraftItem.isActivated = false;
+        RoundMineAnOre.isActivated = false;
 
         if (RoundKnockEveryoneOff.isActivated) RoundKnockEveryoneOff.endKnockOff();
         if (RoundSlimePvP.isActivated) RoundSlimePvP.endSlimePvP();
@@ -191,6 +195,7 @@ public class RoundSystem {
         if (RoundAnvilEscape.isActivated) RoundAnvilEscape.endDodgeAnvils();
         if (RoundHitTheBlock.isActivated) RoundHitTheBlock.endHitTheBlock();
         if (RoundHotPotato.isActivated) RoundHotPotato.endHotPotato();
+        if (RoundSnowFight.isActivated) RoundSnowFight.endSnowFight();
     }
 
     public static List<String> getStats() {

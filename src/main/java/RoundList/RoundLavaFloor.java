@@ -18,7 +18,7 @@ public class RoundLavaFloor {
 
     private static BukkitTask runnable;
 
-    public static void lavaFloor() {
+    public static void startRound() {
         isActivated = true;
         RoundSystem.roundSeconds = 30;
         MapRebuild.loadSchematic("lavafloor-arena");

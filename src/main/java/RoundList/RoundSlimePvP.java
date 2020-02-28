@@ -16,7 +16,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 public class RoundSlimePvP implements Listener {
     public static boolean isActivated = false;
 
-    public static void slimePvP() {
+    public static void startRound() {
         isActivated = true;
         RoundSystem.roundSeconds = 20;
         MapRebuild.loadSchematic("cactus-arena");

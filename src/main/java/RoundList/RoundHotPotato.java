@@ -18,7 +18,7 @@ import org.bukkit.potion.PotionEffectType;
 public class RoundHotPotato implements Listener {
     public static boolean isActivated = false;
 
-    public static void hotPotato() {
+    public static void startRound() {
         // Опционально:
         isActivated = true;
         RoundSystem.roundSeconds = 30;

@@ -23,7 +23,7 @@ public class RoundAnvilEscape implements Listener {
 
     private static BukkitRunnable runnable;
 
-    public static void anvilEscape() {
+    public static void startRound() {
         // Опционально:
         isActivated = true;
         RoundSystem.roundSeconds = 15;

@@ -31,7 +31,7 @@ public class RoundMilkTheCow implements Listener {
     private static int rareCowChance = 85;
     private static int specialCowChance = 95;
 
-    public static void milkTheCow() {
+    public static void startRound() {
         // Опционально:
         isActivated = true;
         RoundSystem.roundSeconds = 30;

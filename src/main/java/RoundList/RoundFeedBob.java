@@ -28,7 +28,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 
-// ~~~~~~~~ TEST ~~~~~~~~
 public class RoundFeedBob implements Listener {
     public static boolean isActivated = false;
     private static BukkitRunnable runnable;
@@ -39,7 +38,7 @@ public class RoundFeedBob implements Listener {
         for (Material mat : Material.values()) if (mat.isEdible()) foods.add(new ItemStack(mat));
     }
 
-    public static void feedBob() {
+    public static void startRound() {
         // Опциально:
         isActivated = true;
         RoundSystem.roundSeconds = 60;

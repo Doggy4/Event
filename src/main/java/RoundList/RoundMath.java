@@ -47,7 +47,7 @@ public class RoundMath implements Listener {
 
     private static List<String> keysAsArray = new ArrayList<String>(examples.keySet());
 
-    public static void math() {
+    public static void startRound() {
         // Опционально:
         isActivated = true;
         RoundSystem.roundSeconds = 30;

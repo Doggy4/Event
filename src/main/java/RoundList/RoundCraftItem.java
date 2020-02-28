@@ -25,7 +25,7 @@ public class RoundCraftItem implements Listener {
     private static ArrayList<Material> craftableMaterials = ItemUtils.craftableMaterials;
     private static ArrayList<Material> materials = ItemUtils.materials;
 
-    public static void craftItem() {
+    public static void startRound() {
         // Опциально:
         isActivated = true;
         RoundSystem.roundSeconds = 60;

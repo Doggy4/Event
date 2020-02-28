@@ -1,5 +1,6 @@
 package RoundList;
 
+import PluginUtils.ItemUtils;
 import PluginUtils.Utils;
 import QueueSystem.Queue;
 import RoundSystem.RoundSystem;
@@ -21,7 +22,7 @@ public class RoundThrowTheEgg implements Listener {
 
 
     private static ArrayList<String> phrases = new ArrayList<String>();
-    private static ArrayList<Material> materials = new ArrayList<Material>(Arrays.asList(Material.values()));
+    private static ArrayList<Material> materials = ItemUtils.materials;
 
     static {
         phrases.add("Кидай яйцо!");
@@ -40,7 +41,7 @@ public class RoundThrowTheEgg implements Listener {
         phrases.add("Кидай еще одно!");
     }
 
-    public static void throwTheEgg() {
+    public static void startRound() {
         // Опционально:
         isActivated = true;
         RoundSystem.roundSeconds = 15;

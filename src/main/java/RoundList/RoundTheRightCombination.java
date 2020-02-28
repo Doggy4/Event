@@ -32,7 +32,7 @@ public class RoundTheRightCombination implements Listener {
     private static int n;
     private static int n2;
 
-    public static void rightCombination() {
+    public static void startRound() {
         RoundSystem.roundSeconds = 30;
         isActivated = true;
         RoundRules.PlaceBlockOff();

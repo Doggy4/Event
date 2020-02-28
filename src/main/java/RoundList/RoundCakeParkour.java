@@ -14,7 +14,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 public class RoundCakeParkour implements Listener {
     public static boolean isActivated = false;
 
-    public static void cakeParkour() {
+    public static void startRound() {
         // Опционально:
         isActivated = true;
         RoundSystem.roundSeconds = 20;
@@ -35,7 +35,7 @@ public class RoundCakeParkour implements Listener {
         Player player = event.getPlayer();
         if (!(Queue.redQueueList.contains(player))) return;
 
-        if (event.getClickedBlock().getType().equals(Material.CAKE)) {
+        if (event.getClickedBlock().getType().equals(Material.CAKE) && player.getGameMode().equals(GameMode.ADVENTURE)) {
             RoundSystem.addScore(player, 1);
             player.setGameMode(GameMode.SPECTATOR);
         }

@@ -33,7 +33,7 @@ public class RoundPlaceTheBlock implements Listener {
         materials.removeIf(material -> !material.isBlock());
     }
 
-    public static void placeBlock() {
+    public static void startRound() {
         isActivated = true;
         RoundSystem.roundSeconds = 30;
         RoundRules.PlaceBlockOff();

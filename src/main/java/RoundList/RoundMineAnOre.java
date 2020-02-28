@@ -30,7 +30,7 @@ public class RoundMineAnOre implements Listener {
 
     private static BukkitRunnable runnable;
 
-    public static void mineAnOre() {
+    public static void startRound() {
         // Опционально:
         isActivated = true;
         RoundSystem.roundSeconds = 40;

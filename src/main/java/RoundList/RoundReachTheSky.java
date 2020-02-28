@@ -13,7 +13,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class RoundReachTheSky {
     public static boolean isActivated = false;
 
-    public static void reachTheSky() {
+    public static void startRound() {
         isActivated = true;
         RoundSystem.roundSeconds = 15;
         MapRebuild.loadSchematic("arena");

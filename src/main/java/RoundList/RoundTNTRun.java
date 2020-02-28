@@ -18,7 +18,7 @@ public class RoundTNTRun {
     private static BukkitRunnable runnable1;
     private static BukkitRunnable runnable2;
 
-    public static void TNTRun() {
+    public static void startRound() {
         isActivated = true;
         RoundSystem.roundSeconds = 30;
         MapRebuild.loadSchematic("tntrun-arena");

@@ -109,7 +109,7 @@ public class CommandEvent implements TabExecutor {
             ArmorStandConstructor.ArmorStandConstructor(player.getLocation(), args[1]);
         } else if (args[0].equals("test")) {
             player.sendMessage("Test");
-            RoundMineAnOre.mineAnOre();
+            RoundMineAnOre.startRound();
         } else
             return false;
 

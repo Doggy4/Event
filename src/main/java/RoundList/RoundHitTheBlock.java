@@ -31,7 +31,7 @@ public class RoundHitTheBlock implements Listener {
     private static Block bonusBlock = null;
     private static BukkitRunnable runnable;
 
-    public static void hitTheBlock() {
+    public static void startRound() {
         // Опционально:
         isActivated = true;
         RoundSystem.roundSeconds = 30;
