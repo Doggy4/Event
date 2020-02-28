@@ -132,6 +132,7 @@ public class RoundFeedBob implements Listener {
         spawnMob();
         event.getDrops().clear();
         event.setDroppedExp(0);
+        if (event.getEntity().getKiller() == null) return;
         event.getEntity().getKiller().getInventory().addItem(foods.get(Utils.getRandom(0, foods.size() - 1)));
     }
 

@@ -80,7 +80,7 @@ public class RoundSystem {
         for (Player player : Bukkit.getOnlinePlayers())
             player.playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 10, 1);
 
-        randomGame = Utils.getRandom(0, 21);
+        randomGame = Utils.getRandom(0, 22);
         switch (randomGame) {
             case 0:
                 RoundPlaceTheBlock.startRound();
@@ -148,6 +148,9 @@ public class RoundSystem {
             case 21:
                 RoundSnowFight.startRound();
                 break;
+            case 22:
+                RoundDropParkour.startRound();
+                break;
         }
     }
 
@@ -197,6 +200,7 @@ public class RoundSystem {
         if (RoundHitTheBlock.isActivated) RoundHitTheBlock.endHitTheBlock();
         if (RoundHotPotato.isActivated) RoundHotPotato.endHotPotato();
         if (RoundSnowFight.isActivated) RoundSnowFight.endSnowFight();
+        if (RoundDropParkour.isActivated) RoundDropParkour.endDropParkour();
     }
 
     public static List<String> getStats() {
@@ -277,23 +281,21 @@ public class RoundSystem {
 
             if (scoreForWin <= 0) {
                 roundPlayer.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Вы не получаете очков за этот раунд");
-                playerReset(roundPlayer);
             } else {
                 GameCycle.gameStats.put(roundPlayer, scoreForWin + GameCycle.gameStats.get(roundPlayer));
                 roundPlayer.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы получили +" + scoreForWin + scoreString + "за этот раунд");
-                playerReset(roundPlayer);
             }
+            playerReset(roundPlayer);
         }
     }
 
     public static void playerLose(Player loser) {
         Chat.broadcastToEveryone(ChatColor.RED + "Игрок " + loser.getName() + " проиграл!");
+        playerReset(loser);
 
         loser.setGameMode(GameMode.SPECTATOR);
         loser.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Вы проиграли!");
         loser.playSound(loser.getLocation(), Sound.ENTITY_BAT_DEATH, 10, 1);
-
-        playerReset(loser);
     }
 
     public static void playerWin(Player player) {

@@ -98,6 +98,7 @@ public class Chat {
         roundNames.put(19, "Горячая картошка");
         roundNames.put(20, "Копатель онлайн");
         roundNames.put(21, "Игра в снежки");
+        roundNames.put(22, "Настоящий руфер");
     }
 
     public static void broadcastToEveryone(String message) {

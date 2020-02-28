@@ -79,13 +79,13 @@ public class RoundHitTheBlock implements Listener {
     }
 
     public static void endHitTheBlock() {
+        runnable.cancel();
+
         bonusBlock.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, block.getLocation(), 1);
         bonusBlock.getWorld().playSound(block.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 10, 1);
 
         block.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, block.getLocation(), 1);
         block.getWorld().playSound(block.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 10, 1);
-
-        runnable.cancel();
     }
 
     @EventHandler

@@ -71,6 +71,7 @@ public final class Main extends JavaPlugin implements Listener {
         this.getServer().getPluginManager().registerEvents(new RoundHotPotato(), this);
         this.getServer().getPluginManager().registerEvents(new RoundMineAnOre(), this);
         this.getServer().getPluginManager().registerEvents(new RoundSnowFight(), this);
+        this.getServer().getPluginManager().registerEvents(new RoundDropParkour(), this);
     }
 
     @Override
