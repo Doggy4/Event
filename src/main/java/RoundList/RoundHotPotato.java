@@ -3,7 +3,7 @@ package RoundList;
 import PluginUtils.Items;
 import PluginUtils.Utils;
 import QueueSystem.Queue;
-import RoundSystem.GameRules;
+import RoundSystem.RoundRules;
 import RoundSystem.RoundSystem;
 import RoundUtils.MapRebuild;
 import org.bukkit.*;
@@ -23,7 +23,7 @@ public class RoundHotPotato implements Listener {
         isActivated = true;
         RoundSystem.roundSeconds = 30;
         MapRebuild.loadSchematic("arena");
-        GameRules.PlayerDamageOff();
+        RoundRules.PlayerDamageOff();
 
         for (Player player : Queue.redQueueList) {
             gameRulesAnnouncement(player);

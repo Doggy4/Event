@@ -127,11 +127,16 @@ public class Items {
             .enchantment(Enchantment.IMPALING, 1)
             .build();
 
-    public static ItemStack hotPotato = new ItemStackConstructor(Material.POTATO, 64)
-            .amount(1)
+    public static ItemStack hotPotato = new ItemStackConstructor(Material.POTATO)
+            .amount(64)
             .displayName(ChatColor.RED + "Горячая картошка")
             .enchantment(Enchantment.FIRE_ASPECT, 1)
             .build();
 
-
+    public static ItemStack pickAxe = new ItemStackConstructor(Material.DIAMOND_PICKAXE)
+            .amount(1)
+            .displayName(ChatColor.RED + "Турнирная кирка")
+            .enchantment(Enchantment.DURABILITY, 10)
+            .enchantment(Enchantment.DIG_SPEED, 2)
+            .build();
 }

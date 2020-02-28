@@ -4,7 +4,7 @@ import PluginUtils.Chat;
 import PluginUtils.ItemUtils;
 import PluginUtils.Utils;
 import QueueSystem.Queue;
-import RoundSystem.GameRules;
+import RoundSystem.RoundRules;
 import RoundSystem.RoundSystem;
 import RoundUtils.MapRebuild;
 import org.bukkit.ChatColor;
@@ -31,7 +31,7 @@ public class RoundDropTheItem implements Listener {
         // Опциально:
         isActivated = true;
         RoundSystem.roundSeconds = 30;
-        GameRules.DropItemOff();
+        RoundRules.DropItemOff();
         MapRebuild.loadSchematic("arena");
 
         univPlayerMaterialHashMap.clear();

@@ -50,7 +50,7 @@ public class RoundSystem {
 
     public static void startRound() {
         isRoundStarted = true;
-        GameRules.TurnOnAllRules();
+        RoundRules.TurnOnAllRules();
 
         for (Player player : Queue.redQueueList) {
             playerReset(player);
@@ -79,7 +79,7 @@ public class RoundSystem {
         for (Player player : Bukkit.getOnlinePlayers())
             player.playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 10, 1);
 
-        randomGame = Utils.getRandom(0, 19);
+        randomGame = Utils.getRandom(0, 20);
         switch (randomGame) {
             case 0:
                 RoundPlaceTheBlock.placeBlock();
@@ -140,6 +140,9 @@ public class RoundSystem {
                 break;
             case 19:
                 RoundHotPotato.hotPotato();
+                break;
+            case 20:
+                RoundMineAnOre.mineAnOre();
                 break;
         }
     }

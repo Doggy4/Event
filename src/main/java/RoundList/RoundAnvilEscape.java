@@ -2,7 +2,7 @@ package RoundList;
 
 import PluginUtils.LocationUtils;
 import QueueSystem.Queue;
-import RoundSystem.GameRules;
+import RoundSystem.RoundRules;
 import RoundSystem.RoundSystem;
 import RoundUtils.MapRebuild;
 import event.main.Main;
@@ -27,7 +27,7 @@ public class RoundAnvilEscape implements Listener {
         // Опционально:
         isActivated = true;
         RoundSystem.roundSeconds = 15;
-        GameRules.PlayerDamageOff();
+        RoundRules.PlayerDamageOff();
         MapRebuild.loadSchematic("arena");
 
         for (Player player : Queue.redQueueList) {

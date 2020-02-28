@@ -3,7 +3,7 @@ package RoundList;
 import PluginUtils.Items;
 import PluginUtils.LocationUtils;
 import QueueSystem.Queue;
-import RoundSystem.GameRules;
+import RoundSystem.RoundRules;
 import RoundSystem.RoundSystem;
 import RoundUtils.MapRebuild;
 import org.bukkit.ChatColor;
@@ -19,7 +19,7 @@ public class RoundKnockEveryoneOff implements Listener {
     public static void knockEveryoneOff() {
         isActivated = true;
         RoundSystem.roundSeconds = 60;
-        GameRules.PlayerDamageOff();
+        RoundRules.PlayerDamageOff();
         MapRebuild.loadSchematic("arena");
 
         for (Player player : Queue.redQueueList) {

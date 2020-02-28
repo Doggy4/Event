@@ -15,7 +15,11 @@ public class LocationUtils {
     public static ArrayList<Location> spawnLocations = new ArrayList<Location>();
     private static FileConfiguration config = Main.main.getConfig();
     public static World world = Bukkit.getWorld(config.getString("spawn.world"));
+
     private static Location arenaCentre = new Location(world, config.getDouble("spawn.x"), config.getDouble("spawn.y"), config.getDouble("spawn.z"));
+    public static Location arenaLeft = new Location(world, config.getDouble("spawn.x") - 16, config.getDouble("spawn.y"), config.getDouble("spawn.z") - 16);
+    public static Location arenaRight = new Location(world, config.getDouble("spawn.x") + 16, config.getDouble("spawn.y"), config.getDouble("spawn.z") + 16);
+
 
     public static List<Location> availableSpawnLocations = new ArrayList<Location>();
 

@@ -25,11 +25,6 @@ public class ItemStackConstructor {
         this.material = material;
     }
 
-    public ItemStackConstructor(Material material, int amount) {
-        this.material = material;
-        this.amount = amount;
-    }
-
 
     public ItemStackConstructor amount(int amount) {
         this.amount = amount;

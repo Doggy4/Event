@@ -4,7 +4,7 @@ import PluginUtils.InventoryUtils;
 import PluginUtils.LocationUtils;
 import PluginUtils.Utils;
 import QueueSystem.Queue;
-import RoundSystem.GameRules;
+import RoundSystem.RoundRules;
 import RoundSystem.RoundSystem;
 import RoundUtils.MapRebuild;
 import event.main.Main;
@@ -43,7 +43,7 @@ public class RoundFeedBob implements Listener {
         // Опциально:
         isActivated = true;
         RoundSystem.roundSeconds = 60;
-        GameRules.EntityDamageOff();
+        RoundRules.EntityDamageOff();
         MapRebuild.loadSchematic("default-arena");
 
         for (Player player : Queue.redQueueList)

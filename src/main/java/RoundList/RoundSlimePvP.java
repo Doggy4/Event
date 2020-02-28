@@ -3,7 +3,7 @@ package RoundList;
 import PluginUtils.Items;
 import PluginUtils.LocationUtils;
 import QueueSystem.Queue;
-import RoundSystem.GameRules;
+import RoundSystem.RoundRules;
 import RoundSystem.RoundSystem;
 import RoundUtils.MapRebuild;
 import org.bukkit.ChatColor;
@@ -20,7 +20,7 @@ public class RoundSlimePvP implements Listener {
         isActivated = true;
         RoundSystem.roundSeconds = 20;
         MapRebuild.loadSchematic("cactus-arena");
-        GameRules.PlayerDamageOff();
+        RoundRules.PlayerDamageOff();
 
         for (Player player : Queue.redQueueList) {
             gameRulesAnnouncement(player);

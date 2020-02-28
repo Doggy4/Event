@@ -4,7 +4,7 @@ import Particles.ParticleUtil;
 import PluginUtils.Chat;
 import PluginUtils.Utils;
 import QueueSystem.Queue;
-import RoundSystem.GameRules;
+import RoundSystem.RoundRules;
 import RoundSystem.RoundSystem;
 import RoundUtils.MapRebuild;
 import event.main.Main;
@@ -35,7 +35,7 @@ public class RoundTheRightCombination implements Listener {
     public static void rightCombination() {
         RoundSystem.roundSeconds = 30;
         isActivated = true;
-        GameRules.PlaceBlockOff();
+        RoundRules.PlaceBlockOff();
         MapRebuild.loadSchematic("arena");
 
         for (Player player : Queue.redQueueList) {

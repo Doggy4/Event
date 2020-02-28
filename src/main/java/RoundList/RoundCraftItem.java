@@ -4,7 +4,7 @@ import PluginUtils.Chat;
 import PluginUtils.ItemUtils;
 import PluginUtils.Utils;
 import QueueSystem.Queue;
-import RoundSystem.GameRules;
+import RoundSystem.RoundRules;
 import RoundSystem.RoundSystem;
 import RoundUtils.MapRebuild;
 import org.bukkit.ChatColor;
@@ -29,7 +29,7 @@ public class RoundCraftItem implements Listener {
         // Опциально:
         isActivated = true;
         RoundSystem.roundSeconds = 60;
-        GameRules.EntityDamageOff();
+        RoundRules.EntityDamageOff();
         MapRebuild.loadSchematic("craft-arena");
 
         int randomMaterialIndex = Utils.getRandom(0, materials.size() - 37);

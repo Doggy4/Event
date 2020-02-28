@@ -5,7 +5,7 @@ import PluginUtils.ItemUtils;
 import PluginUtils.LocationUtils;
 import PluginUtils.Utils;
 import QueueSystem.Queue;
-import RoundSystem.GameRules;
+import RoundSystem.RoundRules;
 import RoundSystem.RoundSystem;
 import RoundUtils.MapRebuild;
 import event.main.Main;
@@ -36,7 +36,7 @@ public class RoundPlaceTheBlock implements Listener {
     public static void placeBlock() {
         isActivated = true;
         RoundSystem.roundSeconds = 30;
-        GameRules.PlaceBlockOff();
+        RoundRules.PlaceBlockOff();
         MapRebuild.loadSchematic("arena");
 
         for (Player player : Queue.redQueueList) {

@@ -7,7 +7,7 @@ import ImageMaps.ImageMaps;
 import Particles.ParticleGUI;
 import QueueSystem.MainScoreBoard;
 import RoundList.*;
-import RoundSystem.GameRules;
+import RoundSystem.RoundRules;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.Listener;
@@ -54,7 +54,7 @@ public final class Main extends JavaPlugin implements Listener {
         this.getServer().getPluginManager().registerEvents(new RoundHitTheBlock(), this);
         this.getServer().getPluginManager().registerEvents(new RoundTrimTheSheep(), this);
         this.getServer().getPluginManager().registerEvents(new RoundThrowTheEgg(), this);
-        this.getServer().getPluginManager().registerEvents(new GameRules(), this);
+        this.getServer().getPluginManager().registerEvents(new RoundRules(), this);
         this.getServer().getPluginManager().registerEvents(new RoundMilkTheCow(), this);
         this.getServer().getPluginManager().registerEvents(new RoundTheRightCombination(), this);
         this.getServer().getPluginManager().registerEvents(new RoundAnvilEscape(), this);
@@ -69,6 +69,7 @@ public final class Main extends JavaPlugin implements Listener {
         this.getServer().getPluginManager().registerEvents(new ImageMaps(), this);
         this.getServer().getPluginManager().registerEvents(new RoundCraftItem(), this);
         this.getServer().getPluginManager().registerEvents(new RoundHotPotato(), this);
+        this.getServer().getPluginManager().registerEvents(new RoundMineAnOre(), this);
     }
 
     @Override
