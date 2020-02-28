@@ -116,4 +116,8 @@ public class LocationUtils {
             fromLocation.getWorld().spawnParticle(particle, loc, 0, 0, 0, 0, 1);
         }
     }
+
+    public static Location addLocation(Location location, int x, int y, int z) {
+        return new Location(world, location.getX() + x, location.getY() + y, location.getZ() + z);
+    }
 }

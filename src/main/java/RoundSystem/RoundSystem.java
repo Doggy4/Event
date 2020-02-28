@@ -14,6 +14,7 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -306,9 +307,12 @@ public class RoundSystem {
     }
 
     public static void playerReset(Player player) {
+        player.setGameMode(GameMode.ADVENTURE);
         player.getInventory().clear();
         player.setHealth(20);
         player.setFoodLevel(20);
-        player.getActivePotionEffects().clear();
+        for (PotionEffect effect : player.getActivePotionEffects())
+            player.removePotionEffect(effect.getType());
+
     }
 }

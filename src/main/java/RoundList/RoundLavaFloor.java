@@ -32,7 +32,7 @@ public class RoundLavaFloor {
             @Override
             public void run() {
                 for (int i = 0; i < 50; i++) {
-                    Block block = LocationUtils.world.getBlockAt(LocationUtils.getRandomLocation());
+                    Block block = LocationUtils.world.getBlockAt(LocationUtils.getRandomLocation().subtract(0, 1, 0));
 
                     if (block.getType() == Material.WHITE_WOOL) block.setType(Material.YELLOW_WOOL);
                     else if (block.getType() == Material.YELLOW_WOOL) block.setType(Material.ORANGE_WOOL);

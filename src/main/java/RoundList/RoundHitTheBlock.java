@@ -27,8 +27,8 @@ public class RoundHitTheBlock implements Listener {
 
     private static int n = (int) Math.floor(Math.random() * targets.length);
 
-    private static Block block = null;
-    private static Block bonusBlock = null;
+    private static Block block = LocationUtils.world.getBlockAt(0, 0, 0);
+    private static Block bonusBlock = LocationUtils.world.getBlockAt(0, 0, 0);
     private static BukkitRunnable runnable;
 
     public static void startRound() {

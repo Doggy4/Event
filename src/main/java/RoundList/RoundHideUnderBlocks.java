@@ -6,7 +6,10 @@ import RoundSystem.RoundRules;
 import RoundSystem.RoundSystem;
 import RoundUtils.MapRebuild;
 import event.main.Main;
-import org.bukkit.*;
+import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
@@ -17,8 +20,6 @@ import org.bukkit.scheduler.BukkitTask;
 
 public class RoundHideUnderBlocks implements Listener {
     public static boolean isActivated = false;
-
-    private static World world = Bukkit.getWorld(Main.main.getConfig().getString("spawn.world"));
 
     private static BukkitTask runnable;
 
@@ -33,9 +34,8 @@ public class RoundHideUnderBlocks implements Listener {
             @Override
             public void run() {
                 MapRebuild.loadSchematic("hide-arena");
-
                 for (int i = 0; i < 8; i++)
-                    world.getBlockAt(LocationUtils.getRandomLocation()).setType(Material.DIORITE_SLAB);
+                    LocationUtils.world.getBlockAt(LocationUtils.addLocation(LocationUtils.getRandomLocation(), 0, 3, 0)).setType(Material.DIORITE_SLAB);
 
                 for (Player player : Queue.redQueueList)
                     gameRulesAnnouncement(player);
@@ -44,8 +44,7 @@ public class RoundHideUnderBlocks implements Listener {
                     @Override
                     public void run() {
                         for (Location location : LocationUtils.availableSpawnLocations) {
-                            location.add(0, 15, 0);
-                            world.spawn(LocationUtils.getCenter(location), Snowball.class);
+                            LocationUtils.world.spawn(LocationUtils.getCenter(LocationUtils.addLocation(location, 0, 15, 0)), Snowball.class);
                         }
                     }
                 }.runTaskLater(Main.main, 60);
