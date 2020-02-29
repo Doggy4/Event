@@ -1,6 +1,5 @@
 package RoundList;
 
-import PluginUtils.LocationUtils;
 import QueueSystem.Queue;
 import RoundSystem.RoundRules;
 import RoundSystem.RoundSystem;
@@ -9,8 +8,10 @@ import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -43,15 +44,19 @@ public class RoundSnowFight implements Listener {
     }
 
     @EventHandler
-    public void onDamage(EntityDamageEvent event) {
+    public void onDamage(EntityDamageByEntityEvent event) {
         if (!isActivated) return;
         if (!(event.getEntity() instanceof Player)) return;
-        Player player = (Player) event.getEntity();
-        if (!(Queue.redQueueList.contains(player))) return;
+        Projectile projectile = (Projectile) event.getDamager();
+        if (!(event.getDamager() instanceof Projectile)) return;
+        if (!(projectile.getShooter() instanceof Player)) return;
+        Player damager = (Player) projectile.getShooter();
+        Player damaged = (Player) event.getEntity();
+        if (!(Queue.redQueueList.contains(damaged))) return;
 
         if (event.getCause() == EntityDamageEvent.DamageCause.PROJECTILE) {
-            RoundSystem.playerLose(player);
+            RoundSystem.addScore(damager, 1);
+            RoundSystem.addScore(damaged, -1);
         }
-        LocationUtils.teleportToSpawn(player);
     }
 }

@@ -115,5 +115,7 @@ public class RoundMilkTheCow implements Listener {
             cow.remove();
             spawnCow(player);
         }
+
+        event.setCancelled(true);
     }
 }

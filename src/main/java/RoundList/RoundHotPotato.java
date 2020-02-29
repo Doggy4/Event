@@ -6,7 +6,10 @@ import QueueSystem.Queue;
 import RoundSystem.RoundRules;
 import RoundSystem.RoundSystem;
 import RoundUtils.MapRebuild;
-import org.bukkit.*;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -53,6 +56,8 @@ public class RoundHotPotato implements Listener {
     }
 
     public static void endHotPotato() {
+        isActivated = false;
+
         for (Player player : Queue.redQueueList) {
             if (player.getInventory().getItemInMainHand().getType() == Material.AIR) {
                 RoundSystem.playerWin(player);
@@ -60,7 +65,6 @@ public class RoundHotPotato implements Listener {
                 player.playSound(player.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 10, 1);
                 player.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, player.getLocation(), 1);
                 RoundSystem.playerLose(player);
-                player.setGameMode(GameMode.SPECTATOR);
             }
         }
     }

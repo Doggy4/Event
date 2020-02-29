@@ -21,7 +21,8 @@ import org.bukkit.scheduler.BukkitTask;
 public class RoundHideUnderBlocks implements Listener {
     public static boolean isActivated = false;
 
-    private static BukkitTask runnable;
+    private static BukkitTask runnable1;
+    private static BukkitTask runnable2;
 
     public static void startRound() {
         isActivated = true;
@@ -29,8 +30,7 @@ public class RoundHideUnderBlocks implements Listener {
         RoundRules.PlayerDamageOff();
 
 
-        runnable = new BukkitRunnable() {
-
+        runnable1 = new BukkitRunnable() {
             @Override
             public void run() {
                 MapRebuild.loadSchematic("hide-arena");
@@ -40,7 +40,7 @@ public class RoundHideUnderBlocks implements Listener {
                 for (Player player : Queue.redQueueList)
                     gameRulesAnnouncement(player);
 
-                new BukkitRunnable() {
+                runnable2 = new BukkitRunnable() {
                     @Override
                     public void run() {
                         for (Location location : LocationUtils.availableSpawnLocations) {
@@ -59,7 +59,8 @@ public class RoundHideUnderBlocks implements Listener {
 
     public static void endHideUnderBlocks() {
         isActivated = false;
-        runnable.cancel();
+        runnable1.cancel();
+        runnable2.cancel();
         for (Player player : Queue.redQueueList)
             if (player.getGameMode() != GameMode.SPECTATOR)
                 RoundSystem.playerWin(player);

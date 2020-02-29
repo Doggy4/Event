@@ -16,6 +16,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.Arrays;
 import java.util.List;
@@ -24,7 +25,7 @@ public class RoundDropParkour implements Listener {
     public static boolean isActivated = false;
     private static List<Material> clays = Arrays.asList(Material.TERRACOTTA, Material.GREEN_TERRACOTTA, Material.RED_TERRACOTTA, Material.YELLOW_TERRACOTTA, Material.BLACK_TERRACOTTA, Material.BLUE_TERRACOTTA, Material.BROWN_TERRACOTTA, Material.CYAN_TERRACOTTA, Material.GRAY_TERRACOTTA, Material.LIME_TERRACOTTA, Material.MAGENTA_TERRACOTTA, Material.ORANGE_TERRACOTTA, Material.PINK_TERRACOTTA, Material.PURPLE_TERRACOTTA, Material.WHITE_TERRACOTTA, Material.LIGHT_BLUE_TERRACOTTA, Material.LIGHT_GRAY_TERRACOTTA);
 
-    private static BukkitRunnable runnable;
+    private static BukkitTask runnable;
 
     public static void startRound() {
         // Опционально:
@@ -44,10 +45,9 @@ public class RoundDropParkour implements Listener {
             if (Utils.getRandom(0, 500) == 1)
                 block.setType(clays.get(Utils.getRandom(0, clays.size() - 1)));
 
-        new BukkitRunnable() {
+        runnable = new BukkitRunnable() {
             @Override
             public void run() {
-                runnable = this;
 
                 for (Player player : Queue.redQueueList)
                     if (player.getGameMode().equals(GameMode.ADVENTURE))

@@ -55,7 +55,6 @@ public class RoundSystem {
 
         for (Player player : Queue.redQueueList) {
             playerReset(player);
-            player.setGameMode(GameMode.ADVENTURE);
             LocationUtils.teleportToSpawn(player);
         }
 
@@ -177,13 +176,10 @@ public class RoundSystem {
     private static void disableRoundEvents() {
         RoundPlaceTheBlock.isActivated = false;
         RoundDropTheItem.isActivated = false;
-        RoundHitTheBlock.isActivated = false;
         RoundTrimTheSheep.isActivated = false;
         RoundThrowTheEgg.isActivated = false;
         RoundMilkTheCow.isActivated = false;
         RoundTheRightCombination.isActivated = false;
-        RoundReachTheSky.isActivated = false;
-        RoundAnvilEscape.isActivated = false;
         RoundCakeParkour.isActivated = false;
         RoundMath.isActivated = false;
         RoundHarryPotter.isActivated = false;
@@ -191,16 +187,17 @@ public class RoundSystem {
         RoundMineAnOre.isActivated = false;
 
         if (RoundKnockEveryoneOff.isActivated) RoundKnockEveryoneOff.endKnockOff();
-        if (RoundSlimePvP.isActivated) RoundSlimePvP.endSlimePvP();
-        if (RoundLavaFloor.isActivated) RoundLavaFloor.endLavaFloor();
-        if (RoundHideUnderBlocks.isActivated) RoundHideUnderBlocks.endHideUnderBlocks();
-        if (RoundFeedBob.isActivated) RoundFeedBob.endFeedBob();
-        if (RoundTNTRun.isActivated) RoundTNTRun.endTNTRun();
-        if (RoundAnvilEscape.isActivated) RoundAnvilEscape.endDodgeAnvils();
-        if (RoundHitTheBlock.isActivated) RoundHitTheBlock.endHitTheBlock();
-        if (RoundHotPotato.isActivated) RoundHotPotato.endHotPotato();
-        if (RoundSnowFight.isActivated) RoundSnowFight.endSnowFight();
-        if (RoundDropParkour.isActivated) RoundDropParkour.endDropParkour();
+        else if (RoundSlimePvP.isActivated) RoundSlimePvP.endSlimePvP();
+        else if (RoundLavaFloor.isActivated) RoundLavaFloor.endLavaFloor();
+        else if (RoundHideUnderBlocks.isActivated) RoundHideUnderBlocks.endHideUnderBlocks();
+        else if (RoundFeedBob.isActivated) RoundFeedBob.endFeedBob();
+        else if (RoundTNTRun.isActivated) RoundTNTRun.endTNTRun();
+        else if (RoundAnvilEscape.isActivated) RoundAnvilEscape.endDodgeAnvils();
+        else if (RoundHitTheBlock.isActivated) RoundHitTheBlock.endHitTheBlock();
+        else if (RoundHotPotato.isActivated) RoundHotPotato.endHotPotato();
+        else if (RoundSnowFight.isActivated) RoundSnowFight.endSnowFight();
+        else if (RoundDropParkour.isActivated) RoundDropParkour.endDropParkour();
+        else if (RoundReachTheSky.isActivated) RoundReachTheSky.endReachTheSky();
     }
 
     public static List<String> getStats() {
@@ -289,32 +286,44 @@ public class RoundSystem {
         }
     }
 
-    public static void playerLose(Player loser) {
-        Chat.broadcastToEveryone(ChatColor.RED + "Игрок " + loser.getName() + " проиграл!");
-        playerReset(loser);
-
-        loser.setGameMode(GameMode.SPECTATOR);
-        loser.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Вы проиграли!");
-        loser.playSound(loser.getLocation(), Sound.ENTITY_BAT_DEATH, 10, 1);
+    public static void playerLose(Player player) {
+        Chat.broadcastToEveryone(ChatColor.RED + "Игрок " + player.getName() + " проиграл!");
+        preReset(player);
+        player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Вы проиграли!");
+        player.playSound(player.getLocation(), Sound.ENTITY_BAT_DEATH, 10, 1);
     }
 
     public static void playerWin(Player player) {
         Chat.broadcastToEveryone(ChatColor.GREEN + "Игрок " + player.getName() + " победил в раунде!");
-
+        preReset(player);
         player.sendTitle(ChatColor.GREEN + "Поздравляем!", "Вы победили!", 20, 20, 20);
         player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_COW_BELL, 10, 1);
-
         RoundSystem.addScore(player, 5);
-        RoundSystem.playerReset(player);
     }
 
-    public static void playerReset(Player player) {
-        player.setGameMode(GameMode.ADVENTURE);
+    public static void preReset(Player player) {
+        player.setGameMode(GameMode.SPECTATOR);
+        player.setAllowFlight(true);
+        player.setFlying(true);
         player.getInventory().clear();
         player.setHealth(20);
         player.setFoodLevel(20);
         for (PotionEffect effect : player.getActivePotionEffects())
-            player.removePotionEffect(effect.getType());
+            if (effect != null)
+                player.removePotionEffect(effect.getType());
+
+    }
+
+    public static void playerReset(Player player) {
+        player.setGameMode(GameMode.ADVENTURE);
+        player.setAllowFlight(false);
+        player.setFlying(false);
+        player.getInventory().clear();
+        player.setHealth(20);
+        player.setFoodLevel(20);
+        for (PotionEffect effect : player.getActivePotionEffects())
+            if (effect != null)
+                player.removePotionEffect(effect.getType());
 
     }
 }

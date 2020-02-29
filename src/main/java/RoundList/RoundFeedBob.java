@@ -25,12 +25,13 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
 
 public class RoundFeedBob implements Listener {
     public static boolean isActivated = false;
-    private static BukkitRunnable runnable;
+    private static BukkitTask runnable;
 
     private static ArrayList<ItemStack> foods = new ArrayList<ItemStack>();
 
@@ -66,13 +67,13 @@ public class RoundFeedBob implements Listener {
         zombie.setGlowing(true);
         zombie.setBaby(true);
 
-        zombie.setHealth(1.0);
+        zombie.setHealth(0.5);
 
         zombie.getEquipment().setItemInMainHand(food);
         zombie.getEquipment().setItemInOffHand(food);
         zombie.getEquipment().setHelmet(new ItemStack(Material.FURNACE));
 
-        zombie.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 99999, 9999));
+        zombie.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 9999, 1));
 
         zombie.setCustomName(ChatColor.GREEN + "Вкусность");
         zombie.setCustomNameVisible(true);
@@ -89,10 +90,9 @@ public class RoundFeedBob implements Listener {
 
         panda.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 99999, 9999));
 
-        new BukkitRunnable() {
+        runnable = new BukkitRunnable() {
             @Override
             public void run() {
-                runnable = this;
                 panda.teleport(LocationUtils.getSpawnLocation());
             }
         }.runTaskTimer(Main.main, 1, 1);

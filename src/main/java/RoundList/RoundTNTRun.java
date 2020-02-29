@@ -11,12 +11,13 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 public class RoundTNTRun {
     public static boolean isActivated = false;
 
-    private static BukkitRunnable runnable1;
-    private static BukkitRunnable runnable2;
+    private static BukkitTask runnable1;
+    private static BukkitTask runnable2;
 
     public static void startRound() {
         isActivated = true;
@@ -26,10 +27,9 @@ public class RoundTNTRun {
         for (Player player : Queue.redQueueList)
             gameRulesAnnouncement(player);
 
-        new BukkitRunnable() {
+        runnable1 = new BukkitRunnable() {
             @Override
             public void run() {
-                runnable1 = this;
                 for (Player player : Queue.redQueueList) {
                     Location location = player.getLocation();
                     if (location.getY() < LocationUtils.getSpawnLocation().getY() - 5) {
@@ -46,10 +46,9 @@ public class RoundTNTRun {
                         int z1 = (int) Math.ceil(location.getZ());
                         int z2 = (int) Math.floor(location.getZ());
 
-                        new BukkitRunnable() {
+                        runnable2 = new BukkitRunnable() {
                             @Override
                             public void run() {
-                                runnable2 = this;
                                 location.getWorld().getBlockAt(x1, y - 1, z1).setType(Material.AIR);
                                 location.getWorld().getBlockAt(x1, y - 2, z1).setType(Material.AIR);
                                 location.getWorld().getBlockAt(x2, y - 1, z1).setType(Material.AIR);

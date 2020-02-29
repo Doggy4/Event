@@ -26,21 +26,21 @@ public class RoundMath implements Listener {
     static {
         examples.put("2 + 2 * 2 = ?", 6);
         examples.put("(2 + 2) * 2 = ?", 8);
-        examples.put("12 * 11 = ?", 134);
-        examples.put("23 + 18 = ?", 51);
+        examples.put("12 * 11 = ?", 132);
+        examples.put("23 + 18 = ?", 41);
         examples.put("75 - 37 = ?", 38);
         examples.put("125 ÷ 5 = ?", 25);
-        examples.put("2 - 4 * 6 + 8 = ?", -16);
+        examples.put("2 - 4 * 6 + 8 = ?", -14);
         examples.put("3 + 3 - 3 * 3 = ?", -3);
         examples.put("5 + 3 * 5 = ?", 20);
-        examples.put("х - 12 = 78", 64);
+        examples.put("х - 12 = 78", 90);
         examples.put("9 + х = 54", 45);
         examples.put("3х = 18", 6);
         examples.put("х + 19 = 31", 12);
-        examples.put("2 - х = -21", -23);
+        examples.put("2 - х = -21", 23);
         examples.put("2х = -16", -8);
         examples.put("-3х = 12", -4);
-        examples.put("4х + 2 = 10", 8);
+        examples.put("4х + 2 = 10", 2);
         examples.put("2х = 4", 2);
         examples.put("16 = 2х", 8);
     }

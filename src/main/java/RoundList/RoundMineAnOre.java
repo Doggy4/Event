@@ -47,7 +47,7 @@ public class RoundMineAnOre implements Listener {
 
         for (Block block : LocationUtils.getBlocksFromTwoPoints(LocationUtils.arenaLeft.add(0, -5, 0), LocationUtils.arenaRight))
             if (block.getType().equals(Material.STONE))
-                if (Utils.getRandom(0, 10) == 1)
+                if (Utils.getRandom(0, 20) == 1)
                     block.setType(oreList.get(Utils.getRandom(0, oreList.size() - 1)));
     }
 
@@ -62,7 +62,7 @@ public class RoundMineAnOre implements Listener {
     }
 
     @EventHandler
-    public void onFallingBlockLand(BlockBreakEvent event) {
+    public void onBlockBreak(BlockBreakEvent event) {
         if (!isActivated) return;
         Player player = event.getPlayer();
         if (!Queue.redQueueList.contains(player)) return;

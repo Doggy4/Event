@@ -15,6 +15,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import static PluginUtils.Items.BowEventBow;
 import static PluginUtils.Items.bowEventArrows;
@@ -29,7 +30,7 @@ public class RoundHitTheBlock implements Listener {
 
     private static Block block = LocationUtils.world.getBlockAt(0, 0, 0);
     private static Block bonusBlock = LocationUtils.world.getBlockAt(0, 0, 0);
-    private static BukkitRunnable runnable;
+    private static BukkitTask runnable;
 
     public static void startRound() {
         // Опционально:
@@ -43,11 +44,9 @@ public class RoundHitTheBlock implements Listener {
             player.getInventory().addItem(bowEventArrows);
         }
 
-        new BukkitRunnable() {
+        runnable = new BukkitRunnable() {
             @Override
             public void run() {
-                runnable = this;
-
                 block.setType(Material.AIR);
                 bonusBlock.setType(Material.AIR);
 
@@ -79,6 +78,8 @@ public class RoundHitTheBlock implements Listener {
     }
 
     public static void endHitTheBlock() {
+        isActivated = false;
+
         runnable.cancel();
 
         bonusBlock.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, block.getLocation(), 1);

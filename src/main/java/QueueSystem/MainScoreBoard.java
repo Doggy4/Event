@@ -162,6 +162,6 @@ public class MainScoreBoard {
                 // ГЛАВНЫЙ ИГРОВОЙ ЦИКЛ
                 GameCycle.mainCycle();
             }
-        }.runTaskTimer(Main.main, 60, 20);
+        }.runTaskTimer(Main.main, 0, 20);
     }
 }

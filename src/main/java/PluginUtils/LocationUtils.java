@@ -43,7 +43,7 @@ public class LocationUtils {
     }
 
     public static void teleportToSpawn(Player player) {
-        player.teleport(getRandomLocation());
+        player.teleport(addLocation(getRandomLocation(), 0, 1, 0));
     }
 
     public static List<Block> getBlocksFromTwoPoints(Location loc1, Location loc2) {

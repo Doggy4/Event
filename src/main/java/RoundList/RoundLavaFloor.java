@@ -32,12 +32,12 @@ public class RoundLavaFloor {
             @Override
             public void run() {
                 for (int i = 0; i < 50; i++) {
-                    Block block = LocationUtils.world.getBlockAt(LocationUtils.getRandomLocation().subtract(0, 1, 0));
+                    Block block = LocationUtils.world.getBlockAt(LocationUtils.addLocation(LocationUtils.getRandomLocation(), 0, -1, 0));
 
-                    if (block.getType() == Material.WHITE_WOOL) block.setType(Material.YELLOW_WOOL);
-                    else if (block.getType() == Material.YELLOW_WOOL) block.setType(Material.ORANGE_WOOL);
-                    else if (block.getType() == Material.ORANGE_WOOL) block.setType(Material.RED_WOOL);
-                    else if (block.getType() == Material.RED_WOOL) block.setType(Material.AIR);
+                    if (block.getType().equals(Material.WHITE_WOOL)) block.setType(Material.YELLOW_WOOL);
+                    else if (block.getType().equals(Material.YELLOW_WOOL)) block.setType(Material.ORANGE_WOOL);
+                    else if (block.getType().equals(Material.ORANGE_WOOL)) block.setType(Material.RED_WOOL);
+                    else if (block.getType().equals(Material.RED_WOOL)) block.setType(Material.AIR);
                 }
 
                 for (Player player : Queue.redQueueList)

@@ -17,11 +17,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 public class RoundAnvilEscape implements Listener {
     public static boolean isActivated = false;
 
-    private static BukkitRunnable runnable;
+    private static BukkitTask runnable;
 
     public static void startRound() {
         // Опционально:
@@ -34,22 +35,21 @@ public class RoundAnvilEscape implements Listener {
             gameRulesAnnouncement(player);
         }
 
-        new BukkitRunnable() {
+        runnable = new BukkitRunnable() {
             @Override
             public void run() {
-                runnable = this;
-                for (int i = 0; i < 50; i++)
-                    LocationUtils.world.getBlockAt(LocationUtils.getRandomLocation()).setType(Material.ANVIL);
+                for (int i = 0; i < 30; i++)
+                    LocationUtils.world.getBlockAt(LocationUtils.addLocation(LocationUtils.getRandomLocation(), 0, 15, 0)).setType(Material.ANVIL);
             }
-        }.runTaskTimer(Main.main, 10, 10);
+        }.runTaskTimer(Main.main, 60, 20);
     }
 
     public static void endDodgeAnvils() {
         isActivated = false;
         runnable.cancel();
-        for (Player roundPlayer : Queue.redQueueList)
-            if (roundPlayer.getGameMode() != GameMode.ADVENTURE)
-                RoundSystem.playerWin(roundPlayer);
+        for (Player player : Queue.redQueueList)
+            if (player.getGameMode() == GameMode.ADVENTURE)
+                RoundSystem.playerWin(player);
     }
 
     private static void gameRulesAnnouncement(Player player) {
@@ -78,5 +78,6 @@ public class RoundAnvilEscape implements Listener {
         if (!Queue.redQueueList.contains(player)) return;
 
         RoundSystem.playerLose(player);
+        event.setCancelled(true);
     }
 }
