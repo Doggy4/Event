@@ -15,6 +15,7 @@ public class ItemUtils {
     public static ArrayList<Material> materials = new ArrayList<Material>();
     public static ArrayList<Material> craftableMaterials = new ArrayList<Material>();
 
+
     static {
         for (Material material : Material.values())
             if (!BlackList.isItemBlocked(material.name())) ItemUtils.materials.add(material);

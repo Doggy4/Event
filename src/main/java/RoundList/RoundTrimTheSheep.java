@@ -9,6 +9,8 @@ import RoundSystem.RoundSystem;
 import RoundUtils.MapRebuild;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Sheep;
@@ -74,8 +76,11 @@ public class RoundTrimTheSheep implements Listener {
 
         if (sheep.getColor() == univPlayerColorHashMap.get(player)) {
             RoundSystem.addScore(player, 1);
+            LocationUtils.world.spawnParticle(Particle.VILLAGER_HAPPY, sheep.getLocation(), 1);
         } else {
             RoundSystem.addScore(player, -1);
+            LocationUtils.world.spawnParticle(Particle.VILLAGER_ANGRY, sheep.getLocation(), 0);
+            player.playSound(player.getLocation(), Sound.BLOCK_GLASS_BREAK, 10, 1);
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Неправильный цвет!");
         }
 

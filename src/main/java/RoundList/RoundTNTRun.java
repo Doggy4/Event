@@ -39,7 +39,6 @@ public class RoundTNTRun {
                     }
 
                     if (player.isOnGround()) {
-
                         int x1 = (int) Math.ceil(location.getX());
                         int x2 = (int) Math.floor(location.getX());
                         int y = (int) location.getY();
