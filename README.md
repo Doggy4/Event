@@ -6,10 +6,10 @@
 Multi-functional minecraft mini-game.
 
 ## Initial development
-Previously, the plugin was used for the minecraft event, after which it was modified and improved to be more suitable for regular personal usage.
+Originally developed for a single-event, the plugin turned into a full-fledged, practical, large-scale, multi-functional module for a mini-game server. As a result, it was modified and improved to be more suitable for regular personal usage.
 
 ## Description
-A mini-game consisting of a set of micro-games. Each game is accompanied by a unique arena and customization. For the correct completion of tasks in the game, the user accumulates points. At the end of all rounds, the winner is revealed.
+Plugin is consisting of a set of micro-games. Each micro-game is accompanied by a unique arena and customization. For the correct completion of tasks in the micro-game, the user accumulates points. At the end of all rounds, the winner is revealed.
 
 ## Features
 - Over 25 copyright micro-games
@@ -42,7 +42,7 @@ A mini-game consisting of a set of micro-games. Each game is accompanied by a un
 - Harry Potter
 - Hot potato
 - Leap of Faith
-- Push everyone to the platform
+- Push everyone off the platform
 - Floor is lava
 - Maths
 - Milk a cow
@@ -65,7 +65,7 @@ A mini-game consisting of a set of micro-games. Each game is accompanied by a un
 ## TODO
 - [x] Write long useless text called README
 - [ ] Implement all the things mentioned above
-- [ ] Get Bob to work
+- [ ] Force Bop to develop a plugin
 
 ## Installation and usage
 
@@ -73,4 +73,4 @@ A mini-game consisting of a set of micro-games. Each game is accompanied by a un
 
 ## Gratitude
 
-I want to thank @[bob302](https://github.com/bob302) and @[KpuBeTka](https://github.com/KpuBeTka) for their help in creating the project.
+I want to thank [@bob302](https://github.com/bob302) and [@KpuBeTka](https://github.com/KpuBeTka) for their help in creating the project.
