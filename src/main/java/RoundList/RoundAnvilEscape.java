@@ -6,9 +6,7 @@ import RoundSystem.RoundRules;
 import RoundSystem.RoundSystem;
 import RoundUtils.MapRebuild;
 import event.main.Main;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
@@ -31,9 +29,8 @@ public class RoundAnvilEscape implements Listener {
         RoundRules.PlayerDamageOff();
         MapRebuild.loadSchematic("arena");
 
-        for (Player player : Queue.redQueueList) {
+        for (Player player : Queue.redQueueList)
             gameRulesAnnouncement(player);
-        }
 
         runnable = new BukkitRunnable() {
             @Override
@@ -61,13 +58,14 @@ public class RoundAnvilEscape implements Listener {
     public void onFallingBlockLand(EntityChangeBlockEvent event) {
         Block block = event.getBlock();
 
-        int x = Math.round((float) block.getLocation().getX());
-        int y = Math.round((float) block.getLocation().getY()) - 1;
-        int z = Math.round((float) block.getLocation().getZ());
+        Location preLocation = block.getLocation();
+        Location location = LocationUtils.addLocation(preLocation, 0, 1, 0);
 
         if (event.getEntity() instanceof FallingBlock)
-            if (event.getEntity().getLocation().getWorld().getBlockAt(x, y, z).getType() != Material.AIR)
+            if (LocationUtils.world.getBlockAt(location).getType() != Material.AIR) {
                 event.setCancelled(true);
+                LocationUtils.world.spawnParticle(Particle.SMOKE_NORMAL, preLocation, 1);
+            }
     }
 
     @EventHandler

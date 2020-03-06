@@ -1,11 +1,13 @@
 package RoundList;
 
+import PluginUtils.LocationUtils;
 import QueueSystem.Queue;
 import RoundSystem.RoundSystem;
 import RoundUtils.MapRebuild;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -37,6 +39,7 @@ public class RoundCakeParkour implements Listener {
 
         if (event.getClickedBlock().getType().equals(Material.CAKE) && player.getGameMode().equals(GameMode.ADVENTURE)) {
             RoundSystem.addScore(player, 1);
+            LocationUtils.world.spawnParticle(Particle.VILLAGER_HAPPY, event.getClickedBlock().getLocation(), 1);
             player.setGameMode(GameMode.SPECTATOR);
         }
 

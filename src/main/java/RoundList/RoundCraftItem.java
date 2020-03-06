@@ -2,12 +2,14 @@ package RoundList;
 
 import PluginUtils.Chat;
 import PluginUtils.ItemUtils;
+import PluginUtils.LocationUtils;
 import PluginUtils.Utils;
 import QueueSystem.Queue;
 import RoundSystem.RoundSystem;
 import RoundUtils.MapRebuild;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -98,9 +100,11 @@ public class RoundCraftItem implements Listener {
         if (event.getCurrentItem().getType().equals(playerMaterialHashMap.get(player))) {
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.GREEN + "Задание выполнено!");
             RoundSystem.addScore(player, 5);
+            LocationUtils.world.spawnParticle(Particle.HEART, player.getLocation(), 1);
         } else {
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Неверный предмет!");
             RoundSystem.addScore(player, -1);
+            LocationUtils.world.spawnParticle(Particle.TOTEM, player.getLocation(), 1);
         }
         nextItem(player);
     }

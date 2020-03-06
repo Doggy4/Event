@@ -6,10 +6,7 @@ import PluginUtils.LocationUtils;
 import PluginUtils.Utils;
 import QueueSystem.Queue;
 import RoundList.*;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.ItemFrame;
@@ -79,7 +76,7 @@ public class RoundSystem {
         for (Player player : Bukkit.getOnlinePlayers())
             player.playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 10, 1);
 
-        randomGame = Utils.getRandom(18, 18);
+        randomGame = Utils.getRandom(0, 22);
         switch (randomGame) {
             case 0:
                 RoundPlaceTheBlock.startRound();
@@ -244,7 +241,7 @@ public class RoundSystem {
             player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
         } else {
             player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.WHITE + "Вы потеряли " + ChatColor.RED + (score * -1) + ChatColor.WHITE + scoreString);
-            player.playSound(player.getLocation(), Sound.ENTITY_ITEM_BREAK, 10, 1);
+            player.playSound(player.getLocation(), Sound.ENTITY_CAT_AMBIENT, 10, 1);
             if (roundStats.get(player) <= 0) {
                 player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Вы достигли минимального количества очков!");
                 score = 0;
@@ -291,12 +288,14 @@ public class RoundSystem {
         preReset(player);
         player.sendMessage(ChatColor.GOLD + "[EVENT] " + ChatColor.RED + "Вы проиграли!");
         player.playSound(player.getLocation(), Sound.ENTITY_BAT_DEATH, 10, 1);
+        player.getLocation().getWorld().spawnParticle(Particle.PORTAL, player.getLocation(), 1);
     }
 
     public static void playerWin(Player player) {
         Chat.broadcastToEveryone(ChatColor.GREEN + "Игрок " + player.getName() + " победил в раунде!");
         preReset(player);
         player.sendTitle(ChatColor.GREEN + "Поздравляем!", "Вы победили!", 20, 20, 20);
+        player.getLocation().getWorld().spawnParticle(Particle.FIREWORKS_SPARK, player.getLocation(), 1);
         player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_COW_BELL, 10, 1);
         RoundSystem.addScore(player, 5);
     }
