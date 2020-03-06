@@ -1,10 +1,12 @@
- ![Plugin logo](logo.png)
-# Event
+
+<p align="center"> <img src="https://i.ibb.co/7QcfmPq/logo.png" /> </p>
+
+# Amphitheatrum Flavium 
 
 Multi-functional minecraft mini-game.
 
 ## Initial development
-Previously, the plugin was used for the event on the previous project, after which it was modified and improved.
+Previously, the plugin was used for the minecraft event, after which it was modified and improved to be more suitable for regular personal usage.
 
 ## Description
 A mini-game consisting of a set of micro-games. Each game is accompanied by a unique arena and customization. For the correct completion of tasks in the game, the user accumulates points. At the end of all rounds, the winner is revealed.
@@ -71,4 +73,4 @@ A mini-game consisting of a set of micro-games. Each game is accompanied by a un
 
 ## Gratitude
 
-I want to thank @bob302 and @KpuBeTka for their help in creating this project.
+I want to thank @[bob302](https://github.com/bob302) and @[KpuBeTka](https://github.com/KpuBeTka) for their help in creating the project.
