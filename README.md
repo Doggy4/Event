@@ -1,5 +1,6 @@
-# Event
-Multi-functional minecraft mini-game. ![Plugin logo](logo.png)
+# Event ![Plugin logo](logo.png)
+
+Multi-functional minecraft mini-game.
 
 ## Initial development
 Previously, the plugin was used for the event on the previous project, after which it was modified and improved.
