@@ -1,4 +1,5 @@
-# Event ![Plugin logo](logo.png)
+ ![Plugin logo](logo.png)
+# Event
 
 Multi-functional minecraft mini-game.
 
