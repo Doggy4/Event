@@ -17,9 +17,9 @@ Plugin is consisting of a set of micro-games. Each micro-game is accompanied by 
 - MySQL Integration
 - Discord WebHook Support
 - Unique customization (music, particles)
-- Setting individual cards for each round
+- Setting individual arenas for each round
 - Well thought out queuing system
-- Support for Image Maps
+- Support for Image Maps [custom images in minecraft frames]
 - Localization of all informational messages
 - Schematics integrations
 - NBS filed music support
